@@ -1,0 +1,63 @@
+picturebox画图
+   void draw(PaintEventArgs e)
+        {
+            try
+            {
+                // 获取Graphics对象
+                Graphics g = e.Graphics;
+
+                // 设置抗锯齿以获得更平滑的文本
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+                // 定义要绘制的字符串
+                string text = show;
+
+                // 定义字体和颜色
+                Font font = new Font("Arial", 24, FontStyle.Bold);
+                System.Drawing.Brush brush = System.Drawing.Brushes.Red;
+
+                // 定义字符串位置
+                PointF point = new PointF(info坐标.x_font, info坐标.y_font);
+
+                // 绘制字符串
+                g.DrawString(text, font, brush, point);
+
+                //// 可选：绘制带有背景的字符串
+                //string text2 = "带背景的文本";
+                //Font font2 = new Font("宋体", 18);
+                //System.Drawing.Brush backgroundBrush = System.Drawing.Brushes.LightYellow;
+                //System.Drawing.Brush textBrush = System.Drawing.Brushes.Red;
+
+                // 计算文本大小
+                //  SizeF textSize = g.MeasureString(text2, font2);
+                //  RectangleF backgroundRect = new RectangleF(50, 120, textSize.Width + 10, textSize.Height + 10);
+
+                // 绘制背景
+                // g.FillRectangle(backgroundBrush, backgroundRect);
+
+                // 绘制文本
+                //  g.DrawString(text2, font2, textBrush, 55, 125);
+
+                // g.DrawString(text2, font2, textBrush, info坐标.width, info坐标 .height);
+
+
+                System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.Red, 2);
+                //g.DrawRectangle(pen, 0, 0, 100, 100);
+
+                g.DrawRectangle(pen, info坐标.x, info坐标.y, info坐标.width, info坐标.height);
+
+                // 释放资源
+                //font.Dispose();
+                //font2.Dispose();
+                //brush.Dispose();
+                //textBrush.Dispose();
+                //backgroundBrush.Dispose();
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+        }

@@ -1,0 +1,58 @@
+<body></body>		重要元素,主体,只能有一个
+<h1></h1>			一级标题元素  
+<h2></h2>			二级标题元素
+<p></p>				段落元素
+<br>					换行,放在要换行元素的后面,不需要</br>    如<p>中国</p><br>
+
+文本
+<b></b>				加粗文本
+<i></i>				斜体文本
+<s></s>				删除线文本
+<strong>	</strong>	加粗文本,并且表示很重要的
+<u></u>				下划线文本
+
+列表
+<ul></ul>			元序列表
+<ol></ol>			有序列表
+	<li></li>		列表元素
+		例:
+			<ul>
+				<li>1</li>
+				<li>2</li>
+			</ul>
+
+链接
+<a></a>				锚点,
+	属性
+	href:超链接引用,
+	例:	<a href="http://www.baidu.com">百度</a>
+		<a href="tel:13111256630">百度</a>
+
+图片
+<img/>				标签添加图片,是一个自闭合标签，不需要结束标签。
+	属生
+	src：图片的来源（source），可以是本地文件路径或网络URL
+	alt：图片的替代文本，当图片无法显示时会显示这段文字
+	例:
+		<img src="https://aicder-1300962510.cos.ap-beijing.myqcloud.com/aicder%2Fhtml%2F06.1-cat.jpg" alt="一只可爱的橘猫"/>
+
+
+<!DOCTYPE html>：这是文档类型声明，位于 HTML 文件的最顶部，告诉浏览器我们使用的是 HTML5 标准。这个声明不需要闭合标签。
+<html>：这是 HTML 文档的根元素，所有代码都包含在这个标签内。<html> 标签需要闭合。 
+<!DOCTYPE html>
+<html>
+  代码放在这里
+</html>
+
+
+例:  
+	<html>
+	  <head>
+	    <title>我的网站</title>
+	  </head>
+	  <body>
+	    <p>你好，<i>欢迎</i>！</p>
+	  </body>
+	</html> 
+		<head> 和 <body> 是 <html> 的子元素。
+		<title> 是 <head> 的子元素。

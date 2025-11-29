@@ -1,0 +1,37 @@
+ 依赖属性  
+
+   public static readonly DependencyProperty ui_TextProperty =
+    DependencyProperty.Register(
+                               nameof(ui_Text),    // 属性名称
+                               typeof(string),     // 属性类型
+                               typeof(ui_TextBox),  // 拥有者类型
+                               new FrameworkPropertyMetadata(
+                               string.Empty, // 默认值
+                               FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, 
+                               On_ui_Text_Changed   //事件回调,,这里是更新内容
+                               ));
+    
+   private static void On_ui_Text_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
+   {
+       ui_TextBox control = d as ui_TextBox;
+       // 将新值同步到UserControl内部的UI元素（如TextBlock）
+       control.TextBox_.Dispatcher.Invoke(() => { control.TextBox_.Text = e.NewValue.ToString(); });
+   }
+
+
+    /// <summary>
+    /// 显示文本
+    /// </summary>
+    [Category("ui")]
+    [Description("显示文本")]
+    public string ui_Text
+    {
+        get
+        {
+            return (string)GetValue(ui_TextProperty);
+        }
+        set
+        {
+            SetValue(ui_TextProperty, value);
+        }
+    }

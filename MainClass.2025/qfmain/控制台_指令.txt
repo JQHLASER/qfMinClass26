@@ -1,0 +1,129 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ServerClass
+{
+    internal class Main_指令操作_带参数
+    {
+        public Main_指令操作_带参数()
+        {
+            while (true)
+            {
+                Console.Write("> ");
+                string input = Console.ReadLine()?.Trim();
+
+                #region 忽略空输入
+
+                // 忽略空输入
+                if (string.IsNullOrEmpty(input))
+                {
+                    Console.WriteLine("请输入有效命令");
+                    continue;
+                }
+
+                #endregion
+
+
+                #region 解析命令和参数
+
+                // 解析命令和参数
+                string[] parts = input.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                string command = parts[0].ToLower();
+                string[] parameters = parts.Skip(1).ToArray();
+
+                #endregion
+
+
+                #region 根据命令执行操作
+
+                // 根据命令执行操作
+                switch (command)
+                {
+                    case "exit":
+                        // Console.WriteLine("程序退出");
+                        break;
+
+                    case "add":
+                        HandleAddCommand(parameters);
+                        break;
+
+                    case "greet":
+                        HandleGreetCommand(parameters);
+                        break;
+
+                    case "help":
+                        ShowHelp();
+                        break;
+
+                    default:
+
+                        #region 未知指令
+
+                        string 未知指令 = Language_.Get语言("未知命令");
+                        string 输入 = Language_.Get语言("输入");
+                        string 查看可用命令 = Language_.Get语言("查看可用命令");
+                        Console.WriteLine($"{未知指令}: {command}，{输入} 'help' {查看可用命令}");
+
+                        #endregion
+
+                        break;
+                }
+
+                #endregion
+
+
+
+            }
+
+        }
+
+
+        #region 方法
+
+        // 处理加法命令
+        static void HandleAddCommand(string[] parameters)
+        {
+            if (parameters.Length < 2)
+            {
+                Console.WriteLine("用法: add 数字1 数字2");
+                return;
+            }
+
+            if (double.TryParse(parameters[0], out double num1) &&
+                double.TryParse(parameters[1], out double num2))
+            {
+                Console.WriteLine($"结果: {num1 + num2}");
+            }
+            else
+            {
+                Console.WriteLine("参数必须是有效的数字");
+            }
+        }
+
+        // 处理问候命令
+        static void HandleGreetCommand(string[] parameters)
+        {
+            string name = parameters.Length > 0 ? parameters[0] : "陌生人";
+            Console.WriteLine($"你好，{name}！");
+        }
+
+        // 显示帮助信息
+        static void ShowHelp()
+        {
+            Console.WriteLine("可用命令:");
+            Console.WriteLine("  exit      - 退出程序");
+            Console.WriteLine("  add 数字1 数字2 - 计算两个数字的和");
+            Console.WriteLine("  greet 姓名 - 向指定姓名的人打招呼");
+            Console.WriteLine("  help      - 显示帮助信息");
+        }
+
+
+        #endregion
+
+
+
+    }
+}

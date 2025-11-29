@@ -1,0 +1,143 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36203.30
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "qfmain", "qfmain.csproj", "{405AD025-8196-461F-909A-938ABA8C7AF2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "资料", "资料", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "学习", "学习", "{C4E27E00-5A09-4639-A99A-12F1E1283081}"
+	ProjectSection(SolutionItems) = preProject
+		..\学习\html.txt = ..\学习\html.txt
+		..\学习\Http.txt = ..\学习\Http.txt
+		Lock.txt = Lock.txt
+		..\学习\paint 画图.txt = ..\学习\paint 画图.txt
+		..\学习\webService.txt = ..\学习\webService.txt
+		内存.txt = 内存.txt
+		..\学习\学习经验.txt = ..\学习\学习经验.txt
+		数据库.txt = 数据库.txt
+		..\学习\笔记.txt = ..\学习\笔记.txt
+		..\学习\简化条件语句的方法.txt = ..\学习\简化条件语句的方法.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "资料", "资料", "{687A89CF-1619-406F-AC9C-02945EFF1552}"
+	ProjectSection(SolutionItems) = preProject
+		..\资料\FodyWeavers.xml = ..\资料\FodyWeavers.xml
+		..\资料\控制台.exe = ..\资料\控制台.exe
+		禁止生成Runtimes.txt = 禁止生成Runtimes.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "qfWPFmain", "..\qfWPFmain\qfWPFmain.csproj", "{1DE70D16-9529-497A-8598-090AD50EB084}"
+	ProjectSection(ProjectDependencies) = postProject
+		{26054DB8-C6B5-48DB-898D-835B7197E621} = {26054DB8-C6B5-48DB-898D-835B7197E621}
+		{405AD025-8196-461F-909A-938ABA8C7AF2} = {405AD025-8196-461F-909A-938ABA8C7AF2}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{F5799360-018C-4A0E-9E5B-85AE534BE84A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "主类库", "主类库", "{024A954B-30C8-4294-90C2-5493FDA8D203}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{07A473CA-3C0C-4526-82AB-9203143A7D07}"
+	ProjectSection(SolutionItems) = preProject
+		Clip.txt = Clip.txt
+		Mvvm.txt = Mvvm.txt
+		Window.Resources.txt = Window.Resources.txt
+		学习.txt = 学习.txt
+		程序.txt = 程序.txt
+		窗体.txt = 窗体.txt
+		自定义控件 CustomControls.txt = 自定义控件 CustomControls.txt
+		自定义控件.txt = 自定义控件.txt
+		自定义用户控件.txt = 自定义用户控件.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{8C21EC1B-4269-4F94-9EFC-792B0D920813}"
+	ProjectSection(SolutionItems) = preProject
+		GC.txt = GC.txt
+		Nlog.txt = Nlog.txt
+		..\学习\NuGet包.txt = ..\学习\NuGet包.txt
+		清除xml.txt = 清除xml.txt
+		..\学习\编译时合并DLL.txt = ..\学习\编译时合并DLL.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "控件", "控件", "{459CE313-BDBF-4C50-A117-193785D45CE4}"
+	ProjectSection(SolutionItems) = preProject
+		App.txt = App.txt
+		Border.txt = Border.txt
+		CheckBox.txt = CheckBox.txt
+		Combobox.txt = Combobox.txt
+		DataGrid.txt = DataGrid.txt
+		Grid.txt = Grid.txt
+		Label.txt = Label.txt
+		ListView.txt = ListView.txt
+		ScrollViewer.txt = ScrollViewer.txt
+		TabControl.txt = TabControl.txt
+		TextBox.txt = TextBox.txt
+		WPF_Grid.txt = WPF_Grid.txt
+		快捷方式.txt = 快捷方式.txt
+		菜单Menu.txt = 菜单Menu.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "qfWork", "..\qfWork\qfWork.csproj", "{26054DB8-C6B5-48DB-898D-835B7197E621}"
+	ProjectSection(ProjectDependencies) = postProject
+		{405AD025-8196-461F-909A-938ABA8C7AF2} = {405AD025-8196-461F-909A-938ABA8C7AF2}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "控制台", "控制台", "{EFEA29ED-AA07-4EF7-853B-9391A70A1AEB}"
+	ProjectSection(SolutionItems) = preProject
+		控制台_不立即关闭.txt = 控制台_不立即关闭.txt
+		控制台_手搓.txt = 控制台_手搓.txt
+		控制台_指令.txt = 控制台_指令.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "qfAvaloina", "..\qfAvaloina\qfAvaloina.csproj", "{9B431AFE-C7F7-4F90-AFE9-03353E17F536}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "qfNet", "..\qfNet\qfNet.csproj", "{7FE49F82-695F-4069-9ED4-0484E9111FCD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{405AD025-8196-461F-909A-938ABA8C7AF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{405AD025-8196-461F-909A-938ABA8C7AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{405AD025-8196-461F-909A-938ABA8C7AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{405AD025-8196-461F-909A-938ABA8C7AF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DE70D16-9529-497A-8598-090AD50EB084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DE70D16-9529-497A-8598-090AD50EB084}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DE70D16-9529-497A-8598-090AD50EB084}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DE70D16-9529-497A-8598-090AD50EB084}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26054DB8-C6B5-48DB-898D-835B7197E621}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26054DB8-C6B5-48DB-898D-835B7197E621}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26054DB8-C6B5-48DB-898D-835B7197E621}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26054DB8-C6B5-48DB-898D-835B7197E621}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B431AFE-C7F7-4F90-AFE9-03353E17F536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B431AFE-C7F7-4F90-AFE9-03353E17F536}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B431AFE-C7F7-4F90-AFE9-03353E17F536}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B431AFE-C7F7-4F90-AFE9-03353E17F536}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FE49F82-695F-4069-9ED4-0484E9111FCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FE49F82-695F-4069-9ED4-0484E9111FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FE49F82-695F-4069-9ED4-0484E9111FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FE49F82-695F-4069-9ED4-0484E9111FCD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{405AD025-8196-461F-909A-938ABA8C7AF2} = {024A954B-30C8-4294-90C2-5493FDA8D203}
+		{C4E27E00-5A09-4639-A99A-12F1E1283081} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{687A89CF-1619-406F-AC9C-02945EFF1552} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{1DE70D16-9529-497A-8598-090AD50EB084} = {F5799360-018C-4A0E-9E5B-85AE534BE84A}
+		{07A473CA-3C0C-4526-82AB-9203143A7D07} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{8C21EC1B-4269-4F94-9EFC-792B0D920813} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{459CE313-BDBF-4C50-A117-193785D45CE4} = {07A473CA-3C0C-4526-82AB-9203143A7D07}
+		{26054DB8-C6B5-48DB-898D-835B7197E621} = {024A954B-30C8-4294-90C2-5493FDA8D203}
+		{EFEA29ED-AA07-4EF7-853B-9391A70A1AEB} = {C4E27E00-5A09-4639-A99A-12F1E1283081}
+		{9B431AFE-C7F7-4F90-AFE9-03353E17F536} = {024A954B-30C8-4294-90C2-5493FDA8D203}
+		{7FE49F82-695F-4069-9ED4-0484E9111FCD} = {024A954B-30C8-4294-90C2-5493FDA8D203}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0B7AD31-154F-4701-AEBF-4206C118E93A}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,53 @@
+﻿
+曲线控件:
+	 Chart(自带) 安装 System.Windows.Forms.DataVisualization
+	 ZedGraph  安装 ZedGraph --> 添加控件：工具箱 → 右键「选择项」→ 浏览 → 找到安装目录下的 ZedGraph.dll → 勾选「ZedGraphControl」→ 拖拽到窗体。
+
+日志类.... 
+	 方法1:下载 Serilog 和  System.Diagnostics.DiagnosticSource 和 Serilog.Sinks.File(不使用他的功能保存文件时不需要下载)
+	 方法2:下载 NLog(目前没在用)
+
+
+串口 SerialPort .... 
+	  下载System.IO.Ports 包
+
+Sqlite 数据库
+	1>	:	使用NuGet包下载  SqlSugar.dll
+	2>	:	调用Sqlite时, 使用NuGet包下载 System.Data.SQLite 就可以了
+	3>	:	将SQLite.Interop.dll复制到文件夹下即可
+
+
+	最后再发布到Win86或64就可以了
+	
+	注意事项,(实测OK的)
+	使用mainclassqf类库,由于里面已调用过SqlSugar及sqlite相关的库,
+	只需要将SQLite.Interop.dll复制到发布好的目录下就可以了,
+	不需要使用NuGet包下载了
+
+SqlServer 数据库....使用最新库
+	直接使用.net8时,必须使用NuGet下载SqlSugarCore
+
+	使用.net4.8开发dll给.net8调用时,
+	必须使用NuGet下载 	 System.Data.SqlClient  
+						 System.Security.Permissions
+	最好将 SqlSugarCore 也一起下载,然后DB初始化时选择"新驱动"
+
+	必须将发布编译时生成的sni.dll复制到程序目录下,否则会提示连接字符串不正确
+
+
+
+Encoding 编码转换
+	下载: System.Text.Encoding.CodePages  (8.0)
+	//在Nuget包System.Text.Encoding.CodePages中的编码到.NET Core
+	Encoding.RegisterProvider(CodePagesEncodingProvider.Instance); 
+	string data = Encoding.GetEncoding("GB2312").GetString(new byte[] { 0xD6, 0XD0 });
+
+Mvvm
+NuGet包下载 CommunityToolkit.Mvvm
+
+.net Framewrok system.Drawing.image (也就是.net8中的image类型)
+	NuGet包下载 System.Drawing.Common
+
+
+
+

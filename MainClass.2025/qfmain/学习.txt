@@ -1,0 +1,47 @@
+
+ GridLength height_未初始化提示 = new GridLength(1, GridUnitType.Star);//高度为最大....类似于xmal中的 1*
+  GridLength height_未初始化提示 = new GridLength(0, GridUnitType.Star);//高度为0....类似于xmal中的 0*
+
+
+   InputMethod.IsInputMethodEnabled="False"  //是否使用输入法
+
+
+ Foreground="{Binding  ui_Foreground ,ElementName=root , Mode=TwoWay}"
+
+     this.Label_.Dispatcher.Invoke(() =>
+                {  // 清除可能的样式/模板设置
+                    this.Label_.ClearValue(System.Windows.Controls.Label.FontSizeProperty);
+                    this.Label_.FontSize = 35;
+                });
+
+
+在 XAML 中可以使用&#x0a;（XML 实体表示的换行符）来强制换行：
+对于更复杂的文本结构，可以使用<LineBreak/>标签实现换行：
+
+
+
+跨窗体访问控件
+    <TextBox x:Name="txtInput" x:FieldModifier="public" />
+    （x:FieldModifier="public" 使控件在外部可见）
+
+简单数据绑定
+ObservableCollection<_info_> LogItems { set; get; }
+
+YourText="这是一段包含&#x0A;换行符&#x0D;的文本" />
+
+
+xmal语言中一个控件绑定另一个控件
+Background="{Binding Background, ElementName=_功能栏}
+
+xmal中 window 局部变量
+    <Window.Resources>
+        <SolidColorBrush x:Key="_工作区边框颜色" Color="#FFD7D7D7"/>
+        <SolidColorBrush x:Key="_日志背景颜色" Color="#FFF9F9F9"/>
+    </Window.Resources>
+
+   调用..... BorderBrush="{StaticResource _工作区边框颜色}
+
+    
+
+//xaml中申明此后,可以建立int/double模板
+   xmlns:System="clr-namespace:System;assembly=mscorlib"

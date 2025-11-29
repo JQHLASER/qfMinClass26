@@ -1,0 +1,23 @@
+﻿<Window x:Class="qfWPFmain.Win_jcz2_双击查看图像"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:qfWPFmain" 
+        xmlns:qfwpfmain="clr-namespace:qfWPFmain"
+        mc:Ignorable="d"
+        Height="450" Width="800" WindowStyle="None" Loaded="Window_Loaded" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"  >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition  Height="*"/>
+        </Grid.RowDefinitions>
+
+        <qfwpfmain:ui_window_Title2 Grid.Row="0" x:Name="_标题栏"   ui_IsMinButton="False"  ui_IsMaxButton="False" />
+
+        <Image Grid.Row="1" x:Name="_image" Margin="10"/>
+
+
+
+    </Grid>
+</Window>

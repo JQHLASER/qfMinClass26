@@ -1,0 +1,17 @@
+<Border
+  Name="Border"     
+         <!--Ô²½Ç°ë¾¶-->
+         CornerRadius="5"
+         <!--±ß¿ò¿í¶È-->
+         BorderThickness="1"
+         <!--±ß¿òÑÕÉ«-->
+         BorderBrush="Gray" 
+         <!--±³¾°ÑÕÉ«-->
+         Background="SeaShell" 
+         <!--ÄÚ±ß¾à-->
+         Padding="0"
+         <!--Íâ±ß¾à-->
+         Margin="1"  
+</Border>
+
+  

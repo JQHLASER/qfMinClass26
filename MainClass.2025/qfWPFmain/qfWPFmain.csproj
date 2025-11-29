@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="UserControls\Window 标题栏\Images\关闭.png" />
+    <None Remove="UserControls\Window 标题栏\Images\最大化.png" />
+    <None Remove="UserControls\Window 标题栏\Images\最大化双.png" />
+    <None Remove="程序类\用户登陆\images\登陆用户.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="UserControls\Window 标题栏\Images\关闭.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="UserControls\Window 标题栏\Images\最大化.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="UserControls\Window 标题栏\Images\最大化双.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="UserControls\Window 标题栏\Images\最小化.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="程序类\用户登陆\images\登陆用户.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Costura.Fody" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Lierda.WPFHelper" Version="1.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="Serilog" Version="4.3.1-dev-02373" />
+    <PackageReference Include="SqlSugar" Version="5.1.4.207" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="9.0.10" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.10" />
+    <PackageReference Include="System.IO.Ports" Version="9.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\qfmain\qfmain.csproj" />
+    <ProjectReference Include="..\qfWork\qfWork.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="UserControls\其它\ui_CheckBoxTB.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\Window 标题栏\ui_win_Title2.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+</Project>

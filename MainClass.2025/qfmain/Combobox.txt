@@ -1,0 +1,15 @@
+     
+     //绑定数据上下文 Items_LoginInfo中的 UserName元素
+     
+     <ComboBox x:Name="_Combobox_UserName" Width=" 200" Height="30" Margin="5,0,0,0"  FontSize="15" 
+                                      FontFamily="微软雅黑"  
+                                      ItemsSource="{Binding Items_LoginInfo}" DisplayMemberPath="UserName"
+                                      />
+
+
+
+
+SelectionChanged="_Combobox_UserName_SelectionChanged" //选择内容发生改变时触发事件
+DropDownClosed="_Combobox_UserName_DropDownClosed"  //下拉框关闭时触发事件
+
+

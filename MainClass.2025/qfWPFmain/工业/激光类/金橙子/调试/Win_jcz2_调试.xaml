@@ -1,0 +1,131 @@
+﻿<Window x:Class="qfWPFmain.Win_jcz2_调试"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:qfWPFmain"
+        mc:Ignorable="d"
+        Height="420" Width="480" WindowStyle="None" Closing="Window_Closing" >
+    <Grid>
+        <Grid.RowDefinitions >
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="240"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+
+        <local:ui_window_Title Grid.Row="0"  x:Name="_标题栏"  ui_IsMaxButton="False" ui_IsMinButton="False"
+                               ui_is普通标题栏="False" ui_Text="{Binding Language_语言.标题}"/>
+
+
+        <!--IO-->
+        <StackPanel Orientation="Vertical" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" >
+
+            <!--IN-->
+            <GroupBox  Header="IN" Padding="10" FontFamily="微软雅黑" FontSize="14" Foreground="Gray" 
+                  VerticalAlignment="Center"  VerticalContentAlignment="Center"
+                  HorizontalAlignment="Center"  HorizontalContentAlignment="Center" >
+                <StackPanel  Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="False" >
+
+                    <local:ui_IO  ui_Width=" 50" x:Name="_In_0"
+                                  ui_Value0 ="{Binding Io_IN_0}"
+                                   ui_Value1 ="{Binding Io_IN_1}"
+                                   ui_Value2 ="{Binding Io_IN_2}"
+                                   ui_Value3 ="{Binding Io_IN_3}"
+                                   ui_Value4 ="{Binding Io_IN_4}"
+                                   ui_Value5 ="{Binding Io_IN_5}"
+                                   ui_Value6 ="{Binding Io_IN_6}"
+                                   ui_Value7 ="{Binding Io_IN_7}"
+                                  />
+                    <local:ui_IO  ui_Width=" 50" Margin="0,5,0,0"  x:Name="_In_1"
+                                  ui_Name_0="8" 
+                                  ui_Name_1="9"
+                                  ui_Name_2="10"
+                                  ui_Name_3="11"
+                                  ui_Name_4="12"
+                                  ui_Name_5="13"
+                                  ui_Name_6="14"
+                                  ui_Name_7="15"
+                                       ui_Value0 ="{Binding Io_IN_8}"
+                                       ui_Value1 ="{Binding Io_IN_9}"
+                                       ui_Value2 ="{Binding Io_IN_10}"
+                                       ui_Value3 ="{Binding Io_IN_11}"
+                                       ui_Value4 ="{Binding Io_IN_12}"
+                                       ui_Value5 ="{Binding Io_IN_13}"
+                                       ui_Value6 ="{Binding Io_IN_14}"
+                                       ui_Value7 ="{Binding Io_IN_15}"/>
+
+                </StackPanel>
+            </GroupBox>
+
+            <!--OUT-->
+            <GroupBox  Header="OUT" Padding="10"  FontFamily="微软雅黑" FontSize="14" Foreground="Gray" 
+                          VerticalAlignment="Center"  VerticalContentAlignment="Center"
+                          HorizontalAlignment="Center"  HorizontalContentAlignment="Center" >
+                <StackPanel  Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" >
+
+                    <local:ui_IO  ui_Width=" 50" x:Name="_Out_0"
+                                   ui_Value0="{Binding Io_OUT_0}"
+                                   ui_Value1="{Binding Io_OUT_1}"
+                                   ui_Value2="{Binding Io_OUT_2}"
+                                   ui_Value3="{Binding Io_OUT_3}"
+                                   ui_Value4="{Binding Io_OUT_4}"
+                                   ui_Value5="{Binding Io_OUT_5}"
+                                   ui_Value6="{Binding Io_OUT_6}"
+                                   ui_Value7="{Binding Io_OUT_7}" Event_操作="_Out_0_Event_操作"/>
+                    <local:ui_IO  ui_Width=" 50" Margin="0,5,0,0"  x:Name="_Out_1"
+                                  ui_Name_0="8"  
+                                  ui_Name_1="9"
+                                  ui_Name_2="10"
+                                  ui_Name_3="11"
+                                  ui_Name_4="12"
+                                  ui_Name_5="13"
+                                  ui_Name_6="14"
+                                  ui_Name_7="15"
+                                     ui_Value0="{Binding Io_OUT_8}"
+                                     ui_Value1="{Binding Io_OUT_9}"
+                                     ui_Value2="{Binding Io_OUT_10}"
+                                     ui_Value3="{Binding Io_OUT_11}"
+                                     ui_Value4="{Binding Io_OUT_12}"
+                                     ui_Value5="{Binding Io_OUT_13}"
+                                     ui_Value6="{Binding Io_OUT_14}"
+                                     ui_Value7="{Binding Io_OUT_15}" Event_操作="_Out_1_Event_操作"/>
+
+                </StackPanel>
+            </GroupBox>
+
+        </StackPanel>
+
+
+        <!--按钮-->
+        <StackPanel Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Center" 
+             Margin="0,10,0,0" Grid.Row="2">
+
+            <!--标刻 / 红光-->
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                <local:ui_ButtonBorder  Width="150" Height="40"  ui_Text="{Binding Language_语言.红光}" 
+                                        x:Name="_button_红光"  Margin="5" 
+                                        PreviewMouseLeftButtonUp="_button_红光_PreviewMouseLeftButtonUp"/>
+                <local:ui_ButtonBorder  Width="150" Height="40"  ui_Text="{Binding Language_语言.标刻}" 
+                                        x:Name="_button_标刻"  Margin="5" PreviewMouseLeftButtonUp="_button_标刻_PreviewMouseLeftButtonUp"/>
+
+            </StackPanel>
+
+            <!--设置 / 停止-->
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" >
+
+                <local:ui_ButtonBorder  Width="150" Height="40"  ui_Text="{Binding Language_语言 .设置}" 
+                                        x:Name="_button_设置"  Margin="5" PreviewMouseLeftButtonUp="_button_设置_PreviewMouseLeftButtonUp"/>
+                <local:ui_ButtonBorder  Width="150" Height="40"  ui_Text="STOP" x:Name="_button_停止"  Margin="5"
+                    ui_Background="Red" PreviewMouseLeftButtonUp="_button_停止_PreviewMouseLeftButtonUp" />
+            </StackPanel>
+
+
+        </StackPanel>
+
+
+
+
+
+    </Grid>
+</Window>

@@ -1,0 +1,56 @@
+
+   xmlns:System="clr-namespace:System;assembly=netstandard"
+    <Window.Resources >
+        <System:Double x:Key="MyDoubleValue">100.5</System:Double>
+    </Window.Resources>
+    
+
+
+
+//定义模板
+ <Window.Resources>
+        <StackPanel Orientation="Vertical" x:Key ="_设置" x:Shared="False"                    
+                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  
+                    Margin="20,10,20,0"
+                    >
+            <Label   FontSize="15" FontFamily="微软雅黑"  Height="30" Width="100"
+                     VerticalContentAlignment="Center" VerticalAlignment="Stretch"
+                     HorizontalAlignment="Left" HorizontalContentAlignment="Stretch"
+                     BorderThickness="0" Foreground="Gray" />
+            <TextBox   AcceptsReturn="True"  TextWrapping="Wrap"  
+                                   Height="70"
+                                   Name="_textBox"/>
+        </StackPanel>
+
+    </Window.Resources>
+
+
+
+//下面是调用方法
+    <StackPanel  Grid.Row="1" Orientation="Vertical" >
+
+            <ContentControl Content="{StaticResource _设置 }" >
+                <ContentControl.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="Content" Value="机器码"/>
+                    </Style>
+                    <Style TargetType="qfwpfmain:ui_TextBox" >
+                        <Setter Property="ui_Text" Value="{Binding text_机器码}"/>
+                        <Setter Property="ui_BackGround" Value="WhiteSmoke" />
+                        <Setter Property="ui_IsReadOnly" Value="True" />
+                    </Style>
+                </ContentControl.Resources>
+            </ContentControl>
+
+
+            <ContentControl Content="{StaticResource _设置 }" x:Name="_注册码">
+                <ContentControl.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="Content" Value="注册码"/>
+                    </Style>
+                    <Style TargetType="qfwpfmain:ui_TextBox" >
+                        <Setter Property="ui_Text" Value="{Binding Text_注册码,Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"/>
+                    </Style>
+                </ContentControl.Resources>
+            </ContentControl>
+     </StackPanel>

@@ -1,0 +1,108 @@
+   // 命令提示符
+        private const string Prompt = "> ";
+        private void InitializeConsole()
+        {
+            // 设置窗体标题
+            Text = "Console Style Form";
+
+            // 创建输出区域（多行文本框，只读）
+            var outputTextBox = new TextBox
+            {
+                Dock = DockStyle.Fill,
+                Multiline = true,
+                ReadOnly = true,
+                ScrollBars = ScrollBars.Vertical,
+                Font = new System.Drawing.Font("Consolas", 9f)
+            };
+
+            // 创建输入区域（单行文本框）
+            var inputTextBox = new TextBox
+            {
+                Dock = DockStyle.Bottom,
+                Font = new System.Drawing.Font("Consolas", 9f)
+            };
+
+            // 添加到窗体
+            Controls.Add(outputTextBox);
+            Controls.Add(inputTextBox);
+
+            // 初始消息
+            outputTextBox.AppendText("简易控制台风格窗体\r\n");
+            outputTextBox.AppendText("输入 'help' 查看可用命令\r\n");
+            // outputTextBox.AppendText(Prompt);
+
+            // 处理输入
+            inputTextBox.KeyDown += (sender, e) =>
+            {
+                if (e.KeyCode == Keys.Enter && !string.IsNullOrWhiteSpace(inputTextBox.Text))
+                {
+                    string command = inputTextBox.Text;
+                    outputTextBox.AppendText(Prompt + command + Environment.NewLine);
+
+
+
+                    // 清空输入框并显示新的提示符
+                    inputTextBox.Clear();
+                    outputTextBox.AppendText(Prompt);
+
+                    // 滚动到底部
+                    outputTextBox.SelectionStart = outputTextBox.TextLength;
+                    outputTextBox.ScrollToCaret();
+
+                    e.SuppressKeyPress = true; // 防止系统提示音
+
+                    // 处理命令
+                    ProcessCommand(command, outputTextBox);
+
+                }
+            };
+
+            // 设置焦点
+            inputTextBox.Focus();
+        }
+
+        private void ProcessCommand(string command, TextBox output)
+        {
+            command = command.Trim().ToLower();
+
+            switch (command)
+            {
+                case "help":
+                    output.AppendText("可用命令:\r\n");
+                    output.AppendText("  help - 显示帮助信息\r\n");
+                    output.AppendText("  time - 显示当前时间\r\n");
+                    output.AppendText("  clear - 清空屏幕\r\n");
+                    output.AppendText("  exit - 退出程序\r\n");
+                    break;
+
+                case "time":
+                    output.AppendText($"当前时间: {DateTime.Now.ToString()}\r\n");
+                    break;
+
+                case "clear":
+                    output.Clear();
+                    break;
+
+                case "exit":
+                    Close();
+                    break;
+
+                default:
+                    output.AppendText($"未知命令: {command}，输入 'help' 查看可用命令\r\n");
+                    break;
+            }
+
+
+        }
+
+
+
+
+
+
+        public Form1()
+        {
+            InitializeConsole();
+            InitializeComponent();
+            forms = this;
+        }

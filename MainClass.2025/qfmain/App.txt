@@ -1,0 +1,40 @@
+
+ /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : Application
+    {
+        //自动GC
+        LierdaCracker cracker = new LierdaCracker();
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            if (new qfWPFmain.进程_().程序是否已运行())
+            {
+                MessageBox.Show("程序已运行");
+                结束自身进程();
+                return;
+            }
+
+            cracker.Cracker();
+            base.OnStartup(e);
+            qfWPFmain.Login登陆.Event_登陆成功 += On_Login登录成功;
+            if (qfWPFmain.Login登陆.Show("无锡骐沣科技有限公司") != MessageBoxResult.Yes)
+            {
+                结束自身进程();
+            }
+            qfWPFmain.Login登陆.Event_登陆成功 -= On_Login登录成功;
+        }
+
+        void 结束自身进程()
+        {
+            Process current = Process.GetCurrentProcess();
+            Current.Shutdown();
+        }
+
+        void On_Login登录成功()
+        {
+            new MainWindow().Show();
+        }
+
+    }
+}

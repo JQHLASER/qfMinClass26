@@ -1,0 +1,128 @@
+﻿<Window x:Class="qfWPFmain.Win_UserLogin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:qfWPFmain"
+        mc:Ignorable="d"
+        Height="450" Width="600" WindowStyle="None" ResizeMode="NoResize"   Closing="Window_Closing" PreviewKeyDown="Window_PreviewKeyDown">
+
+    <Window.Resources>
+        <ControlTemplate x:Key="标签" TargetType="Label">
+            <Label  
+                   Width="90" Height="30" Foreground="Gray"
+                   VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+                   HorizontalAlignment="Stretch" HorizontalContentAlignment="Right"
+                   FontSize="14" FontFamily="微软雅黑" FontWeight="Black"
+                   Content="{TemplateBinding Content}"                   
+             >
+            </Label>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="按钮" TargetType="local:ui_ButtonBorder">
+            <local:ui_ButtonBorder  
+                Width="130" Height="45" FontSize="15" FontFamily="微软雅黑"
+                ui_Text="{TemplateBinding ui_Text}"
+                ui_Background="{TemplateBinding ui_Background }"
+                ui_Foreground="{TemplateBinding ui_Foreground}"/>
+        </ControlTemplate>
+
+        <SolidColorBrush x:Key="_边框颜色" Color="Silver"/>
+    </Window.Resources>
+
+
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <!--#region 标题栏-->
+        <local:ui_window_Title2 x:Name="_标题栏"  Grid.Row="0" ui_IsCloseButton="True" ui_IsMaxButton="False"               
+                                   ui_IsMinButton="False" 
+                                   ui_Text="{Binding  Language_语言.标题}"
+                                   BorderBrush ="{StaticResource _边框颜色}" BorderThickness="0,0,0,1.5"
+            ></local:ui_window_Title2>
+
+        <!--#endregion-->
+
+        <!--#region 输入密码栏-->
+        <Border Grid.Row="1" Background="#FFEDECEC" CornerRadius="20" BorderThickness="0,0,3,3" BorderBrush="Silver"
+            Width="430" Height="250">
+
+
+            <ScrollViewer   VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel>
+
+                    <StackPanel x:Name="登陆图标"   Orientation="Horizontal" HorizontalAlignment="Center"
+                                Margin="0,20,0,20">
+                        <Image Source="/qfWPFmain;component/UserControls/用户登陆/images/登陆用户.png" Stretch="Uniform"
+                           Width=" 50" Height=" 50" />
+                    </StackPanel>
+
+                    <StackPanel x:Name="用户名"   Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label x:Name="_Label_UserName"   Template="{StaticResource 标签}" Content="UserName"/>
+                        <local:ui_TextBox x:Name="_TextBox_userName" Width="200" Height="30"  Margin="2,0,0,0"  FontSize="15"
+                                              FontFamily="微软雅黑" ui_CornerRadius="0" 
+                                          ui_HorizontalAlignment="Stretch" ui_HorizontalContentAlignment="Left" 
+                                          ui_TextAlignment="Left" />
+                        <ComboBox x:Name="_Combobox_UserName" Width=" 200" Height="30" Margin="2,0,0,0"  FontSize="15" 
+                                      FontFamily="微软雅黑"  
+                                      ItemsSource="{Binding Items_LoginInfo}" DisplayMemberPath="UserName" DropDownClosed="_Combobox_UserName_DropDownClosed"   
+                                       HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" 
+                                        VerticalAlignment="Stretch" VerticalContentAlignment="Center" 
+                                      />
+                    </StackPanel>
+
+                    <StackPanel  x:Name="密码输入" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+                        <Label x:Name="_Label_PasswordBox"  Template="{StaticResource 标签}" Content="Password"/>
+                        <local:ui_PasswordBox x:Name="_PasswordBox" Width=" 200" Height="30" Margin="2,0,0,0" 
+                                              ui_CornerRadius="0" ui_HorizontalAlignment ="Stretch" 
+                                              ui_HorizontalContentAlignment="Left" 
+                                              />
+                    </StackPanel>
+
+                    <StackPanel x:Name="按钮" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+                        <local:ui_ButtonBorder x:Name="_Login" Template="{StaticResource 按钮}"
+                                               ui_Text="{Binding  Language_语言.登陆}" ui_Background="Green"  ui_Foreground="White" 
+                                               PreviewMouseLeftButtonUp="_Login_PreviewMouseLeftButtonUp"/>
+                        <Border Width="60"></Border>
+                        <local:ui_ButtonBorder x:Name="_Close" Template="{StaticResource 按钮}"
+                                               ui_Text="{Binding  Language_语言.关闭}"  ui_Background="#FFCC0101" ui_Foreground="White"
+                                               PreviewMouseLeftButtonUp="_Close_PreviewMouseLeftButtonUp"/>
+
+
+                    </StackPanel>
+
+
+                </StackPanel>
+            </ScrollViewer>
+
+
+        </Border>
+
+        <!--#endregion-->
+
+
+        <!--#region 进度条-->
+        <ProgressBar Grid.Row="2" x:Name="_进度条" Background="Transparent" Value="{Binding Value进度条}" Minimum="0" Maximum="100"
+                     ></ProgressBar>
+        <!--#endregion-->
+
+        <!--#region 状态栏-->
+        <Label x:Name="_状态栏"  Grid.Row="2"   Height="auto" Content="{Binding  DateTimeNow}" Padding="0"
+                    BorderBrush="{StaticResource _边框颜色}" BorderThickness="0,1.5,0,0"
+                    FontSize="16" FontFamily="微软雅黑"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"  Background="#FFF1F1F1" Foreground="Gray" 
+                    VerticalAlignment="Stretch" VerticalContentAlignment="Center" 
+                    />
+        <!--#endregion-->
+
+    </Grid>
+
+
+
+</Window>

@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="qfWPFmain.ui_Combobox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:qfWPFmain"
+             mc:Ignorable="d" 
+             Background="White" Width="100">
+
+    <ComboBox x:Name="_ComBobox" FontSize="14" FontFamily="微软雅黑" 
+              VerticalAlignment="Stretch"  VerticalContentAlignment="Center" 
+              HorizontalAlignment="Stretch" SelectionChanged="_ComBobox_SelectionChanged"
+              
+              
+              />
+
+
+
+
+
+</UserControl>

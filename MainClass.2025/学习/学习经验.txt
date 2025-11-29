@@ -1,0 +1,104 @@
+﻿程序默认以管理员方式运行
+    1> 在vs的解决方案资源管理器点击项目，右击添加，新建项，选择 应用程序清单文件(仅限Windows) 列表。
+    2> 将 <requestedExecutionLevel  level="asInvoker" uiAccess="false" />改为:
+            <!-- 以管理员方式运行 -->
+       <requestedExecutionLevel level="requireAdministrator" uiAccess="false" />
+
+
+
+获取结构体元素的名称
+typeof (ma).GetProperty ("ua").Name 
+
+
+查询结构体
+ _windowInfo_[] m = windowInfo.Where(p => p.状态 == state).ToArray();
+
+
+ 枚举判断是否正确,超出定义值
+    if (!Enum.IsDefined(typeof(_打码类型_), 1))
+   {
+   }
+
+
+
+事件  
+    触发产生事件
+	   public event EventHandler Cleared;  //申明事件     
+        public void Clear()
+        {
+            //这里处理事件的
+            edit.Clear();         
+            Cleared?.Invoke(this, EventArgs.Empty);//触发产生事件
+        }
+                
+    调用事件
+
+        this.uiComboBox1.Cleared += (s, e) =>
+        {
+            // MessageBox.Show("自定义清空事件被触发");
+            On_Clear();
+        };
+
+        //事件触发时处理
+        void On_Clear()
+        {
+            this.Item = new string[0];
+            this.uiComboBox1.DataSource = new string[0];
+        
+            this.uiComboBox1.Invalidate();
+        }
+
+
+鼠标....鼠标按下或抬起事件
+     this.uiSymbolButton_正向.Capture = true;//捕获鼠标
+     this.uiSymbolButton_正向.Capture = false;//释放鼠标 
+
+Invoke---判断是否需要使用invoke方法
+     if (this.InvokeRequired)
+     {
+          this.BeginInvoke(new Action(() =>
+          {
+              foreach (var s in listInfo)
+              {
+                  显示日志(s);
+              }
+          }));
+       }
+
+ 
+控件暂停刷新/恢复刷新....应用在数据量在,控件频繁更新时
+   this.Control.SuspendLayout(); // 暂停界面刷新           
+          控件处理....
+    this.Control.ResumeLayout(); // 恢复界面刷新 
+
+
+双缓冲显示窗体所有子控件
+        protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }//双缓冲显示窗体所有子控件
+
+
+txt保存,生产者线程写入,消费者线程保存
+    using (var writer = new StreamWriter("largefile.txt", false, Encoding.UTF8, 65536))
+    {
+        var queue = new BlockingCollection<string>();
+        // 生产者线程生成数据
+        Task.Run(() =>
+        {
+            foreach (var item in data)
+                queue.Add(item);
+            queue.CompleteAdding();
+        });
+        // 消费者线程写入文件
+        foreach (var line in queue.GetConsumingEnumerable())
+            writer.WriteLine(line);
+    }
+
+
+txt保存,二进制写入
+    using (var stream = new FileStream("largefile.txt", FileMode.Create, FileAccess.Write, FileShare.None, 65536))
+    {
+        foreach (var line in data)
+        {
+            var bytes = Encoding.UTF8.GetBytes(line + Environment.NewLine);
+            stream.Write(bytes, 0, bytes.Length);
+        }
+    }

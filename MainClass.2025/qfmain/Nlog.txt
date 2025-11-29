@@ -1,0 +1,53 @@
+private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
+//下面是使用
+
+   // 1. 创建配置对象
+            var config = new LoggingConfiguration();
+
+            // 2. 配置控制台输出目标
+            //var consoleTarget = new ColoredConsoleTarget("consoleTarget")
+            //{
+            //    Layout = @"${date:format=HH\:mm\:ss} [${level}] ${message} ${exception}"
+            //};
+            // config.AddTarget(consoleTarget);
+
+            // 3. 配置文件输出目标
+            var fileTarget = new FileTarget("fileTarget")
+            {
+                FileName = "${basedir}/logs/${shortdate}.log",               
+                Layout = @"${date:format=yyyy-MM-dd HH\:mm\:ss.fff} [${level:uppercase=true}] ${logger} - ${message} ${exception:format=tostring}",
+                ArchiveFileName = "${basedir}/logs/archive/{#}.log",
+                ArchiveEvery = FileArchivePeriod.Day,
+
+                MaxArchiveFiles = 7
+            };
+            config.AddTarget(fileTarget);
+
+            // 4. 设置日志规则（哪些级别日志输出到哪些目标）
+           // config.AddRule(LogLevel.Trace, LogLevel.Fatal, consoleTarget);
+            config.AddRule(LogLevel.Info, LogLevel.Fatal, fileTarget);
+
+            // 5. 应用配置
+            LogManager.Configuration = config;
+
+            // 6. 使用日志
+            var logger = LogManager.GetCurrentClassLogger();
+            logger.Trace("这是一条Trace级别的日志");
+            logger.Debug("这是一条Debug级别的日志");
+                logger.Info("这是一条Info级别的日志");
+                logger.Warn("这是一条Warn级别的日志");
+                logger.Error("这是一条Error级别的日志");
+                logger.Fatal("这是一条Fatal级别的日志");
+
+            try
+            {
+                throw new InvalidOperationException("发生了一个异常");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "捕获到异常");
+            }
+
+            // 确保所有日志都被写入
+            LogManager.Shutdown();

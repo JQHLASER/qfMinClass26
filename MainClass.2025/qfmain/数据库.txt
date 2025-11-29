@@ -1,0 +1,86 @@
+
+新建表
+
+SQLserver风格
+CREATE TABLE MarkMes
+(
+       barcode             [varchar](255) PRIMARY KEY, //主键     
+       id                  [bigint] IDENTITY(1, 1)  PRIMARY KEY  //自增长主键 （从1开始，每次+1）
+       laserType           [int]  NULL,
+       data1               [varchar](255) NULL,
+       PRIMARY KEY (Barcode, OrderNum)  -- 多个字段组合为主键
+       modifyCount INT DEFAULT 0  -- 计数器字段，默认值0（表示初始未修改,触发一次+1）
+);
+
+MySql风格
+CREATE TABLE MarkMes
+(
+       barcode             [varchar](255) PRIMARY KEY, //主键  
+       id                  bigint PRIMARY KEY AUTO_INCREMENT //自增长主键（默认从1开始，每次+1）
+       laserType           int  NULL,
+       data1               [varchar](255) NULL,
+       PRIMARY KEY (barcode, orderNum)  -- 多个字段组合为主键
+);
+
+SQLite风格
+CREATE TABLE MarkToMes (
+    id                  INTEGER PRIMARY KEY AUTOINCREMENT,  -- SQLite中自增主键用INTEGER + AUTOINCREMENT
+    datetimeMark        TEXT(30) NULL,  -- SQLite的TEXT类型不需要指定长度（指定也无效）
+    lasertemplate       TEXT(255) NULL,
+    barcode             TEXT(255) NULL,
+    line                TEXT(255) NULL,
+    laserType           INTEGER NULL,  -- SQLite中int对应INTEGER类型
+    orderNum            TEXT(255) NULL,
+    markCount           INTEGER DEFAULT 0,  -- 去掉多余的INT
+    ToMesState          INTEGER NOT NULL,  -- 确保非空约束正确
+    datetimeMes         TEXT(30) NULL,  -- 最后一列不能有逗号
+    markinfo            TEXT NULL  -- 不指定Text长度
+
+);
+
+
+
+
+
+    /// <summary>
+    /// 替换为需要的表名
+   /// </summary>
+    public  class 表
+    {
+        /// <summary>
+        /// IsPrimaryKey : 是否为主键,
+        /// <para> IsIdentity : 是否为自增长</para>
+        /// </summary>
+        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
+        public int id { set; get; }
+
+        /// <summary>
+        /// 品号
+        /// </summary>     
+        public string MB001 { set; get; } = "";       
+    }
+
+
+
+//触发器
+CREATE TRIGGER trg_update_markCount -- trg_update_markCount : 触发器名称
+ON MarkToMes
+AFTER UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON; -- 禁止返回触发器执行的影响行数
+
+    -- 仅当 username 或 email 实际发生值变化时，才更新计数器
+    IF EXISTS (
+        SELECT 1
+        FROM inserted i   --//i固定值
+        INNER JOIN deleted d ON i.id = d.id -- 关联更新前后的记录  ,id为主键
+        WHERE i.datetimeMark <> d.datetimeMark          --//datetimeMark : 要修改的列名,,当值变化时markCount+1,有多个条件时 用 or
+    )
+    BEGIN
+        UPDATE u        --//u固定值
+        SET markCount = u.markCount + 1                   --//列markCount的值+1,
+        FROM MarkToMes u
+        INNER JOIN inserted i ON u.id = i.id; -- 更新被修改的记录   ,id为主键
+    END
+END;

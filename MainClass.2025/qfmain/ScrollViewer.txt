@@ -1,0 +1,11 @@
+ 
+ <ScrollViewer   VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel>
+
+                    <StackPanel x:Name="登陆图标"   Orientation="Horizontal" HorizontalAlignment="Center"
+                                Margin="0,20,0,20">
+                        <Image Source="/qfWPFmain;component/UserControls/用户登陆/images/登陆用户.png" Stretch="Uniform"
+                           Width=" 50" Height=" 50" />
+                    </StackPanel>
+
+ </ScrollViewer>

@@ -1,0 +1,68 @@
+
+//关闭程序....在Closing事件中添加以下代码
+	   if ( DialogResult != true)
+       {
+           App.Current.Shutdown();
+       }
+
+
+ Window_Closing(this, new System.ComponentModel.CancelEventArgs());
+
+
+不显示在任务栏中
+ShowInTaskbar="False"
+
+窗体启动时显示的位置
+WindowStartupLocation="CenterScreen"
+Manual：默认值，需要手动设置Left和Top属性
+CenterScreen：在屏幕中央显示
+CenterOwner：相对于所有者窗体居中（适用于子窗口）
+
+
+InputMethod.IsInputMethodEnabled="False" //输入法是否启用
+
+
+自定义依赖属性
+
+ // 依赖属性的标识符....必须要申明后才能被Binding绑定
+ public static readonly DependencyProperty ui_TextIntProperty =
+     DependencyProperty.Register(
+         "ui_TextInt",  // 属性名称
+         typeof(int),   // 属性类型
+         typeof(ui_TextBox),  // 拥有者类型
+         new PropertyMetadata(0)// 默认值
+         );
+
+   private string TextUi_ = "TextBox";
+        /// <summary>
+        /// 显示文本
+        /// </summary>
+        [Description("显示文本")]
+        public string ui_Text
+        {
+            get
+            {
+                return (string)GetValue (ui_TextProperty);
+            }
+            set
+            {
+                TextUi_ = value;
+                SetValue(ui_TextProperty, value);
+            }
+        }
+
+
+
+
+
+若自定义控件的构造函数或 XAML 中设置了DataContext = this，会导致外部的DataContext无法继承，必须显式指定Source：
+例  ui_Text ="{Binding DataContext.text, RelativeSource={RelativeSource AncestorType=Window}  }"  //绑定自身
+
+<!-- 场景1：源是某个命名控件 -->
+<local:MyCustomControl MyValue="{Binding Text, Source={x:Reference Name=MyTextBox}}" />
+<!-- 场景2：源是静态资源 -->
+<local:MyCustomControl MyValue="{Binding Age, Source={StaticResource UserData}}" />
+<!-- 场景3：源是父元素的DataContext -->
+<local:MyCustomControl MyValue="{Binding DataContext.ViewModelProperty, RelativeSource={RelativeSource AncestorType=Window}}" />
+
+你的自定义控件需要显式Source的可能原因

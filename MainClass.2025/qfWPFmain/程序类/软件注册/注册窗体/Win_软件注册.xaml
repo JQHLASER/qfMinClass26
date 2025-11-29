@@ -1,0 +1,101 @@
+﻿<Window x:Class="qfWPFmain.Win_软件注册"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:qfWPFmain"
+        mc:Ignorable="d"
+        Title="" Height="480" Width="650" WindowStyle="None" ResizeMode="NoResize"
+         BorderBrush="Silver"  BorderThickness="1" Closing="Window_Closing" KeyDown="Window_KeyDown" Loaded="Window_Loaded">
+ 
+
+
+
+    <Grid>
+        <Grid.RowDefinitions >
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+
+        <!--标题栏-->
+        <local:ui_window_Title Grid.Row="0" BorderBrush="Silver" BorderThickness="0,0,0,2"
+                               x:Name="_标题栏" ui_IsMaxButton="False" ui_IsMinButton="False"
+                               ui_Text=""/>
+
+
+        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center"  
+                    Margin="20,0,20,0">
+
+            <!--机器码-->
+            <StackPanel Orientation="Vertical"             
+              VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+                <local:ui_Label2  ui_Content="机器码" x:Name="_Label_机器码" ui_HorizontalContentAlignment="Left"
+                        Margin="0,5"/>
+                <local:ui_TextBox   ui_IsReadOnly="True"  ui_BackGround="WhiteSmoke" Height=" 30"
+                          ui_Text="{Binding Code_机器码 ,Mode=OneWay}"                      
+                          />
+            </StackPanel>
+
+            <!--注册码-->
+            <StackPanel Orientation="Vertical"     Margin="0,5,0,0"                   
+       VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+       >
+
+                <local:ui_Label2  ui_Content="注册码" x:Name="_Label_注册码" ui_HorizontalContentAlignment="Left" 
+                        Margin="0,5"/>
+                <local:ui_TextBox   ui_AcceptsReturn是否换行 ="True"  ui_TextWrapping="Wrap"  
+                          ui_Text="{Binding Code_注册码,Mode=TwoWay }" Height=" 60"
+                           />
+            </StackPanel>
+
+            <!--二维码-->
+            <StackPanel Orientation="Vertical"  
+              VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+
+                <Image Width="80" Height=" 80"  x:Name="_image_机器码二维码" 
+             Source="{Binding QRcode_二维码}"  Margin="15"
+             HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"    
+             />
+            </StackPanel>
+
+            <!-- 试用-->
+            <StackPanel Orientation="Horizontal"   
+          VerticalAlignment="Center"  HorizontalAlignment="Stretch"   >
+
+                <local:ui_CheckBox  x:Name="_CheckBox_试用"  Visibility="{Binding Vis_试用}"  ui_IsChecked="{Binding Is试用,Mode=TwoWay }" Content="{Binding Language_语言.试用}"
+                           PreviewMouseLeftButtonUp="CheckBox_试用_PreviewMouseLeftButtonUp"
+                           Margin=" 50,2,0,0"  ui_Content="试用"/>
+            </StackPanel>
+
+            <!--状态栏-->
+            <StackPanel Orientation="Vertical"  Margin="0,20,0,0"
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+
+                <local:ui_Label2  ui_Content ="{Binding Label_状态栏}"
+             HorizontalContentAlignment="Center" />
+
+            </StackPanel>
+
+ 
+
+        </StackPanel>
+
+
+
+
+
+        <!--按钮栏-->
+        <Border  Grid.Row="2" BorderBrush="Silver"    BorderThickness="0,2,0,0"  
+                 HorizontalAlignment="Stretch" VerticalAlignment="Center"  >
+
+            <local:ui_ButtonBorder  Grid.Column="1" x:Name="_button_注册" ui_Text="{Binding Language_语言.注册}" 
+                                        PreviewMouseLeftButtonDown="_button_注册_PreviewMouseLeftButtonDown"
+                                        Width="200" Height=" 40" 
+                                        Margin="0,10,0,0"/>
+
+        </Border>
+
+    </Grid>
+
+</Window>

@@ -1,0 +1,9 @@
+
+
+// 用于同步的锁对象
+    private readonly object _lock = new object();
+
+     lock (_lock)
+     {
+            //赋值
+     }

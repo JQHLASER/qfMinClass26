@@ -1,0 +1,43 @@
+
+                            <!-- 基本DataGrid -->
+                            <DataGrid x:Name="_MyDataGrid"  ItemsSource="{Binding People}" Background="White"
+                                Margin="10"
+                                 AutoGenerateColumns="False"  <!-- 禁用自动生成列 -->
+                                CanUserAddRows="False"        <!-- 允许用户添加新行 -->                      
+                                CanUserDeleteRows="False"     <!-- 允许用户删除行 -->                            
+                                CanUserSortColumns="False"    <!-- 允许列排序 -->                            
+                                GridLinesVisibility="All"     <!-- 显示所有网格线 -->
+                                VerticalGridLinesBrush="Silver"  <!-- Y方向网格线颜色 -->
+                                HorizontalGridLinesBrush="Silver" <!-- X方向网格线颜色 -->
+                                      IsReadOnly="True"         <!-- 只读 -->
+                                >
+                             
+
+                               
+
+                                <!-- 定义列 -->
+                                <DataGrid.Columns>
+                                    <!-- 文本列 -->
+                                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+
+                                    <!-- 文本列（可编辑） -->
+                                    <DataGridTextColumn Header="姓名" Binding="{Binding Name}" Width="100"/>
+
+                                    <!-- 数值列 -->
+                                    <DataGridTextColumn Header="年龄" Binding="{Binding Age}" Width="60"/>
+
+                                    <!-- 复选框列 -->
+                                    <DataGridCheckBoxColumn Header="是否激活" Binding="{Binding IsActive}" Width="100"/>
+
+                                    <!-- 下拉列表列 -->
+                                    <!--<DataGridComboBoxColumn Header="部门" Width="120">
+                                        <DataGridComboBoxColumn.ItemsSource>
+                                            <col:ArrayList>
+                                                <sys:String>技术部</sys:String>
+                                                <sys:String>市场部</sys:String>
+                                                <sys:String>财务部</sys:String>
+                                            </col:ArrayList>
+                                        </DataGridComboBoxColumn.ItemsSource>
+                                    </DataGridComboBoxColumn>-->
+                                </DataGrid.Columns>
+                            </DataGrid>

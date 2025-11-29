@@ -1,0 +1,125 @@
+
+http ... 服务.net8
+
+   新建项目-->ASP.NET Core Web API
+   添加 --> API控制器空,如下案例
+	[Route("qifeng")] //接口地址
+	[HttpGet("mark/{name}")] //url地址,Get方式
+	
+	//POST方式，json格式
+ 	[HttpPost("Test")]
+ 	public string Test([FromBody] mt st) //[FromBody]也可以不用
+ 	{
+    	 Console.Write($"Test-{st}\r\n");
+     	return $"Test-{st.st}";
+ 	}
+
+	//GET方式，普通传参
+	  [HttpGet("helloWold")]
+        public string  HelloWold()
+        {
+            return "HelloWorld";
+        }
+	
+	//GET方式，以独立传参	
+        [HttpGet("TestA")]
+        public string TestA([FromBody] mt st)
+        {
+            Console.Write($"Test-{st}\r\n");
+            return $"Test-{st.st}";
+        }
+
+
+http ... 调用.net8
+    /*思路:
+         *      1>通过事件方式来实现.net8与.net4.8之间的交互
+         *      2>需要自己写URL参数的调用
+         * 
+         * 
+         */
+
+	详见案例
+	在.net4.8中构建事件,
+	在.net8中触发事件,并与webservice交互,
+
+
+        //代码
+
+        /// <summary>
+        /// mes调用参数
+        /// </summary>
+        public class info_mes_
+        {
+            public string url { set; get; } = "https://localhost:44325/WebService1.asmx";
+        }
+
+        class Config
+        {
+            internal static info_mes_ 参数 { set; get; } = new info_mes_();
+        }
+
+
+        internal static void 读参数()
+        {
+            ushort model = 1;
+            string path = Environment.CurrentDirectory + "\\mescfg.txt";
+            if (!new mainclassqf.文件_文件夹().文件是否存在(path))
+            {
+                model = 0;
+            }
+            if (model == 0)
+            {
+                string vxt = JsonConvert.SerializeObject(Config.参数);
+                new mainclassqf.文本().写文本(path, vxt, true, Encoding.Default, out string msgErr);
+            }
+            new mainclassqf.文本().读取文件(path, Encoding.Default, out string rxt, out string msgErr1);
+            Config.参数 = JsonConvert.DeserializeObject<info_mes_>(rxt);
+        }
+
+        internal static void 初始化()
+        {
+            读参数();
+            myappdll.mes.Action_HelloWorld += On_HelloWorld;
+        }
+	
+	    //触发事件
+        static myappdll.mes.Info_mes_result_ On_HelloWorld()
+        {
+            myappdll.mes.Info_mes_result_ rt = new myappdll.mes.Info_mes_result_();
+            try
+            {
+                //申明一个参数
+                web_.WebService1SoapClient.EndpointConfiguration a = new web_.WebService1SoapClient.EndpointConfiguration();
+                //实例化
+                var m = new web_.WebService1SoapClient(a);
+                //设置url
+                m.Endpoint.Address = new System.ServiceModel.EndpointAddress(Config.参数.url);
+                //调用HelloWorld方法
+                rt.msg = m.HelloWorld();
+                rt.status = true;
+            }
+            catch (Exception ex)
+            {
+                rt.status = false;
+                rt.msg = ex.ToString();
+            }
+            // string xt = new web_.WebService1SoapClient(a).HelloWorld();
+            return rt;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

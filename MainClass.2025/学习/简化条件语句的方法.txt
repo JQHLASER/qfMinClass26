@@ -1,0 +1,159 @@
+﻿
+使用空合并运算符 ?? 提供默认值
+	string name=null;
+	string displayname = name ?? "Guest";
+	consol.WriteLine(displayname);
+
+************************************************************************************************************************
+
+使用空条件运算符 ?. 避免空引用异常
+	int? length = name ?. length;
+	consol.WriteLine(length ?? 0);
+
+************************************************************************************************************************
+
+
+字典映射
+将条件逻辑映射到字典中，用键值对代替 switch 或 if-else。
+优点：代码更简洁，易于扩展新的操作。
+	
+	public string GetDayOfWeek(int dayNumber)
+{
+    var days = new Dictionary<int, string>
+    {
+        { 1, "星期一" },
+        { 2, "星期二" },
+        { 3, "星期三" },
+        { 4, "星期四" },
+        { 5, "星期五" },
+        { 6, "星期六" },
+        { 7, "星期日" }
+    };
+
+    return days.TryGetValue(dayNumber, out var day) ? day : "无效的天数";
+}
+	
+************************************************************************************************************************
+
+提前返回
+通过尽早返回结果来减少嵌套的条件判断。优点：逻辑分层清晰，减少深层嵌套。
+		public void ProcessOrder(Order order)
+		{
+		    if (order == null) return;
+		    if (order.Items.Count <= 0) return;
+		
+		    // 处理订单逻辑
+		}
+
+************************************************************************************************************************
+ 
+LinQ
+用 LINQ 代替 foreach 和 if 的组合，简化集合过滤和操作。优点：代码更简洁，可读性更高。
+
+		ar numbers = new List<int> { 1, 2, 3, 4, 5, 6 };
+		
+		// 使用 LINQ 过滤偶数
+		var evenNumbers = numbers.Where(n => n % 2 == 0).ToList();
+		
+		Console.WriteLine(string.Join(", ", evenNumbers)); // 输出: 2, 4, 6
+
+************************************************************************************************************************
+
+
+ 委托 / Lambda 表达式	 
+ 将条件逻辑封装到委托或 Lambda 表达式中，减少重复代码。优点：逻辑复用，代码更灵活。
+		 // 定义一个委托
+		Func<int, bool> isEven = x => x % 2 == 0;
+		
+		// 使用委托代替条件语句
+		Console.WriteLine(isEven(4) ? "Even" : "Odd"); // 输出: Even
+		Console.WriteLine(isEven(3) ? "Even" : "Odd"); // 输出: Odd
+
+************************************************************************************************************************
+ 
+策略模式
+将不同的行为封装到独立的策略类中，避免条件语句。优点：避免条件语句，易于扩展新的策略。
+
+		// 策略接口
+		public interface IDiscountStrategy
+		{
+		    double CalculateDiscount(double amount);
+		}
+		
+		// 几个策略实现
+		public class NoDiscount : IDiscountStrategy
+		{
+		    public double CalculateDiscount(double amount) => 0;
+		}
+		
+		public class FivePercentDiscount : IDiscountStrategy
+		{
+		    public double CalculateDiscount(double amount) => amount * 0.05;
+		}
+		
+		public class TenPercentDiscount : IDiscountStrategy
+		{
+		    public double CalculateDiscount(double amount) => amount * 0.10;
+		}
+		
+		// 上下文
+		public class DiscountContext
+		{
+		    private IDiscountStrategy _strategy;
+		
+		    public DiscountContext(IDiscountStrategy strategy)
+		    {
+		        _strategy = strategy;
+		    }
+		
+		    public double GetDiscount(double amount)
+		    {
+		        return _strategy.CalculateDiscount(amount);
+		    }
+		}
+		
+		// 使用示例
+		var context = new DiscountContext(new TenPercentDiscount());
+		var discount = context.GetDiscount(150); // 15
+		
+		
+************************************************************************************************************************
+
+		
+	使用多态	
+	通过多态，将条件逻辑分散到不同的类中，从而减少 if 或 switch 语句。优点：避免了 if 或 switch 语句，代码更易扩展。
+				// 定义一个抽象基类
+				abstract class Animal
+				{
+				    public abstract void MakeSound();
+				}
+				
+				// 派生类实现具体行为
+				class Dog : Animal
+				{
+				    public override void MakeSound()
+				    {
+				        Console.WriteLine("Woof!");
+				    }
+				}
+				
+				class Cat : Animal
+				{
+				    public override void MakeSound()
+				    {
+				        Console.WriteLine("Meow!");
+				    }
+				}
+				
+				// 使用多态代替条件语句
+				Animal myAnimal = new Dog();
+				myAnimal.MakeSound(); // 输出: Woof!
+				
+				myAnimal = new Cat();
+				myAnimal.MakeSound(); // 输出: Meow!
+				
+
+
+
+
+

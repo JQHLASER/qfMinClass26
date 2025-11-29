@@ -1,0 +1,141 @@
+NuGet包下载 CommunityToolkit.Mvvm
+
+ 
+调用方法 例 ViewModel
+	 //批注了之后，源生成器  会将 ViewModel 自动实现 INotifyPropertyChanged
+      public partial class MainWindowModels : ObservableObject
+
+       /// <summary>
+        /// 数据源, //ObservableCollection 可以通知界面更新的
+        /// </summary>
+        [ObservableProperty]
+        private ObservableCollection<info_log_> logItems = new ObservableCollection<info_log_>();
+
+        其中一行修改后//
+        MainWindow.control_客户列表.DataContext_.Item客户列表.Remove(旧对象);//删除旧对象
+        MainWindow.control_客户列表.DataContext_.ItemlogItems.Insert(索引, 新对象);//添加新对象在原来的索引位置
+
+
+
+
+
+按钮事件
+        //命令属性，对应界面上的  按钮登录事件
+        //源生成器，会自动生成   (方法名)Login + Command 的命令类型,实现ICommand
+        [RelayCommand]
+        internal void Update(object parameter)
+        {
+            // Dat s = parameter as Dat;
+            Name = "中国";
+            Age = 10000;
+            Console.Write(Name);
+        }
+         Command="{Binding UpdateCommand}" //绑定触发方法
+                <!--CommandParameter="{  Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window} } }"--> //可有可无
+                />
+        <!--CommandParameter="{  Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window} } }"-->
+
+
+
+
+
+
+
+
+
+/**********************************************************/
+    [ObservableObject]
+
+    internal partial class dataviewModel:ObservableObject
+    {
+        datCz datcz_sis = new datCz();
+
+
+        public dataviewModel()
+        {
+
+        }
+
+
+        //对应界面上的  ListView显示的数据
+        //ObservableCollection 可以通知界面更新的
+        //源生成器自动将首字母大写生成属性
+        [ObservableProperty]
+        private string name = "鬼子";
+
+        //对应界面上的  ListView显示的数据
+        //ObservableCollection 可以通知界面更新的
+        //源生成器自动将首字母大写生成属性
+        [ObservableProperty]
+        private int age = 0;
+
+
+
+
+
+    }
+
+Xaml中数据绑定
+         <Grid SnapsToDevicePixels="True"   >
+
+        <Button x:Name="button" Content="Button" Height="36" Margin="739,538,16,12" Width="45" Click="button_Click_1"   
+               Command="{Binding UpdateCommand}" //绑定触发方法
+                <!--CommandParameter="{  Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window} } }"--> //可有可无
+                />
+        <!--CommandParameter="{  Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window} } }"-->
+
+        <TextBox x:Name="textBox" Margin="11,8,689,538"  TextWrapping="Wrap"
+                 Text="{Binding Dats.Name,UpdateSourceTrigger=PropertyChanged}"
+                 Width="100" Height="40" RenderTransformOrigin="0.237,-0.111"  
+                 />
+        <TextBox x:Name="textBox1" Margin="12,58,688,488" TextWrapping="Wrap" 
+                 Text="{Binding Dats.Age,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" //绑定数据
+                 Width="100" Height="40"
+                 />
+    </Grid>
+
+通过代码创建绑定
+         // 创建绑定
+             Binding binding = new Binding("WindowInfo");//OK
+            // 应用绑定
+            this.SetBinding(ui_WindowInfoProperty, binding);
+
+
+ViewModel
+
+        /// <summary>
+        /// 数据源, //ObservableCollection 可以通知界面更新的
+        /// </summary>
+        [ObservableProperty]
+        private ObservableCollection<info_log_> logItems = new ObservableCollection<info_log_>();
+
+         
+viewModel
+     public partial class MainWindowModels : ObservableObject
+    {
+        private int num = 0;
+       // private Thread thread;
+        [ObservableProperty]
+        private string manualInput = "111";
+
+        [RelayCommand]
+        private async void buttonclick() 
+        {
+            //thread = new Thread(threadrun);
+            //thread.IsBackground = false;
+            //thread.Start();
+            //ManualInput = "23131";
+        }
+
+        public  void threadrun() 
+        {
+            while (true) 
+            {
+                num++;
+                ManualInput = num.ToString();
+                Thread.Sleep(1000);
+            }
+        }
+    }
+
+

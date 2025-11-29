@@ -1,0 +1,269 @@
+ 
+   <ListView Grid.Row="1" x:Name="_listView" ItemsSource="{Binding Item_表}"
+                  FontSize="13" BorderThickness="1,0,1,0" BorderBrush="LightGray"  Margin="5" 
+                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"//不使能水平滚动条
+                   ScrollViewer.VerticalScrollBarVisibility="Auto" >
+
+
+
+
+
+                   
+            <!--<ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <GridViewRowPresenter>
+                                    -->
+            <!--为所有单元格文本设置不换行 且光标不在选中-->
+            <!--
+                                    <GridViewRowPresenter.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{Binding TextColor}"/>
+                                            <Setter Property="TextWrapping" Value="NoWrap"/>
+                                            <Setter Property="Margin" Value="20,20,20,20"/>
+                                        </Style>
+                                    </GridViewRowPresenter.Resources>
+                                </GridViewRowPresenter>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>-->
+
+
+
+
+
+
+
+
+
+ 
+            <!-- 定义行样式 -->
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <!-- 绑定文本颜色 -->
+                    <Setter Property="Foreground" Value="Black"   />
+                    <!--<Setter Property="FontSize" Value=" 15"/>-->
+                    <!-- 绑定字体粗细 -->
+                    <!--<Setter Property="FontWeight" Value="{Binding IsBold, Converter={StaticResource BoolToBoldConverter}}"/>-->
+                    <!-- 定义行高 -->
+                    <Setter Property="Height" Value="40"   />
+
+                    <!-- 定义列表项的样式，添加网格线 -->
+                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    <Setter Property="BorderBrush" Value="LightGray"     />
+                    <Setter Property="Padding" Value="10,0,10,0"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+
+                </Style>
+
+            </ListView.ItemContainerStyle>
+
+            <!-- 定义列样式 -->
+            <ListView.View >
+
+                <GridView >
+
+                    <!-- 定义列标题样式 -->
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style TargetType="GridViewColumnHeader">
+                            <!-- 将标题容器的可见性设为Collapsed 不显示列标题-->
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Setter Property="Height" Value="40"/>
+                            <Setter Property="Background" Value="Gray"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Padding"  Value="0"/>
+                            <Setter Property="BorderBrush" Value="Gray" />
+                            <Setter Property="BorderThickness"  Value="2" />
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
+
+
+                    <GridViewColumn  x:Name="_客户名称" Header="客户名称" Width="300" DisplayMemberBinding="{Binding 公司名称}" />
+                    <GridViewColumn  x:Name="_客户ID" Header="客户ID" Width="120"  DisplayMemberBinding="{Binding 识别代码}"/>
+                    <GridViewColumn  x:Name="_帐号" Header="帐号" Width="150"  DisplayMemberBinding="{Binding 帐号}"/>
+                    <GridViewColumn  x:Name="_备注" Header="备注" Width="500" DisplayMemberBinding="{Binding 备注}"/>
+
+                      <GridViewColumn  Header="Vr"  CellTemplate="{StaticResource myDT1 }" /> //使用DataTemplate模板
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
+         
+
+
+
+        </ListView>
+
+
+public ObservableCollection<ListItem> Items { get; set; } //绑定数据
+代码
+       public class value_
+        {
+            public string name { set; get; }
+            public string age { set; get; }
+            public Brush TextColor { set; get; } = Brushes.Green;
+
+        }
+
+          for (int i = 0; i < 100; i++)
+            {
+                value_ info = new value_();
+                info.name = $"{DateTime.Now.ToString(" HH:mm:ss.fff")} - {i}";
+                info.age = "abcde";
+                if (i == 0)
+                {
+                    info.TextColor = Brushes.Red;
+                }
+                else if (i == 2)
+                {
+
+                    info.TextColor = Brushes.Gray;
+
+                }
+                Items.Add(info);
+
+                if (Items.Count > 10)
+                {
+                    Items.RemoveAt(0);
+                }
+
+                this.logControl.Dispatcher.Invoke(() =>
+                {
+                    //选中并滚动到最后一项
+                    this.logControl.SelectedItem = this.logControl.Items[this.logControl.Items.Count - 1];
+                    this.logControl.ScrollIntoView(this.logControl.SelectedItem);
+                });
+
+                await Task.Delay(100);
+            }
+
+ 
+xaml
+
+        <ListView  Name="logControl" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                   FontSize="15" Background="Transparent" PreviewMouseDoubleClick="logControl_PreviewMouseDoubleClick"  
+                   ItemsSource="{Binding Items}"
+                   >
+            <!-- 定义行样式 -->
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <!-- 绑定文本颜色 -->
+                    <Setter Property="Foreground" Value="{Binding TextColor}" />                   
+                </Style>
+            </ListView.ItemContainerStyle>
+
+           
+            
+            <!-- 定义列 -->
+            <ListView.View  >
+                
+                <GridView x:Name="GridViewLog" >
+                            
+                    <!-- 设置列标题的样式为隐藏 -->
+                    <GridView.ColumnHeaderContainerStyle >
+                        <Style TargetType="GridViewColumnHeader">
+                            <!-- 将标题容器的可见性设为Collapsed -->
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
+
+
+                    <GridViewColumn x:Name="name" Header="name" Width="80" DisplayMemberBinding="{Binding name}"/>
+                    <GridViewColumn Header="age" Width="auto" DisplayMemberBinding="{Binding age}"/>
+                </GridView>
+                
+                
+            </ListView.View>
+        </ListView>
+
+
+
+ 
+通过索引隐藏列 1
+        // 隐藏第2列（索引从0开始）
+        if (listView1.View is GridView gridView && gridView.Columns.Count > 1)
+        {
+            // 方法A：设置Visibility为Collapsed
+            gridView.Columns[1].Visibility = Visibility.Collapsed;
+            
+            // 方法B：从集合中移除（需要时可保存列对象以便恢复）
+            // var columnToHide = gridView.Columns[1];
+            // gridView.Columns.Remove(columnToHide);
+        }
+
+
+通过列标题查找并隐藏
+    // 隐藏标题为"ID"的列
+    if (listView1.View is GridView gridView)
+    {
+        var columnToHide = gridView.Columns.FirstOrDefault(c => 
+            c.Header?.ToString() == "ID");     
+        if (columnToHide != null)
+        {
+            columnToHide.Visibility = Visibility.Collapsed;
+        }
+    }
+
+
+选中并自动滚动到最后一行     
+      this.logControl.SelectedItem = this.logControl.Items[this.logControl.Items.Count - 1];
+      this.logControl.ScrollIntoView(this.logControl.SelectedItem);
+
+
+删除超过指定行数的行,在需要显示的数据过多时使用       
+                if (this.logControl.Items.Count > 10)
+                {
+                    this.logControl.Items.RemoveAt(0);
+                }
+
+
+
+代码设置列标题的显示/隐藏
+   1> 通过设置列标题的高度为 0 来隐藏：
+         if (listView1.View is GridView gridView)
+          {
+              // 设置列标题高度为0
+              gridView.ColumnHeaderHeight = 0;
+          }
+   2> 通过创建空样式来隐藏
+      // 假设你的ListView名为listView1
+      if (listView1.View is GridView gridView)
+      {
+          // 创建一个空样式，用于隐藏列标题
+          Style emptyStyle = new Style();
+          emptyStyle.TargetType = typeof(GridViewColumnHeader);
+          
+          // 应用样式到GridView
+          gridView.ColumnHeaderContainerStyle = emptyStyle;
+      }
+
+
+样式
+
+  <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <GridViewRowPresenter>
+                                    <!--为所有单元格文本设置不换行-->
+                                    <GridViewRowPresenter.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{Binding TextColor}"/>
+                                            <Setter Property="TextWrapping" Value="NoWrap"/>
+                                            <Setter Property="Margin" Value="20,20,20,20"/>
+                                        </Style>
+                                    </GridViewRowPresenter.Resources>
+                                </GridViewRowPresenter>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>

@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Update="UserControls\Button_Led\ui_Led.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\其它\ui_IO.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\MessageBox\win_MessageBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\其它\ui_Border.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\其它\ui_Button.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\Button_Led\ui_ButtonBorder.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\其它\ui_CheckBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\其它\ui_Combobox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\其它\ui_GroupBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\其它\ui_Label.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="程序类\Log\窗体\ui_Log.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\其它\ui_Label2.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\其它\ui_PasswordBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\其它\ui_TextBlock.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\其它\ui_TextBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\信息显示\Ui_信息显示.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\功能栏\ui_功能栏.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\密码输入框\win_passwordBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\状态栏\ui_状态栏.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\Window 标题栏\ui_win_Title.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="程序类\用户登陆\窗体\用户管理\添加或修改\Win_用户管理_添加修改.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="程序类\用户登陆\窗体\用户管理\管理\Win_用户管理.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="程序类\用户登陆\窗体\登陆\Win_UserLogin.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\窗体进度条\Win_进度条.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\软件信息\窗体\Win_软件信息.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="基础类\基础公共\通讯\SerialPort\Win_Set_SerialPort.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="基础类\基础公共\通讯\Socket\Win_Set_Socket.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="工业\激光类\金橙子\图像\ui_jcz_图像_单头.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="工业\激光类\金橙子\图像\Win_jcz2_双击查看图像.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="工业\激光类\金橙子\设置\Win_设置_jczEzcad2.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="工业\激光类\金橙子\调试\Win_jcz2_调试.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="工业\运动控制\正运动\窗体\IO查看\Win_Zaxis_IO查看.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="程序类\软件注册\注册窗体\Win_软件注册.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="语言\窗体\Win_语言设置.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>

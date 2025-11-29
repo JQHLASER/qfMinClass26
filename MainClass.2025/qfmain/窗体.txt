@@ -1,0 +1,48 @@
+// 在父窗口中显示子窗口时
+var childWindow = new ChildWindow();
+// 关键：设置子窗口的所有者为当前父窗口
+childWindow.Owner = this; 
+// 显示模态窗口
+childWindow.ShowDialog();
+
+
+
+加载窗体时,点击任务栏父窗体,父窗体不会到前面来
+new Log_查看日志信息(viewModel_sis.LogItems[index]) { Owner = Window.GetWindow(this) }.ShowDialog();
+或
+ new Log_查看日志信息(viewModel_sis.LogItems[index]) { Owner = this }.ShowDialog();
+
+//不可调整大小
+ ResizeMode="NoResize"> 
+
+
+ //重写 ShowDialog() 方法，直接返回 MessageBoxResult
+        public new MessageBoxResult ShowDialog()
+        {
+            base.ShowDialog();
+            // 根据实际按钮点击返回对应结果
+            return GetResult(); // 需要自己实现 GetResult() 逻辑
+        }
+
+        private MessageBoxResult GetResult()
+        {
+            // 根据内部状态返回对应的 MessageBoxResult
+            // 例如根据用户点击的按钮判断
+            return _selectedResult; // _selectedResult 是内部存储的结果变量
+        }
+
+        private MessageBoxResult _selectedResult = MessageBoxResult.None;
+
+
+
+// 重写 ShowDialog() 方法，直接返回 MessageBoxResult
+        public new MessageBoxResult ShowDialog()
+        {
+            base.ShowDialog();
+            // 根据实际按钮点击返回对应结果
+            return _selectedResult; // 需要自己实现 GetResult() 逻辑
+        }        
+
+        private MessageBoxResult _selectedResult = MessageBoxResult.None;
+
+

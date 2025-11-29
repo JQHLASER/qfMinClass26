@@ -1,0 +1,16 @@
+<Window.InputBindings>
+        <!-- Ctrl+S 快捷键 -->
+        <KeyBinding Key="S" Modifiers="Control" Command="{Binding SaveCommand}" />
+        
+        <!-- Ctrl+Shift+D 快捷键 -->
+        <KeyBinding Key="D" Modifiers="Control+Shift" Command="{Binding DuplicateCommand}" />
+        
+        <!-- Alt+X 快捷键 -->
+        <KeyBinding Key="X" Modifiers="Alt" Command="{Binding ExitCommand}" />
+        
+        <!-- F5 功能键快捷键 -->
+        <KeyBinding Key="F5" Command="{Binding RefreshCommand}" />
+    </Window.InputBindings>
+
+
+     <KeyBinding Key="B" Modifiers="Control" Command="{Binding BorderMouseUpCommand}" />

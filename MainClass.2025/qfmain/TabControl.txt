@@ -1,0 +1,29 @@
+
+TabStripPlacement属性有四个可选值：
+	Top：标签在顶部（默认值）
+	Bottom：标签在底部
+	Left：标签在左侧
+	Right：标签在右侧
+
+
+
+	 <TabControl FontSize=" 15" >
+
+        <TabItem Header="主界面" Width=" 100">
+                                         
+           <TabItem.Header >
+               <TextBlock Text="系统"/>
+           </TabItem.Header>
+
+        </TabItem>
+         
+        <TabItem Header="主界面" Width=" 100">
+                                         
+           <TabItem.Header >
+               <TextBlock Text="设置"/>
+           </TabItem.Header>
+
+        </TabItem>
+
+
+ </TabControl>

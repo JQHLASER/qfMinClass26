@@ -1,0 +1,13 @@
+ Label 
+            Name="label_"
+            Background="White"
+            Content="Label"
+            FontSize="15"
+            <!--垂直对齐-->
+            HorizontalContentAlignment="Center"
+            <!--水平对齐-->
+            VerticalContentAlignment="Center"
+            FontFamily="微软雅黑"
+            Foreground="Black"          
+            >            
+</Label>

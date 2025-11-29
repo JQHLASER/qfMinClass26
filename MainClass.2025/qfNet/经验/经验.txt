@@ -1,0 +1,53 @@
+﻿实现MVVM架构   安装库  WinFormMVVM
+
+  //双缓冲显示窗体所有子控件
+  protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }
+
+ this .MaximizedBounds = Screen.PrimaryScreen.WorkingArea; //显示任务栏(在进入窗体前使用...不然进入窗体时任务栏部份可能不显示)
+
+ ***********************************************
+ 委托线程;
+   private readonly SynchronizationContext _uiSyncContext;//申明
+   _uiSyncContext = SynchronizationContext.Current;//申明,获取调用的窗体
+   //委拖
+     _uiSyncContext.Post(_ =>
+      {
+          this.机器码 = 机器码;
+      }, null);
+
+
+************************************************
+//绑定Combobox控件数据源
+this.uiComboBox1.DataBindings.Add("DataSource", this._DataContext, nameof(this._DataContext.用户信息), false);
+this.uiComboBox1.DisplayMember = "UserName";//绑定为UserName字段
+
+
+************************************************
+ FormMain.forms.SuspendLayout();// 初始化前禁用重绘  
+ FormMain.forms.ResumeLayout(false); // 初始化后启用重绘
+
+
+**************************************************
+  private bool showDragStretch;
+  [Description("显示边框可拖拽调整窗体大小"), Category("SunnyUI"), DefaultValue(true)]
+  public bool ShowDragStretch
+  {
+      get => showDragStretch;
+      set
+      {
+          showDragStretch = value;
+          if (value)
+          {
+              ShowRect = true;
+              ShowRadius = false;
+              Padding = new Padding(2, showTitle ? TitleHeight : 2, 2, 2);
+          }
+          else
+          {
+              ShowRect = false;
+              Padding = new Padding(0, showTitle ? TitleHeight : 0, 0, 0);
+          }
+      }
+  }
+
+*****************************************************************

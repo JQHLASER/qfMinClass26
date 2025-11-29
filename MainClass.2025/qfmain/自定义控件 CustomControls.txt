@@ -1,0 +1,133 @@
+   
+  控件代码
+   
+   public partial class TextBox_ui : TextBox
+    {
+        static TextBox_ui()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(TextBox_ui), new FrameworkPropertyMetadata(typeof(TextBox_ui)));
+
+            // 重写Text属性的元数据，添加我们自己的回调函数
+            TextProperty.OverrideMetadata(typeof(TextBox_ui),
+                new FrameworkPropertyMetadata(string.Empty,
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                    On_Text_Changed));
+
+            BackgroundProperty.OverrideMetadata(typeof(TextBox_ui),
+           new FrameworkPropertyMetadata(string.Empty,
+               FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+               On_Text_Changed));
+
+
+
+        }
+
+
+        //public static readonly DependencyProperty TextProperty =
+        // DependencyProperty.Register(nameof(Text), typeof(string), typeof(ui_TextBox),
+        //     new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, On_Text_Changed));
+        private static void On_Text_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+          TextBox control = d as TextBox;
+
+           
+            //var oldValue = (string)e.OldValue;
+            //var newValue = (string)e.NewValue;
+
+            // 将新值同步到UserControl内部的UI元素（如TextBlock）
+             control.Dispatcher.Invoke(() => { control.Text = e.NewValue.ToString();    });
+
+
+        }
+
+
+ 
+        private static void On_Background_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            Border control = d as Border; 
+            // 将新值同步到UserControl内部的UI元素（如TextBlock）
+            control.Dispatcher.Invoke(() => { control.Background =(Brush) e.NewValue ;
+                 });
+
+
+        }
+
+
+       
+
+
+        /// <summary>
+        /// 显示文本
+        /// </summary>
+        [Category("ui")]
+        [Description("显示文本")]
+        public string Text
+        {
+            get
+            {
+                return (string)GetValue(TextProperty);
+            }
+            set
+            {
+                SetValue(TextProperty, value);
+            }
+        }
+
+        [Category("ui")]
+        [Description("背景颜色")]
+        public Brush Background
+        {
+            get
+            {
+                return (Brush)GetValue(BackgroundProperty);
+            }
+            set
+            {
+                SetValue(BackgroundProperty, value);
+            }
+        }
+
+    }
+
+
+Generic.xaml
+
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:WPF_APP1">
+
+
+    <Style TargetType="{x:Type local:TextBox_ui}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:TextBox_ui}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"                           
+                            >
+                        <TextBox Text="{TemplateBinding Text}"
+                                 Background="Transparent"
+                                 />
+
+
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    
+    
+    
+</ResourceDictionary>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,28 @@
+﻿<Window x:Class="qfWPFmain.Win_进度条"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:qfWPFmain"
+        mc:Ignorable="d"
+        Title="" Height="200" Width="450" WindowStyle="None"  Background="Wheat"
+        BorderBrush="Silver" BorderThickness="0"  ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen" ShowInTaskbar="False" 
+        Topmost="True" Loaded="Window_Loaded" Closing="Window_Closing" >
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" FontFamily="微软雅黑" FontSize="20"  Content="{Binding Title}"
+               VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+               HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" />
+
+
+        <ProgressBar Grid.Row="1" Value="{Binding Value进度}" Maximum="100" Background="WhiteSmoke"  BorderBrush="Silver" BorderThickness="1.5" />
+
+    </Grid>
+
+</Window>

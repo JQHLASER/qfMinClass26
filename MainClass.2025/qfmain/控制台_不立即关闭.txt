@@ -1,0 +1,18 @@
+
+一般控制台会在运行后立妈关闭,这种方法可以一直运行,
+
+
+ static ManualResetEvent _quitEvent = new ManualResetEvent(false);
+ static void Main(string[] args)
+ {
+    
+     // 注册Ctrl+C事件处理
+     Console.CancelKeyPress += (sender, e) =>
+     {
+         e.Cancel = true; // 取消默认处理（默认会直接终止程序）
+         _quitEvent.Set(); // 通知程序退出
+     };
+     // 等待退出信号
+     _quitEvent.WaitOne();
+ }
+    

@@ -1,0 +1,20 @@
+//*****将Grid分成多列
+<Grid Margin="0,0,0,0">
+        <Grid.ColumnDefinitions>
+            <!-- 第一列 -->
+            <ColumnDefinition Width="220"/>
+            <!-- 第二列 -->
+            <ColumnDefinition Width="420"/>
+            <!-- 第三列 -->
+            <ColumnDefinition Width="*"/>
+            
+</Grid.ColumnDefinitions>
+
+
+//*****将Grid分成多行
+<Grid.RowDefinitions>
+             <!-- 第一行 -->
+            <RowDefinition Height="80"/>
+             <!-- 第二行 -->
+            <RowDefinition Height="80"/>
+</Grid.RowDefinitions>

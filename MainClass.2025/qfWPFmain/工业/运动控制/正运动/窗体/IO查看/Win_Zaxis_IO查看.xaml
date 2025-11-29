@@ -1,0 +1,114 @@
+﻿<Window x:Class="qfWPFmain.Win_Zaxis_IO查看"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:qfWPFmain" 
+        xmlns:qfwpfmain="clr-namespace:qfWPFmain"
+        mc:Ignorable="d"
+        Height="260" Width="500" WindowStyle="None" Closing="Window_Closing" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition  Height="*"/>
+        </Grid.RowDefinitions>
+
+        <qfwpfmain:ui_window_Title2 ui_IsMaxButton="False" ui_IsMinButton="False" ui_Text="IO"
+                                    x:Name="_标题栏"/>
+
+        <StackPanel Grid.Row=" 1" Orientation="Vertical"  HorizontalAlignment="Center" VerticalAlignment="Center" >
+
+        <GroupBox Header="IN"
+                  Background="White"
+                  BorderBrush="Silver"                
+                  FontSize="14"
+                  FontFamily="微软雅黑"
+                  FontWeight="SemiBold"
+                  Foreground="Gray"  
+                  BorderThickness="2"
+                  HorizontalAlignment="Center" 
+                  VerticalAlignment="Center" 
+                  Padding="10" IsEnabled="False" 
+                  Margin="0">
+            <StackPanel Orientation="Vertical"  VerticalAlignment="Center" HorizontalAlignment="Center" >
+                    <qfwpfmain:ui_IO 
+                                 ui_Value0="{Binding State_IN._0}"
+                                 ui_Value1="{Binding State_IN._1}"
+                                 ui_Value2="{Binding State_IN._2}"
+                                 ui_Value3="{Binding State_IN._3}"
+                                 ui_Value4="{Binding State_IN._4}"
+                                 ui_Value5="{Binding State_IN._5}"
+                                 ui_Value6="{Binding State_IN._6}"
+                                 ui_Value7="{Binding State_IN._7}"
+                                 />
+                <qfwpfmain:ui_IO ui_Name_0="8"
+                                 ui_Name_1="9"
+                                 ui_Name_2="10"
+                                 ui_Name_3="11"
+                                 ui_Name_4="12"
+                                 ui_Name_5="13"
+                                 ui_Name_6="14"
+                                 ui_Name_7="15"
+                                 
+                                 ui_Value0="{Binding State_IN._8}"
+                                 ui_Value1="{Binding State_IN._9}"
+                                 ui_Value2="{Binding State_IN._10}"
+                                 ui_Value3="{Binding State_IN._11}"
+                                 ui_Value4="{Binding State_IN._12}"
+                                 ui_Value5="{Binding State_IN._13}"
+                                 ui_Value6="{Binding State_IN._14}"
+                                 ui_Value7="{Binding State_IN._15}" 
+                                 />
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="OUT"
+                  Background="White"
+                  BorderBrush="Silver"                
+                  FontSize="14"
+                  FontFamily="微软雅黑"
+                  FontWeight="SemiBold"
+                  Foreground="Gray"  
+                  BorderThickness="2"
+                  HorizontalAlignment="Center" 
+                  VerticalAlignment="Center" 
+                  Padding="10" 
+                  Margin="0">
+            <StackPanel Orientation="Vertical"  VerticalAlignment="Center" HorizontalAlignment="Center" >
+                <qfwpfmain:ui_IO 
+                         ui_Value0="{Binding State_OUT._0}"
+                         ui_Value1="{Binding State_OUT._1}"
+                         ui_Value2="{Binding State_OUT._2}"
+                         ui_Value3="{Binding State_OUT._3}"
+                         ui_Value4="{Binding State_OUT._4}"
+                         ui_Value5="{Binding State_OUT._5}"
+                         ui_Value6="{Binding State_OUT._6}"
+                         ui_Value7="{Binding State_OUT._7}" 
+                    Event_操作="ui_IO_Event_操作"
+                         />
+                <qfwpfmain:ui_IO ui_Name_0="8"
+                         ui_Name_1="9"
+                         ui_Name_2="10"
+                         ui_Name_3="11"
+                         ui_Name_4="12"
+                         ui_Name_5="13"
+                         ui_Name_6="14"
+                         ui_Name_7="15"
+                         
+                         ui_Value0="{Binding State_OUT._8}"
+                         ui_Value1="{Binding State_OUT._9}"
+                         ui_Value2="{Binding State_OUT._10}"
+                         ui_Value3="{Binding State_OUT._11}"
+                         ui_Value4="{Binding State_OUT._12}"
+                         ui_Value5="{Binding State_OUT._13}"
+                         ui_Value6="{Binding State_OUT._14}"
+                         ui_Value7="{Binding State_OUT._15}" 
+                                 Event_操作="ui_IO_Event_操作_1" 
+                         />
+            </StackPanel>
+        </GroupBox>
+
+        </StackPanel>
+
+    </Grid>
+</Window>

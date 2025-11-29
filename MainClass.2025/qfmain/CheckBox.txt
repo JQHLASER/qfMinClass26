@@ -1,0 +1,52 @@
+
+ <!--选择框-->
+        <CheckBox x:Key="选择框" x:Shared="false"  Foreground="Gray" 
+                  FontFamily="微软雅黑"  FontSize="14" Margin="5"
+                  Height=" 20" 
+                  VerticalAlignment="Stretch"  VerticalContentAlignment="Center"
+                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"  >
+            <CheckBox.LayoutTransform>
+                <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+            </CheckBox.LayoutTransform>
+        </CheckBox>
+
+
+
+         
+
+
+缩放大小
+<CheckBox Content="选项1">
+    <CheckBox.LayoutTransform>
+        <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+    </CheckBox.LayoutTransform>
+</CheckBox>
+
+//调整选择框大小
+<CheckBox Content="自定义大小的复选框">
+    <CheckBox.Template>
+        <ControlTemplate TargetType="CheckBox">
+            <StackPanel Orientation="Horizontal">
+                <!-- 自定义大小的选择框 -->
+                <Border Width="20" Height="20" BorderBrush="Gray" BorderThickness="1" Margin="0,0,5,0">
+                    <Grid x:Name="checkGrid">
+                        <!-- 勾选标记 -->
+                        <Path x:Name="checkMark" Data="M5,10 L10,15 L20,5" 
+                              Stroke="Black" StrokeThickness="2" 
+                              Stretch="Fill" Visibility="Collapsed"/>
+                    </Grid>
+                </Border>
+                <!-- 文本内容 -->
+                <ContentPresenter VerticalAlignment="Center"/>
+            </StackPanel>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter TargetName="checkMark" Property="Visibility" Value="Visible"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="checkGrid" Property="Background" Value="#EEEEEE"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </CheckBox.Template>
+</CheckBox>

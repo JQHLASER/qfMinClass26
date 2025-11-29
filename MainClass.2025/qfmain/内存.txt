@@ -1,0 +1,6 @@
+// 错误：创建新数组导致内存分配
+var array = new byte[1024];
+buffer.CopyTo(array);
+
+// 正确：使用 ReadOnlySpan 避免复制
+ReadOnlySpan<byte> span = buffer.AsSpan();

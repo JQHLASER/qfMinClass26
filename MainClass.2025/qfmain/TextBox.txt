@@ -1,0 +1,29 @@
+IsReadOnly="False"			//使能只读
+AcceptsReturn="True"		//使能Enter换行
+TextWrapping="NoWrap"		//换行设置
+
+//绑定数据,输入的内容传给绑定的数据源
+Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+
+  Text="{Binding ui_Text,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=local:ui_TextBox}, Mode=TwoWay}"//绑定数据,输入的内容传给绑定的数据源
+
+InputMethod.IsInputMethodEnabled="False" //输入法是否启用
+
+
+
+ // 自定义方法：限制输入为数字
+        public void RestrictToNumbers()
+        {
+            this.PreviewTextInput += (sender, e) =>
+            {
+                e.Handled = !IsNumber(e.Text);
+            };
+            
+            DataObject.AddPastingHandler(this, (sender, e) =>
+            {
+                if (!IsNumber(e.DataObject.GetData(DataFormats.Text) as string))
+                {
+                    e.CancelCommand();
+                }
+            });
+        }

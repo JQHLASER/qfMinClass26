@@ -1,0 +1,23 @@
+﻿<Window x:Class="qfWPFmain.win_Log查看日志"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:qfWPFmain"
+        mc:Ignorable="d"
+        Title="Log" Height="400" Width="600" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" ResizeMode="CanResize" WindowStyle="None"   BorderBrush="Silver"  >
+    <Grid>
+        <Grid.RowDefinitions >
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <local:ui_window_Title2   Grid.Row="0"  x:Name="_Title" ui_IsMinButton="false" BorderThickness="0,0,0,1.5" BorderBrush="Silver"/>
+
+        <TextBox  Grid.Row="1" Name="LogValue" Margin="10" 
+                  IsReadOnly="true" FontSize="14" FontFamily="微软雅黑"
+                  BorderThickness="0" Background="White" TextWrapping="Wrap"
+                 />
+
+    </Grid>
+</Window>

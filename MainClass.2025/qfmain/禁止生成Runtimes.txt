@@ -1,0 +1,33 @@
+
+把下面的复制到 .csproj 文件中 ,编译时生成的runtimes文件夹为空
+
+
+
+<!-- 在 .csproj 文件中添加 -->
+<PropertyGroup>
+  <!-- 声明支持的Windows运行时标识符(RID) -->
+  <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+</PropertyGroup>
+
+<Target Name="FilterNonWindowsRuntimes" AfterTargets="CopyFilesToOutputDirectory">
+  <!-- 清理输出目录中非Windows的运行时文件夹 -->
+  <ItemGroup>
+    <!-- 匹配所有非Windows的运行时目录（如linux-*、osx-*等） -->
+    <NonWindowsRuntimes Include="$(OutputPath)runtimes\**" 
+                       Exclude="$(OutputPath)runtimes\win-**\*;$(OutputPath)runtimes\win-*" />
+  </ItemGroup>
+  
+  <!-- 删除匹配到的非Windows运行时文件/目录 -->
+  <Delete Files="@(NonWindowsRuntimes)" />
+</Target>
+
+<Target Name="FilterNonWindowsRuntimesPublish" AfterTargets="Publish">
+  <!-- 发布时清理非Windows运行时 -->
+  <ItemGroup>
+    <NonWindowsRuntimesPublish Include="$(PublishDir)runtimes\**" 
+                             Exclude="$(PublishDir)runtimes\win-**\*;$(PublishDir)runtimes\win-*" />
+  </ItemGroup>
+  
+  <Delete Files="@(NonWindowsRuntimesPublish)" />
+</Target>
+

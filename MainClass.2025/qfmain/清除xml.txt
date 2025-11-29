@@ -1,0 +1,22 @@
+
+
+****编译后自动删除xml文件 (右键项目 -> 属性 -> 生成事件 -> 在 "后期生成事件命令行" 中添加：)		
+		del "$(TargetDir)*.xml" /q
+****编译后自动删除obj文件夹 (右键项目 -> 属性 -> 生成事件 -> 在 "后期生成事件命令行" 中添加：)
+	    .net8 中使用 
+			rd /s /q "$(ProjectDir)obj\Release" //清除Release文件夹
+			rd /s /q "$(ProjectDir)obj"	//清除全部
+
+
+.net Formwork中可以
+		rd /s /q "$(ProjectDir)obj\*.*"
+		或
+		rd /s /q "$(ProjectDir)obj"
+		
+		另一种
+		del /f /s /q "$(ProjectDir)obj\*.*"
+		for /d %%i in ("$(ProjectDir)obj\*") do rmdir /s /q "%%i"
+
+所有的
+del "$(TargetDir)*.xml" /q
+rd /s /q "$(ProjectDir)obj"

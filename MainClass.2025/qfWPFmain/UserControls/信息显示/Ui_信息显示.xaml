@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="qfWPFmain.Ui_信息显示"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:qfWPFmain"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600" BorderBrush="Silver" BorderThickness="1" Padding ="10">
+
+    <UserControl.Resources>
+
+        <DataTemplate  x:Key="_模板信息" x:Shared="False">
+            <TextBlock Text="{Binding  Value_}"  
+                       VerticalAlignment="Stretch"  HorizontalAlignment="Stretch"  TextAlignment="Left"    
+                       Foreground="{Binding Foreground_}" FontFamily="{Binding FontFamily_}" 
+                       FontSize="{Binding FontSize_}" Background="{Binding Background_}"
+                       FontWeight="{Binding FontWeight_}" FontStyle="{Binding FontStyle_}"
+                       Margin="{Binding Margin_}"
+                       Width="{Binding Width_}"/>
+
+        </DataTemplate>
+    </UserControl.Resources>
+
+
+    <ListView ItemsSource="{Binding Items}" 
+              ScrollViewer.HorizontalScrollBarVisibility="Auto"
+              ScrollViewer.VerticalScrollBarVisibility="Auto" 
+              BorderThickness="0">
+
+
+        <ListView.ItemContainerStyle>
+            <Style TargetType="ListViewItem">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewItem">
+                            <GridViewRowPresenter>
+
+                                <!--为所有单元格文本设置不换行-->
+
+                                <GridViewRowPresenter.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Stretch" />
+
+
+                                    </Style>
+                                </GridViewRowPresenter.Resources>
+                            </GridViewRowPresenter>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ListView.ItemContainerStyle>
+
+        <ListView.View>
+            <GridView >
+
+                <!-- 设置列标题的样式为隐藏 -->
+                <GridView.ColumnHeaderContainerStyle>
+                    <Style TargetType="GridViewColumnHeader">
+                        <!-- 将标题容器的可见性设为Collapsed -->
+                        <Setter Property="Visibility" Value="Collapsed"/>
+
+                    </Style>
+                </GridView.ColumnHeaderContainerStyle>
+
+                <GridViewColumn   CellTemplate="{StaticResource _模板信息 }"/>
+            </GridView>
+        </ListView.View>
+
+    </ListView>
+</UserControl>

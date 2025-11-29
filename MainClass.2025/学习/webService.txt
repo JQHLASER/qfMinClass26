@@ -1,0 +1,8 @@
+
+新建项目 "Asp.Net Core Web Api"
+
+	添加 --> 新建项  --> API 控制器 空
+	
+	(可设置url)
+	在appsettings.json文件中添加 : "urls": "http://*:3525"
+ 

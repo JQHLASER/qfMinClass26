@@ -1,0 +1,3 @@
+< Button.Clip >
+    < EllipseGeometry Center = "60,20" RadiusX = "60" RadiusY = "40" ></ EllipseGeometry >
+</ Button.Clip >

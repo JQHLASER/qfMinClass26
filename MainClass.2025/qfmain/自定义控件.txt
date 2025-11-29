@@ -1,0 +1,14 @@
+ 
+ ²Ã¼ô³ÉÔ²½Ç¾ØÐÎ
+ <Button  Content="button"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"
+                             Background="Transparent"
+          
+                                                >
+                            <Button.Clip >
+                                <RectangleGeometry RadiusX="50" RadiusY="50"   >
+                                    <RectangleGeometry.Rect>
+                                        <Rect X="0" Y="0" Width="200" Height="100"  />
+                                    </RectangleGeometry.Rect>
+                                </RectangleGeometry>
+                            </Button.Clip>
+                        </Button>

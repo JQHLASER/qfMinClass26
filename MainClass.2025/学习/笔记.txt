@@ -1,0 +1,7 @@
+struct		结构体
+union		联合体
+typedef		类型定义
+sizeof		什么什么的大小
+
+Designsurface 库	开发组态软件
+angular				前端框架软件
