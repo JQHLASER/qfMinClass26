@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySqlX.XDevAPI;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -46,6 +47,86 @@ namespace qfmain
             return days.TryGetValue(dayNumber, out var day) ? day : "application/json";
         }
 
+
+
+        /// <summary>
+        /// lstHeaders : =null 时不使能
+        /// </summary>  
+        public async Task<(bool rt, string msg)> 请求(enum请求方式 请求方式, string url, List<Headers> lstHeaders, string Body, int 超时时间 = 10000, enum标头值 HTTP标头值_ = enum标头值.application_json)
+        {
+            string msg = string.Empty;
+            bool rt = true;
+
+            try
+            {
+                // 创建HttpClient实例
+                using (HttpClient client = new HttpClient())
+                {
+                    try
+                    {
+                        client.Timeout = TimeSpan.FromMilliseconds(超时时间); // 根据需求调整;                   
+
+
+                        if (lstHeaders != null)
+                        {
+                            foreach (var s in lstHeaders)
+                            {
+                                client.DefaultRequestHeaders.Add(s.Key_, s.Value_);
+                            }
+                        }
+                        HttpResponseMessage response = null;
+                        switch (请求方式)
+                        {
+                            case enum请求方式.Post:
+                                // 发送Post请求
+                                string 标头值 = HTTP标头值((int)HTTP标头值_);
+
+                                using (HttpContent content = new StringContent(Body, Encoding.UTF8, 标头值))
+                                {
+                                    //  HttpContent content = new StringContent(Body); 
+                                    response = await client.PostAsync(url, content);
+                                }
+
+
+                                break;
+                            case enum请求方式.Get:
+                                // 发送GET请求
+                                response = await client.GetAsync(url);
+                                break;
+                        }
+
+
+                        // 确保请求成功
+                        response.EnsureSuccessStatusCode();
+
+                        rt = response.IsSuccessStatusCode;
+
+                        // 读取响应内容
+                        string responseBody = await response.Content.ReadAsStringAsync();
+
+                        // 输出响应内容
+                        // Console.WriteLine("Response: " + responseBody);
+                        msg = responseBody;
+                    }
+                    catch (HttpRequestException e)
+                    {
+                        // 处理请求异常
+                        //  Console.WriteLine("Request error: " + e.Message);
+                        msg = e.Message;
+                        rt = false;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                rt = false;
+                msg = ex.Message;
+            }
+            return (rt, msg);
+        }
+
+
         /// <summary>
         /// lstHeaders : =null 时不使能
         /// </summary>
@@ -56,7 +137,7 @@ namespace qfmain
         /// <param name="msg"></param>
         /// <param name="HTTP标头值_"></param>
         /// <returns></returns>
-        public virtual bool 请求(enum请求方式 请求方式, string url, List<Headers> lstHeaders, string Body, out string msg, int 超时时间 = 10000, enum标头值 HTTP标头值_ = enum标头值.application_json)
+        public bool 请求(enum请求方式 请求方式, string url, List<Headers> lstHeaders, string Body, out string msg, int 超时时间 = 10000, enum标头值 HTTP标头值_ = enum标头值.application_json)
         {
             msg = string.Empty;
             bool rt = true;
@@ -85,9 +166,13 @@ namespace qfmain
                                 // 发送Post请求
                                 string 标头值 = HTTP标头值((int)HTTP标头值_);
 
-                                HttpContent content = new StringContent(Body, Encoding.UTF8, 标头值);
-                                //  HttpContent content = new StringContent(Body);    
-                                response = client.PostAsync(url, content).Result;
+                                using (HttpContent content = new StringContent(Body, Encoding.UTF8, 标头值))
+                                {
+                                    //  HttpContent content = new StringContent(Body); 
+                                    response = client.PostAsync(url, content).Result;
+                                }
+
+
                                 break;
                             case enum请求方式.Get:
                                 // 发送GET请求
@@ -98,6 +183,8 @@ namespace qfmain
 
                         // 确保请求成功
                         response.EnsureSuccessStatusCode();
+
+                        rt = response.IsSuccessStatusCode;
 
                         // 读取响应内容
                         string responseBody = response.Content.ReadAsStringAsync().Result;
@@ -123,7 +210,6 @@ namespace qfmain
             }
             return rt;
         }
-
 
 
         /// <summary>
@@ -211,8 +297,7 @@ namespace qfmain
         }
 
 
-
-        public virtual bool 请求_Request(enum请求方式 请求方式, string url, short model, string Body, out string msg, enum标头值 HTTP标头值_ = enum标头值.application_json)
+        public virtual bool 请求_Request(enum请求方式 请求方式, string url, string Body, out string msg, enum标头值 HTTP标头值_ = enum标头值.application_json, int Timeout = 1000 * 10)
         {
 
             bool rt = true;
@@ -225,8 +310,10 @@ namespace qfmain
                 request.Method = $"{请求方式}";//POST
                 string 标头值 = HTTP标头值((int)HTTP标头值_);
                 request.ContentType = 标头值;
+                request.Timeout = Timeout;
                 byte[] data = Encoding.UTF8.GetBytes(Body);
                 request.ContentLength = data.Length;
+
 
                 using (Stream requestStream = request.GetRequestStream())
                 {
@@ -270,7 +357,7 @@ namespace qfmain
         /// <param name="jsonBody"></param>
         /// <param name="msgErr"></param>
         /// <returns></returns>
-        public virtual  bool 请求_Request_post(string url, string jsonBody, out string msgErr)
+        public virtual bool 请求_Request_post(string url, string jsonBody, out string msgErr)
         {
             bool rt = true;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);

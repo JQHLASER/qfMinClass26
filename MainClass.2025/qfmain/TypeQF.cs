@@ -8,33 +8,7 @@ using System.Threading.Tasks;
 
 namespace qfmain
 {
-    /// <summary>
-    /// 语言包
-    /// </summary>
-    public class _language_Value_
-    {
-        public _language_Value_(string KeyValue_, string TypeValue_, string languageValue_)
-        {
-            KeyValue = KeyValue_;
-            TypeValue = TypeValue_;
-            LanguageValue = languageValue_;
-        }
 
-        /// <summary>
-        /// 节点,生成语言文件使用
-        /// </summary>
-        public string KeyValue { set; get; }
-
-        /// <summary>
-        /// 基础内容,内部调用时用
-        /// </summary>
-        public string TypeValue { set; get; }
-
-        /// <summary>
-        /// 语言内容,对外显示时用
-        /// </summary>
-        public string LanguageValue { set; get; }
-    }
 
     /// <summary>
     /// Socket参数,客户端与服务端共用参数
@@ -298,10 +272,13 @@ namespace qfmain
         /// </summary>
         public string Uid { set; get; } = string.Empty;
         public string 注册码 { set; get; } = string.Empty;
-
+        /// <summary>
+        /// 软件的功能码
+        /// </summary>
+        public int 功能码{ set; get; } = 0;    
 
         /// <summary>
-        /// 加密狗类型
+        /// 加密狗类型,代理或万能这些
         /// </summary>
         public string Types { set; get; } = string.Empty;
         public string 备注 { set; get; } = string.Empty;

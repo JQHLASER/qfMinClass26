@@ -175,5 +175,29 @@ namespace qfmain
             return lst.Distinct().ToList();
         }
 
+
+        public virtual List<T> 合并_LINQ<T>(List<T> lst, List<T> lst新)
+        {
+            return lst.Concat(lst新).Distinct().ToList();
+        }
+
+        /// <summary>
+        /// 大量数据更快,适合10万+
+        /// </summary> 
+        public virtual List<T> 合并_HashSet<T>(List<T> lst, List<T> lst新)
+        {
+            var set = new HashSet<T>(lst);
+            set.UnionWith(lst新);
+            return set.ToList();
+        }
+
+        /// <summary>
+        /// 不创建新 List,保留重复元素,适合大量数据
+        /// </summary> 
+        public virtual void 合并_AddRange<T>(List<T> lst原, List<T> lst新)
+        {
+            lst原.AddRange(lst新);
+        }
+
     }
 }

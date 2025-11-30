@@ -17,11 +17,32 @@ namespace qfNet
 
         }
 
-        public void 读写信息(ushort model)
+        public override void 读写信息(ushort model)
         {
             base.读写信息(model);
             状态栏显示();
         }
+
+        public override void 计数递增_良品(int 递增量 = 1)
+        {
+            base.计数递增_良品(递增量);
+            状态栏显示();
+        }
+
+        public override void 计数递增_不良品(int 递增量 = 1)
+        {
+            base.计数递增_不良品(递增量);
+            状态栏显示();
+        }
+
+
+        public override  void 设置(long 零件, long 良品, long 不良品)
+        {
+            base.设置(零件,  良品,  不良品);
+            状态栏显示();
+
+        }
+
 
 
         /// <summary>

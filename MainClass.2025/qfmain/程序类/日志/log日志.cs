@@ -1,9 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using IWshRuntimeLibrary;
+using Newtonsoft.Json;
 using NPOI.OpenXmlFormats.Spreadsheet;
+using Org.BouncyCastle.Pqc.Crypto.Lms;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,7 +25,7 @@ namespace qfmain
     public class log日志 : ILogEventSink
     {
         public _cfg_ 参数 { set; get; } = new _cfg_();
-      
+
 
 
         string 日期分割符 = "-";
@@ -44,8 +47,15 @@ namespace qfmain
         }
 
 
+        /// <summary>
+        /// IFormatProvider formatProvider = null 
+        /// </summary> 
+        public log日志()
+        {
 
-        void 初始化(_cfg_ cfg)
+        }
+
+        public void 初始化(_cfg_ cfg)
         {
             if (cfg is null)
             {
@@ -76,6 +86,10 @@ namespace qfmain
                 { IsBackground = true }.Start();
             }
 
+
+            // 启动日志写入线程
+            Task.Run(LogWorker, _cts.Token);
+
             配置参数();
         }
 
@@ -83,7 +97,25 @@ namespace qfmain
         public virtual void 释放()
         {
             isRun = false;
+            this._cts.Cancel();
+            this._queue.CompleteAdding();
         }
+
+        private async Task LogWorker()
+        {
+            foreach (var log in _queue.GetConsumingEnumerable())
+            {
+                // 先保存文件
+                if (this.参数.使能_保存)
+                {
+                    await SaveLog(log);
+                }
+
+                // 再发事件（UI 更新）
+                On_添加日志(log);
+            }
+        }
+
 
 
         #region 数据类型
@@ -122,6 +154,15 @@ namespace qfmain
             /// </summary>
             public int 清除线程周期 { set; get; } = 1000 * 60 * 60 * 1;
 
+            /// <summary>
+            /// 默认超过400M后,重新保存文件
+            /// </summary>
+            public bool 使能_文件大小限制 { set; get; } = true;
+
+            /// <summary>
+            /// 单位: MB
+            /// </summary>
+            public int 日志文件大小 { set; get; } = 20;
 
             public _cfg_()
             {
@@ -167,6 +208,10 @@ namespace qfmain
             /// 正常
             /// </summary>
             Info,
+            /// <summary>
+            /// 清空日志
+            /// </summary>
+            Clear,
         }
 
         /// <summary>
@@ -178,6 +223,16 @@ namespace qfmain
             public DateTime 时间 { set; get; }
             public string 内容 { set; get; }
 
+            public _logValue_()
+            {
+
+            }
+            public _logValue_(enum状态 状态, DateTime 时间, string 内容)
+            {
+                this.状态 = 状态;
+                this.时间 = 时间;
+                this.内容 = 内容;
+            }
         }
 
 
@@ -189,6 +244,12 @@ namespace qfmain
         private ILogger _logger;
         private string logFilePath;
 
+        //改良版
+        private readonly BlockingCollection<_logValue_> _queue = new BlockingCollection<_logValue_>();
+        private readonly CancellationTokenSource _cts = new CancellationTokenSource();
+
+
+
         public virtual void 配置参数()
         {
             // 配置 Serilog
@@ -199,8 +260,11 @@ namespace qfmain
             return;
         }
 
+
+
         public virtual void Emit(LogEvent logEvent)
         {
+
             #region 日志信息
 
             var timestamp = logEvent.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff");
@@ -215,26 +279,30 @@ namespace qfmain
 
             #region 添加日志
 
-            List<string> lstWork = new List<string>();
-            lstWork.Add("Write");
-            lstWork.Add("On_Event");
-            foreach (var s in lstWork)
-            {
-                if (s == "Write")
-                {
-                    if (this.参数.使能_保存)
-                    {
-                        SaveLog(logInfo);
-                    }
-                }
-                else if (s == "On_Event")
-                {
-                    On_添加日志(logInfo);
-                }
-            }
+            this._queue.Add(logInfo);
+
+            //List<string> lstWork = new List<string>();
+            //lstWork.Add("Write");
+            //lstWork.Add("On_Event");
+            //foreach (var s in lstWork)
+            //{
+            //    if (s == "Write")
+            //    {
+            //        if (this.参数.使能_保存)
+            //        {
+            //            SaveLog(logInfo);
+            //        }
+            //    }
+            //    else if (s == "On_Event")
+            //    {
+            //        On_添加日志(logInfo);
+            //    }
+            //}
 
             #endregion
+
         }
+
 
         public class _saveLog_
         {
@@ -247,7 +315,7 @@ namespace qfmain
         //保存日志
         async Task SaveLog(_logValue_ logInfo)
         {
-            string show = string.IsNullOrEmpty(this.参数.文件标识) ? "" : $"_{this.参数.文件标识}";
+            string show = string.IsNullOrEmpty(this.参数.文件标识) ? "" : $"{this.文件标识分割符}{this.参数.文件标识}";
             DateTime now = DateTime.Now;
             string y = now.ToString("yyyy");
             string M = now.ToString("MM");
@@ -255,6 +323,33 @@ namespace qfmain
             string fileName = $"{y}{this.日期分割符}{M}{this.日期分割符}{d}";
 
             string path = $"{this.参数.Files_Log}\\{fileName}{show}.log";
+            if (this.参数.使能_文件大小限制)
+            {
+                #region 文件大小限制
+
+                for (int i = 0; i < 999; i++)
+                {
+                    if (!new qfmain.文件_文件夹().文件_是否存在(path))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        new 文件_文件夹().文件_获取文件大小(path, out long B, out string msgErr);
+                        if (B >= 1024 * 1024 * this.参数.日志文件大小)
+                        {
+                            path = $"{this.参数.Files_Log}\\{fileName}{show}{this.文件标识分割符}{($"{i + 1}").PadLeft(3, '0')}.log";
+                            continue;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                #endregion
+            }
 
             _saveLog_ saveLog = new _saveLog_();
             saveLog.date = logInfo.时间.ToString("yyyy-MM-dd HH:mm:ss.fff");
@@ -262,13 +357,15 @@ namespace qfmain
             saveLog.log = logInfo.内容;
             string logValue = JsonConvert.SerializeObject(saveLog);
 
-            await new 文本().SaveLine_Async(path, $"{logValue}", false);
+            await new 文本().Save_25(path, $"{logValue}", false, true);
 
         }
 
 
         #endregion
 
+
+        private readonly object _lock = new object();
 
         /// <summary>
         /// 
@@ -277,21 +374,21 @@ namespace qfmain
         /// <param name="logValue">日志内容</param>
         public virtual void Add(enum状态 state, string logValue)
         {
-            switch (state)
+            lock (this._lock)
             {
-                case enum状态.Info:
-                    _logger.Information(logValue);
-                    break;
-                case enum状态.Error:
-                    _logger.Error(logValue);
-                    break;
-                case enum状态.Warning:
-                    _logger.Warning(logValue);
-                    break;
+                switch (state)
+                {
+                    case enum状态.Info:
+                        _logger.Information(logValue);
+                        break;
+                    case enum状态.Error:
+                        _logger.Error(logValue);
+                        break;
+                    case enum状态.Warning:
+                        _logger.Warning(logValue);
+                        break;
+                }
             }
-
-
-
         }
 
         /// <summary>
@@ -352,6 +449,9 @@ namespace qfmain
         }
 
         #endregion
+
+
+
 
 
 

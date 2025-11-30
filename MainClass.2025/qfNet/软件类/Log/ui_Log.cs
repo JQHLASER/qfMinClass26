@@ -1,5 +1,6 @@
 ﻿using Sunny.UI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -50,20 +51,36 @@ namespace qfNet
             this.DataContext = this._DataContext;
 
             this.listBox1.DataBindings.Clear();
-            this.listBox1.DataBindings.Add("TopIndex", this._DataContext, nameof(this._DataContext.TopIndex), false);
+
             this.listBox1.DataBindings.Add("SelectedIndex", this._DataContext, nameof(this._DataContext.SelectedIndex), false, DataSourceUpdateMode.OnPropertyChanged);
             this.listBox1.DataBindings.Add("BackColor", this._DataContext, nameof(this._DataContext.BackColor), false);
             this.listBox1.DataBindings.Add("ItemHeight", this._DataContext, nameof(this._DataContext.ItemHeight), false);
-
+            this.listBox1.DataBindings.Add("IntegralHeight", this._DataContext, nameof(this._DataContext.IntegralHeight), false);
 
             this.Font = this._font;
             this.listBox1.DrawItem += (s, e) => listBox1_DrawItem(s, e);
             this.listBox1.DoubleClick += (s, e) => DoubleClick();
+
+
+            listBox1.DrawMode = DrawMode.OwnerDrawFixed;
+            listBox1.BorderStyle = BorderStyle.None;
+            listBox1.SelectionMode = SelectionMode.One;
+
+
+
+            System.Windows.Forms.Timer _timer = new Timer();
+            _timer.Interval = this._UI刷新时间;
+            _timer.Tick += Timer_Tick;
+            _timer.Start();
         }
 
 
 
-
+        /// <summary>
+        ///  每 100ms 刷一次 UI,保证流畅
+        /// </summary>
+        public int _UI刷新时间 = 100;
+        private readonly Queue<qfmain.log日志._logValue_> _Queue_buffer = new Queue<qfmain.log日志._logValue_>();
         private readonly object _lock = new object();
 
         /// <summary>
@@ -74,23 +91,7 @@ namespace qfNet
         {
             lock (_lock)
             {
-                Task.Run(() =>
-                 {
-                     this.BeginInvoke((Action)(() =>
-                       {
-                           if (this._lstLogInfo.Count >= this._最大显示行数)
-                           {
-                               for (int i = 0; i < this._lstLogInfo.Count - this._最大显示行数; i++)
-                               {
-                                   _lstLogInfo.RemoveAt(0);
-                                   this.listBox1.Items.RemoveAt(0);
-                               }
-                           }
-                           this._lstLogInfo.Add(info);
-                           this.listBox1.Items.Add("1");
-                           this._DataContext.TopIndex = this._lstLogInfo.Count - 1;
-                       }));
-                 });
+                this._Queue_buffer.Enqueue(info);
             }
         }
 
@@ -101,12 +102,7 @@ namespace qfNet
         {
             lock (_lock)
             {
-                this.BeginInvoke((Action)(() =>
-                {
-                    this.listBox1.Items.Clear();
-                    this._lstLogInfo.Clear();
-                    this._DataContext.TopIndex = -1;
-                }));
+                this._Queue_buffer.Enqueue(new qfmain.log日志._logValue_(qfmain.log日志.enum状态.Clear, DateTime.Now, ""));
             }
         }
 
@@ -154,7 +150,7 @@ namespace qfNet
             try
             {
                 int a = e.Index;
-                if (a < 0) return;
+                if (a < 0  ) return;
 
                 Color color_ = Color.Black;
                 Brush mybsh = new SolidBrush(Color.Black);
@@ -196,16 +192,16 @@ namespace qfNet
 
 
 
+
+
                 // 焦点框
                 //   e.DrawFocusRectangle();//启用后,单击时会留下残影
                 //文本 
                 //  e.Graphics.DrawString(this.listBox1.Items[a].ToString(), e.Font, mybsh, e.Bounds, StringFormat.GenericDefault);
 
                 // e.DrawBackground();  //绘制背景色,选中时会带颜色
-                // 使用 TextRenderer 绘制不换行文本
-
-
-                e.Graphics.Save();
+                // 使用 TextRenderer 绘制不换行文本 
+                // e.Graphics.Save();
                 TextRenderer.DrawText(
                     e.Graphics,
                     sb.ToString(),
@@ -229,6 +225,68 @@ namespace qfNet
 
 
         #endregion
+
+
+        bool _IsDraw = false;
+
+        /// <summary>
+        /// UI刷新线程
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            List<qfmain.log日志._logValue_> tmp;
+            lock (_lock)
+            {
+                if (this._Queue_buffer.Count == 0)
+                {
+                    return;
+                }
+                tmp = new List<qfmain.log日志._logValue_>(this._Queue_buffer);
+                this._Queue_buffer.Clear();
+            }
+             
+            _IsDraw = tmp.Count > 0 ? true : false;
+            listBox1.BeginUpdate();
+            foreach (var item in tmp)
+            {
+                if (item.状态 == qfmain.log日志.enum状态.Clear)
+                {
+                    this._lstLogInfo.Clear();
+                    this.listBox1.Items.Clear();
+                    this.listBox1.TopIndex = -1;
+                    continue;
+                }
+                else if (this._lstLogInfo.Count >= this._最大显示行数)
+                {
+                    _lstLogInfo.RemoveAt(0);
+                    this.listBox1.Items.RemoveAt(0);
+                }
+
+                this._lstLogInfo.Add(item);
+                listBox1.Items.Add(""); // 自绘            
+            }
+
+            if (!_IsDraw)
+            {
+                return;
+            }
+
+            listBox1.EndUpdate();
+
+            if (_IsDraw)
+            {
+                this.listBox1.BeginInvoke((Action)(() =>
+                {
+                    this.listBox1.TopIndex = this._lstLogInfo.Count <= 0 ? -1 : this._lstLogInfo.Count - 1;
+                    this.listBox1.SelectedIndex = this._lstLogInfo.Count <= 0 ? -1 : this._lstLogInfo.Count - 1;
+                }));
+                //this.listBox1.Refresh();  // 强制让 WinForms 消息立即处理
+            }
+
+            _IsDraw = false;
+        }
 
 
         private Color _backColor = Color.Black;
@@ -258,6 +316,9 @@ namespace qfNet
                 Invalidate();
             }
         }
+
+
+
 
 
 

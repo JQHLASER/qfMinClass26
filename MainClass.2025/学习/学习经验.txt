@@ -1,9 +1,4 @@
-﻿程序默认以管理员方式运行
-    1> 在vs的解决方案资源管理器点击项目，右击添加，新建项，选择 应用程序清单文件(仅限Windows) 列表。
-    2> 将 <requestedExecutionLevel  level="asInvoker" uiAccess="false" />改为:
-            <!-- 以管理员方式运行 -->
-       <requestedExecutionLevel level="requireAdministrator" uiAccess="false" />
-
+﻿
 
 
 获取结构体元素的名称

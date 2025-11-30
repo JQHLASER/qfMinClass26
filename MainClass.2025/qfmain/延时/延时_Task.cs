@@ -8,6 +8,13 @@ using System.Windows.Forms;
 
 namespace qfmain
 {
+    /// <summary>
+    /// 本类使有和的是 CancellationToken
+    /// <para>UI 程序用 async / await</para>
+    /// <para>服务用 CancellationToken</para>
+    /// <para>多任务不要共享 CTS</para>
+    /// <para>永远不要 while 死等</para>
+    /// </summary>
     public class 延时_Task
     {
         bool isSleep = false;
@@ -27,10 +34,11 @@ namespace qfmain
                 try
                 {
                     await Task.Delay(delay, cts.Token);
+                    rt = true;//正常结束
                 }
-                catch (Exception ex)
+                catch (OperationCanceledException ex)
                 {
-                    rt = false;
+                    rt = false;//补中断
                 }
 
             }
@@ -39,12 +47,13 @@ namespace qfmain
             return rt;
         }
 
+
         /// <summary>
-        /// Task.Delay(delay, cts.Token).Wait ();
+        /// 会阻塞UI,Task.Delay(delay, cts.Token).Wait ();
         /// </summary>
         /// <param name="delay"></param>
         /// <returns></returns>
-        public virtual async Task<bool> 延时_无返回值(int delay)
+        public virtual async Task<bool> 延时_Wait(int delay)
         {
             isSleep = true;
             bool rt = true;
@@ -52,9 +61,9 @@ namespace qfmain
             {
                 try
                 {
-                    await Task.Delay(delay, cts.Token);
+                    Task.Delay(delay, cts.Token).Wait();
                 }
-                catch (Exception ex)
+                catch (OperationCanceledException ex)
                 {
                     rt = false;
                 }

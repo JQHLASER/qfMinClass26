@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OfficeOpenXml.ConditionalFormatting;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -85,15 +86,18 @@ namespace qfmain
         {
             //string filePath = AppDomain.CurrentDomain.BaseDirectory + @"\Err MyApp.txt";
 
-            string filePath = AppDomain.CurrentDomain.BaseDirectory + @"\Err MyApp.txt";
-            //采用using关键字，会自动释放
-            using (FileStream fs = new FileStream(filePath, FileMode.Append))
-            {
-                using (StreamWriter sw = new StreamWriter(fs, Encoding.Default))
-                {
-                    sw.WriteLine(log);
-                }
-            }
+            //string filePath = AppDomain.CurrentDomain.BaseDirectory + @"\Err MyApp.txt";
+            ////采用using关键字，会自动释放
+            //using (FileStream fs = new FileStream(filePath, FileMode.Append))
+            //{
+            //    using (StreamWriter sw = new StreamWriter(fs, Encoding.Default))
+            //    {
+            //        sw.WriteLine(log);
+            //    }
+            //}
+
+            string filePath = Environment.CurrentDirectory + @"\Err MyApp.txt";
+            new 文本().Save_25(filePath, log, false, out string msgErr, true, Encoding.Default);
         }
 
 

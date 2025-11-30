@@ -86,52 +86,8 @@ namespace qfWPFmain
             return rt;
         }
 
-        /// <summary>
-        /// 写文件,以json格式保存
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
-        /// <param name="cfg"></param>
-        /// <returns></returns>
-        public override async Task<qfmain.TRuest> WriteIni(string path, string cfg, string section = "信息", string key_ = "data", bool 加密 = false, Encoding encoding_ = null)
-        {
-            bool rt = true;
-            string msgErr = string.Empty;
-            try
-            {
-                List<string> lstWork = new List<string>();
-                lstWork.Add("写");
-
-                foreach (var s in lstWork)
-                {
-                    if (!rt)
-                    {
-                        break;
-                    }
-
-                    else if (s == "写")
-                    {
-                        string vxt = JsonConvert.SerializeObject(cfg, Formatting.None);
-                        new qfmain.ini_win().Write(section, key_, vxt, path);
-
-                    }
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                rt = false;
-                msgErr = ex.Message;
-            }
-
-            qfmain.TRuest ruest = new qfmain.TRuest();
-            ruest.state = rt;
-            ruest.msg = msgErr;
-
-            return ruest;
-        }
-
+        
+         
         #endregion
 
     }

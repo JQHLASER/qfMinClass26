@@ -37,9 +37,6 @@
     <Reference Include="INIFileParser">
       <HintPath>..\qfmain\packages\ini-parser.2.5.2\lib\net20\INIFileParser.dll</HintPath>
     </Reference>
-    <Reference Include="qfWork">
-      <HintPath>..\qfWork\bin\Release\qfWork.dll</HintPath>
-    </Reference>
     <Reference Include="SqlSugar, Version=5.1.4.207, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\qfmain\packages\SqlSugar.5.1.4.207\lib\SqlSugar.dll</HintPath>
     </Reference>
@@ -139,6 +136,14 @@
       <DependentUpon>Form_语言.cs</DependentUpon>
     </Compile>
     <Compile Include="语言\Language_.cs" />
+    <Compile Include="软件类\Win_委托线程.cs" />
+    <Compile Include="软件类\显示文件信息\ui_ShowInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="软件类\显示文件信息\ui_ShowInfo.Designer.cs">
+      <DependentUpon>ui_ShowInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="软件类\显示文件信息\viewModel_ShowInfo.cs" />
     <Compile Include="软件类\winForm双缓冲设置.cs" />
     <Compile Include="软件类\密码输入框\Form_密码输入框.cs">
       <SubType>Form</SubType>
@@ -229,7 +234,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="经验\经验.txt" />
+    <Content Include="经验\Queue自动阻塞.txt" />
+    <Content Include="经验\Timer的用法.txt" />
+    <Content Include="经验\winForm经验.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -266,6 +273,9 @@
     <EmbeddedResource Include="语言\Form_语言.resx">
       <DependentUpon>Form_语言.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="软件类\显示文件信息\ui_ShowInfo.resx">
+      <DependentUpon>ui_ShowInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="软件类\密码输入框\Form_密码输入框.resx">
       <DependentUpon>Form_密码输入框.cs</DependentUpon>
     </EmbeddedResource>
@@ -298,9 +308,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Language\qfLanguage.csproj">
+      <Project>{e4bdbf82-365e-414d-901e-4de427aaca1b}</Project>
+      <Name>qfLanguage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\qfmain\qfmain.csproj">
       <Project>{405ad025-8196-461f-909a-938aba8c7af2}</Project>
       <Name>qfmain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\qfWork\qfWork.csproj">
+      <Project>{26054db8-c6b5-48db-898d-835b7197e621}</Project>
+      <Name>qfWork</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

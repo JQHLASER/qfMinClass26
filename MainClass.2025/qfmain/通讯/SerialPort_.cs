@@ -222,7 +222,7 @@ namespace qfmain
             {
                 this.jm_sys.Event_解码 -= On_接收数据_jm;
             }
-
+           
         }
 
 

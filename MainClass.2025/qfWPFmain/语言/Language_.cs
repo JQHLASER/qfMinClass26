@@ -1,9 +1,9 @@
-using System.Windows;
+ï»¿using System.Windows;
 
 namespace qfWPFmain
 {
     /// <summary>
-    /// ÓïÑÔ
+    /// è¯­è¨€
     /// </summary>
     public class Language_ : qfmain.Language_
     {
@@ -17,15 +17,17 @@ namespace qfWPFmain
 
 
 
-        public new static string GetÓïÑÔ(string TyepValue)
+        public new static string Getè¯­è¨€(string TyepValue)
         {
-            return qfmain.Language_.GetÓïÑÔ(TyepValue, qfmain.LanguageList.lst_Language);
+            (string value, qfLanguage._language_Value_[] beff) rt = qfmain.Language_.Getè¯­è¨€(TyepValue, qfLanguage.LanguageList.lst_Language);
+
+            return rt.value;
         }
 
 
-        public static void ´°ÌåÉèÖÃ(Window d)
+        public static void çª—ä½“è®¾ç½®(Window d)
         {
-            new Win_ÓïÑÔÉèÖÃ() { Owner = Window.GetWindow(d) }.ShowDialog();
+            new Win_è¯­è¨€è®¾ç½®() { Owner = Window.GetWindow(d) }.ShowDialog();
         }
 
 

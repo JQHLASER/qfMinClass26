@@ -305,9 +305,8 @@ namespace qfmain
         }
 
         /// <summary>
-        /// 后缀表示:*.jpg
-        /// </summary>
-        /// <param name="后缀"></param>
+        /// 后缀 : "*.jpg", "*.png"
+        /// </summary> 
         /// <returns></returns>
         public virtual bool 文件_获取文件名_指定后缀(string FilePath, string 后缀, out string[] 文件名, out string msgErr)
         {
@@ -393,6 +392,7 @@ namespace qfmain
 
             return rt;
         }
+
 
         public virtual bool 文件_获取文件名_含后缀(string path, out string 文件名, out string msgErr)
         {
@@ -490,20 +490,26 @@ namespace qfmain
             return rt;
         }
 
-
-        public virtual string[] 文件_获取_文件夹下所有文件名(string path, string 匹配的字符串="", SearchOption 包含的目录= System.IO.SearchOption.TopDirectoryOnly)
+        /// <summary>
+        /// 后缀 : "*.jpg", "*.png"
+        /// </summary>
+        public virtual string[] 文件_获取_文件夹下所有文件名(string path, string 后缀 = "", SearchOption 包含的目录 = System.IO.SearchOption.TopDirectoryOnly)
         {
-            string[] files = Directory.GetFiles(path, 匹配的字符串, 包含的目录);
+            string[] files = Directory.GetFiles(path, 后缀, 包含的目录);
             return files;
         }
-        public virtual bool 文件_获取_文件夹下所有文件名(string FilePath, out string[] 文件名, out string msgErr, string 匹配的字符串="", SearchOption 包含的目录= System.IO.SearchOption.TopDirectoryOnly)
+
+        /// <summary>
+        /// 后缀 : "*.jpg", "*.png"
+        /// </summary>
+        public virtual bool 文件_获取_文件夹下所有文件名(string FilePath, out string[] 文件名, out string msgErr, string 后缀 = "", SearchOption 包含的目录 = System.IO.SearchOption.TopDirectoryOnly)
         {
             bool rt = true;
             msgErr = string.Empty;
             文件名 = new string[0];
             try
             {
-                文件名 = 文件_获取_文件夹下所有文件名(FilePath, 匹配的字符串, 包含的目录);
+                文件名 = 文件_获取_文件夹下所有文件名(FilePath, 后缀, 包含的目录);
             }
             catch (Exception ex)
             {
@@ -858,6 +864,95 @@ namespace qfmain
 
         }
 
+        /// <summary>
+        /// 单位：字节
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="Length"></param>
+        /// <param name="msgErr"></param>
+        /// <returns></returns>
+        public virtual bool 文件_获取文件大小(string path, out long Length, out string msgErr)
+        {
+            bool rt = true;
+            msgErr = string.Empty;
+            Length = 0;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(path))
+                {
+                    msgErr = Language_.Get语言("路径不能为空");
+                    return false;
+                }
+
+                if (!File.Exists(path))
+                {
+                    msgErr = Language_.Get语言("文件不存在");
+                    return false;
+                }
+
+
+                FileInfo fileInfo = new FileInfo(path);
+                Length = fileInfo.Length; // 单位：字节
+            }
+            catch (Exception ex)
+            {
+                rt = false;
+                msgErr = ex.Message;
+            }
+            return rt;
+        }
+
+        #endregion
+
+
+        #region 文件夹...封装...获取文件夹下所有文件
+
+        /// <summary>
+        /// 后缀 : "*.jpg", "*.png"
+        /// </summary>
+        public virtual void 文件夹_获取所有文件_路径(string File, out List<string> lst, string 后缀 = "")
+        {
+            string[] path = new qfmain.文件_文件夹().文件_获取_文件夹下所有文件名(File, 后缀);
+            lst = new List<string>();
+            foreach (var s in path)
+            {
+
+                lst.Add(s);
+            }
+        }
+
+        /// <summary>
+        /// 后缀 : "*.jpg", "*.png"
+        /// </summary>
+        public virtual void 文件夹_获取所有文件_有后缀(string File, out List<string> lst, string 后缀 = "")
+        {
+            string[] path = new qfmain.文件_文件夹().文件_获取_文件夹下所有文件名(File, 后缀);
+            lst = new List<string>();
+            foreach (var s in path)
+            {
+
+                new qfmain.文件_文件夹().文件_获取文件名_含后缀(s, out string ezdName, out string msgerr);
+                lst.Add(ezdName);
+
+            }
+
+        }
+
+        /// <summary>
+        /// 后缀 : "*.jpg", "*.png"
+        /// </summary>
+        public virtual void 文件夹_获取所有文件_无后缀(string File, out List<string> lst, string 后缀 = "")
+        {
+            string[] path = new qfmain.文件_文件夹().文件_获取_文件夹下所有文件名(File, 后缀);
+            lst = new List<string>();
+            foreach (var s in path)
+            {
+                new qfmain.文件_文件夹().文件_获取文件名_不含后缀(s, out string ezdName, out string msgerr);
+                lst.Add(ezdName);
+            }
+
+        }
+
 
         #endregion
 
@@ -917,13 +1012,13 @@ namespace qfmain
                             {
                                 vxt = new 加解密_AES().加密_1(vxt, 密码);
                             }
-                            new 文本().Save(path, vxt, true, out msgErr, encoding_);
+                            new 文本().Save_25(path, vxt, true, out msgErr, false, encoding_);
                         }
 
                     }
                     else if (s == "读")
                     {
-                        rt = new 文本().ReadFile(path, out string rxt, out msgErr, encoding_);
+                        rt = new 文本().Read_25(path, out string rxt, out msgErr, encoding_);
                         if (rt && !string.IsNullOrEmpty(rxt))
                         {
                             if (加密)
@@ -945,58 +1040,6 @@ namespace qfmain
             return rt;
         }
 
-        /// <summary>
-        /// 写文件,以json格式保存,system.IO.json.txt
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
-        /// <param name="cfg"></param>
-        /// <returns></returns>
-        public virtual async Task<TRuest> WriteJsonText<T>(string path, T cfg, bool 加密 = false, Encoding encoding_ = null, string 密码 = "QFLASER")
-        {
-            bool rt = true;
-            string msgErr = string.Empty;
-            try
-            {
-                List<string> lstWork = new List<string>();
-                lstWork.Add("写");
-
-                foreach (var s in lstWork)
-                {
-                    if (!rt)
-                    {
-                        break;
-                    }
-
-                    else if (s == "写")
-                    {
-                        rt = new Json_().JsonTo_T(cfg, out string vxt, out msgErr);
-
-                        if (rt)
-                        {
-                            if (加密)
-                            {
-                                vxt = new 加解密().AES加密2(vxt, 密码);
-                            }
-                            await new 文本().Save_Async(path, vxt, true, encoding_);
-                        }
-                    }
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                rt = false;
-                msgErr = ex.Message;
-            }
-
-            TRuest ruest = new TRuest();
-            ruest.state = rt;
-            ruest.msg = msgErr;
-
-            return ruest;
-        }
 
 
 
@@ -1052,13 +1095,13 @@ namespace qfmain
                         {
                             vxt = new 加解密().AES加密2(vxt, 密码);
                         }
-                        new 文本().Save(path, vxt, true, out msgErr, encoding_);
+                        new 文本().Save_25(path, vxt, true, out msgErr, false, encoding_);
 
 
                     }
                     else if (s == "读")
                     {
-                        rt = new 文本().ReadFile(path, out string rxt, out msgErr, encoding_);
+                        rt = new 文本().Read_25(path, out string rxt, out msgErr, encoding_);
 
                         if (rt && !string.IsNullOrEmpty(rxt))
                         {
@@ -1091,65 +1134,6 @@ namespace qfmain
             }
             return rt;
         }
-
-        /// <summary>
-        /// 写文件,以json格式保存,Newtonsoft.Json
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
-        /// <param name="cfg"></param>
-        /// <returns></returns>
-        public virtual async Task<TRuest> WriteJson<T>(string path, T cfg, bool 加密 = false, Encoding encoding_ = null, string 密码 = "QFLASER")
-        {
-            bool rt = true;
-            string msgErr = string.Empty;
-            try
-            {
-                List<string> lstWork = new List<string>();
-                lstWork.Add("写");
-
-                foreach (var s in lstWork)
-                {
-                    if (!rt)
-                    {
-                        break;
-                    }
-
-                    else if (s == "写")
-                    {
-                        string vxt = JsonConvert.SerializeObject(cfg, Formatting.Indented);
-
-                        if (加密)
-                        {
-                            vxt = new 加解密().AES加密2(vxt, 密码);
-                        }
-                        await new 文本().Save_Async(path, vxt, true, encoding_);
-
-                    }
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                rt = false;
-                msgErr = ex.Message;
-            }
-
-            TRuest ruest = new TRuest();
-            ruest.state = rt;
-            ruest.msg = msgErr;
-
-            return ruest;
-        }
-
-
-
-
-
-
-
-
 
 
         /// <summary>
@@ -1204,13 +1188,13 @@ namespace qfmain
                         {
                             vxt = new 加解密_AES().加密_1(vxt, 密码);
                         }
-                        new 文本().Save(path, vxt, true, out msgErr, encoding_);
+                        new 文本().Save_25(path, vxt, true, out msgErr, false, encoding_);
 
 
                     }
                     else if (s == "读")
                     {
-                        rt = new 文本().ReadFile(path, out string rxt, out msgErr, encoding_);
+                        rt = new 文本().Read_25(path, out string rxt, out msgErr, encoding_);
                         if (rt && !string.IsNullOrEmpty(rxt))
                         {
                             if (加密)
@@ -1232,55 +1216,6 @@ namespace qfmain
             return rt;
         }
 
-        /// <summary>
-        /// 写文件,以json格式保存
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
-        /// <param name="cfg"></param>
-        /// <returns></returns>
-        public virtual async Task<TRuest> WriteText(string path, string cfg, bool 加密 = false, Encoding encoding_ = null, string 密码 = "QFLASER")
-        {
-            bool rt = true;
-            string msgErr = string.Empty;
-            try
-            {
-                List<string> lstWork = new List<string>();
-                lstWork.Add("写");
-
-                foreach (var s in lstWork)
-                {
-                    if (!rt)
-                    {
-                        break;
-                    }
-
-                    else if (s == "写")
-                    {
-                        string vxt = cfg;
-                        if (加密)
-                        {
-                            vxt = new 加解密().AES加密2(vxt, 密码);
-                        }
-                        await new 文本().Save_Async(path, vxt, true, encoding_);
-
-                    }
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                rt = false;
-                msgErr = ex.Message;
-            }
-
-            TRuest ruest = new TRuest();
-            ruest.state = rt;
-            ruest.msg = msgErr;
-
-            return ruest;
-        }
 
 
         /// <summary>
@@ -1330,13 +1265,11 @@ namespace qfmain
                             continue;
                         }
                         string vxt = JsonConvert.SerializeObject(cfg, Formatting.None);
-                        new ini().Write(section, key_, vxt, path, encoding_);
-
-
+                        new ini_sharpconfig(path).Write(section, key_, vxt,true );
                     }
                     else if (s == "读")
                     {
-                        string rxt = new ini().Read(section, key_, JsonConvert.SerializeObject(cfg), path, encoding_);
+                        string rxt = new ini_sharpconfig(path).Read(section, key_, JsonConvert.SerializeObject(cfg));
                         if (!string.IsNullOrEmpty(rxt))
                         {
                             cfg = JsonConvert.DeserializeObject<T>(rxt);
@@ -1353,57 +1286,11 @@ namespace qfmain
             return rt;
         }
 
-        /// <summary>
-        /// 写文件,以json格式保存
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
-        /// <param name="cfg"></param>
-        /// <returns></returns>
-        public virtual async Task<TRuest> WriteIni(string path, string cfg, string section = "信息", string key_ = "data", bool 加密 = false, Encoding encoding_ = null)
-        {
-            bool rt = true;
-            string msgErr = string.Empty;
-            try
-            {
-                List<string> lstWork = new List<string>();
-                lstWork.Add("写");
 
-                foreach (var s in lstWork)
-                {
-                    if (!rt)
-                    {
-                        break;
-                    }
-
-                    else if (s == "写")
-                    {
-                        string vxt = JsonConvert.SerializeObject(cfg, Formatting.None);
-                        new ini().Write(section, key_, vxt, path, encoding_);
-
-                    }
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                rt = false;
-                msgErr = ex.Message;
-            }
-
-            TRuest ruest = new TRuest();
-            ruest.state = rt;
-            ruest.msg = msgErr;
-
-            return ruest;
-        }
 
         #endregion
 
-
-
-
+         
 
     }
 }

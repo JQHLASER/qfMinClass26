@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NPOI.SS.Formula.Functions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -22,10 +23,6 @@ namespace qfmain
             Inistiall();
 
         }
-
-
-
-
 
 
         public class _languageInfo_
@@ -57,8 +54,7 @@ namespace qfmain
         {
             new 文件_文件夹().文件夹_新建(软件类.Files_Cfg.Files_Langeuage, out string msgerr);
             读写参数(1);
-
-            Get语言包(LanguageList.lst_Language);//本地语言包
+            Get语言包(qfLanguage.LanguageList.lst_Language);//本地语言包
         }
 
         /// <summary>
@@ -75,64 +71,73 @@ namespace qfmain
         /// </summary>   
         /// <param name="lst"></param>
         /// <param name="section">节名称</param>
-        public static void Set语言包(List<_language_Value_> lst)
+        public static void Set语言包(List<qfLanguage._language_Value_> lst)
         {
-            lock (_lock)
-            {
-                new 文件_文件夹().文件夹_新建(软件类.Files_Cfg.Files_Langeuage, out string msgerr);
-                string path = Get语言文件路径();
 
-                for (int i = 0; i < lst.Count; i++)
-                {
-                    var s = lst[i];
-                    string TypeValue = s.TypeValue;
-                    int index = i + 1;
-                    new ini().Write(s.KeyValue, $"{TypeValue}", s.LanguageValue, path);
-                }
+            new 文件_文件夹().文件夹_新建(软件类.Files_Cfg.Files_Langeuage, out string msgerr);
+            string path = Get语言文件路径();
+
+            for (int i = 0; i < lst.Count; i++)
+            {
+                var s = lst[i];
+                string TypeValue = s.TypeValue;
+                int index = i + 1;
+
+                ini_sys.Write(s.KeyValue, $"{TypeValue}", s.LanguageValue, false);
             }
+            ini_sys.Save();
         }
 
-        static readonly object _lock = new object();
-      
 
+        private static ini_sharpconfig ini_sys;
+        private static readonly object _lock = new object();
         /// <summary>
         /// 从文件获取语言
         /// </summary> 
         /// <param name="lst"></param>
         /// <param name="section">节名称</param>
-        public static void Get语言包(List<_language_Value_> lst)
+        public static void Get语言包(List<qfLanguage._language_Value_> lst)
         {
             lock (_lock)
             {
                 new 文件_文件夹().文件夹_新建(软件类.Files_Cfg.Files_Langeuage, out string msgerr);
                 string path = Get语言文件路径();
+                ini_sys = new ini_sharpconfig(path);
+                bool 是否写入 = false;
+
+
                 for (int i = 0; i < lst.Count; i++)
                 {
                     var s = lst[i];
                     string TypeValue = s.TypeValue;
-                    int index = i + 1;
-                    string languageVlaue = new ini().Read(s.KeyValue, $"{TypeValue}", "", path);
+                    string languageVlaue = ini_sys.Read(s.KeyValue, $"{TypeValue}", "");
 
                     if (string.IsNullOrEmpty(languageVlaue))
                     {
                         languageVlaue = s.LanguageValue;
-                        new ini().Write(s.KeyValue, $"{TypeValue}", languageVlaue, path);
+                        ini_sys.Write(s.KeyValue, $"{TypeValue}", languageVlaue, false);
+                        是否写入 = true;
                     }
                     lst[i].LanguageValue = languageVlaue;
+
+                }
+
+                if (是否写入)
+                {
+                    ini_sys.Save();
                 }
             }
         }
 
 
-        public static string Get语言(string TypeValue, List<_language_Value_> lst)
+        public static (string languageValue, qfLanguage._language_Value_[] beff) Get语言(string TypeValue, List<qfLanguage._language_Value_> lst)
         {
-            _language_Value_[] ma = lst.Where(p => p.TypeValue == TypeValue).ToArray();
-            if (ma.Length == 0)
-            {
-                return TypeValue;
-            }
-            return ma[0].LanguageValue;
+            qfLanguage._language_Value_[] ma = lst.Where(p => p.TypeValue == TypeValue).ToArray();
+            string value = ma.Length > 0 ? ma[0].LanguageValue : TypeValue;
+
+            return (value, ma);
         }
+ 
 
         /// <summary>
         /// 本地使用
@@ -140,9 +145,10 @@ namespace qfmain
         /// <param name="TypeValue"></param>
         /// <param name=""></param>
         /// <returns></returns>
-        internal static string Get语言(string TypeValue)
+        public static string Get语言(string TypeValue)
         {
-            return Get语言(TypeValue, LanguageList.lst_Language);
+            (string languageValue, qfLanguage._language_Value_[] beff) rt = Get语言(TypeValue, qfLanguage.LanguageList.lst_Language);
+            return rt.languageValue;
         }
 
 

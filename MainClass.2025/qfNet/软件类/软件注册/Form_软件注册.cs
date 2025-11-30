@@ -36,8 +36,23 @@ namespace qfNet
             this.FormClosing += (s, e) => Event_FormClosing();
             this.uiButton_注册.Click += (s, e) => Event_注册();
             this.uiCheckBox_试用.Click += (s, e) => On_试用();
+            this.KeyDown += (s, e) => On_KeyDown(e);
+            this.pictureBox_二维码.DoubleClick += (s, e) => 设置Tcp();
         }
 
+
+        void 设置Tcp()
+        {
+            this._DataContext.TcpClien_设置窗体();
+        }
+
+        void On_KeyDown(KeyEventArgs e)
+        {
+            if (e.KeyCode==Keys.F12 )
+            {
+                设置Tcp();
+            }
+        }
 
 
         void Event_注册()

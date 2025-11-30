@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -143,11 +144,22 @@ namespace qfWork
         /// <param name="笔号"></param>
         /// <param name="是否填充"></param>
         /// <returns></returns>
-        public virtual _Err_jczMarkEzd2_ 添加曲线(double[,] 曲线顶点数组, int 顶点数量, string 对象名称, int 笔号, int 是否填充)
+        public virtual _Err_jczMarkEzd2_ 添加曲线(string 对象名称, double[,] 曲线顶点数组, int 顶点数量, int 笔号, int 是否填充)
         {
             int nErr = JczLmc.添加曲线(曲线顶点数组, 顶点数量, 对象名称, 笔号, 是否填充);
             return (_Err_jczMarkEzd2_)nErr;
         }
+
+
+        /// <summary>
+        /// 按比例缩放大小
+        /// </summary> 
+        public virtual _Err_jczMarkEzd2_  按比例缩放对象(string 对象名称, double xCenter, double yCenter, double x, double y)
+        {
+            int nErr = JczLmc.指定对象按比例缩放(对象名称, xCenter, yCenter, x, y);
+            return (_Err_jczMarkEzd2_)nErr;
+        }
+
 
         public virtual _Err_jczMarkEzd2_ 删除指定对象(string 对象名称)
         {
@@ -162,17 +174,13 @@ namespace qfWork
         }
 
         /// <summary>
-        /// 
+        /// A : 角度
         /// </summary>
-        /// <param name="x坐标"></param>
-        /// <param name="y坐标"></param>
-        /// <param name="x旋转中心"></param>
-        /// <param name="y旋转中心"></param>
-        /// <param name="A"></param>
-        /// <returns>反回值不准确,一般不采集</returns>
-        public virtual int 旋转变换(double x坐标, double y坐标, double x旋转中心, double y旋转中心, double A)
+        public virtual _Err_jczMarkEzd2_ 旋转变换(double x, double y, double xCenter, double yCenter, double A)
         {
-            return JczLmc.旋转变换(x坐标, y坐标, x旋转中心, y旋转中心, Math.PI / 180 * A);
+
+            _Err_jczMarkEzd2_ nErr = (_Err_jczMarkEzd2_)JczLmc.旋转变换(x, y, xCenter, yCenter, A * Math.PI / 180d);
+            return nErr;
         }
 
         public virtual IntPtr 获取_图形Intptr(int width, int height)
@@ -208,16 +216,17 @@ namespace qfWork
         }
 
 
-        public virtual _Err_jczMarkEzd2_ 获取_对象名称(int 对象索引, ref string Name)
+        public virtual _Err_jczMarkEzd2_ 获取_对象名称(int 对象索引, ref string Name, int lenght = 255)
         {
-            StringBuilder str = new StringBuilder(255);
+            StringBuilder str = new StringBuilder(lenght);
             int nErr = JczLmc.获取指定序号的对象名称(对象索引, str);
+            Name = str.ToString();
             return (_Err_jczMarkEzd2_)nErr;
         }
 
-        public virtual _Err_jczMarkEzd2_ 获取_对象内容(string strName, ref string strDate)
+        public virtual _Err_jczMarkEzd2_ 获取_对象内容(string strName, ref string strDate, int lenght = 255)
         {
-            StringBuilder xt = new StringBuilder(255);
+            StringBuilder xt = new StringBuilder(lenght);
             int nErr = JczLmc.获取指定对象的内容(strName, xt);
             strDate = xt.ToString();
             return (_Err_jczMarkEzd2_)nErr;
@@ -361,6 +370,8 @@ namespace qfWork
             }
 
         }
+
+
 
         public virtual _Err_jczMarkEzd2_ 旋转对象(string 对象名称, double A)
         {
@@ -662,6 +673,8 @@ namespace qfWork
         }
 
 
+
+
         #endregion
 
 
@@ -688,6 +701,7 @@ namespace qfWork
             this._is连续加工 = true;
             On_加工状态(_激光加工状态_.红指示光中);
             输出(this._参数.OUT.红光, true);
+
             while (this.isRun && this._is连续加工)
             {
                 Thread.Sleep(this._参数.连续加工周期);
@@ -828,7 +842,7 @@ namespace qfWork
 
         #region Err
 
-        public virtual bool Err_加载激光模板中(out string msgErr)
+        public virtual bool Err_加载激光模板中(out string msgErr, bool 是否日志 = true)
         {
             msgErr = "";
             if (this._激光加工状态 == _激光加工状态_.加载激光模板中)
@@ -840,61 +854,90 @@ namespace qfWork
             return true;
         }
 
-        public virtual bool Err_未初始化(out string msgErr)
+        public virtual bool Err_初始化中(out string msgErr, bool 是否日志 = true)
+        {
+            msgErr = "";
+            if (this._初始化状态 == _初始化状态_.初始化中)
+            {
+                msgErr = Get语言("初始化中");
+                if (是否日志)
+                {
+                    On_Log(false, msgErr);
+                }
+                return false;
+            }
+            return true;
+        }
+
+        public virtual bool Err_未初始化(out string msgErr, bool 是否日志 = true)
         {
             msgErr = "";
             if (this._初始化状态 != _初始化状态_.已初始化)
             {
                 msgErr = Get语言("未初始化");
-                On_Log(false, msgErr);
+                if (是否日志)
+                {
+                    On_Log(false, msgErr);
+                }
                 return false;
             }
             return true;
         }
 
-        public virtual bool Err_红光指示中(out string msgErr)
+        public virtual bool Err_红光指示中(out string msgErr, bool 是否日志 = true)
         {
             msgErr = "";
             if (this._激光加工状态 == _激光加工状态_.红指示光中)
             {
                 msgErr = Get语言("红光指示中");
-                On_Log(false, msgErr);
+                if (是否日志)
+                {
+                    On_Log(false, msgErr);
+                }
                 return false;
             }
             return true;
         }
 
-        public virtual bool Err_出激光标刻中(out string msgErr)
+        public virtual bool Err_出激光标刻中(out string msgErr, bool 是否日志 = true)
         {
             msgErr = "";
             if (this._激光加工状态 == _激光加工状态_.出激光标刻中)
             {
                 msgErr = Get语言("出激光标刻中");
-                On_Log(false, msgErr);
+                if (是否日志)
+                {
+                    On_Log(false, msgErr);
+                }
                 return false;
             }
             return true;
         }
 
-        public virtual bool Err_无可加工数据(out string msgErr)
+        public virtual bool Err_无可加工数据(out string msgErr, bool 是否日志 = true)
         {
             msgErr = "";
             if (获取_对象总数() == 0)
             {
                 msgErr = Get语言("激光模板中无可加工数据");
-                On_Log(false, msgErr);
+                if (是否日志)
+                {
+                    On_Log(false, msgErr);
+                }
                 return false;
             }
             return true;
         }
 
-        public virtual bool Err_未加载激光模板(out string msgErr)
+        public virtual bool Err_未加载激光模板(out string msgErr, bool 是否日志 = true)
         {
             msgErr = "";
             if (string.IsNullOrEmpty(this._Path_ezd))
             {
                 msgErr = Get语言("未加载激光模板");
-                On_Log(false, msgErr);
+                {
+                    On_Log(false, msgErr);
+                }
                 return false;
             }
             return true;
@@ -914,13 +957,16 @@ namespace qfWork
         /// DLL路径
         /// </summary>
         string path_MarkEzd = Environment.CurrentDirectory + "\\Ezd2\\Miks.dll";
-        public virtual bool Err_dll是否存在(out string msgErr)
+        public virtual bool Err_dll是否存在(out string msgErr, bool 是否日志 = true)
         {
             msgErr = string.Empty;
             if (!new 文件_文件夹().文件_是否存在(path_MarkEzd))
             {
                 msgErr = Get语言("DL故障");
-                On_Log(false, msgErr);
+                if (是否日志)
+                {
+                    On_Log(false, msgErr);
+                }
                 return false;
             }
 
@@ -1147,40 +1193,40 @@ namespace qfWork
         _EzCad2打开状态_ EzCad2打开状态 = _EzCad2打开状态_.None;
 
 
-        public async Task <bool> EzCad2软件_打开()
+        public async Task<bool> EzCad2软件_打开()
         {
-         Task t0=   Task.Run(() =>
-            {
-                try
-                {
-                    string ezdPath_ = this._Path_ezd_最后一次;
-                    EzCad2打开状态 = _EzCad2打开状态_.已处理;
-                    if (this._初始化状态 == _初始化状态_.已初始化)
-                    {
-                        this.释放打标卡(true);
-                        Thread.Sleep(1000);
-                    }
+            Task t0 = Task.Run(() =>
+               {
+                   try
+                   {
+                       string ezdPath_ = this._Path_ezd_最后一次;
+                       EzCad2打开状态 = _EzCad2打开状态_.已处理;
+                       if (this._初始化状态 == _初始化状态_.已初始化)
+                       {
+                           this.释放打标卡(true);
+                           Thread.Sleep(1000);
+                       }
 
-                    if (!string.IsNullOrEmpty(ezdPath_) && new 文件_文件夹().文件_是否存在(ezdPath_))
-                    {
-                        new 文件_文件夹().文件_打开(ezdPath_, out string msgErr, "", ProcessWindowStyle.Maximized);
+                       if (!string.IsNullOrEmpty(ezdPath_) && new 文件_文件夹().文件_是否存在(ezdPath_))
+                       {
+                           new 文件_文件夹().文件_打开(ezdPath_, out string msgErr, "", ProcessWindowStyle.Maximized);
 
-                    }
-                    else
-                    {
+                       }
+                       else
+                       {
 
-                        new 文件_文件夹().文件_打开(JczLmc.path_EzCad2 + $"\\{this._参数.激光软件名称}.exe", out string msgErr, "", ProcessWindowStyle.Maximized);
-                    }
-                    Thread.Sleep(3000);
-                    EzCad2打开状态 = _EzCad2打开状态_.打开;
-                }
-                catch (Exception ex)
-                {
-                    On_Log(false, ex.Message);
-                    Thread.Sleep(1000);
-                    EzCad2打开状态 = _EzCad2打开状态_.None;
-                }
-            });
+                           new 文件_文件夹().文件_打开(JczLmc.path_EzCad2 + $"\\{this._参数.激光软件名称}.exe", out string msgErr, "", ProcessWindowStyle.Maximized);
+                       }
+                       Thread.Sleep(3000);
+                       EzCad2打开状态 = _EzCad2打开状态_.打开;
+                   }
+                   catch (Exception ex)
+                   {
+                       On_Log(false, ex.Message);
+                       Thread.Sleep(1000);
+                       EzCad2打开状态 = _EzCad2打开状态_.None;
+                   }
+               });
 
             await t0;
             return true;

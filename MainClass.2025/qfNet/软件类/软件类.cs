@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,15 +16,41 @@ namespace qfNet
         /// </summary>
         /// <param name="信息"></param>
         /// <param name="版本信息"></param>
-        public void Win_帮助及软件信息(string 信息, string 版本信息 = "(QF.L)250910.5")
+        public void Win_显示信息(string 信息, string Title = "")
         {
-            using (Form_查看信息 form = new Form_查看信息(版本信息, 信息, Color.Black))
+            using (Form_查看信息 form = new Form_查看信息(Title, 信息, Color.Black))
             {
                 form.ShowDialog();
             }
 
 
         }
+
+        /// <summary>
+        /// 弹出帮助窗体,显示help.txt信息
+        /// </summary>
+        /// <param name="信息"></param>
+        /// <param name="版本信息"></param>
+        public void Win_软件信息及help(string[] 信息, string 版本信息 = "(QF.L)250910.5")
+        {
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var s in 信息)
+            {
+                sb.Append(s + "\r\n");
+            }
+            string path = $"{qfmain.软件类.Files_Cfg.Files_help}\\help.txt";
+            if (!new qfmain.文件_文件夹().文件_是否存在(path))
+            {
+                new qfmain.文本().Save_25(path, "help", true, out string msgErr1);
+            }
+            new qfmain.文本().Read_25(path, out string vxt, out string msgErr);
+            sb.Append(vxt);
+
+            Win_显示信息(sb.ToString(),版本信息);
+
+        }
+
 
         /// <summary>
         /// 密码正确时返回 DialogResult = DialogResult.Yes
@@ -50,16 +77,20 @@ namespace qfNet
         /// </summary> 
         public DialogResult Win_文件类弹窗(string File, string 文件类型, string 后缀, out string FileName, _文件弹窗类型_ 类型 = _文件弹窗类型_.打开)
         {
-            using (Label lab = new Label())
+
+            using (Form_文件_弹窗 forms = new Form_文件_弹窗(File, 文件类型, 后缀, 类型))
             {
-                using (Form_文件_弹窗 forms = new Form_文件_弹窗(lab, File, 文件类型, 后缀, 类型))
-                {
-                    DialogResult dlt = forms.ShowDialog();
-                    FileName = lab.Text;
-                    return dlt;
-                }
+                DialogResult dlt = forms.ShowDialog();
+                FileName = forms._selectedFileName;
+                return dlt;
             }
+
         }
+
+
+
+
+
 
     }
 }

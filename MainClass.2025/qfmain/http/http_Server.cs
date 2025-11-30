@@ -10,232 +10,212 @@ using System.Threading.Tasks;
 
 namespace qfmain
 {
+
+    using Newtonsoft.Json;
+    using System;
+    using System.IO;
+    using System.Net;
+    using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class http_Server
     {
+        #region 内部类型
+
         public class _info_请求信息_
         {
             /// <summary>
-            /// 路由,如http://127.0.0.1/mark/ 其中/mark为路由
+            /// 路由，如 http://127.0.0.1/mark/ 中的 /mark
             /// </summary>
-            public string AbsolutePath { set; get; } = "/";
-
-            public string 数据 { set; get; } = "";
-
-        }
-
-        public class Config_
-        {
-            public int 线程周期 { set; get; } = 1;
+            public string AbsolutePath { get; set; } = "/";
 
             /// <summary>
-            /// -2:启动中,-1:未启动,0:已启动
+            /// 请求方法 GET / POST
             /// </summary>
-            public int 服务启动状态 { set; get; } = -1;
+            public string Method { get; set; } = "GET";
 
-            public string[] Url { set; get; } = new string[0];
+            /// <summary>
+            /// Body 数据
+            /// </summary>
+            public string 数据 { get; set; } = "";
         }
 
 
-        public Config_ Config = new Config_();
-        private bool run_ = true;
-        //private readonly HttpListener _listener;
-        //private readonly string[] _url;
+
+        #endregion
+
+        #region 字段
+
+        public volatile qfmain._启动状态_ _服务启动状态 = qfmain._启动状态_.未启动;
+
+        public string[] _Url = Array.Empty<string>();
 
         private HttpListener _listener;
-        private string[] _url;
+        private CancellationTokenSource _cts;
 
+        #endregion
 
-
-        //public http服务_25(string[] url)
-        //{
-        //    _url = url;
-        //    _listener = new HttpListener();
-        //    foreach (string s in _url)
-        //    {
-        //        _listener.Prefixes.Add(s);
-        //    }
-        //}
+        #region 启动 / 停止
 
         /// <summary>
-        /// 启动服务
+        /// 异步启动（不阻塞调用线程）
         /// </summary>
-        public virtual void Start(string[] url)
+        public void Start(string[] url)
         {
-            _url = url;
-            _listener = new HttpListener();
-            foreach (string s in _url)
-            {
-                _listener.Prefixes.Add(s);
-            }
+            if (_listener != null && _listener.IsListening)
+                return;
 
-            this.Config.服务启动状态 = -2;
+            On_启动状态(_启动状态_.启动中);
+            _listener = new HttpListener();
+            foreach (var u in url)
+                _listener.Prefixes.Add(u);
+
+            _cts = new CancellationTokenSource();
+
             try
             {
                 _listener.Start();
-                this.Config.服务启动状态 = _listener.IsListening ? 0 : -1;
+                On_启动状态(_启动状态_.已启动);
             }
             catch (Exception ex)
-            {
-                this.Config.服务启动状态 = -1;
-            }
-
-
-
-            string show = this.Config.服务启动状态 == 0 ? "OK" : "NG";
-            bool rt = this.Config.服务启动状态 == 0 ? true : false;
-            On_日志(rt, $"httpServer,{Language_.Get语言("启动")},{show},{JsonConvert.SerializeObject(_url)}");
-
-            if (!rt)
-            {
+            { 
+                On_启动状态(_启动状态_.未启动);
+                On_日志(false, ex.ToString());
                 return;
             }
 
-            while (run_)
-            {
-                if (this.Config.线程周期 > 0)
-                {
-                    Thread .Sleep (this.Config.线程周期);
-                }
-                if (!run_)
-                {
-                    break;
-                }
+            //On_日志(true, $"httpServer, OK,{JsonConvert.SerializeObject(url)}");
 
-
-                try
-                {
-                    var context = _listener.GetContext();
-                    ProcessRequest(context);
-                }
-                catch (Exception ex)
-                {
-                    On_日志(false, $"httpServer,Error: {ex.Message}");
-                }
-            }
-
-
-
-
-        }
-
-        public virtual bool Start(string[] url, out string msgErr)
-        {
-            bool rt = true;
-            msgErr = string.Empty;
-            try
-            {
-                Start(url);
-            }
-            catch (Exception ex)
-            {
-                rt = false;
-                msgErr = ex.ToString();
-            }
-            if (!rt)
-            {
-                Config.服务启动状态 = -1;
-            }
-
-
-            return rt;
-        }
-
-
-
-        void ProcessRequest(HttpListenerContext context)
-        {
-            // 获取请求信息
-            var request = context.Request;
-            var response = context.Response;
-
-            // log($"{request.HttpMethod} {request.Url}  ");
-
-            try
-            {
-                //// string mm = request.Headers.GetValues("");
-                //string responseString;
-                //// 根据请求路径处理不同路由
-                //if (request.Url.AbsolutePath == "/")
-                //{
-                //    //  responseString = "<h1>Simple HTTP Server</h1><p>Hello World!</p>";
-
-                //    responseString = new StreamReader(request.InputStream).ReadToEndAsync().Result;
-                //}
-                //else if (request.Url.AbsolutePath == "/json")
-                //{
-                //    responseString = "{\"message\":\"Hello JSON\"}";
-                //    response.ContentType = "application/json";
-                //}
-                //else
-                //{
-                //    response.StatusCode = (int)HttpStatusCode.NotFound;
-                //    responseString = "<h1>404 Not Found</h1>";
-                //}
-
-
-
-                _info_请求信息_ info = new _info_请求信息_();
-                info.AbsolutePath = request.Url.AbsolutePath;
-                info.数据 = new StreamReader(request.InputStream).ReadToEndAsync().Result;
-                if (!string.IsNullOrEmpty(info.数据))
-                {
-                    string responseString = On_请求处理(info);
-                    // 写入响应
-                    byte[] buffer = Encoding.UTF8.GetBytes(responseString);
-                    response.ContentLength64 = buffer.Length;
-                    response.OutputStream.Write(buffer, 0, buffer.Length);
-                }
-
-                
-
-                //  log(responseString);
-            }
-            finally
-            {
-                response.OutputStream.Close();
-            }
-
-
+            // 后台监听
+            Task.Run(() => ListenLoopAsync(_cts.Token));
         }
 
         /// <summary>
-        /// 停止/释放
+        /// 停止
         /// </summary>
-        public virtual void Stop()
+        public void Stop()
         {
-            Config.服务启动状态 = -1;
-            run_ = false;
-            _listener.Stop();
-            _listener.Close();
-
-        }
-
-        public virtual bool Stop(out string msgErr)
-        {
-            bool rt = true;
-            msgErr = string.Empty;
             try
             {
-                Stop();
+
+                On_启动状态(_启动状态_.未启动);
+
+                _cts?.Cancel();
+
+                if (_listener != null)
+                {
+                    if (_listener.IsListening)
+                        _listener.Stop();
+
+                    _listener.Close();
+                }
+            }
+            catch { }
+        }
+
+        #endregion
+
+        #region 监听循环
+
+        private async Task ListenLoopAsync(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                HttpListenerContext context = null;
+
+                try
+                {
+                    context = await _listener.GetContextAsync();
+                }
+                catch (HttpListenerException)
+                {
+                    break; // Stop 时会进这里
+                }
+                catch (ObjectDisposedException)
+                {
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    On_日志(false, ex.ToString());
+                    continue;
+                }
+
+                // 并发处理请求
+                _ = Task.Run(() => ProcessRequestAsync(context), token);
+            }
+        }
+
+        #endregion
+
+        #region 请求处理
+
+        private async Task ProcessRequestAsync(HttpListenerContext context)
+        {
+            var request = context.Request;
+            var response = context.Response;
+
+            try
+            {
+                var info = new _info_请求信息_
+                {
+                    AbsolutePath = request.Url.AbsolutePath,
+                    Method = request.HttpMethod
+                };
+
+                // 读取 Body（POST / PUT）
+                if (request.HasEntityBody)
+                {
+                    using (var reader = new StreamReader(request.InputStream, request.ContentEncoding))
+                    {
+                        info.数据 = await reader.ReadToEndAsync();
+                    }
+                }
+
+                string result = "";
+
+                try
+                {
+                    result = Event_请求处理?.Invoke(info) ?? "";
+                }
+                catch (Exception ex)
+                {
+                    On_日志(false, ex.ToString());
+                    response.StatusCode = 500;
+                    result = "Server Error";
+                }
+
+                byte[] buffer = Encoding.UTF8.GetBytes(result);
+
+                response.StatusCode = 200;
+                response.ContentType = "application/json; charset=utf-8";
+                response.ContentLength64 = buffer.Length;
+
+                await response.OutputStream.WriteAsync(buffer, 0, buffer.Length);
             }
             catch (Exception ex)
             {
-                rt = false;
-                msgErr = ex.Message;
+                On_日志(false, ex.ToString());
             }
-            return rt;
+            finally
+            {
+                try { response.OutputStream.Close(); } catch { }
+            }
         }
 
+        #endregion
+
+        #region 参数读取
 
         public virtual void 读参数(string path)
         {
-            string[] url = Config.Url;
-            new 文件_文件夹().WriteReadJson(path, 1, ref url, out string msgErr);
-            Config.Url = url;
-
+            string[] url = this._Url;
+            new 文件_文件夹().WriteReadJson(path, 1, ref url, out _);
+            this._Url = url;
         }
 
-
+        #endregion
 
         #region 事件
 
@@ -243,31 +223,29 @@ namespace qfmain
         /// 参数：(bool)状态,(string)日志
         /// </summary>
         public event Action<bool, string> Event_日志;
+        private void On_日志(bool status, string log)
+        {
+            Event_日志?.Invoke(status, log);
+        }
+
+
+
         /// <summary>
-        /// 返回:处理后的结果
-        /// <para>参数(info_请求信息_)请求信息</para>
+        /// 请求处理，返回响应内容
         /// </summary>
         public event Func<_info_请求信息_, string> Event_请求处理;
 
-        void On_日志(bool status, string logStr)
+        public event Action<qfmain._启动状态_> Event_启动状态;
+        private void On_启动状态(qfmain._启动状态_ state)
         {
-
-            Event_日志?.Invoke(status, logStr);
-
+            this._服务启动状态 = state;
+            Event_启动状态?.Invoke(state);
         }
-        string On_请求处理(_info_请求信息_ info)
-        {
-            string xt = Event_请求处理 is null ? "" : Event_请求处理?.Invoke(info);
-            return xt;
-        }
-
-
-
 
 
         #endregion
-
-
-
     }
+
+
+
 }

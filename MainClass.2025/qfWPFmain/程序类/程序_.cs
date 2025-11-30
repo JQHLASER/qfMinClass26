@@ -69,7 +69,7 @@ namespace qfWPFmain
             string xt = "-------------------- Err --------------------\r\n";
             xt += $"{ErrValue}\r\n";
             xt += "------------------------------End\r\n";
-            new 文本().Save(ErrPath, xt, false, out string msgErr);
+            new 文本().Save_25(ErrPath, xt, false, out string msgErr);
         }
 
         /// <summary>

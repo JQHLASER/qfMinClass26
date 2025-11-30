@@ -178,12 +178,12 @@ namespace qfmain
         /// <param name="msgErr"></param>
         /// <returns></returns>
         public async Task<(bool rt, string msgErr)> Connect连接Async(bool 是否先读取参数 = true, bool 是否先断开 = true)
-        {           
+        {
             if (是否先读取参数)
             {
                 参数读写(1);
             }
-            return await Connect连接Async(this._参数,   是否先断开);
+            return await Connect连接Async(this._参数, 是否先断开);
         }
 
 
@@ -373,6 +373,7 @@ namespace qfmain
                 {
                     this.jm_sys.Event_解码 -= On_接收数据_jm;
                 }
+                
             }
 
 
@@ -447,7 +448,7 @@ namespace qfmain
                         是否需要延时 = true;
                         continue;
                     }
-                    else if (this._连接状态 == 0)
+                    else if (this._连接状态 == _连接状态_.已连接)
                     {
                         if (!判断是否连接_1(1000))
                         {
@@ -487,15 +488,7 @@ namespace qfmain
 
         }
 
-        /// <summary>
-        /// Poll()
-        /// </summary>
-        /// <returns></returns>
-        public bool 判断是否连接(int 检测超时 = 1000)
-        {
-            return client.Poll(检测超时, SelectMode.SelectWrite);
-        }
-
+      
 
         public bool Err_未连接()
         {
@@ -513,8 +506,31 @@ namespace qfmain
         /// <param name="socket_"></param>
         /// <returns></returns>
         public bool 判断是否连接_1(int 检测超时 = 1000)
-        {
-            return !((client.Poll(检测超时, SelectMode.SelectRead) && (client.Available == 0)) || !client.Connected);
+        { 
+            if (client == null)
+                return false;
+
+            try
+            {
+                if (!client.Connected)
+                    return false;
+
+                // 优雅断开检测
+                if (client.Poll(检测超时, SelectMode.SelectRead) && client.Available == 0)
+                    return false;
+
+                // 强制触发底层 TCP 状态检测
+                client.Send(new byte[0]);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+       
+
+
         }
 
 

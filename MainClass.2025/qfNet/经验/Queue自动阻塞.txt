@@ -1,0 +1,31 @@
+﻿
+目的是自动阻塞的线程 ,当 Queue中Add数据时,会触发   On_Queue处理();
+                  
+private readonly BlockingCollection<_logValue_> _queue = new BlockingCollection<_logValue_>();     //Queue队列
+private readonly CancellationTokenSource _cts = new CancellationTokenSource();   //令牌
+
+void 初始化( )
+{    
+    // 启动线程
+    Task.Run(On_Queue处理, _cts.Token);       
+}
+
+
+//添加到队列 
+ _queue.Add(info);
+ 
+
+void 释放()
+{
+    _cts.Cancel();   //释放令牌
+    _queue.CompleteAdding();   //自动退出循环      会在消费完所有剩余数据后 自动退出 foreach 循环。
+}
+
+//处理队列事件
+private async Task On_Queue处理()
+{
+    foreach (var s in _queue.GetConsumingEnumerable())
+    {
+     //处理事件
+    }
+}

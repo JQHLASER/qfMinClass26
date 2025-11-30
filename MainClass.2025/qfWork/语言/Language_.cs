@@ -15,7 +15,9 @@ namespace qfWork
           
         public new static string Get语言(string TyepValue)
         {
-            return qfmain.Language_.Get语言(TyepValue, qfmain. LanguageList.lst_Language);
+            (string value, qfLanguage._language_Value_[] beff) rt = qfmain.Language_.Get语言(TyepValue, qfLanguage.LanguageList.lst_Language);
+
+            return rt.value;
         }
 
  

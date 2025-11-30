@@ -50,6 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Language\qfLanguage.csproj" />
     <ProjectReference Include="..\qfmain\qfmain.csproj" />
     <ProjectReference Include="..\qfWork\qfWork.csproj" />
   </ItemGroup>

@@ -35,11 +35,9 @@
             // uiTextBox1
             // 
             this.uiTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.uiTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uiTextBox1.FillColor = System.Drawing.Color.WhiteSmoke;
-            this.uiTextBox1.Font = new System.Drawing.Font("微软雅黑", 11.89565F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiTextBox1.ForeColor = System.Drawing.Color.Black;
-            this.uiTextBox1.Location = new System.Drawing.Point(2, 35);
+            this.uiTextBox1.FillColor = System.Drawing.Color.White;
+            this.uiTextBox1.Font = new System.Drawing.Font("微软雅黑", 10.01739F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiTextBox1.Location = new System.Drawing.Point(53, 79);
             this.uiTextBox1.Margin = new System.Windows.Forms.Padding(0);
             this.uiTextBox1.Maximum = 2147483647D;
             this.uiTextBox1.Minimum = -2147483648D;
@@ -48,14 +46,13 @@
             this.uiTextBox1.Name = "uiTextBox1";
             this.uiTextBox1.Padding = new System.Windows.Forms.Padding(5);
             this.uiTextBox1.ReadOnly = true;
-            this.uiTextBox1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(56)))), ((int)(((byte)(110)))));
-            this.uiTextBox1.RectSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.None;
-            this.uiTextBox1.Size = new System.Drawing.Size(796, 563);
-            this.uiTextBox1.Style = Sunny.UI.UIStyle.Custom;
+            this.uiTextBox1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(219)))), ((int)(((byte)(227)))));
+            this.uiTextBox1.Size = new System.Drawing.Size(589, 429);
+            this.uiTextBox1.Style = Sunny.UI.UIStyle.White;
             this.uiTextBox1.StyleCustomMode = true;
             this.uiTextBox1.TabIndex = 0;
             this.uiTextBox1.Text = "uiTextBox1";
-            this.uiTextBox1.填充颜色 = System.Drawing.Color.WhiteSmoke;
+            this.uiTextBox1.填充颜色 = System.Drawing.Color.White;
             // 
             // Form_查看信息
             // 

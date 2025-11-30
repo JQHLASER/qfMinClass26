@@ -1,0 +1,18 @@
+﻿
+1> ManualResetEvent方法	  (后台线程)
+		ManualResetEvent evt = new ManualResetEvent(false);	
+		// 等待线程
+		evt.WaitOne();   // 阻塞等待，不耗 CPU
+
+		// 设置线程
+		evt.Set();       // 通知 ,等待结束
+	 
+
+			  
+ 2> Task / async（现代 C# 推荐,UI 程序）
+		TaskCompletionSource<bool> tcs = new();	  	
+		// 等待
+		await tcs.Task;	  	
+		// 设置 	 
+		tcs.SetResult(true); //等待结束
+		 

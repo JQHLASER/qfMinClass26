@@ -65,17 +65,6 @@
     <Compile Include="激光\打标\金橙子\EzCad2\多头\MultilineMarkEzd.cs" />
     <Compile Include="激光\打标\金橙子\EzCad2\多头\multilineMarkEzd_Lcm.cs" />
     <Compile Include="激光\打标\金橙子\EzCad3\EzCad3_TcpServer.cs" />
-    <Compile Include="编码\方法\编码_Err.cs" />
-    <Compile Include="编码\方法\编码_json.cs" />
-    <Compile Include="编码\方法\编码_文件.cs" />
-    <Compile Include="编码\方法\编码_编辑.cs" />
-    <Compile Include="编码\方法\编码_计算.cs" />
-    <Compile Include="编码\结构\_编码_Type_.cs" />
-    <Compile Include="编码\结构\_编码_对象_.cs" />
-    <Compile Include="编码\结构\_编码_元素_.cs" />
-    <Compile Include="编码\结构\_编码_功能_.cs" />
-    <Compile Include="编码\结构\_编码_文件信息_.cs" />
-    <Compile Include="编码\编码.cs" />
     <Compile Include="语言\Language_.cs" />
     <Compile Include="读码器\读码器.cs" />
     <Compile Include="运动控制卡\正运动\Class\Zmcaux.cs" />
@@ -90,6 +79,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Language\qfLanguage.csproj">
+      <Project>{e4bdbf82-365e-414d-901e-4de427aaca1b}</Project>
+      <Name>qfLanguage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\qfmain\qfmain.csproj">
       <Project>{405ad025-8196-461f-909a-938aba8c7af2}</Project>
       <Name>qfmain</Name>

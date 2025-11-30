@@ -1,0 +1,47 @@
+﻿     
+ System.Windows.Forms.Timer _timer = new Timer();
+ _timer.Interval = this._UI刷新时间;
+ _timer.Tick += Timer_Tick;
+ _timer.Start();
+
+
+
+    /// <summary>
+        /// UI刷新线程
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            List<qfmain.log日志._logValue_> tmp;
+            lock (_lock)
+            {
+                if (this._Queue_buffer.Count == 0)
+                    return;
+
+                tmp = new List<qfmain.log日志._logValue_>(this._Queue_buffer);
+                this._Queue_buffer.Clear();
+            }
+
+            listBox1.BeginUpdate();
+            foreach (var item in tmp)
+            {
+                if (item.状态 == qfmain.log日志.enum状态.Clear)
+                {
+                    this._lstLogInfo.Clear();
+                    this.listBox1.Items.Clear();
+                    this._DataContext.TopIndex = -1;
+                }
+                else if (this._lstLogInfo.Count >= this._最大显示行数)
+                {
+                    _lstLogInfo.RemoveAt(0);
+                    this.listBox1.Items.RemoveAt(0);
+                }
+
+                this._lstLogInfo.Add(item);
+                listBox1.Items.Add(""); // 自绘
+            }
+            this._DataContext.TopIndex = this._lstLogInfo.Count <= 0 ? -1 : this._lstLogInfo.Count - 1;
+            listBox1.EndUpdate();
+
+        }

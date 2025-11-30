@@ -30,8 +30,8 @@ namespace qfNet
 
         private void Form_log查看_Load(object sender, EventArgs e)
         {
-            this.Padding = new Padding (10,45,10,10 );
-            this.uiTextBox1 .Dock = DockStyle.Fill;
+            new winForm窗体().Set设置_Padding(this, 10);  
+            this.uiTextBox1.Dock = DockStyle.Fill;
         }
     }
 }

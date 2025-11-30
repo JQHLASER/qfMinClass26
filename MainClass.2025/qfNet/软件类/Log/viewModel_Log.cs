@@ -20,19 +20,7 @@ namespace qfNet
             }
         }
 
-        private int _TopIndex = -1;
-        public int TopIndex
-        {
-            get => _TopIndex;
-            set
-            {
-                _TopIndex = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-
+   
         private int _SelectedIndex = -1;
         public int SelectedIndex
         {
@@ -67,6 +55,19 @@ namespace qfNet
             }
         }
 
+        private bool _IntegralHeight = false;
+        /// <summary>
+        /// =true时,fill时,最下面会有一部分空白
+        /// </summary>
+        public bool IntegralHeight
+        {
+            get => _IntegralHeight;
+            set
+            {
+                _IntegralHeight = value;
+                OnPropertyChanged();
+            }
+        }
 
 
 

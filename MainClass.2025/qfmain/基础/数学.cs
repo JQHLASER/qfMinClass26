@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace qfmain.基础
 {
-    public  class 数学
+    public class 数学
     {
 
         public virtual decimal 余数一律加1(decimal x)
@@ -87,6 +87,15 @@ namespace qfmain.基础
             random.NextBytes(bytes);
         }
 
+        public virtual double 角度转弧度(double A)
+        {
+            return A * Math.PI / 180d;
+        }
+
+        public virtual double 弧度转角度(double A)
+        {
+            return A * 180d / Math.PI;
+        }
 
 
     }

@@ -17,49 +17,31 @@ namespace qfmain
     /// </summary>
     public class Image_
     {
-
-
-
         /// <summary>
-        /// Convert Image to Byte[]
+        /// format =  ImageFormat.Jpeg;
         /// </summary>
-        /// <param name="image"></param>
-        /// <returns></returns>
-        public virtual byte[] ImageToBytes(System.Drawing.Image image)
+        public virtual byte[] ImageToBytes(Image imagePath, ImageFormat format)
         {
+            byte[] imgBytes;
 
-            ImageFormat format = image.RawFormat;
-
-            using (MemoryStream ms = new MemoryStream())
+            using (var bmp = new Bitmap(imagePath))
+            using (var ms = new MemoryStream())
             {
-                if (format.Equals(ImageFormat.Jpeg))
-                {
-                    image.Save(ms, ImageFormat.Jpeg);
-                }
-                else if (format.Equals(ImageFormat.Png))
-                {
-                    image.Save(ms, ImageFormat.Png);
-                }
-                else if (format.Equals(ImageFormat.Bmp))
-                {
-                    image.Save(ms, ImageFormat.Bmp);
-                }
-                else if (format.Equals(ImageFormat.Gif))
-                {
-                    image.Save(ms, ImageFormat.Gif);
-                }
-                else if (format.Equals(ImageFormat.Icon))
-                {
-                    image.Save(ms, ImageFormat.Icon);
-                }
-                byte[] buffer = new byte[ms.Length];
-                //Image.Save()会改变MemoryStream的Position，需要重新Seek到Begin
-                ms.Seek(0, SeekOrigin.Begin);
-                ms.Read(buffer, 0, buffer.Length);
-                return buffer;
+                bmp.Save(ms, format); // PNG / BMP 都行
+                imgBytes = ms.ToArray();
             }
+            return imgBytes;
         }
 
+       
+        public virtual Bitmap BytesToImage(byte[] imgBytes)
+        {
+            using (var ms = new MemoryStream(imgBytes))
+            {
+                return new Bitmap(ms);
+            }
+        }
+         
 
 
         /// <summary>
@@ -84,24 +66,7 @@ namespace qfmain
             File.WriteAllBytes(imagePath, bytes);
         }
 
-
-
-        /// <summary>
-        /// Convert Byte[] to Image
-        /// </summary>
-        /// <param name="buffer"></param>
-        /// <returns></returns>
-        public virtual System.Drawing.Image BytesToImage(byte[] buffer)
-        {
-
-            using (MemoryStream ms = new MemoryStream(buffer))
-            {
-                return System.Drawing.Image.FromStream(ms);
-
-            }
-        }
-
-
+         
 
 
         /// <summary>
@@ -444,7 +409,7 @@ namespace qfmain
                             using (var grahics = Graphics.FromImage(destBitmap))
                             {
                                 grahics.DrawImage(bitmap, destRect, srcRect, GraphicsUnit.Pixel);
-                                 
+
                                 //ImageFormat format = ImageFormat.Png;
                                 //switch (fileExt.ToLower())
                                 //{

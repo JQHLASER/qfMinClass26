@@ -14,7 +14,7 @@ namespace qfWork
     /// 控制器的连接参数
     /// </summary>
     public class _Zaxis_连接参数_
-    {
+    { 
         public string 提示 { set; get; } = "连接类型:0:网口,1:串口";
         public _连接类型_ 连接类型 { set; get; } = _连接类型_.网口;
         public _Zaxis_串口参数_ 串口 { set; get; } = new _Zaxis_串口参数_();

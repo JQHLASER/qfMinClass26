@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace qfNet
 {
-    public  class 文件_<T>
+    public class 文件_<T>
     {
         string _File = qfmain.软件类.Files_Cfg.Files_LogMyApp + "\\files";
         string _后缀名 = ".fls";
@@ -48,17 +48,12 @@ namespace qfNet
         {
             msgerr = string.Empty;
             FileName = string.Empty;
-            DialogResult dlt = new qfNet.软件类().Win_文件类弹窗(this._File, "", this._后缀名, out string path, _文件弹窗类型_.打开);
+            DialogResult dlt = new qfNet.软件类().Win_文件类弹窗(this._File, "", this._后缀名, out FileName, _文件弹窗类型_.打开);
 
             if (dlt == DialogResult.OK)
             {
-                bool rt = new qfmain.文件_文件夹().文件_获取文件名_含后缀(path, out FileName, out msgerr);
-                if (rt)
-                {
-                    rt = this.读写(FileName, 1, ref t, out msgerr);
-                }
+                bool rt = this.读写(FileName, 1, ref t, out msgerr);
                 dlt = rt ? DialogResult.Yes : DialogResult.No;
-
             }
 
             return dlt;
@@ -68,20 +63,27 @@ namespace qfNet
         /// <para> 返回 DialogResult.Yes ,成功</para>
         /// <para> 返回 DialogResult.No ,失败</para>
         /// <para> 返回 其它,None</para>
-        /// <para>FileName:源文件名称</para>
+        /// <para>FileName:源文件名称,为空时为弹窗保存</para>
         /// </summary> 
         public DialogResult 另存为_弹窗(string FileName, T t, out string NewFileName, out string msgerr)
         {
             msgerr = string.Empty;
 
             NewFileName = string.Empty;
-            DialogResult dlt = new qfNet.软件类().Win_文件类弹窗(this._File, "", this._后缀名, out string path, _文件弹窗类型_.保存);
+            DialogResult dlt = new qfNet.软件类().Win_文件类弹窗(this._File, "", this._后缀名, out NewFileName, _文件弹窗类型_.保存);
             if (dlt == DialogResult.OK)
-            { 
-                bool rt = new qfmain.文件_文件夹().文件_获取文件名_含后缀(path, out NewFileName, out msgerr);
-                rt = 另存为(FileName, NewFileName, t, out string msgErr);
-                dlt = rt ? DialogResult.Yes : DialogResult.No;
+            {
+                bool rt = true;
+                if (!string.IsNullOrEmpty(FileName))
+                {
+                    rt = 另存为(FileName, NewFileName, t, out msgerr);
+                }
+                else
+                {
+                    rt = 保存(NewFileName, t, out msgerr);
+                }
 
+                dlt = rt ? DialogResult.Yes : DialogResult.No;                 
             }
 
             return dlt;
@@ -89,6 +91,7 @@ namespace qfNet
 
         }
 
+         
         public bool 打开(string FileName, ref T t, out string msgerr)
         {
             return this.读写(FileName, 1, ref t, out msgerr);

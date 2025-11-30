@@ -1,4 +1,4 @@
-﻿using Sunny.UI;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,7 +17,7 @@ namespace qfNet
         protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }//双缓冲显示窗体所有子控件
         readonly viewModel_Login _DataContext = new viewModel_Login();
         _LoginShowType_ _LoginShowType = _LoginShowType_.用户登陆;
-
+        System.Windows.Forms.Timer _timer = new System.Windows.Forms.Timer();
         Login登陆 _Login_sys;
 
         public Form_用户登陆(Login登陆 login_, _LoginShowType_ LoginShowType_ = _LoginShowType_.用户登陆)
@@ -70,11 +70,20 @@ namespace qfNet
             this.uiButton_登陆.Click += (s, e) => On_登陆();
             this.uiComboBox_用户.SelectedIndexChanged += (s, e) => SelectedIndexChanged_用户();
 
-
-
+            On_Datetime();
+            this._timer.Interval = 1000;
+            this._timer.Tick += On_Timer;
+            this._timer.Start();
         }
 
         #region 本地方法
+
+
+        void TimesClose()
+        {
+            this._timer.Stop();
+            this._timer.Tick -= On_Timer;
+        }
 
         void SelectedIndexChanged_用户()
         {
@@ -236,6 +245,7 @@ namespace qfNet
 
             if (rt)
             {
+                TimesClose();
                 this._Login_sys.On_Event_登陆成功();
                 this.DialogResult = DialogResult.OK;
             }
@@ -243,9 +253,9 @@ namespace qfNet
 
         void FormClosing_()
         {
-            this.isRun = false;
+            TimesClose();
             this._Login_sys = null;
-            
+
         }
         void Close_()
         {
@@ -264,23 +274,22 @@ namespace qfNet
             }
         }
 
-        bool isRun = true;
         private void Form_用户登陆_Load(object sender, EventArgs e)
         {
 
-            new Thread(() =>
-            {
-                while (isRun)
-                {
-                    this.Invoke((Action)(() => { this._DataContext.时间 = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"); }));
-                    Thread.Sleep(1000);
-                }
-            })
-            { IsBackground = true }.Start();
-
         }
 
-
+        private void On_Timer(object s, EventArgs e)
+        {
+            On_Datetime();
+        }
+        /// <summary>
+        /// 显示信息
+        /// </summary>
+        private void On_Datetime()
+        {
+            this._DataContext.时间 = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+        }
         #endregion
 
 

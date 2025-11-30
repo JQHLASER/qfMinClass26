@@ -1,5 +1,4 @@
-﻿using NPOI.OpenXmlFormats.Spreadsheet;
-using Org.BouncyCastle.Tls.Crypto;
+﻿using MySqlX.XDevAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +25,8 @@ namespace qfmain
             {
                 path = path_;
             }
-            //if (cfg != null)
+
+            if (cfg != null)
             {
                 jm_sys = new 解码(cfg);
                 jm_sys.Event_解码_Sockets += On_接收数据_jm;
@@ -111,7 +111,7 @@ namespace qfmain
         void On_侦听启动状态(_启动状态_ status)
         {
             this._侦听启动状态 = status;
-            Event_侦听启动状态?.Invoke(status);
+            Event_侦听启动状态?.Invoke(this._侦听启动状态);
 
         }
 
@@ -186,20 +186,20 @@ namespace qfmain
             bool rt = true;
             msgErr = string.Empty;
 
-            if (!IPAddress.TryParse(ip, out IPAddress ip_) && !string.IsNullOrEmpty(ip))
+            if (!string.IsNullOrEmpty(ip) && !IPAddress.TryParse(ip, out IPAddress ip_))
             {
                 msgErr = Language_.Get语言("IP错误");
                 return false;
             }
+            On_侦听启动状态(_启动状态_.启动中);
 
             try
             {
-
                 StopListen(out msgErr);
                 this._lstSocket.Clear();
-                Thread.Sleep(1);
+                Thread.Sleep(100);
 
-                On_侦听启动状态(_启动状态_.启动中);
+
 
                 socketServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
@@ -255,22 +255,38 @@ namespace qfmain
                 rt = false;
                 msgErr = ex.Message;
             }
-
+          
             return rt;
         }
-
-
-
-
-        /// <summary>
-        /// Poll()
-        /// </summary>
-        /// <param name="socket_"></param>
-        /// <returns></returns>
-        public bool 判断客户断是否在线(Socket socket_, int 检测超时 = 1000)
+         
+        public bool 判断是否连接(Socket socket_,int 检测超时 = 1000)
         {
-            return !((socket_.Poll(检测超时, SelectMode.SelectRead) && (socket_.Available == 0)) || !socket_.Connected);
+            if (socket_ == null)
+                return false;
+
+            try
+            {
+                if (!socket_.Connected)
+                    return false;
+
+                // 优雅断开检测
+                if (socket_.Poll(检测超时, SelectMode.SelectRead) && socket_.Available == 0)
+                    return false;
+
+                // 强制触发底层 TCP 状态检测
+                socket_.Send(new byte[0]);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+
+
         }
+
 
         public void 断开所有客户端()
         {

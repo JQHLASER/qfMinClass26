@@ -292,11 +292,11 @@ namespace qfNet
             {
                 return;
             }
-
-            DialogResult rt = new Socket_Client().窗体设置("QF Server");
+       
+            DialogResult rt = new Socket_Client().窗体设置(tcpClient_sys.TcpClient_sys, "QF Server");
             if (rt == DialogResult.OK)
             {
-                this.tcpClient_sys.TcpClient_sys.Connect连接Async();
+              await   this.tcpClient_sys.TcpClient_sys.Connect连接Async();
             }
         }
 

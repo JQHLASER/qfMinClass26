@@ -46,6 +46,9 @@ namespace qfWork
 
         private int _IO输入组数 = 2;
         private int _IO输出组数 = 2;
+        /// <summary>
+        /// 是否匹配功能码
+        /// </summary>
         private bool _is匹配功能码 = true;
 
         /// <summary>
@@ -133,10 +136,11 @@ namespace qfWork
         public event Action<_连接状态_> Event_连接状态;
         void On_Event_连接状态(_连接状态_ state)
         {
-            if (state == _连接状态_.已连接)
+            if (state == _连接状态_.已连接 && this._is匹配功能码)
             {
+
                 //处理功能码
-                if (!获取控制器信息())
+                if (!获取控制器信息(false))
                 {
                     state = _连接状态_.功能码不匹配;
                 }
@@ -474,7 +478,7 @@ namespace qfWork
 
 
         public int IO_设置输出口状态(int 输出口, bool 状态)
-        {     
+        {
             uint a = 状态 ? (uint)1 : 0;
             return IO_设置输出口状态(输出口, a);
         }
@@ -584,7 +588,7 @@ namespace qfWork
         {
             return zmcaux.ZAux_Direct_GetOp(_handle, 输出口, ref 输出口状态);
         }
-                   
+
 
         /// <summary>
         /// <returns>-9999:未连接</returns>
@@ -1182,7 +1186,7 @@ namespace qfWork
         /// <summary>
         /// 获取控制器信息 
         /// </summary>
-        private bool 获取控制器信息()
+        private bool 获取控制器信息(bool 产生事件 = true)
         {
             bool rt = true;
             if (this._is匹配功能码)
@@ -1194,20 +1198,23 @@ namespace qfWork
                 stringBuilder.Clear();
                 this.Modbus_读取MODBUS_STRING寄存器(350, 20, stringBuilder);
                 this._控制器参数.Sn = stringBuilder.ToString();
+
                 stringBuilder.Clear();
                 this.Modbus_读取MODBUS_STRING寄存器(370, 20, stringBuilder);
                 this._控制器参数.软件型号 = stringBuilder.ToString();
+
                 stringBuilder.Clear();
                 this.Modbus_读取MODBUS_STRING寄存器(390, 20, stringBuilder);
                 this._控制器参数.硬件型号 = stringBuilder.ToString();
+
                 stringBuilder.Clear();
 
-                rt = this.判断功能ID是否正确();
+                rt = this.判断功能ID是否正确(产生事件);
             }
             return rt;
         }
 
-        private bool 判断功能ID是否正确()
+        private bool 判断功能ID是否正确(bool 产生事件 = true)
         {
 
             if (!this._is匹配功能码)
@@ -1221,7 +1228,10 @@ namespace qfWork
             }
 
             释放();
-            On_Event_连接状态(_连接状态_.功能码不匹配);
+            if (产生事件)
+            {
+                On_Event_连接状态(_连接状态_.功能码不匹配);
+            }
             return false;
         }
 

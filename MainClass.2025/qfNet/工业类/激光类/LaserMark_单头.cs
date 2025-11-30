@@ -202,6 +202,35 @@ namespace qfNet
             return rt;
         }
 
+        public bool 保存激光模板(string path, out string msgErr, bool 显示日志 = true)
+        {
+            bool rt = false;
+            msgErr = string.Empty;
+            switch (this._打标卡类型)
+            {
+                case _打标卡类型_.EzCad2:
+
+                    #region EzCad2
+
+                    qfWork._Err_jczMarkEzd2_ nErr = this._Markezd.保存ezd文件(path);
+                    rt = nErr != qfWork._Err_jczMarkEzd2_.成功 ? false : true;
+                    this._Markezd.ErrToMsg((int)nErr, out msgErr);
+
+                    #endregion
+
+                    break;
+
+            }
+
+            if (显示日志)
+            {
+                On_Log(rt, $"{Get语言("保存激光模板")},{msgErr},{path}");
+            }
+
+            return rt;
+        }
+
+
         /// <summary>
         /// 显示图像控件
         /// </summary>
@@ -402,7 +431,7 @@ namespace qfNet
             }
             return rt;
         }
-        public bool 获取对象内容(string 对象名, out string 内容, out string msgErr)
+        public bool 获取对象内容(string 对象名, out string 内容, out string msgErr, int lenght = 255)
         {
             内容 = string.Empty;
             msgErr = string.Empty;
@@ -412,7 +441,7 @@ namespace qfNet
             {
                 case _打标卡类型_.EzCad2:
                     string value = string.Empty;
-                    qfWork._Err_jczMarkEzd2_ nErr = this._Markezd.获取_对象内容(对象名, ref value);
+                    qfWork._Err_jczMarkEzd2_ nErr = this._Markezd.获取_对象内容(对象名, ref value, lenght);
                     内容 = value;
                     this._Markezd.ErrToMsg((int)nErr, out msgErr);
                     rt = nErr == qfWork._Err_jczMarkEzd2_.成功 ? true : false;
@@ -421,7 +450,7 @@ namespace qfNet
             }
             return rt;
         }
-        public bool 获取对象内容(int 对象索引, out string 对象名, out string msgErr)
+        public bool 获取对象名称(int 对象索引, out string 对象名, out string msgErr, int lenght = 255)
         {
             对象名 = string.Empty;
             msgErr = string.Empty;
@@ -431,7 +460,7 @@ namespace qfNet
             {
                 case _打标卡类型_.EzCad2:
                     string value = string.Empty;
-                    qfWork._Err_jczMarkEzd2_ nErr = this._Markezd.获取_对象名称(对象索引, ref value);
+                    qfWork._Err_jczMarkEzd2_ nErr = this._Markezd.获取_对象名称(对象索引, ref value, lenght);
                     对象名 = value;
                     this._Markezd.ErrToMsg((int)nErr, out msgErr);
                     rt = nErr == qfWork._Err_jczMarkEzd2_.成功 ? true : false;
@@ -455,7 +484,29 @@ namespace qfNet
             return count;
         }
 
+        /// <summary>
+        ///  a:角度,
+        ///  <para>反馈结果有可能不准确</para>
+        /// </summary> 
+        public bool 设置绝对坐标(double x, double y, double xCenter, double yCenter, double a, out string msgErr)
+        {
 
+            msgErr = string.Empty;
+            bool rt = true;
+
+            switch (this._打标卡类型)
+            {
+                case _打标卡类型_.EzCad2:
+                    string value = string.Empty;
+                    qfWork._Err_jczMarkEzd2_ nErr = this._Markezd.旋转变换(x, y, xCenter, yCenter, a);
+                   
+                    this._Markezd.ErrToMsg((int)nErr, out msgErr);
+                    rt = nErr == qfWork._Err_jczMarkEzd2_.成功 ? true : false;
+                    break;
+
+            }
+            return rt;
+        }
 
         public class _变量信息_
         {
@@ -481,7 +532,7 @@ namespace qfNet
             int count = 获取对象总数();
             for (int i = 0; i < count; i++)
             {
-                获取对象内容(i, out string 对象名, out string msgErr);
+                获取对象名称(i, out string 对象名, out string msgErr);
                 if (!string.IsNullOrEmpty(对象名))
                 {
                     获取对象内容(对象名, out string 内容, out msgErr);
@@ -496,7 +547,7 @@ namespace qfNet
 
         #region Err
 
-        public bool Err_未初始化(out string msgErr)
+        public bool Err_未初始化(out string msgErr, bool 是否日志 = true)
         {
             bool rt = false;
             msgErr = string.Empty;
@@ -504,7 +555,7 @@ namespace qfNet
             switch (this._打标卡类型)
             {
                 case _打标卡类型_.EzCad2:
-                    rt = this._Markezd.Err_未初始化(out msgErr);
+                    rt = this._Markezd.Err_未初始化(out msgErr, 是否日志);
                     break;
 
             }
@@ -512,7 +563,7 @@ namespace qfNet
             return rt;
         }
 
-        public bool Err_加载激光模板中(out string msgErr)
+        public bool Err_初始化中(out string msgErr, bool 是否日志 = true)
         {
             bool rt = false;
             msgErr = string.Empty;
@@ -520,7 +571,22 @@ namespace qfNet
             switch (this._打标卡类型)
             {
                 case _打标卡类型_.EzCad2:
-                    rt = this._Markezd.Err_加载激光模板中(out msgErr);
+                    rt = this._Markezd.Err_初始化中(out msgErr, 是否日志);
+                    break;
+
+            }
+
+            return rt;
+        }
+        public bool Err_加载激光模板中(out string msgErr, bool 是否日志 = true)
+        {
+            bool rt = false;
+            msgErr = string.Empty;
+
+            switch (this._打标卡类型)
+            {
+                case _打标卡类型_.EzCad2:
+                    rt = this._Markezd.Err_加载激光模板中(out msgErr, 是否日志);
                     break;
 
             }
@@ -528,7 +594,7 @@ namespace qfNet
             return rt;
         }
 
-        public bool Err_出激光标刻中(out string msgErr)
+        public bool Err_出激光标刻中(out string msgErr, bool 是否日志 = true)
         {
             bool rt = false;
             msgErr = string.Empty;
@@ -536,7 +602,7 @@ namespace qfNet
             switch (this._打标卡类型)
             {
                 case _打标卡类型_.EzCad2:
-                    rt = this._Markezd.Err_出激光标刻中(out msgErr);
+                    rt = this._Markezd.Err_出激光标刻中(out msgErr, 是否日志);
                     break;
 
             }
@@ -544,7 +610,7 @@ namespace qfNet
             return rt;
         }
 
-        public bool Err_无可加工数据(out string msgErr)
+        public bool Err_无可加工数据(out string msgErr, bool 是否日志 = true)
         {
             bool rt = false;
             msgErr = string.Empty;
@@ -552,7 +618,7 @@ namespace qfNet
             switch (this._打标卡类型)
             {
                 case _打标卡类型_.EzCad2:
-                    rt = this._Markezd.Err_无可加工数据(out msgErr);
+                    rt = this._Markezd.Err_无可加工数据(out msgErr, 是否日志);
                     break;
 
             }
@@ -560,7 +626,7 @@ namespace qfNet
             return rt;
         }
 
-        public bool Err_未加载激光模板(out string msgErr)
+        public bool Err_未加载激光模板(out string msgErr, bool 是否日志 = true)
         {
             bool rt = false;
             msgErr = string.Empty;
@@ -568,7 +634,7 @@ namespace qfNet
             switch (this._打标卡类型)
             {
                 case _打标卡类型_.EzCad2:
-                    rt = this._Markezd.Err_未加载激光模板(out msgErr);
+                    rt = this._Markezd.Err_未加载激光模板(out msgErr, 是否日志);
                     break;
 
             }
@@ -576,7 +642,7 @@ namespace qfNet
             return rt;
         }
 
-        public bool Err_红光指示中(out string msgErr)
+        public bool Err_红光指示中(out string msgErr, bool 是否日志 = true)
         {
             bool rt = false;
             msgErr = string.Empty;
@@ -584,7 +650,7 @@ namespace qfNet
             switch (this._打标卡类型)
             {
                 case _打标卡类型_.EzCad2:
-                    rt = this._Markezd.Err_红光指示中(out msgErr);
+                    rt = this._Markezd.Err_红光指示中(out msgErr, 是否日志);
                     break;
 
             }
@@ -592,7 +658,7 @@ namespace qfNet
             return rt;
         }
 
-        public bool Err_dll是否存在(out string msgErr)
+        public bool Err_dll是否存在(out string msgErr, bool 是否日志 = true)
         {
             bool rt = false;
             msgErr = string.Empty;
@@ -601,7 +667,7 @@ namespace qfNet
             {
                 case _打标卡类型_.EzCad2:
 
-                    rt = this._Markezd.Err_dll是否存在(out msgErr);
+                    rt = this._Markezd.Err_dll是否存在(out msgErr, 是否日志);
                     break;
 
             }

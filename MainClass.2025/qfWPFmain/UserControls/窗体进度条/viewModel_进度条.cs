@@ -24,12 +24,12 @@ namespace qfWPFmain
             while (isRun)
             {
                 this.Value进度 += 1;
-                delay_sys.延时_无返回值(1000).Wait();
+                Thread.Sleep(1000);
             }
         }
 
         internal void 释放()
-        {           
+        {
             isRun = false;
             this.Value进度 = 100;
             delay_sys.中断延时();
