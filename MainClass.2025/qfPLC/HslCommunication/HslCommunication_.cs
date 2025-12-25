@@ -17,7 +17,7 @@ namespace qfPLC
         /// <returns></returns>
         public (bool rt, string msgErr) 激活()
         {
-            // 授权示例 Authorization example
+            // 授权示例 Authorization example...
             //V116.1 : 8cb26b16-6848-46b8-a9e4-6f57336b2872
             string keys = "8cb26b16-6848-46b8-a9e4-6f57336b2872";
             bool rt = HslCommunication.Authorization.SetAuthorizationCode(keys);
