@@ -154,7 +154,7 @@ namespace qfWork
         /// <summary>
         /// 按比例缩放大小
         /// </summary> 
-        public virtual _Err_jczMarkEzd2_  按比例缩放对象(string 对象名称, double xCenter, double yCenter, double x, double y)
+        public virtual _Err_jczMarkEzd2_ 按比例缩放对象(string 对象名称, double xCenter, double yCenter, double x, double y)
         {
             int nErr = JczLmc.指定对象按比例缩放(对象名称, xCenter, yCenter, x, y);
             return (_Err_jczMarkEzd2_)nErr;
@@ -803,10 +803,12 @@ namespace qfWork
         {
             string path = Environment.CurrentDirectory + "\\jczdf.crc";
             string pathEzd = this._Path_ezd_最后一次;
-            new qfmain.文件_文件夹().WriteReadIni<string>(path, model, ref pathEzd, out string msgErr);
+            new qfmain.文件_文件夹().WriteReadIni(path, model, ref pathEzd, out string msgErr);
+          
+
             if (!string.IsNullOrEmpty(pathEzd) && new qfmain.文件_文件夹().文件_是否存在(path))
             {
-                this._Path_ezd_最后一次 = pathEzd;
+                this._Path_ezd_最后一次 = pathEzd;            
             }
             else
             {
@@ -997,32 +999,32 @@ namespace qfWork
         }
 
         public event Action<_初始化状态_> Event_初始化状态;
-        void On_初始化状态(_初始化状态_ state)
+       void   On_初始化状态(_初始化状态_ state)
         {
             this._初始化状态 = state;
 
-            Task.Run(() =>
-            {
-                switch (state)
+              Task.Run(() =>
                 {
-                    case _初始化状态_.已初始化:
-                        //On_Log(true, Get语言("已初始化"));
+                    switch (state)
+                    {
+                        case _初始化状态_.已初始化:
+                            //On_Log(true, Get语言("已初始化"));
 
-                        if (!is第一次初始化 || this._参数.进入时加载激光模板)
-                        {
-                            this.LoadEzdFile(this._Path_ezd_最后一次);
-                        }
-                        is第一次初始化 = false;
+                            if ((is第一次初始化 && this._参数.进入时加载激光模板) || !is第一次初始化)
+                            {
+                                this.LoadEzdFile(this._Path_ezd_最后一次);                      
+                            }
+                            is第一次初始化 = false;
 
-                        break;
-                    case _初始化状态_.初始化中:
-                        //On_Log(true, Get语言("初始化中"));
-                        break;
-                    case _初始化状态_.未初始化:
-                        //  On_Log(false, Get语言("未初始化"));
-                        break;
-                }
-            });
+                            break;
+                        case _初始化状态_.初始化中:
+                            //On_Log(true, Get语言("初始化中"));
+                            break;
+                        case _初始化状态_.未初始化:
+                            //  On_Log(false, Get语言("未初始化"));
+                            break;
+                    }
+                });
 
             Event_初始化状态?.Invoke(state);
         }

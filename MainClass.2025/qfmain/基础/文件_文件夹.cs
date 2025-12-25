@@ -1227,18 +1227,13 @@ namespace qfmain
         /// <param name="Model"></param>
         /// <param name="cfg"></param>
         /// <param name="msgErr"></param>
-        /// <param name="encoding_"></param>
-        /// <param name="加密"></param>
-        /// <param name="密码"></param>
-        /// <param name="bufferSize"></param>
         /// <returns></returns>
-        public virtual bool WriteReadIni<T>(string path, ushort Model, ref T cfg, out string msgErr, string section = "信息", string key_ = "data", Encoding encoding_ = null, int bufferSize = 65535)
+        public virtual bool WriteReadIni<T>(string path, ushort Model, ref T cfg, out string msgErr, string section = "信息", string key_ = "data")
         {
             bool rt = true;
             msgErr = string.Empty;
             try
             {
-
 
                 List<string> lstWork = new List<string>();
                 lstWork.Add("是否强制写");
@@ -1264,16 +1259,81 @@ namespace qfmain
                         {
                             continue;
                         }
+
                         string vxt = JsonConvert.SerializeObject(cfg, Formatting.None);
-                        new ini_sharpconfig(path).Write(section, key_, vxt,true );
+                        new ini_sharpconfig(path).Write(section, key_, vxt, true);
+
                     }
                     else if (s == "读")
                     {
+
                         string rxt = new ini_sharpconfig(path).Read(section, key_, JsonConvert.SerializeObject(cfg));
                         if (!string.IsNullOrEmpty(rxt))
                         {
                             cfg = JsonConvert.DeserializeObject<T>(rxt);
                         }
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                rt = false;
+                msgErr = ex.Message;
+            }
+            return rt;
+        }
+
+
+        /// <summary>
+        ///  Model: =0写,=1读
+        /// <para>读写文件,以json格式保存</para>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path"></param>
+        /// <param name="Model"></param>
+        /// <param name="cfg"></param>
+        /// <param name="msgErr"></param>
+        /// <returns></returns>
+        public virtual bool WriteReadIni(string path, ushort Model, ref string  cfg, out string msgErr, string section = "信息", string key_ = "data")
+        {
+            bool rt = true;
+            msgErr = string.Empty;
+            try
+            {
+
+                List<string> lstWork = new List<string>();
+                lstWork.Add("是否强制写");
+                lstWork.Add("写");
+                lstWork.Add("读");
+
+                foreach (var s in lstWork)
+                {
+                    if (!rt)
+                    {
+                        break;
+                    }
+                    else if (s == "是否强制写")
+                    {
+                        if (Model != 0 && !new 文件_文件夹().文件_是否存在(path))
+                        {
+                            Model = 0;
+                        }
+                    }
+                    else if (s == "写")
+                    {
+                        if (Model != 0)
+                        {
+                            continue;
+                        }
+                         
+                        new ini_sharpconfig(path).Write(section, key_, cfg , true);
+
+                    }
+                    else if (s == "读")
+                    {
+                      cfg= new ini_sharpconfig(path).Read(section, key_,"");                   
                     }
                 }
 
@@ -1290,7 +1350,7 @@ namespace qfmain
 
         #endregion
 
-         
+
 
     }
 }

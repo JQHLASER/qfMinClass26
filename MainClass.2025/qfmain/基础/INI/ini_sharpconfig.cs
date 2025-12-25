@@ -49,7 +49,7 @@ namespace qfmain
 
         public string Read(string sectionName, string settingName, string 默认值 = "")
         {
-            (bool rt, string value, string msgErr) rt = ReadStr(sectionName, settingName, 默认值);
+            (bool rt, string value, string msgErr) rt = ReadStr(sectionName, settingName, 默认值);          
             return rt.value;
         }
         public (bool rt, string value, string msgErr) ReadStr(string sectionName, string settingName, string 默认值 = "")
