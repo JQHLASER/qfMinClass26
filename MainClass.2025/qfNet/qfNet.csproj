@@ -41,7 +41,7 @@
       <HintPath>..\qfmain\packages\SqlSugar.5.1.4.207\lib\SqlSugar.dll</HintPath>
     </Reference>
     <Reference Include="SunnyUI8">
-      <HintPath>..\..\..\UserControl\SunnyUI\SunnyUI\Bin\SunnyUI8.dll</HintPath>
+      <HintPath>..\..\..\UserControl\SunnyUI\Bin\SunnyUI8.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

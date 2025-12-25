@@ -35,14 +35,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Interop.BarTender">
-      <HintPath>..\..\..\..\..\QiFeng Work\BaiduSyncdisk\文件资料类\工业类\打印机\Bartender\Bartender 2016\以前的\Interop.BarTender.dll</HintPath>
+      <HintPath>..\..\..\资料类\第三方库\Bartender\2016\Interop.BarTender.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\qfmain\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Seagull.BarTender.Print">
-      <HintPath>..\..\net 8 注意事项\备注_注意事项\打印机\BarTender\Seagull.BarTender.Print.dll</HintPath>
+      <HintPath>..\..\..\资料类\第三方库\Bartender\2016\Seagull.BarTender.Print.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

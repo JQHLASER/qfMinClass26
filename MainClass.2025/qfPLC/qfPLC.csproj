@@ -36,7 +36,7 @@
       <HintPath>..\..\..\资料类\第三方库\PLC\HslCommunication.dll</HintPath>
     </Reference>
     <Reference Include="SunnyUI8">
-      <HintPath>..\..\..\UserControl\SunnyUI\SunnyUI\Bin\SunnyUI8.dll</HintPath>
+      <HintPath>..\..\..\UserControl\SunnyUI\Bin\SunnyUI8.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
