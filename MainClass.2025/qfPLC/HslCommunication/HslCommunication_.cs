@@ -30,6 +30,11 @@ namespace qfPLC
             return (rt, msgErr);
         }
          
+
+
+
+
+
         public (bool rt, string msgErr) Err_未激活()
         {
             bool rt = true;
