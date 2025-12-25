@@ -56,6 +56,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{8C21EC1B-4269-4F94-9EFC-792B0D920813}"
 	ProjectSection(SolutionItems) = preProject
 		GC.txt = GC.txt
+		..\学习\html.txt = ..\学习\html.txt
 		Nlog.txt = Nlog.txt
 		..\学习\NuGet包.txt = ..\学习\NuGet包.txt
 		清除xml.txt = 清除xml.txt
