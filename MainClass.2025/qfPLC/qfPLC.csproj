@@ -48,7 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HslCommunication\Modbus\modbusTcp\modbusTcp.cs" />
     <Compile Include="HslCommunication\HslCommunication_.cs" />
+    <Compile Include="HslCommunication\PLC_Hsl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,15 +63,7 @@
       <Name>qfmain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="HslCommunication\Modbus\" />
-    <Folder Include="HslCommunication\MQTT\" />
-    <Folder Include="HslCommunication\三菱\" />
-    <Folder Include="HslCommunication\台达\" />
-    <Folder Include="HslCommunication\基恩士\" />
-    <Folder Include="HslCommunication\汇川\" />
-    <Folder Include="HslCommunication\西门子\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rd /s /q "$(ProjectDir)obj"</PostBuildEvent>
