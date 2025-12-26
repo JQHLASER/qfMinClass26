@@ -8,5 +8,10 @@ namespace qfPLC
 {
     internal class modbusTcp
     {
+
+
+
+
+
     }
 }
