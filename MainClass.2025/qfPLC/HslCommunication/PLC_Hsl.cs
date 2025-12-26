@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace qfPLC
 {
-    internal class modbusTcp
+    public  class PLC_Hsl
     {
+
+
+
+
+
     }
 }
