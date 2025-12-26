@@ -804,8 +804,6 @@ namespace qfWork
             string path = Environment.CurrentDirectory + "\\jczdf.crc";
             string pathEzd = this._Path_ezd_最后一次;
             new qfmain.文件_文件夹().WriteReadIni(path, model, ref pathEzd, out string msgErr);
-          
-
             if (!string.IsNullOrEmpty(pathEzd) && new qfmain.文件_文件夹().文件_是否存在(path))
             {
                 this._Path_ezd_最后一次 = pathEzd;            
