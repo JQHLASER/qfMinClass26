@@ -227,9 +227,9 @@ namespace qfLanguage
             new _language_Value_ ( keys, "激光软件已打开","激光软件已打开"),
             new _language_Value_ ( keys, "路径不能为空","路径不能为空"),
 
-            new _language_Value_ ( keys, "HSL激活失败","HSL激活失败,激活码无效!"),
-            new _language_Value_ ( keys, "HSL激活成功","HSL激活成功,激活码有效!"),
-
+            new _language_Value_ ( keys, "HSL激活失败","HSL激活失败,激活码无效"),
+            new _language_Value_ ( keys, "HSL激活成功","HSL激活成功,激活码有效"),
+            new _language_Value_ ( keys, "HSL未激活","HSL未激活"),
 
 
 

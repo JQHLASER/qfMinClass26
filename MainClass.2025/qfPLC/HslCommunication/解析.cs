@@ -16,24 +16,9 @@ namespace qfPLC
         /// </summary> 
         public (bool rt, string msgErr, T value) OperateResult<T>(OperateResult<T> result)
         {
-            bool rt = true;
-            string msgErr = string.Empty;
-            T value = default(T);
-
-            if (result.IsSuccess)
-            {
-                //msgErr = DateTime.Now.ToString("[HH:mm:ss] ") + $"[{address}] {result.Content}{Environment.NewLine}";
-
-                value = result.Content;
-
-            }
-            else
-            {
-                msgErr = result.ToMessageShowString();
-                rt = false;
-            }
-            return (rt, msgErr, value);
-
+            return result.IsSuccess ?
+                      (true, "", (T)(object)result.Content) :
+                      (false, result.Message, default(T));
         }
 
         /// <summary>
@@ -43,7 +28,7 @@ namespace qfPLC
         {
             bool rt = true;
             string msgErr = string.Empty;
-           
+
             if (result.IsSuccess)
             {
                 //msgErr = DateTime.Now.ToString("[HH:mm:ss] ") + $"[{address}] {result.Content}{Environment.NewLine}";  
@@ -53,9 +38,10 @@ namespace qfPLC
                 msgErr = result.ToMessageShowString();
                 rt = false;
             }
-            return (rt, msgErr );
+            return (rt, msgErr);
 
         }
 
+         
     }
 }

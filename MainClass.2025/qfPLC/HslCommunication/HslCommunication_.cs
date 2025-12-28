@@ -15,7 +15,7 @@ namespace qfPLC
         /// 激活PLC库
         /// </summary>
         /// <returns></returns>
-        public (bool rt, string msgErr) 激活()
+        public (bool 是否激活, string msgErr) 激活()
         {
             // 授权示例 Authorization example 
             //V116.1 : 8cb26b16-6848-46b8-a9e4-6f57336b2872
@@ -29,7 +29,7 @@ namespace qfPLC
             _Is激活状态 = rt;
             return (rt, msgErr);
         }
-         
+
 
 
 

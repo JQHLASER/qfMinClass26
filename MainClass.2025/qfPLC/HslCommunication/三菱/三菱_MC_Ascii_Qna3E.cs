@@ -4,17 +4,22 @@ using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace qfPLC
 {
+
+
     /// <summary>
     /// MC Qna3E ASCII
     /// </summary>
-    public class 三菱_MC_Ascii_Qna3E
+    public class 三菱_MC_Ascii_Qna3E : IWorker
     {
+
+
         public class _Cfg_
         {
             public string Ip { set; get; } = "127.0.0.1";
@@ -122,7 +127,7 @@ namespace qfPLC
             return (rt, msgErr);
         }
 
-        public virtual (bool rt, string msgErr) 释放()
+        public virtual (bool rt, string msgErr) 断开()
         {
             On_连接状态(qfmain._连接状态_.未连接);
             bool rt = true;
@@ -140,7 +145,117 @@ namespace qfPLC
             return (rt, msgErr);
         }
 
-         
+
+
+        /// <summary>
+        ///   true成功,false失败
+        /// </summary>
+        /// <param name="address_开始"></param>
+        /// <param name="length_address长度"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool 读取型号(out string 型号, out string MsgErr)
+        {
+            型号 = string.Empty;
+
+
+            try
+            {
+
+
+                // 读取型号
+                OperateResult<string> readResult = this._MelsecMcAsciiNet.ReadPlcType();
+                if (readResult.IsSuccess)
+                {
+                    MsgErr = "Type:" + readResult.Content;
+                    型号 = readResult.Content;
+                    return true;
+                }
+                else
+                {
+                    MsgErr = "Failed: " + readResult.ToMessageShowString();
+
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MsgErr = ex.Message;
+                return false;
+            }
+
+
+
+        }
+
+
+        /// <summary>
+        ///   true成功,false失败
+        /// </summary>
+        /// <param name="address_开始"></param>
+        /// <param name="length_address长度"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool 远程启动(out string MsgErr)
+        {
+            try
+            {
+
+
+                // 远程启动
+                OperateResult runResult = this._MelsecMcAsciiNet.RemoteRun();
+                if (runResult.IsSuccess)
+                {
+                    MsgErr = "Run Success";
+                    return true;
+                }
+                else
+                {
+                    MsgErr = "Failed: " + runResult.ToMessageShowString();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MsgErr = ex.Message;
+                return false;
+            }
+        }
+
+
+        /// <summary>
+        ///   true成功,false失败
+        /// </summary>
+        /// <param name="address_开始"></param>
+        /// <param name="length_address长度"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool 远程停止(out string MsgErr)
+        {
+            try
+            {
+                // 远程停止
+                OperateResult runResult = this._MelsecMcAsciiNet.RemoteStop();
+                if (runResult.IsSuccess)
+                {
+                    MsgErr = "Stop Success";
+                    return true;
+                }
+                else
+                {
+                    MsgErr = "Failed: " + runResult.ToMessageShowString();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MsgErr = ex.Message;
+                return false;
+            }
+        }
+
+
+
 
         /// <summary>
         /// 写入 
@@ -166,24 +281,46 @@ namespace qfPLC
             return new 解析().OperateResult(result);
         }
 
-        public virtual (bool rt, string msgErr, bool value) Read(string address)
+
+        #region Read
+
+        public virtual (bool rt, string msgErr, T value) Read<T>(string address)
         {
-            OperateResult<bool> result = this._MelsecMcAsciiNet.ReadBool(address);
-            return new 解析().OperateResult<bool>(result);
+            return new ReadPlc().Read<T>(this._MelsecMcAsciiNet, address);
+        }
+        public virtual (bool rt, string msgErr, T value) Read<T>(string address, ushort length)
+        {
+            return new ReadPlc().Read<T>(this._MelsecMcAsciiNet, address, length);
+        }
+        public virtual (bool rt, string msgErr, string value) Read(string address, ushort length, Encoding encoding)
+        {
+            return new ReadPlc().Read(this._MelsecMcAsciiNet, address, length, encoding);
         }
 
-        public virtual async Task<(bool rt, string msgErr, bool value)> ReadAsync(string address)
+        public virtual async Task<(bool rt, string msgErr, T value)> ReadAsync<T>(string address)
         {
-            OperateResult<bool> result = await this._MelsecMcAsciiNet.ReadBoolAsync(address);
-            return new 解析().OperateResult<bool>(result);
+            return await new ReadPlc().ReadAsync<T>(this._MelsecMcAsciiNet, address);
         }
+        public virtual async Task<(bool rt, string msgErr, T value)> ReadAsync<T>(string address, ushort length)
+        {
+            return await new ReadPlc().ReadAsync<T>(this._MelsecMcAsciiNet, address, length);
+        }
+        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length, Encoding encoding)
+        {
+            return await new ReadPlc().ReadAsync(this._MelsecMcAsciiNet, address, length, encoding);
+        }
+
+
+
+
+        #endregion
 
 
 
         #region 事件
 
         public event Action<qfmain._连接状态_> Event_连接状态;
-        private void On_连接状态(qfmain._连接状态_ state)
+        public void On_连接状态(qfmain._连接状态_ state)
         {
             this._连接状态 = state;
             Event_连接状态?.Invoke(state);
@@ -191,7 +328,10 @@ namespace qfPLC
 
         #endregion
 
-
+        public qfmain._连接状态_ Get连接状态()
+        {
+            return this._连接状态;
+        }
 
     }
 }

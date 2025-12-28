@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace qfPLC
 {
-    public class 三菱_FX
+    public class 三菱_FX : IWorker
     {
         /// <summary>
         /// 串口信息
@@ -32,8 +32,6 @@ namespace qfPLC
             /// </summary>
             public StopBits 停止位 { set; get; } = StopBits.One;
         }
-
-
 
 
         /// <summary>
@@ -122,7 +120,7 @@ namespace qfPLC
             return (rt, msgErr);
         }
 
-        public virtual (bool rt, string msgErr) 释放()
+        public virtual (bool rt, string msgErr) 断开()
         {
             On_连接状态(qfmain._连接状态_.未连接);
             bool rt = true;
@@ -180,24 +178,48 @@ namespace qfPLC
             return new 解析().OperateResult(result);
         }
 
-        public virtual (bool rt, string msgErr, bool value) Read(string address)
+
+
+        #region Read
+
+        public virtual (bool rt, string msgErr, T value) Read<T>(string address)
         {
-            OperateResult<bool> result = this._MelsecFxSerial.ReadBool(address);
-            return new 解析().OperateResult<bool>(result);
+            return new ReadPlc().Read<T>(this._MelsecFxSerial, address);
+        }
+        public virtual (bool rt, string msgErr, T value) Read<T>(string address, ushort length)
+        {
+            return new ReadPlc().Read<T>(this._MelsecFxSerial, address, length);
+        }
+        public virtual (bool rt, string msgErr, string value) Read(string address, ushort length, Encoding encoding)
+        {
+            return new ReadPlc().Read(this._MelsecFxSerial, address, length, encoding);
         }
 
-        public virtual async Task<(bool rt, string msgErr, bool value)> ReadAsync(string address)
+        public virtual async Task<(bool rt, string msgErr, T value)> ReadAsync<T>(string address)
         {
-            OperateResult<bool> result = await this._MelsecFxSerial.ReadBoolAsync(address);
-            return new 解析().OperateResult<bool>(result);
+            return await new ReadPlc().ReadAsync<T>(this._MelsecFxSerial, address);
         }
+        public virtual async Task<(bool rt, string msgErr, T value)> ReadAsync<T>(string address, ushort length)
+        {
+            return await new ReadPlc().ReadAsync<T>(this._MelsecFxSerial, address, length);
+        }
+        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length, Encoding encoding)
+        {
+            return await new ReadPlc().ReadAsync(this._MelsecFxSerial, address, length, encoding);
+        }
+
+
+
+
+        #endregion
+
 
 
 
         #region 事件
 
         public event Action<qfmain._连接状态_> Event_连接状态;
-        private void On_连接状态(qfmain._连接状态_ state)
+        public void On_连接状态(qfmain._连接状态_ state)
         {
             this._连接状态 = state;
             Event_连接状态?.Invoke(state);
@@ -205,6 +227,9 @@ namespace qfPLC
 
         #endregion
 
-
+        public qfmain._连接状态_ Get连接状态()
+        {
+            return this._连接状态;
+        }
     }
 }
