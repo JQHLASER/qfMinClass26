@@ -75,14 +75,12 @@ namespace qfPLC
         {
             return this.获取PLC库().断开();
         }
-
-
+         
         void On_连接状态(qfmain._连接状态_ state)
         {
             Event_连接状态?.Invoke(state);
         }
-
-
+         
 
         #region 事件
 
