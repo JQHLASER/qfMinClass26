@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace qfPLC
 {
@@ -13,7 +14,7 @@ namespace qfPLC
     {
 
         _PLC_Type_ _PLC类型 = _PLC_Type_.MC_ASCII;
-        bool _Is激活 = false;
+
         string _path = "";
         /// <summary>
         /// PLC库
@@ -24,25 +25,16 @@ namespace qfPLC
         /// <summary>
         /// <para>Path_ : 存放信息文件路径</para>
         /// </summary> 
-        public PLC_Hsl(HslCommunication_ hsl, _PLC_Type_ PLC类型_, string Path_)
+        public PLC_Hsl(_PLC_Type_ PLC类型_, string Path_)
         {
             this._path = Path_;
             this._PLC类型 = PLC类型_;
             this._PLC库 = 获取PLC库();
 
             this._PLC库.Event_连接状态 += (s) => On_连接状态(s);
-
             this._PLC库.On_连接状态(qfmain._连接状态_.未连接);
-            (bool rt, string msgErr) rt = hsl.激活();
-            this._Is激活 = rt.rt;
-            if (!this._Is激活)
-            {
-                On_Log(false, rt.msgErr);
-            }
-
         }
 
-         
         private IWorker 获取PLC库()
         {
             switch (this._PLC类型)
@@ -65,9 +57,13 @@ namespace qfPLC
             }
         }
 
-         
         public (bool rt, string msgErr) 连接(bool 是否先读参数 = true)
         {
+            if (!Err_HSL未激活(out string msgErr, false))
+            {
+                this.获取PLC库().On_连接状态(qfmain._连接状态_.未连接);
+                return (false, msgErr);
+            }
             return this.获取PLC库().连接(是否先读参数);
         }
 
@@ -75,12 +71,12 @@ namespace qfPLC
         {
             return this.获取PLC库().断开();
         }
-         
+
         void On_连接状态(qfmain._连接状态_ state)
         {
             Event_连接状态?.Invoke(state);
         }
-         
+
 
         #region 事件
 
@@ -100,7 +96,7 @@ namespace qfPLC
         {
             bool rt = true;
             msgErr = "";
-            if (!this._Is激活)
+            if (!HslCommunication_._Is激活状态)
             {
                 rt = false;
                 msgErr = qfmain.Language_.Get语言("HSL未激活");
