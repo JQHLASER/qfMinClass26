@@ -18,6 +18,8 @@ namespace qfPLC
         (bool rt, string msgErr) 断开();
         void 读写参数(ushort model);
 
+        void 窗体设置(string Title);
+
         #region Write
 
         (bool rt, string msgerr) Write(string address, dynamic value);
@@ -25,8 +27,6 @@ namespace qfPLC
 
 
         #endregion
-
-
 
         #region Read
 

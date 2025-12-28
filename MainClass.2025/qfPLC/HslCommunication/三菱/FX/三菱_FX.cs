@@ -105,6 +105,7 @@ namespace qfPLC
                     //sp.StopBits = stopBits == 0 ? System.IO.Ports.StopBits.None : (stopBits == 1 ? System.IO.Ports.StopBits.One : System.IO.Ports.StopBits.Two);
                     //sp.Parity = 奇偶校验 == 0 ? System.IO.Ports.Parity.None : (奇偶校验 == 1 ? System.IO.Ports.Parity.Odd : System.IO.Ports.Parity.Even);
                 });
+              
 
                 this._MelsecFxSerial.Open();
                 rt = this._MelsecFxSerial.IsOpen();
@@ -152,6 +153,7 @@ namespace qfPLC
             }
         }
 
+        #region Write
 
 
         /// <summary>
@@ -178,6 +180,7 @@ namespace qfPLC
             return new 解析().OperateResult(result);
         }
 
+        #endregion
 
 
         #region Read

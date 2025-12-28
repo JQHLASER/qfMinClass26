@@ -144,6 +144,12 @@ namespace qfPLC
             }
             return (rt, msgErr);
         }
+         
+
+        public void  窗体设置(string Title)
+        {
+
+        }
 
 
 
