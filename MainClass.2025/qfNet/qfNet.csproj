@@ -197,11 +197,12 @@
     <Compile Include="软件类\用户登陆\远程数据库\Login_DB.cs" />
     <Compile Include="软件类\用户登陆\远程数据库\Login_DB_表.cs" />
     <Compile Include="软件类\winForm窗体.cs" />
-    <Compile Include="软件类\窗体_标题栏状态.cs" />
+    <Compile Include="软件类\窗体_标题栏状态\窗体_标题栏状态.cs" />
     <Compile Include="Mvvm\RelayCommand.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Mvvm\示例.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="软件类\窗体_标题栏状态\窗体_标题栏状态_方法.cs" />
     <Compile Include="软件类\软件类.cs" />
     <Compile Include="软件类\软件注册\DogTW基础_window通知机制.cs" />
     <Compile Include="软件类\软件注册\Form_软件注册.cs">
