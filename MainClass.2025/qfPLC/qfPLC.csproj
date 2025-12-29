@@ -60,6 +60,7 @@
     <Compile Include="HslCommunication\HslCommunication_.cs" />
     <Compile Include="HslCommunication\PLC_Hsl.cs" />
     <Compile Include="HslCommunication\ReadPlc.cs" />
+    <Compile Include="HslCommunication\WritePlc.cs" />
     <Compile Include="HslCommunication\三菱\FX\Form_FX.cs">
       <SubType>Form</SubType>
     </Compile>

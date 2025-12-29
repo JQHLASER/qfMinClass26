@@ -65,14 +65,19 @@ namespace qfPLC
 
         }
 
+        private readonly object _lock=new object();
+
         /// <summary>
         /// 0:写,1:读
         /// </summary>   
         public void 读写参数(ushort model)
         {
-            _Cfg_ info = this._参数;
-            new qfmain.文件_文件夹().WriteReadJson(this._path, model, ref info, out string msgErr);
-            this._参数 = info;
+            lock (_lock)
+            {
+                _Cfg_ info = this._参数;
+                new qfmain.文件_文件夹().WriteReadJson(this._path, model, ref info, out string msgErr);
+                this._参数 = info;
+            }
         }
 
 
@@ -150,7 +155,7 @@ namespace qfPLC
         }
          
 
-        public void  窗体设置(string Title)
+        public void  窗体设置(string Title, bool 重连)
         {
 
         }
@@ -265,31 +270,42 @@ namespace qfPLC
         }
 
 
+        #region Write
 
 
-        /// <summary>
-        /// 写入 
-        /// <para>类型:byte,short,ushort,int,uint,long,ulong,float,double,string,bool</para>
-        /// <para>类型:byte[],ushort[],short[],int[],uint[],long[],ulong[],float[],double[],bool[]</para>
-        /// </summary>
-        /// <returns></returns>
-        public virtual (bool rt, string msgerr) Write(string address, dynamic value)
+
+        public virtual (bool rt, string msgErr) Write<T>(string address, T value) where T : struct
         {
-            OperateResult result = this._MelsecMcAsciiNet.Write(address, new byte[] { value });
-            return new 解析().OperateResult(result);
+            return new WritePlc().Write(this._MelsecMcAsciiNet , address, value);
         }
 
-        /// <summary>
-        /// 写入 
-        /// <para>类型:byte,short,ushort,int,uint,long,ulong,float,double,string,bool</para>
-        /// <para>类型:byte[],ushort[],short[],int[],uint[],long[],ulong[],float[],double[],bool[]</para>
-        /// </summary>
-        /// <returns></returns>
-        public virtual async Task<(bool rt, string msgerr)> WriteAsync(string address, dynamic value)
+        public virtual (bool rt, string msgErr) Write(string address, string value)
         {
-            OperateResult result = await this._MelsecMcAsciiNet.WriteAsync(address, new byte[] { value });
-            return new 解析().OperateResult(result);
+            return new WritePlc().Write(this._MelsecMcAsciiNet, address, value);
         }
+        public virtual (bool rt, string msgErr) Write(Encoding encoding, string address, string value)
+        {
+            return new WritePlc().Write(this._MelsecMcAsciiNet, encoding, address, value);
+        }
+
+
+        public virtual async Task<(bool rt, string msgErr)> WriteAsync<T>(string address, T value) where T : struct
+        {
+            return await new WritePlc().WriteAsync(this._MelsecMcAsciiNet, address, value);
+        }
+        public virtual async Task<(bool rt, string msgErr)> WriteAsync(string address, string value)
+        {
+            return await new WritePlc().WriteAsync(this._MelsecMcAsciiNet, address, value);
+        }
+        public virtual async Task<(bool rt, string msgErr)> WriteAsync(Encoding encoding, string address, string value)
+        {
+            return await new WritePlc().WriteAsync(this._MelsecMcAsciiNet, encoding, address, value);
+        }
+
+
+
+
+        #endregion
 
 
         #region Read

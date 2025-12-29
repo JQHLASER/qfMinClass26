@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -53,14 +54,19 @@ namespace qfPLC
 
         }
 
+        private readonly object _lock = new object();
+
         /// <summary>
         /// 0:写,1:读
         /// </summary>   
         public void 读写参数(ushort model)
         {
-            _cfg_ info = this._参数;
-            new qfmain.文件_文件夹().WriteReadJson(this._path, model, ref info, out string msgErr);
-            this._参数 = info;
+            lock (_lock)
+            {
+                _cfg_ info = this._参数;
+                new qfmain.文件_文件夹().WriteReadJson(this._path, model, ref info, out string msgErr);
+                this._参数 = info;
+            }
         }
 
         public (bool rt, string msgErr) 连接(bool 是否先读参数 = true)
@@ -88,21 +94,21 @@ namespace qfPLC
             On_连接状态(qfmain._连接状态_.连接中);
 
             this._ModbusTcpClient?.ConnectClose();
+
+
             this._ModbusTcpClient = new ModbusTcpNet(cfg.IP, (int)cfg.Port, cfg.站号);
             this._ModbusTcpClient.AddressStartWithZero = cfg.首地址从0开始;
             this._ModbusTcpClient.DataFormat = cfg.字符串模式;
-
             // 设置数据服务
             this._ModbusTcpClient.IsStringReverse = cfg.字符串是否颠倒;
 
             try
             {
                 OperateResult connect = this._ModbusTcpClient.ConnectServer();
-
+                msgErr = connect.Message;
                 if (!connect.IsSuccess)
                 {
                     rt = false;
-                    msgErr = connect.Message;
                 }
             }
             catch (Exception ex)
@@ -138,12 +144,12 @@ namespace qfPLC
             return (rt, msgErr);
         }
 
-        public virtual void 窗体设置(string Title)
+        public virtual void 窗体设置(string Title,bool 重连)
         {
             using (Form_ModbusTcp forms = new Form_ModbusTcp(this, Title))
             {
                 DialogResult dlt = forms.ShowDialog();
-                if (dlt == DialogResult.OK)
+                if (重连 &&  dlt == DialogResult.OK)
                 {
                     连接(true);
                 }
@@ -154,29 +160,39 @@ namespace qfPLC
         #region Write
 
 
-        /// <summary>
-        /// 写入 
-        /// <para>类型:byte,short,ushort,int,uint,long,ulong,float,double,string,bool</para>
-        /// <para>类型:byte[],ushort[],short[],int[],uint[],long[],ulong[],float[],double[],bool[]</para>
-        /// </summary>
-        /// <returns></returns>
-        public virtual (bool rt, string msgerr) Write(string address, dynamic value)
+       
+        public virtual (bool rt, string msgErr) Write<T>(string address, T value) where T : struct
         {
-            OperateResult result = this._ModbusTcpClient.Write(address, new byte[] { value });
-            return new 解析().OperateResult(result);
+            
+                return new WritePlc().Write(this._ModbusTcpClient, address, value);
+           
         }
 
-        /// <summary>
-        /// 写入 
-        /// <para>类型:byte,short,ushort,int,uint,long,ulong,float,double,string,bool</para>
-        /// <para>类型:byte[],ushort[],short[],int[],uint[],long[],ulong[],float[],double[],bool[]</para>
-        /// </summary>
-        /// <returns></returns>
-        public virtual async Task<(bool rt, string msgerr)> WriteAsync(string address, dynamic value)
+        public virtual (bool rt, string msgErr) Write( string address, string value)
         {
-            OperateResult result = await this._ModbusTcpClient.WriteAsync(address, new byte[] { value });
-            return new 解析().OperateResult(result);
+            return new WritePlc().Write(this._ModbusTcpClient, address, value);
         }
+        public virtual (bool rt, string msgErr) Write( Encoding encoding, string address, string value)
+        {
+            return new WritePlc().Write(this._ModbusTcpClient, encoding, address, value);
+        }
+
+
+        public virtual async Task<(bool rt, string msgErr)> WriteAsync<T>( string address, T value) where T : struct
+        {
+            return await  new WritePlc().WriteAsync(this._ModbusTcpClient, address, value);
+        }
+        public virtual async Task<(bool rt, string msgErr)> WriteAsync( string address, string value)
+        {
+            return await  new WritePlc().WriteAsync(this._ModbusTcpClient, address, value);
+        }
+        public virtual async Task<(bool rt, string msgErr)> WriteAsync( Encoding encoding, string address, string value)
+        {
+            return await  new WritePlc().WriteAsync(this._ModbusTcpClient, encoding, address, value);
+        }
+
+
+
 
         #endregion
 
@@ -216,9 +232,10 @@ namespace qfPLC
 
 
         #region 事件
+         
 
         public event Action<qfmain._连接状态_> Event_连接状态;
-        public void On_连接状态(qfmain._连接状态_ state)
+        private void On_连接状态(qfmain._连接状态_ state)
         {
             this._连接状态 = state;
             Event_连接状态?.Invoke(state);

@@ -35,7 +35,7 @@ namespace qfPLC
             }
             else
             {
-                msgErr = result.ToMessageShowString();
+                msgErr = result.Message;
                 rt = false;
             }
             return (rt, msgErr);
