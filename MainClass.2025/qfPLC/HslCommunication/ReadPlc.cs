@@ -199,6 +199,23 @@ namespace qfPLC
                 return (false, ex.Message, default);
             }
         }
+        public virtual (bool rt, string msgErr, string value) Read(MelsecMcAsciiNet PlcNet, string address, ushort length )
+        {
+            try
+            {
+
+                OperateResult<string> result = PlcNet.ReadString(address, length );
+                return result.IsSuccess ?
+                      (true, "", result.Content) :
+                      (false, result.Message, "");
+
+            }
+            catch (Exception ex)
+            {
+
+                return (false, ex.Message, default);
+            }
+        }
 
 
         public virtual async Task<(bool rt, string msgErr, T value)> ReadAsync<T>(MelsecMcAsciiNet PlcNet, string address)
@@ -387,7 +404,23 @@ namespace qfPLC
                 return (false, ex.Message, default);
             }
         }
+        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(MelsecMcAsciiNet PlcNet, string address, ushort length )
+        {
+            try
+            {
 
+                OperateResult<string> result = await PlcNet.ReadStringAsync(address, length);
+                return result.IsSuccess ?
+                      (true, "", result.Content) :
+                      (false, result.Message, "");
+
+            }
+            catch (Exception ex)
+            {
+
+                return (false, ex.Message, default);
+            }
+        }
 
         #endregion
 
@@ -578,7 +611,23 @@ namespace qfPLC
                 return (false, ex.Message, default);
             }
         }
+        public virtual (bool rt, string msgErr, string value) Read(MelsecFxSerial PlcNet, string address, ushort length)
+        {
+            try
+            {
 
+                OperateResult<string> result = PlcNet.ReadString(address, length);
+                return result.IsSuccess ?
+                      (true, "", result.Content) :
+                      (false, result.Message, "");
+
+            }
+            catch (Exception ex)
+            {
+
+                return (false, ex.Message, default);
+            }
+        }
 
         public virtual async Task<(bool rt, string msgErr, T value)> ReadAsync<T>(MelsecFxSerial PlcNet, string address)
         {
@@ -755,6 +804,23 @@ namespace qfPLC
             {
 
                 OperateResult<string> result = await PlcNet.ReadStringAsync(address, length, encoding);
+                return result.IsSuccess ?
+                      (true, "", result.Content) :
+                      (false, result.Message, "");
+
+            }
+            catch (Exception ex)
+            {
+
+                return (false, ex.Message, default);
+            }
+        }
+        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(MelsecFxSerial PlcNet, string address, ushort length )
+        {
+            try
+            {
+
+                OperateResult<string> result = await PlcNet.ReadStringAsync(address, length);
                 return result.IsSuccess ?
                       (true, "", result.Content) :
                       (false, result.Message, "");
@@ -957,6 +1023,24 @@ namespace qfPLC
                 return (false, ex.Message, default);
             }
         }
+        public virtual (bool rt, string msgErr, string value) Read(ModbusTcpNet PlcNet, string address, ushort length )
+        {
+            try
+            {
+
+                OperateResult<string> result = PlcNet.ReadString(address, length );
+                return result.IsSuccess ?
+                      (true, "", result.Content) :
+                      (false, result.Message, "");
+
+            }
+            catch (Exception ex)
+            {
+
+                return (false, ex.Message, default);
+            }
+        }
+
 
 
         public virtual async Task<(bool rt, string msgErr, T value)> ReadAsync<T>(ModbusTcpNet PlcNet, string address)
@@ -1146,6 +1230,23 @@ namespace qfPLC
             }
         }
 
+        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(ModbusTcpNet PlcNet, string address, ushort length )
+        {
+            try
+            {
+
+                OperateResult<string> result = await PlcNet.ReadStringAsync(address, length);
+                return result.IsSuccess ?
+                      (true, "", result.Content) :
+                      (false, result.Message, "");
+
+            }
+            catch (Exception ex)
+            {
+
+                return (false, ex.Message, default);
+            }
+        }
 
 
         #endregion

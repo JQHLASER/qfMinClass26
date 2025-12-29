@@ -209,6 +209,11 @@ namespace qfPLC
         {
             return new ReadPlc().Read(this._MelsecFxSerial, address, length, encoding);
         }
+        public virtual (bool rt, string msgErr, string value) Read(string address, ushort length )
+        {
+            return new ReadPlc().Read(this._MelsecFxSerial, address, length );
+        }
+
 
         public virtual async Task<(bool rt, string msgErr, T value)> ReadAsync<T>(string address)
         {
@@ -222,7 +227,10 @@ namespace qfPLC
         {
             return await new ReadPlc().ReadAsync(this._MelsecFxSerial, address, length, encoding);
         }
-
+        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length )
+        {
+            return await new ReadPlc().ReadAsync(this._MelsecFxSerial, address, length );
+        }
 
 
 

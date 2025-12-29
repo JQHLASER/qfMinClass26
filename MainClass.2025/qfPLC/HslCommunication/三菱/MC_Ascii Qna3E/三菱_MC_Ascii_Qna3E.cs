@@ -323,6 +323,12 @@ namespace qfPLC
             return new ReadPlc().Read(this._MelsecMcAsciiNet, address, length, encoding);
         }
 
+        public virtual (bool rt, string msgErr, string value) Read(string address, ushort length )
+        {
+            return new ReadPlc().Read(this._MelsecMcAsciiNet, address, length );
+        }
+
+
         public virtual async Task<(bool rt, string msgErr, T value)> ReadAsync<T>(string address)
         {
             return await new ReadPlc().ReadAsync<T>(this._MelsecMcAsciiNet, address);
@@ -335,7 +341,10 @@ namespace qfPLC
         {
             return await new ReadPlc().ReadAsync(this._MelsecMcAsciiNet, address, length, encoding);
         }
-
+        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length )
+        {
+            return await new ReadPlc().ReadAsync(this._MelsecMcAsciiNet, address, length );
+        }
 
 
 

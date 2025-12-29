@@ -42,14 +42,14 @@ namespace qfPLC
         (bool rt, string msgErr, T value) Read<T>(string address, ushort length);
 
         (bool rt, string msgErr, string value) Read(string address, ushort length, Encoding encoding);
-
+        (bool rt, string msgErr, string value) Read(string address, ushort length );
 
         Task<(bool rt, string msgErr, T value)> ReadAsync<T>(string address);
 
         Task<(bool rt, string msgErr, T value)> ReadAsync<T>(string address, ushort length);
 
         Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length, Encoding encoding);
-
+        Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length );
 
 
         #endregion

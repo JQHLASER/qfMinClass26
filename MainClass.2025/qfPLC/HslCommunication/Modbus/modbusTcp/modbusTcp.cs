@@ -211,6 +211,11 @@ namespace qfPLC
         {
             return new ReadPlc().Read(this._ModbusTcpClient, address, length, encoding);
         }
+        public virtual (bool rt, string msgErr, string value) Read(string address, ushort length)
+        {
+            return new ReadPlc().Read(this._ModbusTcpClient, address, length);
+        }
+
 
         public virtual async Task<(bool rt, string msgErr, T value)> ReadAsync<T>(string address)
         {
@@ -224,6 +229,11 @@ namespace qfPLC
         {
             return await new ReadPlc().ReadAsync(this._ModbusTcpClient, address, length, encoding);
         }
+        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length )
+        {
+            return await new ReadPlc().ReadAsync(this._ModbusTcpClient, address, length );
+        }
+
 
 
 
@@ -232,7 +242,7 @@ namespace qfPLC
 
 
         #region 事件
-         
+
 
         public event Action<qfmain._连接状态_> Event_连接状态;
         private void On_连接状态(qfmain._连接状态_ state)
