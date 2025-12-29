@@ -150,6 +150,7 @@ namespace qfPLC
             }
         }
 
+
         #region Write
 
 
@@ -224,6 +225,7 @@ namespace qfPLC
         }
 
         #endregion
+
 
         public qfmain._连接状态_ Get连接状态()
         {
