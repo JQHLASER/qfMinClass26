@@ -90,7 +90,7 @@ namespace qfPLC
             // 连接
             if (!System.Net.IPAddress.TryParse(cfg.Ip, out System.Net.IPAddress address))
             {
-                msgErr = "IP错误";
+                msgErr = qfmain .Language_ .Get语言 ("IP错误");
                 rt = false;
                 return (rt, msgErr);
             }
@@ -136,6 +136,10 @@ namespace qfPLC
             {
                 OperateResult connect = this._MelsecMcAsciiNet.ConnectClose();
                 rt = connect.IsSuccess;
+                if (!rt)
+                {
+                    msgErr = connect.Message;
+                }
             }
             catch (Exception ex)
             {

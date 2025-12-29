@@ -50,7 +50,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HslCommunication\Modbus\modbusTcp\modbusTcp.cs" />
+    <Compile Include="HslCommunication\Modbus\ModbusTcp\Form_ModbusTcp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HslCommunication\Modbus\ModbusTcp\Form_ModbusTcp.Designer.cs">
+      <DependentUpon>Form_ModbusTcp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HslCommunication\Modbus\ModbusTcp\ModbusTcp.cs" />
     <Compile Include="HslCommunication\HslCommunication_.cs" />
     <Compile Include="HslCommunication\PLC_Hsl.cs" />
     <Compile Include="HslCommunication\ReadPlc.cs" />
@@ -61,7 +67,7 @@
       <DependentUpon>Form_FX.cs</DependentUpon>
     </Compile>
     <Compile Include="HslCommunication\三菱\FX\三菱_FX.cs" />
-    <Compile Include="HslCommunication\三菱\三菱_MC_Ascii_Qna3E.cs" />
+    <Compile Include="HslCommunication\三菱\MC_Ascii Qna3E\三菱_MC_Ascii_Qna3E.cs" />
     <Compile Include="HslCommunication\统一接口.cs" />
     <Compile Include="HslCommunication\解析.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,13 +84,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="HslCommunication\Modbus\ModbusTcp\Form_ModbusTcp.resx">
+      <DependentUpon>Form_ModbusTcp.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="HslCommunication\三菱\FX\Form_FX.resx">
       <DependentUpon>Form_FX.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="HslCommunication\三菱\MC_Ascii Qna3E\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rd /s /q "$(ProjectDir)obj"</PostBuildEvent>

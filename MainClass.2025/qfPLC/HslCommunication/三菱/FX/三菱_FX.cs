@@ -128,8 +128,7 @@ namespace qfPLC
             string msgErr = string.Empty;
             try
             {
-                this._MelsecFxSerial.Close();
-                msgErr = String.Empty;
+                this._MelsecFxSerial.Close();               
                 rt = !this._MelsecFxSerial.IsOpen();
 
             }
@@ -143,7 +142,7 @@ namespace qfPLC
 
         public virtual void 窗体设置(string Title)
         {
-            using (Form_FX forms = new Form_FX(this))
+            using (Form_FX forms = new Form_FX(this, Title))
             {
                 DialogResult dlt = forms.ShowDialog();
                 if (dlt == DialogResult.OK)

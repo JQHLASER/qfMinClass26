@@ -43,7 +43,8 @@ namespace qfPLC
                     return new 三菱_MC_Ascii_Qna3E(this._path);
                 case _PLC_Type_.FX_Serial_:
                     return new 三菱_FX(this._path);
-
+                case _PLC_Type_.ModbusTcp:
+                    return new ModbusTcp(this._path);
 
 
 

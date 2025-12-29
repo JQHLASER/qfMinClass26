@@ -22,11 +22,11 @@ namespace qfPLC
         private string[] _校验位;
         private 三菱_FX _fxsys;
 
-        internal Form_FX(三菱_FX fxsys_)
+        internal Form_FX(三菱_FX fxsys_,string Title)
         {
             InitializeComponent();
             this._fxsys = fxsys_;
-
+            this.Text = Title;
             this._串口名称 = new qfmain.SerialPort_方法().Get_串口名称();
             this._波特率 = new qfmain.SerialPort_方法().Get_波特率();
             this._数据位 = new qfmain.SerialPort_方法().Get_数据位();

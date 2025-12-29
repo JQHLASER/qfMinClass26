@@ -18,7 +18,7 @@ namespace qfPLC
         /// 三菱,MC协议,Qna3E
         /// </summary>
         MC_ASCII,
-
+        ModbusTcp,
 
 
 
