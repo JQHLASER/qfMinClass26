@@ -44,7 +44,7 @@ namespace qfNet
 
             System.Windows.Forms.Timer _timer = new Timer();
             _timer.Interval = this._UI刷新时间;
-            _timer.Tick += Timer_Tick;
+            _timer.Tick += (s, e) => Timer_Tick(s, e);
             _timer.Start();
         }
 
