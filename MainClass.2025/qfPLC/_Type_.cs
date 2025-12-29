@@ -13,7 +13,7 @@ namespace qfPLC
         /// <summary>
         /// 三菱,FX编程口
         /// </summary>
-        FX_Serial_,
+        FX_Serial,
         /// <summary>
         /// 三菱,MC协议,Qna3E
         /// </summary>
