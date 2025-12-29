@@ -29,3 +29,12 @@ private async Task On_Queue处理()
      //处理事件
     }
 }
+
+
+void 清空队列()
+{
+    var oldQueue = _queue;
+    _queue = new BlockingCollection<int>();
+
+    oldQueue.CompleteAdding();   // 让旧消费者自然退出
+}

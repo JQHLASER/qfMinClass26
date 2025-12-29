@@ -1,0 +1,161 @@
+﻿public sealed class QueueWorker<T> : IDisposable
+{
+    private BlockingCollection<T> _queue;
+    private CancellationTokenSource _cts;
+    private Task _workerTask;
+    private readonly object _lock = new object();
+
+    /// <summary>
+    /// 构造
+    /// </summary>
+    public QueueWorker(int boundedCapacity = -1)
+    {
+        CreateNew(boundedCapacity);
+    }
+
+    /// <summary>
+    /// 创建新队列
+    /// </summary>
+    private void CreateNew(int boundedCapacity)
+    {
+        _cts = new CancellationTokenSource();
+        _queue = boundedCapacity > 0
+            ? new BlockingCollection<T>(boundedCapacity)
+            : new BlockingCollection<T>();
+    }
+
+    /// <summary>
+    /// 启动消费者
+    /// </summary>
+    public void Start(Action<T> onConsume)
+    {
+        if (onConsume == null) throw new ArgumentNullException(nameof(onConsume));
+
+        lock (_lock)
+        {
+            if (_workerTask != null && !_workerTask.IsCompleted)
+                return;
+
+            _workerTask = Task.Run(() =>
+            {
+                try
+                {
+                    foreach (var item in _queue.GetConsumingEnumerable(_cts.Token))
+                    {
+                        onConsume(item);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    // 正常取消
+                }
+                catch (Exception ex)
+                {
+                    // TODO: 记录日志
+                    System.Diagnostics.Debug.WriteLine(ex);
+                }
+            }, _cts.Token);
+        }
+    }
+
+    /// <summary>
+    /// 入队
+    /// </summary>
+    public bool Enqueue(T item)
+    {
+        if (_queue.IsAddingCompleted)
+            return false;
+
+        try
+        {
+            _queue.Add(item, _cts.Token);
+            return true;
+        }
+        catch (OperationCanceledException)
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// 立即清空队列（不处理剩余数据）
+    /// </summary>
+    public void Clear()
+    {
+        lock (_lock)
+        {
+            var oldQueue = _queue;
+
+            CreateNew(-1);              // 新队列
+            oldQueue.CompleteAdding();  // 旧消费者自然退出
+        }
+    }
+
+    /// <summary>
+    /// 优雅停止（处理完剩余数据）
+    /// </summary>
+    public void StopGracefully()
+    {
+        lock (_lock)
+        {
+            _queue.CompleteAdding();
+        }
+    }
+
+    /// <summary>
+    /// 立即停止（丢弃剩余数据）
+    /// </summary>
+    public void StopImmediately()
+    {
+        lock (_lock)
+        {
+            _cts.Cancel();
+            _queue.CompleteAdding();
+        }
+    }
+
+    public void Dispose()
+    {
+        StopImmediately();
+
+        try
+        {
+            _workerTask?.Wait(2000);
+        }
+        catch { }
+
+        _queue?.Dispose();
+        _cts?.Dispose();
+    }
+}
+
+
+///使用方法
+QueueWorker<int> worker;
+
+void 初始化()
+{
+    worker = new QueueWorker<int>();
+
+    worker.Start(item =>
+    {
+        // 模拟处理
+        Console.WriteLine($"处理：{item}");
+        Thread.Sleep(200);
+    });
+}
+
+void 添加()
+{
+    worker.Enqueue(123);
+}
+
+void 清空()
+{
+    worker.Clear();     // 立即丢弃未处理数据
+}
+
+void 关闭()
+{
+    worker.StopGracefully(); // 或 StopImmediately()
+}
