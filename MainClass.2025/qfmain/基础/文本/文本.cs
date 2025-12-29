@@ -208,16 +208,18 @@ namespace qfmain
             右对齐,
             居中,
         }
-        public string 对齐(string 内容, int 字符数量, Font font, _对齐_ 对齐方式, string 填充内容 = " ")
+
+
+        public string 对齐(string 内容, int 字符宽度, Font font, _对齐_ 对齐方式, string 填充内容 = " ")
         {
             switch (对齐方式)
             {
                 case _对齐_.左对齐:
-                    return 左对齐(内容, 字符数量, font, 填充内容);
+                    return 左对齐(内容, 字符宽度, font, 填充内容);
                 case _对齐_.右对齐:
-                    return 右对齐(内容, 字符数量, font, 填充内容);
+                    return 右对齐(内容, 字符宽度, font, 填充内容);
                 case _对齐_.居中:
-                    return 居中(内容, 字符数量, font, 填充内容);
+                    return 居中(内容, 字符宽度, font, 填充内容);
                 default:
                     return 内容;
             }
