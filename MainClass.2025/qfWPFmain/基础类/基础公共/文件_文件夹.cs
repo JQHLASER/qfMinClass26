@@ -29,7 +29,7 @@ namespace qfWPFmain
         /// <param name="密码"></param>
         /// <param name="bufferSize"></param>
         /// <returns></returns>
-        public override bool WriteReadIni<T>(string path, ushort Model, ref T cfg, out string msgErr, string section = "信息", string key_ = "data", Encoding encoding_ = null, int bufferSize = 65535)
+        public override bool WriteReadIni<T>(string path, ushort Model, ref T cfg, out string msgErr, string section = "信息", string key_ = "data" )
         {
             bool rt = true;
             msgErr = string.Empty;
@@ -86,8 +86,59 @@ namespace qfWPFmain
             return rt;
         }
 
-        
-         
+        public override bool WriteReadIni (string path, ushort Model, ref string  cfg, out string msgErr, string section = "信息", string key_ = "data")
+        {
+            bool rt = true;
+            msgErr = string.Empty;
+            try
+            {
+
+
+                List<string> lstWork = new List<string>();
+                lstWork.Add("是否强制写");
+                lstWork.Add("写");
+                lstWork.Add("读");
+
+                foreach (var s in lstWork)
+                {
+                    if (!rt)
+                    {
+                        break;
+                    }
+                    else if (s == "是否强制写")
+                    {
+                        if (Model != 0 && !new 文件_文件夹().文件_是否存在(path))
+                        {
+                            Model = 0;
+                        }
+                    }
+                    else if (s == "写")
+                    {
+                        if (Model != 0)
+                        {
+                            continue;
+                        }
+ 
+                        new qfmain.ini_win().Write(section, key_, cfg , path);
+
+
+                    }
+                    else if (s == "读")
+                    {
+                      cfg  = new qfmain.ini_win().Read(section, key_, "", path);
+                       
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                rt = false;
+                msgErr = ex.Message;
+            }
+            return rt;
+        }
+
         #endregion
 
     }
