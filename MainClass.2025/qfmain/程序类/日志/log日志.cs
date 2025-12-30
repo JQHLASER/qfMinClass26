@@ -155,7 +155,7 @@ namespace qfmain
             public int 清除线程周期 { set; get; } = 1000 * 60 * 60 * 1;
 
             /// <summary>
-            /// 默认超过400M后,重新保存文件
+            /// 默认超过20M后,重新保存文件
             /// </summary>
             public bool 使能_文件大小限制 { set; get; } = true;
 
@@ -315,14 +315,31 @@ namespace qfmain
         //保存日志
         async Task SaveLog(_logValue_ logInfo)
         {
-            string show = string.IsNullOrEmpty(this.参数.文件标识) ? "" : $"{this.文件标识分割符}{this.参数.文件标识}";
+            StringBuilder sb = new StringBuilder();
+            sb.Append(this.文件标识分割符);
+            sb.Append(this.参数.文件标识);
+            string show = string.IsNullOrEmpty(this.参数.文件标识) ? "" : sb.ToString();
+
             DateTime now = DateTime.Now;
             string y = now.ToString("yyyy");
             string M = now.ToString("MM");
             string d = now.ToString("dd");
-            string fileName = $"{y}{this.日期分割符}{M}{this.日期分割符}{d}";
 
-            string path = $"{this.参数.Files_Log}\\{fileName}{show}.log";
+            sb.Clear();
+            sb.Append(y);
+            sb.Append(this.日期分割符);
+            sb.Append(M);
+            sb.Append(this.日期分割符);
+            sb.Append(d);
+            string fileName = sb.ToString ();
+
+            sb.Clear();
+            sb.Append(this.参数.Files_Log);
+            sb.Append("\\");
+            sb.Append(fileName);
+            sb.Append(show);
+            sb.Append(".log");
+            string path = sb.ToString();
             if (this.参数.使能_文件大小限制)
             {
                 #region 文件大小限制
@@ -338,7 +355,16 @@ namespace qfmain
                         new 文件_文件夹().文件_获取文件大小(path, out long B, out string msgErr);
                         if (B >= 1024 * 1024 * this.参数.日志文件大小)
                         {
-                            path = $"{this.参数.Files_Log}\\{fileName}{show}{this.文件标识分割符}{($"{i + 1}").PadLeft(3, '0')}.log";
+                            sb.Clear();
+                            sb.Append(this.参数.Files_Log);
+                            sb.Append("\\");
+                            sb.Append(fileName);
+                            sb.Append(show);
+                            sb.Append(this.文件标识分割符);
+                            sb.Append(($"{i + 1}").PadLeft(3, '0'));
+                            sb.Append(".log");
+                           
+                            path = sb.ToString ();
                             continue;
                         }
                         else

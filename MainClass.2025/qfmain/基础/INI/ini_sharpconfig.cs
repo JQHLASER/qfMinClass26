@@ -88,6 +88,12 @@ namespace qfmain
         {
             lock (_lock)
             {
+                if (!_config.Contains(sectionName))
+                    _config.Add(sectionName);
+
+                if (!_config[sectionName].Contains(settingName))
+                    _config[sectionName].Add(settingName, "");
+
                 _config[sectionName][settingName].SetValue(value);
                 if (是否保存)
                 {
@@ -151,7 +157,7 @@ namespace qfmain
         /// 保存
         /// <para>将更改持久化到磁盘（高效写入）</para>
         /// </summary>
-        public void Save()
+        public (bool state ,string msg) Save( )
         {
             lock (_lock)
             {
@@ -164,11 +170,11 @@ namespace qfmain
                         Directory.CreateDirectory(dir);
                     }
                     _config.SaveToFile(_filePath);
+                    return (true, default);
                 }
                 catch (IOException ex)
                 {
-                    // Log the error or handle it as needed
-                    Console.WriteLine($"Error saving configuration file: {ex.Message}");
+                    return (false ,ex.Message);
                 }
             }
 
