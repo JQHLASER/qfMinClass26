@@ -58,6 +58,7 @@
     </Compile>
     <Compile Include="HslCommunication\Modbus\ModbusTcp\ModbusTcp.cs" />
     <Compile Include="HslCommunication\HslCommunication_.cs" />
+    <Compile Include="HslCommunication\Modbus\Modbus_地址转换.cs" />
     <Compile Include="HslCommunication\PLC_Hsl.cs" />
     <Compile Include="HslCommunication\ReadPlc.cs" />
     <Compile Include="HslCommunication\WritePlc.cs" />
