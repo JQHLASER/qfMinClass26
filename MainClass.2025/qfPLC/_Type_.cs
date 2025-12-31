@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace qfPLC
 {
-
+    /// <summary>
+    /// PLC类型
+    /// </summary>
     public enum _PLC_Type_
     {
         /// <summary>

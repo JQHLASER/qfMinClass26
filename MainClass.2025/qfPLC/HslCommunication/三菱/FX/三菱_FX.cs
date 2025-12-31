@@ -145,7 +145,7 @@ namespace qfPLC
             return (rt, msgErr);
         }
 
-        public virtual void 窗体设置(string Title, bool 重连)
+        public virtual DialogResult  窗体设置(string Title, bool 重连)
         {
             using (Form_FX forms = new Form_FX(this, Title))
             {
@@ -154,6 +154,7 @@ namespace qfPLC
                 {
                     连接(true);
                 }
+                return dlt;
             }
         }
 
@@ -161,7 +162,7 @@ namespace qfPLC
 
 
 
-        public virtual (bool rt, string msgErr) Write<T>(string address, T value) where T : struct
+        public virtual (bool rt, string msgErr) Write<T>(string address, T value) 
         {
             return new WritePlc().Write(this._MelsecFxSerial, address, value);
         }
@@ -176,7 +177,7 @@ namespace qfPLC
         }
 
 
-        public virtual async Task<(bool rt, string msgErr)> WriteAsync<T>(string address, T value) where T : struct
+        public virtual async Task<(bool rt, string msgErr)> WriteAsync<T>(string address, T value)  
         {
             return await new WritePlc().WriteAsync(this._MelsecFxSerial, address, value);
         }

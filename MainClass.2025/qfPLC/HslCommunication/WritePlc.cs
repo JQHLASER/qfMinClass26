@@ -13,7 +13,7 @@ namespace qfPLC
     {
         #region 三菱_MC_Ascii_Qna3E
 
-        public (bool rt, string msgErr) Write<T>(MelsecMcAsciiNet PlcNet, string address, T value) where T : struct
+        public (bool rt, string msgErr) Write<T>(MelsecMcAsciiNet PlcNet, string address, T value)  
         {
             try
             {
@@ -151,7 +151,7 @@ namespace qfPLC
 
 
 
-        public async Task<(bool rt, string msgErr)> WriteAsync<T>(MelsecMcAsciiNet PlcNet, string address, T value) where T : struct
+        public async Task<(bool rt, string msgErr)> WriteAsync<T>(MelsecMcAsciiNet PlcNet, string address, T value) 
         {
             try
             {
@@ -292,7 +292,7 @@ namespace qfPLC
 
         #region 三菱_FX
 
-        public (bool rt, string msgErr) Write<T>(MelsecFxSerial PlcNet, string address, T value) where T : struct
+        public (bool rt, string msgErr) Write<T>(MelsecFxSerial PlcNet, string address, T value)  
         {
             try
             {
@@ -430,7 +430,7 @@ namespace qfPLC
 
 
 
-        public async Task<(bool rt, string msgErr)> WriteAsync<T>(MelsecFxSerial PlcNet, string address, T value) where T : struct
+        public async Task<(bool rt, string msgErr)> WriteAsync<T>(MelsecFxSerial PlcNet, string address, T value)  
         {
             try
             {
@@ -571,7 +571,7 @@ namespace qfPLC
 
         #region ModbusTcp
 
-        public (bool rt, string msgErr) Write<T>(ModbusTcpNet PlcNet, string address, T value) where T : struct
+        public (bool rt, string msgErr) Write<T>(ModbusTcpNet PlcNet, string address, T value) 
         {
             try
             {
@@ -708,7 +708,7 @@ namespace qfPLC
         }
 
 
-        public async Task<(bool rt, string msgErr)> WriteAsync<T>(ModbusTcpNet PlcNet, string address, T value) where T : struct
+        public async Task<(bool rt, string msgErr)> WriteAsync<T>(ModbusTcpNet PlcNet, string address, T value)    
         {
             try
             {

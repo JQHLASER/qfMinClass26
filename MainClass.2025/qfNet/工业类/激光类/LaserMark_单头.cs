@@ -499,7 +499,7 @@ namespace qfNet
                 case _打标卡类型_.EzCad2:
                     string value = string.Empty;
                     qfWork._Err_jczMarkEzd2_ nErr = this._Markezd.旋转变换(x, y, xCenter, yCenter, a);
-                   
+
                     this._Markezd.ErrToMsg((int)nErr, out msgErr);
                     rt = nErr == qfWork._Err_jczMarkEzd2_.成功 ? true : false;
                     break;
@@ -543,6 +543,21 @@ namespace qfNet
             vBeff = lst.ToArray();
         }
 
+
+        public string 获取模板后缀名()
+        {
+
+            bool rt = true;
+            switch (this._打标卡类型)
+            {
+                case _打标卡类型_.EzCad2:
+
+                    return ".ezd";
+                default:
+                    return "";
+            }
+
+        }
 
 
         #region Err

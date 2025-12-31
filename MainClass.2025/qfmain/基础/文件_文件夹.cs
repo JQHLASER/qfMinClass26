@@ -1288,7 +1288,7 @@ namespace qfmain
 
         /// <summary>
         ///  Model: =0写,=1读
-        /// <para>读写文件,以json格式保存</para>
+        /// <para>读写文件</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="path"></param>

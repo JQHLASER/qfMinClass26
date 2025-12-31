@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+ 
 
 
 namespace qfmain
@@ -49,7 +49,7 @@ namespace qfmain
 
         public string Read(string sectionName, string settingName, string 默认值 = "")
         {
-            (bool rt, string value, string msgErr) rt = ReadStr(sectionName, settingName, 默认值);          
+            (bool rt, string value, string msgErr) rt = ReadStr(sectionName, settingName, 默认值);
             return rt.value;
         }
         public (bool rt, string value, string msgErr) ReadStr(string sectionName, string settingName, string 默认值 = "")
@@ -84,7 +84,7 @@ namespace qfmain
         /// <summary>
         /// 需要配置是否保存
         /// </summary>
-        public void Write<T>(string sectionName, string settingName, T value, bool 是否保存  )
+        public void Write<T>(string sectionName, string settingName, T value, bool 是否保存)
         {
             lock (_lock)
             {
@@ -149,6 +149,57 @@ namespace qfmain
             }
         }
 
+        /// <summary>
+        /// 读大文件
+        /// </summary>
+        /// <param name="sectionName"></param>
+        /// <param name="行数"></param>
+        /// <returns></returns>
+        public (bool state, string msg, Dictionary<int, string> value) Read_Dictionary(string sectionName, int 行数)
+        {
+            try
+            {
+
+
+                Configuration cfg = Configuration.LoadFromFile(_filePath);
+                var section = cfg[sectionName];
+                var dict = new Dictionary<int, string>(行数);
+                foreach (var setting in section)
+                {
+                    dict[int.Parse(setting.Name)] = setting.StringValue;
+                }
+                return (true, default, dict);
+
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message, default);
+            }
+        }
+
+        /// <summary>
+        /// 读多行,超快,key需是从0开始的连续数字
+        /// </summary> 
+        public (bool state, string msg, string[] value) Read_Array(string sectionName, int 行数)
+        {
+            try
+            {
+
+                Configuration cfg = Configuration.LoadFromFile(_filePath);
+                string[] data = new string[行数];
+
+                foreach (var s in cfg[sectionName])
+                {
+                    int idx = int.Parse(s.Name);
+                    data[idx] = s.StringValue;
+                }
+                return (true, default, data);
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message, default);
+            }
+        }
 
 
 
@@ -157,7 +208,7 @@ namespace qfmain
         /// 保存
         /// <para>将更改持久化到磁盘（高效写入）</para>
         /// </summary>
-        public (bool state ,string msg) Save( )
+        public (bool state, string msg) Save()
         {
             lock (_lock)
             {
@@ -174,7 +225,7 @@ namespace qfmain
                 }
                 catch (IOException ex)
                 {
-                    return (false ,ex.Message);
+                    return (false, ex.Message);
                 }
             }
 

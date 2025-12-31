@@ -155,9 +155,9 @@ namespace qfPLC
         }
          
 
-        public void  窗体设置(string Title, bool 重连)
+        public DialogResult   窗体设置(string Title, bool 重连)
         {
-
+            return DialogResult.None;
         }
 
 
@@ -274,7 +274,7 @@ namespace qfPLC
 
 
 
-        public virtual (bool rt, string msgErr) Write<T>(string address, T value) where T : struct
+        public virtual (bool rt, string msgErr) Write<T>(string address, T value)  
         {
             return new WritePlc().Write(this._MelsecMcAsciiNet , address, value);
         }
@@ -289,7 +289,7 @@ namespace qfPLC
         }
 
 
-        public virtual async Task<(bool rt, string msgErr)> WriteAsync<T>(string address, T value) where T : struct
+        public virtual async Task<(bool rt, string msgErr)> WriteAsync<T>(string address, T value)  
         {
             return await new WritePlc().WriteAsync(this._MelsecMcAsciiNet, address, value);
         }

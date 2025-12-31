@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace qfPLC
 {
@@ -19,16 +20,16 @@ namespace qfPLC
         (bool rt, string msgErr) 断开();
         void 读写参数(ushort model);
 
-        void 窗体设置(string Title,bool 重连);
+        DialogResult 窗体设置(string Title,bool 重连);
 
         #region Write
 
-        (bool rt, string msgErr) Write<T>( string address, T value) where T : struct;
+        (bool rt, string msgErr) Write<T>( string address, T value)  ;
         (bool rt, string msgErr) Write( string address, string value);
         (bool rt, string msgErr) Write( Encoding encoding, string address, string value);
 
 
-        Task<(bool rt, string msgErr)> WriteAsync<T>( string address, T value) where T : struct;
+        Task<(bool rt, string msgErr)> WriteAsync<T>( string address, T value)  ;
         Task<(bool rt, string msgErr)> WriteAsync( string address, string value);
         Task<(bool rt, string msgErr)> WriteAsync( Encoding encoding, string address, string value);
 
