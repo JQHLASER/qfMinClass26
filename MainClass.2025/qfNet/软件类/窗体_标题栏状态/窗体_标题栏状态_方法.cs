@@ -20,8 +20,16 @@ namespace qfNet
                 new _cfg_标题栏状态_ (Name,$"{Title }{Language_ .Get语言 ("已连接")}",(int)qfmain._连接状态_.已连接 ),
                 new _cfg_标题栏状态_ (Name,$"{Title }{Language_ .Get语言 ("连接中")}",(int)qfmain._连接状态_.连接中  ),
                 new _cfg_标题栏状态_ (Name,$"{Title }{Language_ .Get语言 ("未连接")}",(int)qfmain._连接状态_.未连接  ),
+                new _cfg_标题栏状态_ (Name,$"{Title }{Language_ .Get语言 ("无响应")}",(int)qfmain._连接状态_.无响应   ),
              };
             con.Add(info, (int)state);
         }
+
+
+
+      
+
+
+
     }
 }

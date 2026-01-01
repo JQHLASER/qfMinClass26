@@ -65,7 +65,7 @@ namespace qfPLC
 
         }
 
-        private readonly object _lock=new object();
+        private readonly object _lock = new object();
 
         /// <summary>
         /// 0:写,1:读
@@ -95,7 +95,7 @@ namespace qfPLC
             // 连接
             if (!System.Net.IPAddress.TryParse(cfg.Ip, out System.Net.IPAddress address))
             {
-                msgErr = qfmain .Language_ .Get语言 ("IP错误");
+                msgErr = qfmain.Language_.Get语言("IP错误");
                 rt = false;
                 return (rt, msgErr);
             }
@@ -153,9 +153,9 @@ namespace qfPLC
             }
             return (rt, msgErr);
         }
-         
 
-        public DialogResult   窗体设置(string Title, bool 重连)
+
+        public DialogResult 窗体设置(string Title, bool 重连)
         {
             return DialogResult.None;
         }
@@ -274,9 +274,9 @@ namespace qfPLC
 
 
 
-        public virtual (bool rt, string msgErr) Write<T>(string address, T value)  
+        public virtual (bool rt, string msgErr) Write<T>(string address, T value)
         {
-            return new WritePlc().Write(this._MelsecMcAsciiNet , address, value);
+            return new WritePlc().Write(this._MelsecMcAsciiNet, address, value);
         }
 
         public virtual (bool rt, string msgErr) Write(string address, string value)
@@ -289,7 +289,7 @@ namespace qfPLC
         }
 
 
-        public virtual async Task<(bool rt, string msgErr)> WriteAsync<T>(string address, T value)  
+        public virtual async Task<(bool rt, string msgErr)> WriteAsync<T>(string address, T value)
         {
             return await new WritePlc().WriteAsync(this._MelsecMcAsciiNet, address, value);
         }
@@ -310,6 +310,26 @@ namespace qfPLC
 
         #region Read
 
+
+        public virtual (bool rt, string msgErr, bool value) ReadDiscrete_离散线圈(string address)
+        {
+            return new ReadPlc().ReadDiscrete_离散线圈(this._MelsecMcAsciiNet, address);
+        }
+        public virtual (bool rt, string msgErr, bool[] value) ReadDiscrete_离散线圈(string address, ushort length)
+        {
+            return new ReadPlc().ReadDiscrete_离散线圈(this._MelsecMcAsciiNet, address, length);
+        }
+
+        public virtual async Task<(bool rt, string msgErr, bool value)> ReadDiscreteAysnc_离散线圈(string address)
+        {
+            return await new ReadPlc().ReadDiscreteAysnc_离散线圈(this._MelsecMcAsciiNet, address);
+        }
+        public virtual async Task<(bool rt, string msgErr, bool[] value)> ReadDiscreteAysnc_离散线圈(string address, ushort length)
+        {
+            return await new ReadPlc().ReadDiscreteAysnc_离散线圈(this._MelsecMcAsciiNet, address, length);
+        }
+
+
         public virtual (bool rt, string msgErr, T value) Read<T>(string address)
         {
             return new ReadPlc().Read<T>(this._MelsecMcAsciiNet, address);
@@ -318,14 +338,31 @@ namespace qfPLC
         {
             return new ReadPlc().Read<T>(this._MelsecMcAsciiNet, address, length);
         }
+        /// <summary>
+        /// 无此功能
+        /// </summary> 
+        public virtual (bool rt, string msgErr, bool[] value) ReadCoil(string address, ushort length)
+        {
+            return new ReadPlc().ReadCoil(this._MelsecMcAsciiNet, address, length);
+        }
+        /// <summary>
+        /// 无此功能
+        /// </summary> 
+        public virtual (bool rt, string msgErr, bool value) ReadCoil(string address)
+        {
+            return new ReadPlc().ReadCoil(this._MelsecMcAsciiNet, address);
+        }
+
+
+
         public virtual (bool rt, string msgErr, string value) Read(string address, ushort length, Encoding encoding)
         {
             return new ReadPlc().Read(this._MelsecMcAsciiNet, address, length, encoding);
         }
 
-        public virtual (bool rt, string msgErr, string value) Read(string address, ushort length )
+        public virtual (bool rt, string msgErr, string value) Read(string address, ushort length)
         {
-            return new ReadPlc().Read(this._MelsecMcAsciiNet, address, length );
+            return new ReadPlc().Read(this._MelsecMcAsciiNet, address, length);
         }
 
 
@@ -337,13 +374,30 @@ namespace qfPLC
         {
             return await new ReadPlc().ReadAsync<T>(this._MelsecMcAsciiNet, address, length);
         }
+        /// <summary>
+        /// 无此功能
+        /// </summary> 
+        public virtual async Task<(bool rt, string msgErr, bool [] value)> ReadCoilAsync(string address, ushort length)
+        {
+            return await new ReadPlc().ReadCoilAsync(this._MelsecMcAsciiNet, address, length);
+        }
+
+        /// <summary>
+        /// 无此功能
+        /// </summary> 
+        public virtual async Task<(bool rt, string msgErr, bool value)> ReadCoilAsync(string address)
+        {
+            return await new ReadPlc().ReadCoilAsync(this._MelsecMcAsciiNet, address);
+        }
+
+
         public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length, Encoding encoding)
         {
             return await new ReadPlc().ReadAsync(this._MelsecMcAsciiNet, address, length, encoding);
         }
-        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length )
+        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length)
         {
-            return await new ReadPlc().ReadAsync(this._MelsecMcAsciiNet, address, length );
+            return await new ReadPlc().ReadAsync(this._MelsecMcAsciiNet, address, length);
         }
 
 

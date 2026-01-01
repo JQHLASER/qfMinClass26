@@ -452,6 +452,7 @@ namespace qfmain
         未连接 = -1,
         已连接 = 0,
         连接中 = -2,
+        无响应=-3,
     }
 
     public enum _启动状态_

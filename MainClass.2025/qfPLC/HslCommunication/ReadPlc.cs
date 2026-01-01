@@ -14,6 +14,28 @@ namespace qfPLC
     {
         #region MelsecMcAsciiNet....三菱_MC_Ascii_Qna3E
 
+        public (bool state, string msg, bool v) ReadDiscrete_离散线圈(MelsecMcAsciiNet PlcNet, string address)
+        {
+            return (false, "无此功能", default);
+
+        }
+        public (bool state, string msg, bool[] v) ReadDiscrete_离散线圈(MelsecMcAsciiNet PlcNet, string address, ushort length)
+        {
+            return (false, "无此功能", default);
+        }
+        public async Task<(bool state, string msg, bool v)> ReadDiscreteAysnc_离散线圈(MelsecMcAsciiNet PlcNet, string address)
+        {
+            return (false, "无此功能", default);
+        }
+        public async Task<(bool state, string msg, bool[] v)> ReadDiscreteAysnc_离散线圈(MelsecMcAsciiNet PlcNet, string address, ushort length)
+        {
+
+            return (false, "无此功能", default);
+
+        }
+
+
+
 
         public virtual (bool rt, string msgErr, T value) Read<T>(MelsecMcAsciiNet PlcNet, string address)
         {
@@ -182,6 +204,20 @@ namespace qfPLC
 
         }
 
+        public virtual (bool rt, string msgErr, bool[] value) ReadCoil(MelsecMcAsciiNet PlcNet, string address, ushort length)
+        {
+            return (false, "无此功能", default);
+
+        }
+        public virtual (bool rt, string msgErr, bool value) ReadCoil(MelsecMcAsciiNet PlcNet, string address)
+        {
+            return (false, "无此功能", default);
+        }
+
+
+
+
+
         public virtual (bool rt, string msgErr, string value) Read(MelsecMcAsciiNet PlcNet, string address, ushort length, Encoding encoding)
         {
             try
@@ -199,12 +235,12 @@ namespace qfPLC
                 return (false, ex.Message, default);
             }
         }
-        public virtual (bool rt, string msgErr, string value) Read(MelsecMcAsciiNet PlcNet, string address, ushort length )
+        public virtual (bool rt, string msgErr, string value) Read(MelsecMcAsciiNet PlcNet, string address, ushort length)
         {
             try
             {
 
-                OperateResult<string> result = PlcNet.ReadString(address, length );
+                OperateResult<string> result = PlcNet.ReadString(address, length);
                 return result.IsSuccess ?
                       (true, "", result.Content) :
                       (false, result.Message, "");
@@ -386,6 +422,15 @@ namespace qfPLC
                 return (false, ex.Message, default);
             }
         }
+        public virtual async Task<(bool rt, string msgErr, bool[] value)> ReadCoilAsync(MelsecMcAsciiNet PlcNet, string address, ushort length)
+        {
+            return (false, "无此功能", default);
+
+        }
+        public virtual async Task<(bool rt, string msgErr, bool value)> ReadCoilAsync(MelsecMcAsciiNet PlcNet, string address)
+        {
+            return (false, "无此功能", default);
+        }
 
         public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(MelsecMcAsciiNet PlcNet, string address, ushort length, Encoding encoding)
         {
@@ -404,7 +449,7 @@ namespace qfPLC
                 return (false, ex.Message, default);
             }
         }
-        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(MelsecMcAsciiNet PlcNet, string address, ushort length )
+        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(MelsecMcAsciiNet PlcNet, string address, ushort length)
         {
             try
             {
@@ -426,6 +471,27 @@ namespace qfPLC
 
         #region MelsecFxSerial...三菱_FX
 
+        public (bool state, string msg, bool v) ReadDiscrete_离散线圈(MelsecFxSerial PlcNet, string address)
+        {
+
+            return (false, "无此功能", default);
+
+        }
+        public (bool state, string msg, bool[] v) ReadDiscrete_离散线圈(MelsecFxSerial PlcNet, string address, ushort length)
+        {
+            return (false, "无此功能", default);
+        }
+        public async Task<(bool state, string msg, bool v)> ReadDiscreteAysnc_离散线圈(MelsecFxSerial PlcNet, string address)
+        {
+            return (false, "无此功能", default);
+        }
+
+        public async Task<(bool state, string msg, bool[] v)> ReadDiscreteAysnc_离散线圈(MelsecFxSerial PlcNet, string address, ushort length)
+        {
+
+            return (false, "无此功能", default);
+
+        }
 
         public virtual (bool rt, string msgErr, T value) Read<T>(MelsecFxSerial PlcNet, string address)
         {
@@ -593,6 +659,16 @@ namespace qfPLC
             }
 
         }
+        public virtual (bool rt, string msgErr, bool[] value) ReadCoil(MelsecFxSerial PlcNet, string address, ushort length)
+        {
+            return (false, "无此功能", default);
+
+        }
+        public virtual (bool rt, string msgErr, bool value) ReadCoil(MelsecFxSerial PlcNet, string address)
+        {
+            return (false, "无此功能", default);
+        }
+
 
         public virtual (bool rt, string msgErr, string value) Read(MelsecFxSerial PlcNet, string address, ushort length, Encoding encoding)
         {
@@ -798,6 +874,16 @@ namespace qfPLC
             }
         }
 
+        public virtual async Task<(bool rt, string msgErr, bool[] value)> ReadCoilAsync(MelsecFxSerial PlcNet, string address, ushort length)
+        {
+            return (false, "无此功能", default);
+
+        }
+        public virtual async Task<(bool rt, string msgErr, bool value)> ReadCoilAsync(MelsecFxSerial PlcNet, string address)
+        {
+            return (false, "无此功能", default);
+        }
+
         public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(MelsecFxSerial PlcNet, string address, ushort length, Encoding encoding)
         {
             try
@@ -815,7 +901,7 @@ namespace qfPLC
                 return (false, ex.Message, default);
             }
         }
-        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(MelsecFxSerial PlcNet, string address, ushort length )
+        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(MelsecFxSerial PlcNet, string address, ushort length)
         {
             try
             {
@@ -838,12 +924,84 @@ namespace qfPLC
 
         #region ModbusTcp
 
+        public (bool state, string msg, bool v) ReadDiscrete_离散线圈(ModbusTcpNet PlcNet, string address)
+        {
+            try
+            {
+                OperateResult<bool> result = PlcNet.ReadDiscrete(address );
+                return result.IsSuccess ?
+                      (true, "", result.Content) :
+                      (false, result.Message, default);
+            }
+            catch (Exception ex)
+            {
+
+                return (false, ex.Message, default);
+            }
+
+
+        }
+        public (bool state, string msg, bool[] v) ReadDiscrete_离散线圈(ModbusTcpNet PlcNet, string address, ushort length)
+        {
+            try
+            {
+                OperateResult<bool[]> result = PlcNet.ReadDiscrete(address, length);
+                return result.IsSuccess ?
+                      (true, "", result.Content) :
+                      (false, result.Message, default);
+            }
+            catch (Exception ex)
+            {
+
+                return (false, ex.Message, default);
+            }
+
+
+        }
+        public async Task<(bool state, string msg, bool v)> ReadDiscreteAysnc_离散线圈(ModbusTcpNet PlcNet, string address)
+        {
+            try
+            {
+                OperateResult<bool> result =await  PlcNet.ReadDiscreteAsync (address);
+                return result.IsSuccess ?
+                      (true, "", result.Content) :
+                      (false, result.Message, default);
+            }
+            catch (Exception ex)
+            {
+
+                return (false, ex.Message, default);
+            }
+
+
+        }
+
+        public async Task<(bool state, string msg, bool[] v)> ReadDiscreteAysnc_离散线圈(ModbusTcpNet PlcNet, string address, ushort length)
+        {
+            try
+            {
+                OperateResult<bool[]> result =await  PlcNet.ReadDiscreteAsync (address, length);
+                return result.IsSuccess ?
+                      (true, "", result.Content) :
+                      (false, result.Message, default);
+            }
+            catch (Exception ex)
+            {
+
+                return (false, ex.Message, default);
+            }
+
+
+        }
+
+
+
+
 
         public virtual (bool rt, string msgErr, T value) Read<T>(ModbusTcpNet PlcNet, string address)
         {
             try
             {
-
                 Type type = typeof(T);
                 if (type == typeof(bool))
                 {
@@ -1005,6 +1163,40 @@ namespace qfPLC
             }
 
         }
+        public virtual (bool rt, string msgErr, bool[] value) ReadCoil(ModbusTcpNet PlcNet, string address, ushort length)
+        {
+            try
+            {
+
+                OperateResult<bool[]> result = PlcNet.ReadCoil(address, length);
+                return result.IsSuccess ?
+                      (true, "", result.Content) :
+                      (false, result.Message, default);
+
+            }
+            catch (Exception ex)
+            {
+
+                return (false, ex.Message, default);
+            }
+
+        }
+        public virtual (bool rt, string msgErr, bool value) ReadCoil(ModbusTcpNet PlcNet, string address)
+        {
+            try
+            {
+                OperateResult<bool> result = PlcNet.ReadCoil(address);
+                return result.IsSuccess ?
+                      (true, "", result.Content) :
+                      (false, result.Message, default);
+            }
+            catch (Exception ex)
+            {
+
+                return (false, ex.Message, default);
+            }
+
+        }
 
         public virtual (bool rt, string msgErr, string value) Read(ModbusTcpNet PlcNet, string address, ushort length, Encoding encoding)
         {
@@ -1023,12 +1215,12 @@ namespace qfPLC
                 return (false, ex.Message, default);
             }
         }
-        public virtual (bool rt, string msgErr, string value) Read(ModbusTcpNet PlcNet, string address, ushort length )
+        public virtual (bool rt, string msgErr, string value) Read(ModbusTcpNet PlcNet, string address, ushort length)
         {
             try
             {
 
-                OperateResult<string> result = PlcNet.ReadString(address, length );
+                OperateResult<string> result = PlcNet.ReadString(address, length);
                 return result.IsSuccess ?
                       (true, "", result.Content) :
                       (false, result.Message, "");
@@ -1040,8 +1232,6 @@ namespace qfPLC
                 return (false, ex.Message, default);
             }
         }
-
-
 
         public virtual async Task<(bool rt, string msgErr, T value)> ReadAsync<T>(ModbusTcpNet PlcNet, string address)
         {
@@ -1211,26 +1401,62 @@ namespace qfPLC
                 return (false, ex.Message, default);
             }
         }
+        public virtual async Task<(bool rt, string msgErr, bool[] value)> ReadCoilAsync(ModbusTcpNet PlcNet, string address, ushort length)
+        {
+            try
+            {
+
+                OperateResult<bool[]> result = await PlcNet.ReadCoilAsync(address, length);
+                return result.IsSuccess ?
+                      (true, "", result.Content) :
+                      (false, result.Message, default);
+
+            }
+            catch (Exception ex)
+            {
+
+                return (false, ex.Message, default);
+            }
+
+        }
+        public virtual async Task<(bool rt, string msgErr, bool value)> ReadCoilAsync(ModbusTcpNet PlcNet, string address)
+        {
+            try
+            {
+                OperateResult<bool> result = await PlcNet.ReadCoilAsync(address);
+                return result.IsSuccess ?
+                      (true, "", result.Content) :
+                      (false, result.Message, default);
+            }
+            catch (Exception ex)
+            {
+
+                return (false, ex.Message, default);
+            }
+
+        }
+
+
 
         public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(ModbusTcpNet PlcNet, string address, ushort length, Encoding encoding)
         {
             try
             {
 
-            OperateResult<string> result = await PlcNet.ReadStringAsync(address, length, encoding);
-            return result.IsSuccess ?
-                  (true, "", result.Content) :
-                  (false, result.Message, "");
+                OperateResult<string> result = await PlcNet.ReadStringAsync(address, length, encoding);
+                return result.IsSuccess ?
+                      (true, "", result.Content) :
+                      (false, result.Message, "");
 
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
 
-               return (false ,ex.Message, default);
+                return (false, ex.Message, default);
             }
         }
 
-        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(ModbusTcpNet PlcNet, string address, ushort length )
+        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(ModbusTcpNet PlcNet, string address, ushort length)
         {
             try
             {

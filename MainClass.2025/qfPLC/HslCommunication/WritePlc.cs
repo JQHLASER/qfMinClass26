@@ -707,7 +707,7 @@ namespace qfPLC
             }
         }
 
-
+       
         public async Task<(bool rt, string msgErr)> WriteAsync<T>(ModbusTcpNet PlcNet, string address, T value)    
         {
             try

@@ -198,6 +198,26 @@ namespace qfPLC
 
         #region Read
 
+        public virtual (bool rt, string msgErr, bool value) ReadDiscrete_离散线圈(string address)
+        {
+            return new ReadPlc().ReadDiscrete_离散线圈(this._MelsecFxSerial, address);
+        }
+        public virtual (bool rt, string msgErr, bool[] value) ReadDiscrete_离散线圈(string address, ushort length)
+        {
+            return new ReadPlc().ReadDiscrete_离散线圈(this._MelsecFxSerial, address, length);
+        }
+
+        public virtual async Task<(bool rt, string msgErr, bool value)> ReadDiscreteAysnc_离散线圈(string address)
+        {
+            return await new ReadPlc().ReadDiscreteAysnc_离散线圈(this._MelsecFxSerial, address);
+        }
+        public virtual async Task<(bool rt, string msgErr, bool[] value)> ReadDiscreteAysnc_离散线圈(string address, ushort length)
+        {
+            return await new ReadPlc().ReadDiscreteAysnc_离散线圈(this._MelsecFxSerial, address, length);
+        }
+
+
+
         public virtual (bool rt, string msgErr, T value) Read<T>(string address)
         {
             return new ReadPlc().Read<T>(this._MelsecFxSerial, address);
@@ -206,6 +226,23 @@ namespace qfPLC
         {
             return new ReadPlc().Read<T>(this._MelsecFxSerial, address, length);
         }
+
+        /// <summary>
+        /// 无此功能
+        /// </summary> 
+        public virtual (bool rt, string msgErr, bool [] value) ReadCoil(string address, ushort length)
+        {
+            return new ReadPlc().ReadCoil(this._MelsecFxSerial, address, length);
+        }
+
+        /// <summary>
+        /// 无此功能
+        /// </summary> 
+        public virtual (bool rt, string msgErr, bool value) ReadCoil(string address)
+        {
+            return new ReadPlc().ReadCoil(this._MelsecFxSerial, address);
+        }
+
         public virtual (bool rt, string msgErr, string value) Read(string address, ushort length, Encoding encoding)
         {
             return new ReadPlc().Read(this._MelsecFxSerial, address, length, encoding);
@@ -224,6 +261,23 @@ namespace qfPLC
         {
             return await new ReadPlc().ReadAsync<T>(this._MelsecFxSerial, address, length);
         }
+        /// <summary>
+        /// 无此功能
+        /// </summary> 
+        public virtual async Task<(bool rt, string msgErr, bool[] value)> ReadCoilAsync(string address, ushort length)
+        {
+            return await new ReadPlc().ReadCoilAsync(this._MelsecFxSerial, address, length);
+        }
+        /// <summary>
+        /// 无此功能
+        /// </summary> 
+        public virtual async Task<(bool rt, string msgErr, bool value)> ReadCoilAsync(string address)
+        {
+            return await new ReadPlc().ReadCoilAsync(this._MelsecFxSerial, address);
+        }
+
+
+
         public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length, Encoding encoding)
         {
             return await new ReadPlc().ReadAsync(this._MelsecFxSerial, address, length, encoding);
