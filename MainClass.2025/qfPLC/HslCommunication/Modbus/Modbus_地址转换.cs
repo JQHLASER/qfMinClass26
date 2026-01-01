@@ -35,7 +35,7 @@ namespace qfPLC
 
             /// <summary>
             /// 默认从0x00000(0)开始,分配点数: 1024
-            /// <para>组索引: 从0开始,=0:0~7;=1:8~15...按此方法</para>
+            /// <para>组索引: 输入的值v属于哪个组,组索引从0开始,=0:0~7;=1:8~15...按此方法</para>
             /// <para>ReadDiscrete读离散线圈</para>
             /// </summary> 
             public int X(ushort v, ushort 组索引)
@@ -46,7 +46,7 @@ namespace qfPLC
 
             /// <summary>
             /// 默认从0x00000(0)开始,分配点数: 1024
-            /// <para>组索引: 从0开始,=0:0~7;=1:8~15...按此方法</para>
+            /// <para>组索引: 输入的值v属于哪个组,组索引从0开始,=0:0~7;=1:8~15...按此方法</para>
             /// <para>ReadDiscrete读离散线圈</para>
             /// </summary> 
             public int Y(ushort v, ushort 组索引)
