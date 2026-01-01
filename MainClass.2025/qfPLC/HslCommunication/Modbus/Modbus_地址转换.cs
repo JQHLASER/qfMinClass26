@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -16,12 +17,20 @@ namespace qfPLC
         public class 三菱_Fx5U
         {
 
+            bool _is首地址从0开始 = true;
+            public 三菱_Fx5U(bool 首地址从0开始)
+            {
+                this._is首地址从0开始 = 首地址从0开始;
+            }
+
+
             /// <summary>
             /// 默认从0x2000(8192)开始,分配点数: 7680
             /// </summary> 
             public int M(ushort v)
             {
-                return v + 8192;
+                int a = v + 8192;
+                return this._is首地址从0开始 ? a : a + 1;
             }
 
             /// <summary>
@@ -32,7 +41,7 @@ namespace qfPLC
             public int X(ushort v, ushort 组索引)
             {
                 int a = v - 组索引 * 8;
-                return a + 0;
+                return this._is首地址从0开始 ? a + 0 : a + 0 + 1;
             }
 
             /// <summary>
@@ -43,7 +52,7 @@ namespace qfPLC
             public int Y(ushort v, ushort 组索引)
             {
                 int a = v - 组索引 * 8;
-                return a + 0;
+                return this._is首地址从0开始 ? a + 0 : a + 0 + 1;
             }
 
             /// <summary>
@@ -51,10 +60,10 @@ namespace qfPLC
             /// </summary> 
             public int D(ushort v)
             {
-                return v + 0;
+                return this._is首地址从0开始 ? v + 0 : v + 0 + 1;
             }
 
-             
+
 
         }
 
