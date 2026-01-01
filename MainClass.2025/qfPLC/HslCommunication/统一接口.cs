@@ -38,9 +38,24 @@ namespace qfPLC
 
         #region Read
 
+        /// <summary>
+        /// X
+        /// </summary> 
         (bool rt, string msgErr, bool  value) ReadDiscrete_离散线圈(string address);
+
+        /// <summary>
+        /// X
+        /// </summary> 
         (bool rt, string msgErr, bool[] value) ReadDiscrete_离散线圈(string address, ushort length);
+
+        /// <summary>
+        /// X
+        /// </summary> 
         Task<(bool rt, string msgErr, bool value)> ReadDiscreteAysnc_离散线圈(string address);
+
+        /// <summary>
+        /// X
+        /// </summary> 
         Task<(bool rt, string msgErr, bool[] value)> ReadDiscreteAysnc_离散线圈(string address, ushort length);
 
 

@@ -994,10 +994,7 @@ namespace qfPLC
 
         }
 
-
-
-
-
+          
         public virtual (bool rt, string msgErr, T value) Read<T>(ModbusTcpNet PlcNet, string address)
         {
             try
