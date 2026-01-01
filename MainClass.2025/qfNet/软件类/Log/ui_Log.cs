@@ -228,7 +228,7 @@ namespace qfNet
 
 
         bool _IsDraw = false;
-
+       
         /// <summary>
         /// UI刷新线程
         /// </summary>
@@ -239,7 +239,7 @@ namespace qfNet
             List<qfmain.log日志._logValue_> tmp;
             lock (_lock)
             {
-                if (this._Queue_buffer.Count == 0)
+                if (this._Queue_buffer.Count == 0 ||_IsDraw)
                 {
                     return;
                 }
