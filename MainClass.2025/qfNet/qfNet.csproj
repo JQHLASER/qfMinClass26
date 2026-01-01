@@ -128,6 +128,7 @@
     <Compile Include="控件类\ListView_.cs" />
     <Compile Include="控件类\PictrueBoxSys.cs" />
     <Compile Include="控件类\tableLayoutPanel.cs" />
+    <Compile Include="控件类\TextBox_.cs" />
     <Compile Include="系统\Window_通知机制.cs" />
     <Content Include="经验\生产者.txt" />
     <Compile Include="语言\Form_语言.cs">
