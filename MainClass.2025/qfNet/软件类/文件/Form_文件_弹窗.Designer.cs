@@ -80,12 +80,12 @@
             this.右键.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.删除ToolStripMenuItem});
             this.右键.Name = "右键";
-            this.右键.Size = new System.Drawing.Size(113, 30);
+            this.右键.Size = new System.Drawing.Size(109, 28);
             // 
             // 删除ToolStripMenuItem
             // 
             this.删除ToolStripMenuItem.Name = "删除ToolStripMenuItem";
-            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(112, 26);
+            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
             this.删除ToolStripMenuItem.Text = "删除";
             // 
             // panel2
@@ -115,7 +115,7 @@
             this.uiTextBox_FileName.Name = "uiTextBox_FileName";
             this.uiTextBox_FileName.Padding = new System.Windows.Forms.Padding(5);
             this.uiTextBox_FileName.RectColor = System.Drawing.Color.Silver;
-            this.uiTextBox_FileName.Size = new System.Drawing.Size(636, 29);
+            this.uiTextBox_FileName.Size = new System.Drawing.Size(636, 26);
             this.uiTextBox_FileName.Style = Sunny.UI.UIStyle.Custom;
             this.uiTextBox_FileName.StyleCustomMode = true;
             this.uiTextBox_FileName.TabIndex = 0;
@@ -196,7 +196,7 @@
             // 
             // Form_文件_弹窗
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 600);
             this.Controls.Add(this.uiListBox1);

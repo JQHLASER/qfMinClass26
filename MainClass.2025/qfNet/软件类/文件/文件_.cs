@@ -102,6 +102,9 @@ namespace qfNet
         }
 
         /// <summary>
+        /// <para> 返回 DialogResult.Yes ,成功</para>
+        /// <para> 返回 DialogResult.No ,失败</para>
+        /// <para> 返回 其它,None</para>
         /// 文件名不为空时直接保存
         /// <para>文件名为空时弹窗另存为</para>
         /// </summary> 
