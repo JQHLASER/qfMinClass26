@@ -131,9 +131,9 @@ namespace qfSqlSugar
         public string 密码 { set; get; } = "abc";
 
         /// <summary>
-        /// 编码,默认 utf8
+        /// 编码,默认 utf8mb4
         /// </summary>
-        public string 编码 { set; get; } = "utf8";
+        public string 编码 { set; get; } = "utf8mb4";
     }
 
 

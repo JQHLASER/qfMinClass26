@@ -76,7 +76,13 @@ SqlServer 数据库....使用最新库
             {
                 this.Db = new SqlSugarScope(lst);
                 this.Db.Ado.CommandTimeOut = 超时时间;
-                this.Db.Ado.ExecuteCommand("PRAGMA journal_mode=WAL;");
+                foreach (ConnectionConfig config in lst)
+                {
+                    if (config.DbType == DbType.Sqlite)
+                    {
+                        优化_Sqlite();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -95,11 +101,27 @@ SqlServer 数据库....使用最新库
         {
             List<ConnectionConfig> lst = new List<ConnectionConfig>();
             On_ConnectionConfig(lst);
-            bool rt = 初始化(lst, out msgErr, 超时时间);         
+            bool rt = 初始化(lst, out msgErr, 超时时间);
             return rt;
         }
 
-
+        /// <summary>
+        /// 读写速度更快,读写可以并发
+        /// <para>只针到SQLite数据库</para>
+        /// <para>需在初始化成功后调用一下</para>
+        /// </summary>
+        public virtual (bool s, string m) 优化_Sqlite()
+        {
+            try
+            {
+                this.Db.Ado.ExecuteCommand("PRAGMA journal_mode=WAL;");//读写速度更快,读写可以并发
+                return (true, default);
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
+            }
+        }
 
 
         /// <summary>
@@ -116,8 +138,14 @@ SqlServer 数据库....使用最新库
                 DbType = DbType,//设置数据库类型
                 IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
                 InitKeyType = InitKeyType.Attribute,//从实体特性中读取主键自增列信息
-
+                MoreSettings = new ConnMoreSettings
+                {
+                    IsAutoRemoveDataCache = true
+                }
             };
+
+
+
         }
 
 
@@ -137,7 +165,7 @@ SqlServer 数据库....使用最新库
         /// </summary>      
         public virtual bool 读取参数<T>(ushort model, ref T Info, string path, out string msgErr)
         {
-          return   new qfmain.文件_文件夹().WriteReadJson(path, model, ref Info, out msgErr);
+            return new qfmain.文件_文件夹().WriteReadJson(path, model, ref Info, out msgErr);
         }
 
 
@@ -167,11 +195,11 @@ SqlServer 数据库....使用最新库
             //switch (连接类型)
             //{
             //    case _SqlServer_连接类型_.旧驱动:
-            //        return $"Server={_info_SQLserver.数据库地址};database={_info_SQLserver.数据库名称};User Id={_info_SQLserver.用户};Password={_info_SQLserver.密码};";
+            //        return $"Server={Info_SQLserver.数据库地址};database={Info_SQLserver.数据库名称};User Id={Info_SQLserver.用户};Password={Info_SQLserver.密码};";
             //    // return $"Server={_info_SQLserver.数据库地址};database={_info_SQLserver.数据库名称};uid={_info_SQLserver.用户};pwd={_info_SQLserver.密码};Pooling=true; ";
 
             //    case _SqlServer_连接类型_.新驱动:
-            //        return $"Server={_info_SQLserver.数据库地址};database={_info_SQLserver.数据库名称};User Id={_info_SQLserver.用户};Password={_info_SQLserver.密码};Encrypt=True;TrustServerCertificate=True;";
+            //        return $"Server={Info_SQLserver.数据库地址};database={Info_SQLserver.数据库名称};User Id={Info_SQLserver.用户};Password={Info_SQLserver.密码};Encrypt=True;TrustServerCertificate=True;";
             //    // return $"Server={_info_SQLserver.数据库地址};database={_info_SQLserver.数据库名称};uid={_info_SQLserver.用户};pwd={_info_SQLserver.密码};Pooling=true; ";
 
             //    default:
@@ -180,9 +208,21 @@ SqlServer 数据库....使用最新库
             //}
 
             //下面是要解决长期连接会失效的问题 
-            string connectionString = $"Data Source={Info_SQLserver.数据库地址};Initial Catalog={Info_SQLserver.数据库名称};User ID={Info_SQLserver.用户};Password={Info_SQLserver.密码};Integrated Security=False;Pooling=True;Max Pool Size=500;Min Pool Size=5;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;MultipleActiveResultSets=False;";
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"Data Source={Info_SQLserver.数据库地址};");
+            sb.Append($"database={Info_SQLserver.数据库名称};");
+            sb.Append($"User ID={Info_SQLserver.用户};");
+            sb.Append($"Password={Info_SQLserver.密码};");
+            sb.Append($"Integrated Security=False;");
+            sb.Append($"Pooling=True;");
+            sb.Append($"Max Pool Size=100;");
+            sb.Append($"Min Pool Size=0;");
+            sb.Append($"Connect Timeout=30;");
+            sb.Append($"Encrypt=False;");
+            sb.Append($"MultipleActiveResultSets=True;");
 
-            return connectionString;
+
+            return sb.ToString();
 
         }
 
@@ -197,13 +237,31 @@ SqlServer 数据库....使用最新库
 
         public virtual string 生成连接字符串(_cfg_Mysql_ _info_Mysql)
         {
-            string xt = $"server={_info_Mysql.数据库地址};port={_info_Mysql.端口};database={_info_Mysql.数据库名称};user={_info_Mysql.用户名};password={_info_Mysql.密码};Charset = '{_info_Mysql.编码}'";//服务器地址；端口号；数据库；用户名；密码;
+            //StringBuilder sb = new StringBuilder();
+            //sb.Append($"server={_info_Mysql.数据库地址};port={_info_Mysql.端口};database={_info_Mysql.数据库名称};user={_info_Mysql.用户名};password={_info_Mysql.密码};Charset = '{_info_Mysql.编码}'");//服务器地址；端口号；数据库；用户名；密码;
 
-            //以下解决长时间连接mysql时断开的问题 
-            xt += $"Pooling=true;Max Pool Size=100;Min Pool Size=5;";
-            xt += $"Connection Timeout=30;Default Command Timeout=30;";// 添加连接超时和生命周期设置
-            xt += $"Connection Lifetime=60;";// 设置生命周期为 60 秒（这个值应小于 MySQL 服务器的 wait_timeout 设置）
-            return xt;
+            ////以下解决长时间连接mysql时断开的问题 
+            //sb.Append($"Pooling=true;Max Pool Size=100;Min Pool Size=5;");
+            //sb.Append($"Connection Timeout=30;Default Command Timeout=30;");// 添加连接超时和生命周期设置
+            //sb.Append($"Connection Lifetime=60;");// 设置生命周期为 60 秒（这个值应小于 MySQL 服务器的 wait_timeout 设置）
+
+            //return sb.ToString ();
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"Server={_info_Mysql.数据库地址};");
+            sb.Append($"Port={_info_Mysql.端口};");
+            sb.Append($"Database={_info_Mysql.数据库名称};");
+            sb.Append($"User ID={_info_Mysql.用户名};");
+            sb.Append($"Password={_info_Mysql.密码};");
+            sb.Append($"Charset={_info_Mysql.编码};");
+            sb.Append($"Pooling=true;");
+            sb.Append($"MinimumPoolSize=5;");
+            sb.Append($"MaximumPoolSize=100;");
+            sb.Append($"ConnectionTimeout=30;");
+            sb.Append($"DefaultCommandTimeout=30;");
+            sb.Append($"Keepalive=60;");
+
+            return sb.ToString();
         }
 
 
