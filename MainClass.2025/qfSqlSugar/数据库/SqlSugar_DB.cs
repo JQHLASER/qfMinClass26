@@ -135,10 +135,12 @@ SqlServer 数据库....使用最新库
         /// <summary>
         /// model: =0:写 =1:读
         /// </summary>      
-        public virtual void 读取参数<T>(ushort model, ref T Info, string path, out string msgErr)
+        public virtual bool 读取参数<T>(ushort model, ref T Info, string path, out string msgErr)
         {
-            new qfmain.文件_文件夹().WriteReadJson(path, model, ref Info, out msgErr);
+          return   new qfmain.文件_文件夹().WriteReadJson(path, model, ref Info, out msgErr);
         }
+
+
 
 
         #region 本地方法...生成连接字符串
