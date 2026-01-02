@@ -128,7 +128,7 @@ namespace qfNet
 
         public class _cfg_winForm_
         {
-            
+
             /// <summary>
             /// 最大化框
             /// </summary>
@@ -164,7 +164,7 @@ namespace qfNet
             /// </summary>
             public FormWindowState WindowState_ { set; get; } = FormWindowState.Normal;
 
-           
+
         }
 
 
@@ -187,18 +187,24 @@ namespace qfNet
 
             forms.WindowState = cfg.WindowState_;
         }
-        public void Set设置_Padding(Sunny.UI.UIForm forms,int 边距=5)
-        { 
+        public void Set设置_Padding(Sunny.UI.UIForm forms, int 边距 = 5)
+        {
             Padding pad = forms.Padding;
             pad.Top += 边距;
             pad.Left += 边距;
             pad.Bottom += 边距;
             pad.Right += 边距;
             forms.Padding = pad;
-             
+
         }
 
-
-
+        public void 禁用输入法(Sunny.UI.UIForm forms)
+        {
+            forms.ImeMode = ImeMode.Disable;
+        }
+        public void 禁用输入法(Form forms)
+        {
+            forms.ImeMode = ImeMode.Disable;
+        }
     }
 }

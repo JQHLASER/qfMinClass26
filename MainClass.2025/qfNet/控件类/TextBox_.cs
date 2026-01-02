@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+ 
 
 namespace qfNet
 {
@@ -14,11 +15,13 @@ namespace qfNet
 
         public void 关闭输入法(TextBox t)
         {
+            t.ImeMode = ImeMode.Disable;
             new textBox_关闭输入法().SetEnglishInput(t);
         }
 
         public void 关闭输入法(Sunny.UI.UITextBox t)
         {
+            t.ImeMode = ImeMode.Disable;
             new textBox_关闭输入法().SetEnglishInput(t);
         }
 
