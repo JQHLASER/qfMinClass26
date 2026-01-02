@@ -81,6 +81,7 @@ SqlServer 数据库....使用最新库
                     if (config.DbType == DbType.Sqlite)
                     {
                         优化_Sqlite();
+                        break;
                     }
                 }
             }

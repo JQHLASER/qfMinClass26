@@ -79,12 +79,14 @@ namespace qfNet
         List<string> lstName = new List<string>();
         public _状态_ _当前系统状态 = _状态_.None;
         bool _IniStiall = false;
+        bool _isRun = false;
 
         public void 初始化()
         {
             // 启动线程
             Task.Run(On_Queue处理, _cts.Token);
             _IniStiall = true;
+            _isRun = true;
         }
 
         public void 释放()
@@ -93,6 +95,7 @@ namespace qfNet
             {
                 return;
             }
+            _isRun = false;
             _cts.Cancel();   //释放令牌
             _queue.CompleteAdding();   //自动退出循环      会在消费完所有剩余数据后 自动退出 foreach 循环。
         }
@@ -166,7 +169,22 @@ namespace qfNet
 
         public void Add(_cfg_标题栏状态_[] cfg, int State)
         {
-            this._queue.Add((cfg, State));
+
+            if (!_isRun)
+            {
+                return;
+            }
+            try
+            {
+
+                this._queue.Add((cfg, State));
+
+            }
+            catch (Exception)
+            {
+
+            }
+
         }
 
 
