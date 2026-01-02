@@ -148,7 +148,7 @@ namespace qfNet
             List<_ShowInfo_> tmp;
             lock (_lock)
             {
-                if (this._Queue_buffer.Count == 0)
+                if (this._Queue_buffer.Count == 0 || _IsDraw)
                     return;
 
                 tmp = new List<_ShowInfo_>(this._Queue_buffer);
