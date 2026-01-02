@@ -30,6 +30,16 @@ namespace qfNet
             return this._File + $"\\{FileName}{this._后缀名}";
         }
 
+        public bool 文件是否存在(string fileName)
+        {
+             if (string.IsNullOrEmpty (fileName ))
+            {
+                return false;
+            }
+            string path=获取文件路径 (fileName);
+           return new qfmain .文件_文件夹().文件_是否存在 (path);
+        }
+
         public bool 读写(string FileName, ushort model, ref T t, out string msgerr)
         {
             bool rt = true;
@@ -90,6 +100,29 @@ namespace qfNet
 
 
         }
+
+        /// <summary>
+        /// 文件名不为空时直接保存
+        /// <para>文件名为空时弹窗另存为</para>
+        /// </summary> 
+        public DialogResult 保存_弹窗(string FileName, T t, out string NewFileName, out string msgerr)
+        {
+            DialogResult dr = DialogResult.None;
+            if (string.IsNullOrEmpty(FileName))
+            {
+                dr = 另存为_弹窗(FileName, t, out NewFileName, out msgerr);
+            }
+            else
+            {
+                NewFileName = FileName;
+                bool rt = 保存(FileName, t, out msgerr);
+                dr = rt ? DialogResult.Yes : DialogResult.No;
+            }
+
+            return dr;
+        }
+
+
 
 
         public bool 打开(string FileName, ref T t, out string msgerr)
