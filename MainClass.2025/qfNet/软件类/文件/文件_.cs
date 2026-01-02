@@ -83,7 +83,7 @@ namespace qfNet
                     rt = 保存(NewFileName, t, out msgerr);
                 }
 
-                dlt = rt ? DialogResult.Yes : DialogResult.No;                 
+                dlt = rt ? DialogResult.Yes : DialogResult.No;
             }
 
             return dlt;
@@ -91,7 +91,7 @@ namespace qfNet
 
         }
 
-         
+
         public bool 打开(string FileName, ref T t, out string msgerr)
         {
             return this.读写(FileName, 1, ref t, out msgerr);
@@ -120,6 +120,12 @@ namespace qfNet
             string path = 获取文件路径(FileName);
             bool rt = new qfmain.文件_文件夹().文件_删除文件(path, out msgErr);
             return rt;
+        }
+
+
+        public bool 读写最后一次打开的文件(ushort model, ref string FileName, string path)
+        {
+            return new qfmain.文件_文件夹().WriteReadIni(path, model, ref FileName, out string msgErr);
         }
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,8 +27,18 @@ namespace qfNet
         }
 
 
+        public void 标题栏状态(窗体_标题栏状态 con, string Name, string Title, qfWork._初始化状态_ state)
+        {
+            _cfg_标题栏状态_[] info = new _cfg_标题栏状态_[]
+             {
+                new _cfg_标题栏状态_ (Name,$"{Title }{Language_ .Get语言 ("未初始化")}",(int)qfWork._初始化状态_.未初始化),
+                new _cfg_标题栏状态_ (Name,$"{Title }{Language_ .Get语言 ("初始化中")}",(int)qfWork._初始化状态_.初始化中),
+                new _cfg_标题栏状态_ (Name,$"{Title }{Language_ .Get语言 ("已初始化")}",(int)qfWork._初始化状态_.已初始化),
 
-      
+             };
+            con.Add(info, (int)state);
+        }
+
 
 
 
