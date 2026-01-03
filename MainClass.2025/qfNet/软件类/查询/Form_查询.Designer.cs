@@ -58,10 +58,10 @@
             this.toolStripSeparator3,
             this.toolStripButton_关闭,
             this.toolStripSeparator4});
-            this.工具栏1.Location = new System.Drawing.Point(724, 35);
+            this.工具栏1.Location = new System.Drawing.Point(695, 35);
             this.工具栏1.Name = "工具栏1";
             this.工具栏1.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.工具栏1.Size = new System.Drawing.Size(105, 545);
+            this.工具栏1.Size = new System.Drawing.Size(105, 522);
             this.工具栏1.TabIndex = 0;
             this.工具栏1.Text = "工具栏1";
             // 
@@ -132,24 +132,25 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 43;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(724, 545);
+            this.dataGridView1.Size = new System.Drawing.Size(695, 522);
             this.dataGridView1.TabIndex = 1;
             // 
             // ui_分页1
             // 
             this.ui_分页1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.ui_分页1.Font = new System.Drawing.Font("微软雅黑", 9.267326F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ui_分页1.Location = new System.Drawing.Point(0, 580);
+            this.ui_分页1.Location = new System.Drawing.Point(0, 557);
             this.ui_分页1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ui_分页1.Name = "ui_分页1";
-            this.ui_分页1.Size = new System.Drawing.Size(829, 43);
+            this.ui_分页1.Size = new System.Drawing.Size(800, 43);
             this.ui_分页1.TabIndex = 2;
             // 
             // Form_查询
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(829, 623);
+            this.ClientSize = new System.Drawing.Size(800, 600);
+            this.ControlBox = false;
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.工具栏1);
             this.Controls.Add(this.ui_分页1);
@@ -159,6 +160,7 @@
             this.Name = "Form_查询";
             this.ShowInTaskbar = false;
             this.Text = "";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.工具栏1.ResumeLayout(false);
             this.工具栏1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

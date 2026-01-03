@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace qfNet
 {
@@ -79,13 +80,12 @@ namespace qfNet
         /// </summary>
         public event Action<Form, int> Event_到指定页;
 
-        /// <summary>
-        /// 页索引 : 从0开始      
-        /// </summary> 
+       
         public void 设置显示信息(string value)
         { 
             this.ui_分页1.设置显示信息(value);
         }
+         
 
         public string 生成显示信息(qfmain.List分页_._PageInfo_ 页信息)
         {
@@ -106,6 +106,6 @@ namespace qfNet
             return sb.ToString();
         }
 
-
+       
     }
 }
