@@ -230,10 +230,10 @@ namespace qfLanguage
             new _language_Value_ ( keys, "HSL激活失败","HSL激活失败,激活码无效"),
             new _language_Value_ ( keys, "HSL激活成功","HSL激活成功,激活码有效"),
             new _language_Value_ ( keys, "HSL未激活","HSL未激活"),
-
-
-
-
+            new _language_Value_ ( keys, "行","行"),
+            new _language_Value_ ( keys, "页","页"),
+            new _language_Value_ ( keys, "当前页","当前页"),
+            new _language_Value_ ( keys, "共","共"),
 
         };
 

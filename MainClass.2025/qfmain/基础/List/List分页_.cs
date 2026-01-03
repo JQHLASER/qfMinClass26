@@ -15,19 +15,19 @@ namespace qfmain
         public class _PageInfo_
         {
             /// <summary>每页行数</summary>
-            public int 每页行数 { get; set; }
+            public uint 每页行数 { get; set; }
 
             /// <summary>总行数</summary>
-            public int 总行数 { get; internal set; }
+            public uint 总行数 { get; internal set; }
 
             /// <summary>总页数</summary>
-            public int 总页数 { get; internal set; }
+            public uint 总页数 { get; internal set; }
 
             /// <summary>最后一页行数</summary>
-            public int 最后一页行数 { get; internal set; }
+            public uint 最后一页行数 { get; internal set; }
 
             /// <summary>当前页索引（从 0 开始）</summary>
-            public int 当前页 { get; set; }
+            public uint 当前页 { get; set; }
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace qfmain
         /// </summary>
         public PageResult<T> 分页_小数据量<T>(
             IList<T> source,
-            int pageSize)
+            uint pageSize)
         {
             var pageInfo = new _PageInfo_
             {
@@ -74,14 +74,14 @@ namespace qfmain
                 };
             }
 
-            pageInfo.总行数 = source.Count;
+            pageInfo.总行数 = (uint)source.Count;
             pageInfo.总页数 = (pageInfo.总行数 + pageSize - 1) / pageSize;
 
             for (int i = 0; i < pageInfo.总页数; i++)
             {
-                int startIndex = i * pageSize;
+                uint startIndex = (uint)(i * pageSize);
 
-                int count = Math.Min(
+                uint count = Math.Min(
                     pageSize,
                     pageInfo.总行数 - startIndex);
 
@@ -90,7 +90,7 @@ namespace qfmain
 
                 T[] page = new T[count];
                 for (int j = 0; j < count; j++)
-                    page[j] = source[startIndex + j];
+                    page[j] = source[(int)(startIndex + j)];
 
                 pages.Add(page);
             }
@@ -110,8 +110,8 @@ namespace qfmain
         /// </summary>
         public T[] 分页_仅获取指定页_大数据量<T>(
             IList<T> source,
-            int pageIndex,
-            int pageSize,
+            uint pageIndex,
+            uint pageSize,
             out _PageInfo_ pageInfo)
         {
             pageInfo = new _PageInfo_
@@ -128,15 +128,15 @@ namespace qfmain
                 return Array.Empty<T>();
             }
 
-            pageInfo.总行数 = source.Count;
+            pageInfo.总行数 = (uint)(source.Count);
             pageInfo.总页数 = (pageInfo.总行数 + pageSize - 1) / pageSize;
 
             if (pageIndex < 0 || pageIndex >= pageInfo.总页数)
                 return Array.Empty<T>();
 
-            int startIndex = pageIndex * pageSize;
+            uint startIndex = pageIndex * pageSize;
 
-            int count = Math.Min(
+            uint count = Math.Min(
                 pageSize,
                 pageInfo.总行数 - startIndex);
 
@@ -145,7 +145,7 @@ namespace qfmain
 
             T[] result = new T[count];
             for (int i = 0; i < count; i++)
-                result[i] = source[startIndex + i];
+                result[i] = source[(int)(startIndex + i)];
 
             return result;
         }

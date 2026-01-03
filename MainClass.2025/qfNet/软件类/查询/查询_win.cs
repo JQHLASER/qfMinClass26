@@ -12,11 +12,11 @@ namespace qfNet
         /// <summary>
         /// 每页显示多少行
         /// </summary>
-        int _每页行数 = 100;
+        uint _每页行数 = 200;
         Form_查询 _forms = null;
 
 
-        public 查询_win(int 每页多少行_)
+        public 查询_win(uint 每页多少行_)
         {
             this._每页行数 = 每页多少行_;
         }
@@ -78,7 +78,7 @@ namespace qfNet
         /// <summary>
         /// 页码 : 从0开始
         /// </summary> 
-        public (bool state, string msg, T[] value, qfmain.List分页_._PageInfo_ 页信息) 分页(List<T> lst, int 页索引)
+        public (bool state, string msg, T[] value, qfmain.List分页_._PageInfo_ 页信息) 分页(List<T> lst, uint 页索引)
         {
             try
             {

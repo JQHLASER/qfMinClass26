@@ -63,6 +63,8 @@ namespace qfNet
             {
                 this.Event_FormClosing_关闭时?.Invoke(this);
             };
+
+ 
         }
 
 
@@ -95,13 +97,13 @@ namespace qfNet
                 lst.Add(i + 1);
             }
             this.ui_分页1.uiComboBox_所有页码.DataSource = lst;
-            this.ui_分页1.uiComboBox_所有页码.SelectedIndex = 页信息.当前页;
+            this.ui_分页1.uiComboBox_所有页码.SelectedIndex =(int) 页信息.当前页;
 
             StringBuilder sb = new StringBuilder();
             sb.Append($"【{Language_.Get语言("共")}{页信息.总行数}{Language_.Get语言("行")}】");
             sb.Append($"【{Language_.Get语言("共")}{页信息.总页数}{Language_.Get语言("页")}】");
             sb.Append($"【{页信息.每页行数}{Language_.Get语言("行")}】/{Language_.Get语言("页")}");
-            int a = 页信息.当前页 == 页信息.总页数 - 1 ? 页信息.最后一页行数 : 页信息.每页行数;
+            uint a = 页信息.当前页 == 页信息.总页数 - 1 ? 页信息.最后一页行数 : 页信息.每页行数;
             sb.Append($"【{a}{Language_.Get语言("行")}】/{Language_.Get语言("当前页")}");
             return sb.ToString();
         }
