@@ -100,12 +100,15 @@ namespace qfNet
         public DataGridview_ 使能修改列宽(bool T使能F不使能)
         {
             this._datagridview.AllowUserToResizeColumns = T使能F不使能;
+
+
             return this;
         }
 
         public DataGridview_ 使能修改行高(bool T使能F不使能)
         {
             this._datagridview.AllowUserToResizeRows = T使能F不使能;
+
             return this;
         }
 

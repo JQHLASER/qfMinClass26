@@ -159,7 +159,6 @@
             this.Name = "Form_查询";
             this.ShowInTaskbar = false;
             this.Text = "";
-            this.Load += new System.EventHandler(this.Form_查询_Load);
             this.工具栏1.ResumeLayout(false);
             this.工具栏1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -174,11 +173,11 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButton_查询;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ToolStripButton toolStripButton_导出;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolStripButton_关闭;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private Sunny.ui_分页 ui_分页1;
+        public System.Windows.Forms.DataGridView dataGridView1;
     }
 }

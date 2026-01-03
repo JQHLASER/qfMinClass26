@@ -3,129 +3,157 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static qfmain.List分页_;
 
-namespace qfmain 
+namespace qfmain
 {
-    public  class List分页_
+    public class List分页_
     {
         /// <summary>
-        /// 数据结构
+        /// 页信息
         /// </summary>
-        public class _info_
+        public class _PageInfo_
         {
-            public int 每页行数 { set; get; } = 10;
-            public int 总页数 { set; get; } = 0;
-            public int 最后一页行数 { set; get; } = 0;
-            public int 当前页码 { set; get; } = 0;
+            /// <summary>每页行数</summary>
+            public int 每页行数 { get; set; }
 
+            /// <summary>总行数</summary>
+            public int 总行数 { get; internal set; }
 
+            /// <summary>总页数</summary>
+            public int 总页数 { get; internal set; }
 
-            public int 总行数 { set; get; } = 0;
-            public int 在总数据第几行 { set; get; } = 0;
+            /// <summary>最后一页行数</summary>
+            public int 最后一页行数 { get; internal set; }
+
+            /// <summary>当前页索引（从 0 开始）</summary>
+            public int 当前页 { get; set; }
+        }
+
+        /// <summary>
+        /// 分页结果模型
+        /// </summary> 
+        public class PageResult<T>
+        {
+            /// <summary>
+            /// 页信息
+            /// </summary>
+            public _PageInfo_ PageInfo { get; set; }
+            /// <summary>
+            /// 分页后的数据
+            /// </summary>
+            public List<T[]> Pages { get; set; }
         }
 
 
         /// <summary>
-        /// config分割后的数据:数组格式
+        /// 一次性分页（适合数据量不大 / 配置数据）
+        /// <para>pageSize :  每面行数</para>
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="lst"></param>
-        /// <param name="config_"></param>
-        /// <param name="config数据原始"></param>
-        /// <param name="config分割后的数据"></param>
-        public virtual  void 获取总页及分页好的数据<T>(List<T> lst数据原始, out List<T[]> lst分割后的数据, ref _info_ config_)
+        public PageResult<T> 分页_小数据量<T>(
+            IList<T> source,
+            int pageSize)
         {
-            lst分割后的数据 = new List<T[]>();
-            lst分割后的数据.Clear();
-            config_.总行数 = lst数据原始.Count;
-            config_.总页数 = 0;
-
-            if (config_.总行数 > 0)
+            var pageInfo = new _PageInfo_
             {
-                // 取总页数,总行数/每页行数 = 页数量,然后根据余数判断是否需要加1
-                int a = (int)(config_.总行数 * 1.0 / config_.每页行数 * 1.0);
+                每页行数 = pageSize
+            };
 
-                //取余数
-                int b = (int)(config_.总行数 * 1.0 % config_.每页行数 * 1.0);
+            var pages = new List<T[]>();
 
+            if (source == null || source.Count == 0 || pageSize <= 0)
+            {
+                pageInfo.总行数 = 0;
+                pageInfo.总页数 = 0;
+                pageInfo.最后一页行数 = 0;
 
-                if (b == 0)
+                return new PageResult<T>
                 {
-                    config_.总页数 = a;
-                }
-                else if (b > 0)
-                {
-                    //有余数表示,后面还有数据,则+1
-                    config_.总页数 = a + 1;
-                    //最后一页的数据就是余数
-                    config_.最后一页行数 = b;
-                }
-
-
-
-
-                //在无余数情况下分割的数据
-                for (int i = 0; i < config_.总页数; i++)
-                {
-                    int count = config_.每页行数;
-                    //b>0表示有余数,  i == config_.总行数 - 1 表示是最后一行了
-                    if (b > 0 && i == config_.总页数 - 1)
-                    {
-                        count = config_.最后一页行数;
-                    }
-
-
-                    List<T> lst中转 = new List<T>();
-                    for (int ia = 0; ia < count; ia++)
-                    {
-                        int mc = (i * config_.每页行数) + ia;
-                        lst中转.Add(lst数据原始[mc]);
-                    }
-                    lst分割后的数据.Add(lst中转.ToArray());
-                }
-
+                    PageInfo = pageInfo,
+                    Pages = pages
+                };
             }
 
-        }
+            pageInfo.总行数 = source.Count;
+            pageInfo.总页数 = (pageInfo.总行数 + pageSize - 1) / pageSize;
 
-
-        /// <summary>
-        /// 页码: 从1到总页数,,页码可以用 config.当前页码+1或 config.当前页码-1
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="页码"></param>
-        /// <param name="lst分页好的数据"></param>
-        /// <param name="lst当前页码数据"></param>
-        public virtual List<T> 选择页<T>(int 页码, List<T[]> lst分页好的数据)
-        {
-            List<T> lst = new List<T>();
-            if (页码 <= 0 || 页码 > lst分页好的数据.Count)
+            for (int i = 0; i < pageInfo.总页数; i++)
             {
-                return lst;
+                int startIndex = i * pageSize;
+
+                int count = Math.Min(
+                    pageSize,
+                    pageInfo.总行数 - startIndex);
+
+                if (i == pageInfo.总页数 - 1)
+                    pageInfo.最后一页行数 = count;
+
+                T[] page = new T[count];
+                for (int j = 0; j < count; j++)
+                    page[j] = source[startIndex + j];
+
+                pages.Add(page);
             }
-            int a = 页码 - 1;
 
-            lst = lst分页好的数据[a].ToList();
-
-            return lst;
+            return new PageResult<T>
+            {
+                PageInfo = pageInfo,
+                Pages = pages
+            };
         }
 
         /// <summary>
-        /// 在当前页中的行号,从0开始的
+        /// 仅获取指定页（适合 UI 翻页 / 大数据）
+        /// <para>pageIndex : 页索引,从0开始</para>
+        /// <para>pageSize : 每页行数</para>
+        /// <para>pageInfo : 页信息</para>
         /// </summary>
-        /// <param name="页码"></param>
-        /// <param name="在当前页中的行号"></param>
-        /// <param name="config_"></param>
-        public virtual void 当前行在总数据中的行号(int 页码, int 在当前页中的行号, _info_ config_)
+        public T[] 分页_仅获取指定页_大数据量<T>(
+            IList<T> source,
+            int pageIndex,
+            int pageSize,
+            out _PageInfo_ pageInfo)
         {
-            if (页码 <= 0 || 页码 > config_.总页数)
+            pageInfo = new _PageInfo_
             {
-                return;
-            }
-            int a = 页码 - 1;
-            int b = a * config_.每页行数;
-            config_.在总数据第几行 = b + 在当前页中的行号;
-        }
+                每页行数 = pageSize,
+                当前页 = pageIndex
+            };
 
+            if (source == null || source.Count == 0 || pageSize <= 0)
+            {
+                pageInfo.总行数 = 0;
+                pageInfo.总页数 = 0;
+                pageInfo.最后一页行数 = 0;
+                return Array.Empty<T>();
+            }
+
+            pageInfo.总行数 = source.Count;
+            pageInfo.总页数 = (pageInfo.总行数 + pageSize - 1) / pageSize;
+
+            if (pageIndex < 0 || pageIndex >= pageInfo.总页数)
+                return Array.Empty<T>();
+
+            int startIndex = pageIndex * pageSize;
+
+            int count = Math.Min(
+                pageSize,
+                pageInfo.总行数 - startIndex);
+
+            if (pageIndex == pageInfo.总页数 - 1)
+                pageInfo.最后一页行数 = count;
+
+            T[] result = new T[count];
+            for (int i = 0; i < count; i++)
+                result[i] = source[startIndex + i];
+
+            return result;
+        }
     }
+
+
+
+
 }
+
+
