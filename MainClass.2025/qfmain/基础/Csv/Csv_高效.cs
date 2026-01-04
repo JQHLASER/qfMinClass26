@@ -181,12 +181,12 @@ namespace qfmain
         public async Task WriteLinesAsync(
             string filePath,
             IEnumerable<IEnumerable<string>> rows,
-            bool append = false,
+            bool 追加写入  ,
             CancellationToken ct = default)
         {
             using (var fs = new FileStream(
                 filePath,
-                append ? FileMode.Append : FileMode.Create,
+                追加写入 ? FileMode.Append : FileMode.Create,
                 FileAccess.Write,
                 FileShare.Read,
                 bufferSize: 8192,
