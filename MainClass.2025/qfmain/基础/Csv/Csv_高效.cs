@@ -29,7 +29,8 @@ namespace qfmain
         #region ===== 写 =====
 
         /// <summary>
-        /// 写入一行（线程安全）    
+        /// 写入一行（线程安全） 
+        /// <para>追加写入 =false覆盖写入</para>
         /// </summary>
         public void WriteLine(
                 string filePath,
@@ -69,7 +70,8 @@ namespace qfmain
         }
 
         /// <summary>
-        /// 批量写入（最快方式）      
+        /// 批量写入（最快方式）   
+        /// <para>追加写入 =false覆盖写入</para>
         /// </summary>
         public void WriteLines(
                 string filePath,
@@ -130,6 +132,7 @@ namespace qfmain
 
         /// <summary>
         /// 异步写一行（可选线程安全）
+        /// <para>追加写入 =false覆盖写入</para>
         /// </summary>
         public async Task WriteLineAsync(
             string filePath,
@@ -177,6 +180,7 @@ namespace qfmain
 
         /// <summary>
         /// 异步批量写（最快）
+        /// <para>追加写入 =false覆盖写入</para>
         /// </summary>
         public async Task WriteLinesAsync(
             string filePath,
