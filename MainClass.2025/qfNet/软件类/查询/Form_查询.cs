@@ -56,7 +56,7 @@ namespace qfNet
 
             this.Load += (s, e) =>
             {
-                this.Event_Load_进入时(this);
+                this.Event_Load_进入时?.Invoke(this);
             };
 
             this.FormClosing += (s, e) =>
