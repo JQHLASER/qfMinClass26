@@ -75,7 +75,7 @@
             this.toolStripButton_查询.AutoSize = false;
             this.toolStripButton_查询.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton_查询.Font = new System.Drawing.Font("微软雅黑", 10.69307F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.toolStripButton_查询.ForeColor = System.Drawing.Color.Gray;
+            this.toolStripButton_查询.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.toolStripButton_查询.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_查询.Image")));
             this.toolStripButton_查询.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_查询.Name = "toolStripButton_查询";
@@ -93,7 +93,7 @@
             this.toolStripButton_导出.AutoSize = false;
             this.toolStripButton_导出.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton_导出.Font = new System.Drawing.Font("微软雅黑", 10.69307F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.toolStripButton_导出.ForeColor = System.Drawing.Color.Gray;
+            this.toolStripButton_导出.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.toolStripButton_导出.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_导出.Image")));
             this.toolStripButton_导出.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_导出.Name = "toolStripButton_导出";
@@ -111,7 +111,7 @@
             this.toolStripButton_关闭.AutoSize = false;
             this.toolStripButton_关闭.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton_关闭.Font = new System.Drawing.Font("微软雅黑", 10.69307F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.toolStripButton_关闭.ForeColor = System.Drawing.Color.Gray;
+            this.toolStripButton_关闭.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.toolStripButton_关闭.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_关闭.Image")));
             this.toolStripButton_关闭.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_关闭.Name = "toolStripButton_关闭";
