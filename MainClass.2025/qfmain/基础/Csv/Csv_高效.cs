@@ -1,10 +1,12 @@
-﻿using System;
+﻿using NPOI.OpenXmlFormats.Dml.Chart;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace qfmain
 {
@@ -32,13 +34,21 @@ namespace qfmain
         /// 写入一行（线程安全） 
         /// <para>追加写入 =false覆盖写入</para>
         /// </summary>
-        public void WriteLine(
+        public (bool state, string msg) WriteLine(
                 string filePath,
                 IEnumerable<string> values,
                 bool 追加写入)
         {
 
-            WriteLineInternal(filePath, values, 追加写入);
+            try
+            {
+                WriteLineInternal(filePath, values, 追加写入);
+                return (true, "");
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
+            }
 
         }
 
@@ -73,31 +83,39 @@ namespace qfmain
         /// 批量写入（最快方式）   
         /// <para>追加写入 =false覆盖写入</para>
         /// </summary>
-        public void WriteLines(
+        public (bool state, string msg) WriteLines(
                 string filePath,
                 IEnumerable<IEnumerable<string>> rows,
                 bool 追加写入)
         {
-            using (var fs = new FileStream(
-                filePath,
-                追加写入 ? FileMode.Append : FileMode.Create,
-                FileAccess.Write,
-                FileShare.Read))
-            using (var writer = new StreamWriter(fs, _encoding))
+            try
             {
-                foreach (var row in rows)
+                using (var fs = new FileStream(
+                    filePath,
+                    追加写入 ? FileMode.Append : FileMode.Create,
+                    FileAccess.Write,
+                    FileShare.Read))
+                using (var writer = new StreamWriter(fs, _encoding))
                 {
-                    bool first = true;
-                    foreach (var value in row)
+                    foreach (var row in rows)
                     {
-                        if (!first)
-                            writer.Write(_separator);
+                        bool first = true;
+                        foreach (var value in row)
+                        {
+                            if (!first)
+                                writer.Write(_separator);
 
-                        writer.Write(Escape(value));
-                        first = false;
+                            writer.Write(Escape(value));
+                            first = false;
+                        }
+                        writer.WriteLine();
                     }
-                    writer.WriteLine();
                 }
+                return (true, "");
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
             }
         }
 
@@ -134,16 +152,23 @@ namespace qfmain
         /// 异步写一行（可选线程安全）
         /// <para>追加写入 =false覆盖写入</para>
         /// </summary>
-        public async Task WriteLineAsync(
+        public async Task<(bool state, string msg)> WriteLineAsync(
             string filePath,
             IEnumerable<string> values,
             bool 追加写入,
-
             CancellationToken ct = default)
         {
+            try
+            {
 
-            await WriteLineInternalAsync(filePath, values, 追加写入, ct)
-                .ConfigureAwait(false);
+                await WriteLineInternalAsync(filePath, values, 追加写入, ct)
+                    .ConfigureAwait(false);
+                return (true, "");
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
+            }
 
         }
 
@@ -182,38 +207,48 @@ namespace qfmain
         /// 异步批量写（最快）
         /// <para>追加写入 =false覆盖写入</para>
         /// </summary>
-        public async Task WriteLinesAsync(
+        public async Task<(bool state, string msg)> WriteLinesAsync(
             string filePath,
             IEnumerable<IEnumerable<string>> rows,
-            bool 追加写入  ,
+            bool 追加写入,
             CancellationToken ct = default)
         {
-            using (var fs = new FileStream(
-                filePath,
-                追加写入 ? FileMode.Append : FileMode.Create,
-                FileAccess.Write,
-                FileShare.Read,
-                bufferSize: 8192,
-                useAsync: true))
-            using (var writer = new StreamWriter(fs, _encoding))
+            try
             {
-                foreach (var row in rows)
+
+                using (var fs = new FileStream(
+                    filePath,
+                    追加写入 ? FileMode.Append : FileMode.Create,
+                    FileAccess.Write,
+                    FileShare.Read,
+                    bufferSize: 8192,
+                    useAsync: true))
+                using (var writer = new StreamWriter(fs, _encoding))
                 {
-                    ct.ThrowIfCancellationRequested();
-
-                    bool first = true;
-                    foreach (var value in row)
+                    foreach (var row in rows)
                     {
-                        if (!first)
-                            await writer.WriteAsync(_separator).ConfigureAwait(false);
+                        ct.ThrowIfCancellationRequested();
 
-                        await writer.WriteAsync(Escape(value)).ConfigureAwait(false);
-                        first = false;
+                        bool first = true;
+                        foreach (var value in row)
+                        {
+                            if (!first)
+                                await writer.WriteAsync(_separator).ConfigureAwait(false);
+
+                            await writer.WriteAsync(Escape(value)).ConfigureAwait(false);
+                            first = false;
+                        }
+                        await writer.WriteLineAsync().ConfigureAwait(false);
                     }
-                    await writer.WriteLineAsync().ConfigureAwait(false);
-                }
 
-                await writer.FlushAsync().ConfigureAwait(false);
+                    await writer.FlushAsync().ConfigureAwait(false);
+                }
+                return (true, "");
+            }
+            catch (Exception ex)
+            {
+
+                return (false, ex.Message);
             }
         }
 
@@ -227,26 +262,36 @@ namespace qfmain
         /// <summary>
         /// 异步读取（回调式，最省内存）
         /// </summary>
-        public async Task ReadLinesAsync(
+        public async Task<(bool state, string msg)> ReadLinesAsync(
             string filePath,
             Func<string[], Task> onRowAsync,
+            int buffersize = 8192,
             CancellationToken ct = default)
         {
-            using (var fs = new FileStream(
-                filePath,
-                FileMode.Open,
-                FileAccess.Read,
-                FileShare.ReadWrite,
-                bufferSize: 8192,
-                useAsync: true))
-            using (var reader = new StreamReader(fs, _encoding))
+            try
             {
-                string line;
-                while ((line = await reader.ReadLineAsync().ConfigureAwait(false)) != null)
+                using (var fs = new FileStream(
+                    filePath,
+                    FileMode.Open,
+                    FileAccess.Read,
+                    FileShare.ReadWrite,
+                    bufferSize: buffersize,
+                    useAsync: true))
+                using (var reader = new StreamReader(fs, _encoding))
                 {
-                    ct.ThrowIfCancellationRequested();
-                    await onRowAsync(ParseLine(line)).ConfigureAwait(false);
+                    string line;
+                    while ((line = await reader.ReadLineAsync().ConfigureAwait(false)) != null)
+                    {
+                        ct.ThrowIfCancellationRequested();
+                        await onRowAsync(ParseLine(line)).ConfigureAwait(false);
+                    }
                 }
+                return (true, "");
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
+
             }
         }
 
@@ -261,19 +306,20 @@ namespace qfmain
         /// <summary>
         /// 异步读取到 List（中小文件）
         /// </summary>
-        public async Task<List<string[]>> ReadAllAsync(
+        public async Task<(bool state, string msg, List<string[]>)> ReadAllAsync(
             string filePath,
+            int buffsize = 8192,
             CancellationToken ct = default)
         {
             var result = new List<string[]>();
 
-            await ReadLinesAsync(filePath, row =>
-            {
-                result.Add(row);
-                return Task.CompletedTask;
-            }, ct);
+            (bool rt, string msg) rt = await ReadLinesAsync(filePath, row =>
+                {
+                    result.Add(row);
+                    return Task.CompletedTask;
+                }, buffsize, ct);
 
-            return result;
+            return (rt.rt, rt.msg, result);
         }
 
         #endregion
