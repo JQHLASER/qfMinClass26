@@ -16,9 +16,9 @@ namespace qfmain
         /// </summary>
         /// <param name="超时时间"> </param>
         /// <returns></returns>
-        public virtual bool 是否超时(DateTime dateMax,DateTime dateMin, int 超时时间)
+        public virtual bool 是否超时(DateTime dateMax, DateTime dateMin, int 超时时间)
         {
-            bool rt = true;    
+            bool rt = true;
             TimeSpan ts = dateMax - dateMin;
             if (ts >= TimeSpan.FromMilliseconds(超时时间))
             {
@@ -27,7 +27,7 @@ namespace qfmain
             return rt;
 
         }
-          
+
 
         /// <summary>
         /// 增加为"-"则减小,无符号则增加......要增加的部份0:年份,1月份,2为日,3为小时,4为分钟,5为秒,6为毫秒
@@ -53,7 +53,7 @@ namespace qfmain
             }
             return dtnow;
         }
-          
+
 
         /// <summary>
         /// 一年的第几周
@@ -66,7 +66,7 @@ namespace qfmain
             int weekofyear = gc.GetWeekOfYear(DateTime_, System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
             return weekofyear;
         }
-         
+
 
         /// <summary>
         /// 一年的第几天
@@ -79,7 +79,7 @@ namespace qfmain
             return s;
         }
 
-   
+
 
         /// <summary>
         /// 一,二,三,四,五,六,日
@@ -108,7 +108,7 @@ namespace qfmain
             return week[Convert.ToInt16(DateTime_.DayOfWeek)];
         }
 
-         
+
         public virtual TimeSpan 计算两个时间差(DateTime 时间1, DateTime 时间2)
         {
             return 时间1.Subtract(时间2); ;
@@ -154,7 +154,21 @@ namespace qfmain
         }
 
 
+        /// <summary>
+        /// 不看天及其它
+        /// </summary> 
+        public static int 相差几月(DateTime start, DateTime end)
+        {
+            return (end.Year - start.Year) * 12 + (end.Month - start.Month);
+        }
+        /// <summary>
+        /// 不看天及其它
+        /// </summary> 
+        public static int 相差几年(DateTime start, DateTime end)
+        {
+            return end.Year - start.Year;
+        }
 
-         
+
     }
 }
