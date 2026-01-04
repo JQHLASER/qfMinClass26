@@ -3,6 +3,7 @@ using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -42,7 +43,7 @@ namespace qfSqlSugar
             this.Db = Db_.Db.GetConnection(id);
         }
 
-         
+
         /// <summary>
         /// 查询全部记录,非事务处理
         /// </summary>
@@ -244,7 +245,7 @@ namespace qfSqlSugar
         {
             list = new List<T>();
             msgErr = string.Empty;
-            bool rt = true; 
+            bool rt = true;
             try
             {
                 if (是否事务处理)
@@ -1041,7 +1042,7 @@ namespace qfSqlSugar
         /// <param name="totalCount"></param>
         /// <param name="msgErr"></param>
         /// <returns></returns>
-        public bool 获取总行数(string Sql语句, out long totalCount, out string msgErr,bool 是否事务处理=false )
+        public bool 获取总行数(string Sql语句, out long totalCount, out string msgErr, bool 是否事务处理 = false)
         {
             msgErr = string.Empty;
             bool rt = true;
@@ -1075,7 +1076,7 @@ namespace qfSqlSugar
         /// 输入表名就可以了
         ///  <para>使用语句"SELECT COUNT(*) FROM 表名"</para>
         /// </summary> 
-        public bool 获取总行数1(string 表名, out long totalCount, out string msgErr,bool 是否事务处理=false )
+        public bool 获取总行数1(string 表名, out long totalCount, out string msgErr, bool 是否事务处理 = false)
         {
             msgErr = string.Empty;
             bool rt = true;
@@ -1106,7 +1107,139 @@ namespace qfSqlSugar
         }
 
 
+        #region TPV
 
+        /*
+      1.  在数据库表中执行一次,新建类型
+        CREATE TYPE dbo.SNListType AS TABLE
+        (
+            Value NVARCHAR(100) PRIMARY KEY //就是要查询的列的类型,Value就是列名-- 长度建议和 SN条码 一致
+        );
+         
+
+     2.   C#：构造 DataTable（列名必须一致）
+       DataTable dtSN = new DataTable();
+        dtSN.Columns.Add("Value", typeof(string));
+        
+        foreach (var sn in snList)
+        {
+            dtSN.Rows.Add(sn);
+        }
+
+
+
+     3.   创TVP 参数（TypeName 必须一致）
+        var pSN = new SqlParameter("@sns", dtSN)
+        {
+            SqlDbType = SqlDbType.Structured,
+            TypeName = "dbo.SNListType"
+        };
+
+      4.  JOIN TVP（用 Value）
+        string sql = @"
+        SELECT d.SN条码
+        FROM dataZX d
+        INNER JOIN @sns s ON d.SN条码 = s.SN条码
+        ";
+
+      5.  SqlSugar 执行（正确）
+        List<string> result = db.Ado.SqlQuery<string>(sql, pSN);
+
+注意事项
+        1. 目标表一定要有索引
+            CREATE NONCLUSTERED INDEX IX_dataZX_SN条码  ON dataZX(SN条码);
+        2. TVP 列类型、长度要一致
+            例:
+               ❌ NVARCHAR(100) 对 NVARCHAR(80)
+                ✔ NVARCHAR(80) 对 NVARCHAR(80)
+        3. 不要对 SN条码 做函数/转换 
+            例:
+                -- ❌ 会导致索引失效
+                ON LEFT(d.SN条码,10) = s.Value
+        4. 查询条件数量少使用常规方法,>=300条左右合用TPV方法
+
+
+        */
+
+        /// <summary>
+        /// List<string> → TVP 参数
+        /// </summary>
+        public static SqlParameter CreateStringTvp(
+            string paramName,
+            IEnumerable<string> list,
+            string typeName = "dbo.StringListType")
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Value", typeof(string));
+
+            foreach (var item in list)
+            {
+                if (!string.IsNullOrEmpty(item))
+                    dt.Rows.Add(item);
+            }
+
+            return new SqlParameter(paramName, dt)
+            {
+                SqlDbType = SqlDbType.Structured,
+                TypeName = typeName
+            };
+        }
+
+        /// <summary>
+        /// List<int> → TVP 参数
+        /// </summary>
+        public static SqlParameter CreateIntTvp(
+            string paramName,
+            IEnumerable<int> list,
+            string typeName = "dbo.IntListType")
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Value", typeof(int));
+
+            foreach (var item in list)
+            {
+                dt.Rows.Add(item);
+            }
+
+            return new SqlParameter(paramName, dt)
+            {
+                SqlDbType = SqlDbType.Structured,
+                TypeName = typeName
+            };
+
+        }
+
+
+        public static List<T> QueryByList<T>(
+         SqlSugarClient db,
+         string sqlIn,
+         string sqlTvp,
+         string tvpParamName,
+         IEnumerable<string> list,
+         int tvpThreshold = 300)
+        {
+            var arr = list?.ToList();
+            if (arr == null || arr.Count == 0)
+                return new List<T>();
+
+            // 少量数据：IN
+            if (arr.Count <= tvpThreshold)
+            {
+                return db.Ado.SqlQuery<T>(
+                    sqlIn.Replace("@list", string.Join(",", arr.Select(x => $"'{x}'")))
+                );
+            }
+
+            // 大量数据：TVP
+            var p = CreateStringTvp(tvpParamName, arr);
+            return db.Ado.SqlQuery<T>(sqlTvp, p);
+        }
+
+
+        #endregion
 
     }
 }
