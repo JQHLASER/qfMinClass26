@@ -68,19 +68,19 @@ namespace qfNet
         }
 
 
-        public event Action<Form> Event_FormClosing_关闭时;
-        public event Action<Form> Event_Load_进入时;
+        public event Action<Form_查询> Event_FormClosing_关闭时;
+        public event Action<Form_查询> Event_Load_进入时;
 
 
-        public event Action<Form> Event_查询;
-        public event Action<Form> Event_导出;
+        public event Action<Form_查询> Event_查询;
+        public event Action<Form_查询> Event_导出;
 
-        public event Action<Form> Event_上一页;
-        public event Action<Form> Event_下一页;
+        public event Action<Form_查询> Event_上一页;
+        public event Action<Form_查询> Event_下一页;
         /// <summary>
         /// (int 页索引,DataGridView )
         /// </summary>
-        public event Action<Form, int> Event_到指定页;
+        public event Action<Form_查询, int> Event_到指定页;
 
        
         public void 设置显示信息(string value)
