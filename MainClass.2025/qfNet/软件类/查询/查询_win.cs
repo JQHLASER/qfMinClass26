@@ -72,7 +72,7 @@ namespace qfNet
         /// <summary>
         /// (int 页索引 )
         /// </summary>
-        public event Action<Form_查询, int> Event_到指定页;
+        public event Action<Form_查询, uint> Event_到指定页;
 
 
         /// <summary>

@@ -80,7 +80,7 @@ namespace qfNet
         /// <summary>
         /// (int 页索引,DataGridView )
         /// </summary>
-        public event Action<Form_查询, int> Event_到指定页;
+        public event Action<Form_查询, uint> Event_到指定页;
 
        
         public void 设置显示信息(string value)
@@ -91,8 +91,8 @@ namespace qfNet
 
         public string 生成显示信息(qfmain.List分页_._PageInfo_ 页信息)
         {
-            List<int> lst = new List<int>();
-            for (int i = 0; i < 页信息.总页数; i++)
+            List<uint> lst = new List<uint>();
+            for (uint i = 0; i < 页信息.总页数; i++)
             {
                 lst.Add(i + 1);
             }
