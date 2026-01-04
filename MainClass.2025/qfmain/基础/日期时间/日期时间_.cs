@@ -157,14 +157,14 @@ namespace qfmain
         /// <summary>
         /// 不看天及其它
         /// </summary> 
-        public static int 相差几月(DateTime start, DateTime end)
+        public   int 相差几月(DateTime start, DateTime end)
         {
             return (end.Year - start.Year) * 12 + (end.Month - start.Month);
         }
         /// <summary>
         /// 不看天及其它
         /// </summary> 
-        public static int 相差几年(DateTime start, DateTime end)
+        public   int 相差几年(DateTime start, DateTime end)
         {
             return end.Year - start.Year;
         }
