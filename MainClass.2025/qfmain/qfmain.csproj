@@ -247,6 +247,7 @@
     <Compile Include="PC\键盘_鼠标.cs" />
     <Compile Include="TRuest.cs" />
     <Compile Include="const常量.cs" />
+    <Compile Include="基础\Csv\Csv_高效.cs" />
     <Compile Include="基础\INI\ini_sharpconfig.cs" />
     <Compile Include="基础\文本\文本_持续写入.cs" />
     <Compile Include="延时\等待_ManualResetEvent.cs" />
@@ -274,7 +275,7 @@
     <Compile Include="参考\Zip.cs" />
     <Compile Include="参考\正则表达式.cs" />
     <Compile Include="参考\颜色.cs" />
-    <Compile Include="基础\CSV.cs" />
+    <Compile Include="基础\Csv\CSV.cs" />
     <Compile Include="基础\Encoding编码.cs" />
     <Compile Include="基础\Excel\Excel_.cs" />
     <Compile Include="基础\Image\Image_.cs" />

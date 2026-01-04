@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NPOI.SS.Formula.Functions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,10 +19,10 @@ namespace qfmain
         /// <param name="append"></param>
         /// <param name="msgErr"></param>
         /// <returns></returns>
-        public virtual bool Write(string path, List<string[]> rows, bool append, out string msgErr, Encoding encoding = null)
+        public virtual async Task<(bool state, string msgErr)> Write(string path, List<string[]> rows, bool append, Encoding encoding = null)
         {
             bool rt = true;
-            msgErr = string.Empty;
+            string msgErr = string.Empty;
             if (encoding is null)
             {
                 encoding = Encoding.Default;
@@ -54,7 +55,7 @@ namespace qfmain
                         }
                         // fileWriter.WriteLine(buffer.ToString());
 
-                        fileWriter.WriteLineAsync(buffer.ToString());
+                        await fileWriter.WriteLineAsync(buffer.ToString());
                     }
                 }
 
@@ -66,7 +67,7 @@ namespace qfmain
             }
 
 
-            return rt;
+            return (rt, msgErr);
         }
 
         /// <summary>
@@ -168,6 +169,10 @@ namespace qfmain
 
 
 
+
+
+
+
         private List<string> getStrCellVal(string rowStr)
         {
             List<string> cellList = new List<string>();
@@ -229,7 +234,7 @@ namespace qfmain
         /// <param name="msgErr"></param>
         /// <param name="encoding"></param>
         /// <returns></returns>
-        public virtual bool Write(string path, string[] 标题, string[][] rows, bool append, out string msgErr, Encoding encoding = null)
+        public virtual async Task<(bool state, string msgErr)> Write(string path, string[] 标题, string[][] rows, bool append, Encoding encoding = null)
         {
             List<string> lstStr = new List<string>();
             List<string[]> lstCsv = new List<string[]>();
@@ -242,10 +247,10 @@ namespace qfmain
             {
                 lstCsv.Add(s);
             }
-            return Write(path, lstCsv, append, out msgErr, encoding);
+            return await Write(path, lstCsv, append, encoding);
         }
 
-     
+
         /// <summary>
         ///  append : =true:追加,=false:覆盖
         /// </summary>
@@ -256,13 +261,15 @@ namespace qfmain
         /// <param name="msgErr"></param>
         /// <param name="encoding"></param>
         /// <returns></returns>
-        public virtual bool Write(string path, string[] 标题, string[] row, bool append, out string msgErr, Encoding encoding = null)
+        public virtual async Task<(bool state, string msgErr)> Write(string path, string[] 标题, string[] row, bool append, Encoding encoding = null)
         {
             List<string[]> lstCsv = new List<string[]>();
             lstCsv.Add(row);
-            return Write(path, 标题, lstCsv.ToArray(), append, out msgErr, encoding);
+            return await Write(path, 标题, lstCsv.ToArray(), append, encoding);
         }
 
 
     }
+
+     
 }

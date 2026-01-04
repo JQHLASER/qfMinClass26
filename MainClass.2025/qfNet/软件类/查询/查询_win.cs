@@ -26,9 +26,9 @@ namespace qfNet
         {
             using (this._forms = new Form_查询())
             {
-                this._forms.Event_查询 += (s) =>
+                this._forms.Event_Load_进入时 += (s) =>
                 {
-                    Event_查询?.Invoke(s);
+                    this.Event_Load_进入时?.Invoke(s);
                 };
 
                 this._forms.Event_FormClosing_关闭时 += (s) =>
@@ -36,6 +36,11 @@ namespace qfNet
                     this.Event_FormClosing_关闭时?.Invoke(s);
                 };
 
+                this._forms.Event_查询 += (s) =>
+                {
+                    Event_查询?.Invoke(s);
+                };
+                 
                 this._forms.Event_导出 += (s) =>
                 {
                     this.Event_导出?.Invoke(s);
