@@ -56,7 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BarTender_2022_.cs" />
+    <Compile Include="打印机\BarTender_2022_.cs" />
     <Compile Include="IO类_.cs" />
     <Compile Include="_Type_.cs" />
     <Compile Include="打印机\BarTender_.cs" />
