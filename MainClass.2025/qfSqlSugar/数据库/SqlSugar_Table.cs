@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -1105,6 +1106,48 @@ namespace qfSqlSugar
             }
             return rt;
         }
+
+
+        #region 高速查询....泛型
+
+
+        /*使用方法
+        var list = QueryInByField<表.dataZX, string, string>(
+                 db_sys.Db,
+                 sns,          // values
+                 "SN条码",     // fieldName
+                 d => d.SN条码 // selectExpr
+                ); 
+         */
+
+        /// <summary>
+        /// 据说效率很高的
+        /// <pata>Expression : 例 d => d.SN条码 //返加一个字段 </pata>
+        /// <para>Expression : 例 d => new {  d.SN条码, d.工厂ID,   d.创建时间  } //可以返回多个字段</para>
+        /// <para>Expression : d=>d //返回整个实体,但不推荐</para>
+        /// </summary> 
+        public List<查结果类型> GetList_高效<字段类型, 查结果类型>(
+                                                 IEnumerable<字段类型> values,
+                                                 string 字段名,
+                                                 Expression<Func<T, 查结果类型>> selectExpr)
+        {
+            var list = values?.Where(v => v != null)
+                              .Distinct()
+                              .ToList();
+
+            if (list == null || list.Count == 0)
+                return new List<查结果类型>();
+
+            return this.Db.Queryable<T>()
+                     .In(字段名, list)
+                     .Select(selectExpr)
+                     .ToList();
+        }
+
+
+
+        #endregion
+
 
 
         #region TPV
