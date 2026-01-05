@@ -35,14 +35,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Interop.BarTender">
-      <HintPath>..\..\..\资料类\第三方库\Bartender\2016\Interop.BarTender.dll</HintPath>
+      <HintPath>..\..\..\资料类\第三方库\Bartender\2021版\SDK\Assemblies\Interop.BarTender.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\qfmain\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Seagull.BarTender.Print">
-      <HintPath>..\..\..\资料类\第三方库\Bartender\2016\Seagull.BarTender.Print.dll</HintPath>
+    <Reference Include="Seagull.BarTender.Print, Version=11.0.2.1, Culture=neutral, PublicKeyToken=109ff779a1b4cbc7, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\资料类\第三方库\Bartender\2021版\SDK\Assemblies\Seagull.BarTender.Print.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,9 +56,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BarTender_2022_.cs" />
     <Compile Include="IO类_.cs" />
     <Compile Include="_Type_.cs" />
-    <Compile Include="打印机\BarTender_打印.cs" />
+    <Compile Include="打印机\BarTender_.cs" />
     <Compile Include="激光\打标\金橙子\EzCad2\单头\JczLmc.cs" />
     <Compile Include="激光\打标\金橙子\EzCad2\单头\MarkEzd.cs" />
     <Compile Include="激光\打标\金橙子\EzCad2\单头\MarkEzd_Lcm.cs" />
