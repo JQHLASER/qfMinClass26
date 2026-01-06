@@ -4,6 +4,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -160,18 +161,15 @@ namespace qf_Contol
 
         #endregion
 
-         
+
         #region 变量
 
         bool isRun = true;
-        private readonly BlockingCollection<_logValue_> _queue = new BlockingCollection<_logValue_>();
-        private readonly CancellationTokenSource _cts = new CancellationTokenSource();
-        private readonly object _lock = new object();
 
 
         #endregion
 
-         
+
         public Log日志(_cfg_ cfg)
         {
             初始化(cfg);
@@ -210,8 +208,6 @@ namespace qf_Contol
             }
 
 
-            // 启动日志写入线程
-            Task.Run(LogWorker, _cts.Token);
 
 
         }
@@ -219,8 +215,7 @@ namespace qf_Contol
         public virtual void 释放()
         {
             isRun = false;
-            this._cts.Cancel();
-            this._queue.CompleteAdding();
+
         }
 
         /// <summary>
@@ -228,19 +223,17 @@ namespace qf_Contol
         /// </summary>
         /// <param name="state">状态</param>
         /// <param name="logValue">日志内容</param>
-        public virtual void Add(enum状态 state, string logValue)
+        public virtual async Task Add(enum状态 state, string logValue)
         {
-            lock (this._lock)
-            {
-                _queue.Add(new _logValue_
-                {
-                    状态 = state,
-                    时间 = DateTime.Now,
-                    内容 = logValue,
-                });
-            }
+            await SaveLog(
+                      new _logValue_
+                      {
+                          状态 = state,
+                          时间 = DateTime.Now,
+                          内容 = logValue,
+                      });
         }
-
+       
         /// <summary>
         /// 
         /// </summary>
@@ -282,18 +275,6 @@ namespace qf_Contol
 
 
 
-        private async Task LogWorker()
-        {
-            foreach (var log in _queue.GetConsumingEnumerable())
-            {
-                // 先保存文件
-                if (this.参数.使能_保存)
-                {
-                    await SaveLog(log);
-                }
-
-            }
-        }
         //保存日志
         async Task SaveLog(_logValue_ logInfo)
         {
