@@ -118,6 +118,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "qf_WebSocket", "..\qf_WebSo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "qfPLC", "..\qfPLC\qfPLC.csproj", "{E34D6BF0-3D01-4EF7-A0B9-598B4232F663}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "qf_Contol", "..\qf_Contol\qf_Contol.csproj", "{F08A8829-E528-4880-B159-DB57D574446C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -168,6 +170,10 @@ Global
 		{E34D6BF0-3D01-4EF7-A0B9-598B4232F663}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E34D6BF0-3D01-4EF7-A0B9-598B4232F663}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E34D6BF0-3D01-4EF7-A0B9-598B4232F663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F08A8829-E528-4880-B159-DB57D574446C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F08A8829-E528-4880-B159-DB57D574446C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F08A8829-E528-4880-B159-DB57D574446C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F08A8829-E528-4880-B159-DB57D574446C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -191,6 +197,7 @@ Global
 		{89DE93D9-12F9-4435-A670-19EBEA9B1307} = {024A954B-30C8-4294-90C2-5493FDA8D203}
 		{6282170A-0077-4D70-9B97-00103DA32A9A} = {024A954B-30C8-4294-90C2-5493FDA8D203}
 		{E34D6BF0-3D01-4EF7-A0B9-598B4232F663} = {024A954B-30C8-4294-90C2-5493FDA8D203}
+		{F08A8829-E528-4880-B159-DB57D574446C} = {B6AF074B-C43D-4288-BE1F-B1836578A1E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B0B7AD31-154F-4701-AEBF-4206C118E93A}
