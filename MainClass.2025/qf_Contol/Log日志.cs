@@ -165,7 +165,7 @@ namespace qf_Contol
         #region 变量
 
         bool isRun = true;
-
+        readonly object _lock = new object();
 
         #endregion
 
@@ -223,17 +223,20 @@ namespace qf_Contol
         /// </summary>
         /// <param name="state">状态</param>
         /// <param name="logValue">日志内容</param>
-        public virtual async Task Add(enum状态 state, string logValue)
+        public virtual void Add(enum状态 state, string logValue)
         {
-            await SaveLog(
-                      new _logValue_
-                      {
-                          状态 = state,
-                          时间 = DateTime.Now,
-                          内容 = logValue,
-                      });
+            lock (this._lock)
+            {
+                SaveLog(
+                        new _logValue_
+                        {
+                            状态 = state,
+                            时间 = DateTime.Now,
+                            内容 = logValue,
+                        });
+            }
         }
-       
+
         /// <summary>
         /// 
         /// </summary>
@@ -276,7 +279,7 @@ namespace qf_Contol
 
 
         //保存日志
-        async Task SaveLog(_logValue_ logInfo)
+        async void SaveLog(_logValue_ logInfo)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(this.文件标识分割符);
@@ -346,7 +349,7 @@ namespace qf_Contol
             saveLog.log = logInfo.内容;
             string logValue = JsonConvert.SerializeObject(saveLog);
 
-            await new 文本().Save_25(path, $"{logValue}", false, true);
+            new 文本().Save_25(path, $"{logValue}", false, true);
 
         }
 
