@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Log日志.cs" />
     <Compile Include="程序_捕获异常_.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
