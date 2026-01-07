@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
-namespace qfNet
+namespace qf_Laser
 {
     public partial class Form_jcz多头_卡ID设置 : Sunny.UI.UIForm
     {
