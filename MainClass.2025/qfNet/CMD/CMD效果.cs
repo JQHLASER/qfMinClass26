@@ -160,14 +160,14 @@ namespace qfNet
             this._richTextBox.SelectionStart = this._richTextBox.Text.Length;
             // 自动滚动到底部
             this._richTextBox.ScrollToCaret();
+            this._richTextBox.Focus();
         }
 
         /// <summary>
         /// 输出文本并设置颜色,(带换行)
         /// </summary> 
         public void WriteLine(string text, Color? color)
-        {
-
+        { 
 
             this._richTextBox.SelectionColor = color ?? Color.White;
             this._richTextBox.AppendText(text);
@@ -177,6 +177,7 @@ namespace qfNet
 
             // 自动滚动到底部
             this._richTextBox.ScrollToCaret();
+            this._richTextBox.Focus();
         }
 
 
@@ -190,6 +191,7 @@ namespace qfNet
             this._richTextBox.SelectionStart = this._richTextBox.Text.Length;
             // 自动滚动到底部
             this._richTextBox.ScrollToCaret();
+            this._richTextBox.Focus();
         }
 
 
@@ -204,6 +206,7 @@ namespace qfNet
 
             // 自动滚动到底部
             this._richTextBox.ScrollToCaret();
+            this._richTextBox.Focus();
         }
 
         #endregion
