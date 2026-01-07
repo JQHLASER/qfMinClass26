@@ -137,14 +137,6 @@ namespace qfmain
 
 
 
-
-
-
-
-
-
-
-
         public void 参数读写(ushort model)
         {
             _Socket_Cfg_ info = this._参数;
@@ -241,7 +233,7 @@ namespace qfmain
             {
                 if (是否先断开)
                 {
-                    Stop关闭连接(out msgErr, false);
+                    Stop关闭连接(out msgErr, false, false);
 
                     if (this._参数.重连周期 > 0)
                     {
@@ -308,7 +300,7 @@ namespace qfmain
             {
                 if (是否先断开)
                 {
-                    Stop关闭连接(out msgErr, false);
+                    Stop关闭连接(out msgErr, false, false);
                     if (this._参数.重连周期 > 0)
                     {
                         Thread.Sleep(this._参数.重连周期);
@@ -358,7 +350,7 @@ namespace qfmain
         /// </summary>
         /// <param name="msgErr"></param>
         /// <returns></returns>
-        public bool Stop关闭连接(out string msgErr, bool 释放 = true)
+        public bool Stop关闭连接(out string msgErr, bool 释放 = true, bool IS产生事件 = true)
         {
             bool rt = true;
             msgErr = string.Empty;
@@ -373,7 +365,7 @@ namespace qfmain
                 {
                     this.jm_sys.Event_解码 -= On_接收数据_jm;
                 }
-                
+
             }
 
 
@@ -488,7 +480,7 @@ namespace qfmain
 
         }
 
-      
+
 
         public bool Err_未连接()
         {
@@ -506,7 +498,7 @@ namespace qfmain
         /// <param name="socket_"></param>
         /// <returns></returns>
         public bool 判断是否连接_1(int 检测超时 = 1000)
-        { 
+        {
             if (client == null)
                 return false;
 
@@ -528,7 +520,7 @@ namespace qfmain
             {
                 return false;
             }
-       
+
 
 
         }

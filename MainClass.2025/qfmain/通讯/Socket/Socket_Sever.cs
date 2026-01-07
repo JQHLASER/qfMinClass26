@@ -195,7 +195,7 @@ namespace qfmain
 
             try
             {
-                StopListen(out msgErr);
+                StopListen(out msgErr,false );
                 this._lstSocket.Clear();
                 Thread.Sleep(100);
 
@@ -237,11 +237,14 @@ namespace qfmain
         /// </summary>
         /// <param name="msgErr"></param>
         /// <returns></returns>
-        public bool StopListen(out string msgErr)
+        public bool StopListen(out string msgErr,bool IS产生事件=true  )
         {
             bool rt = true;
             msgErr = string.Empty;
-            On_侦听启动状态(_启动状态_.未启动);
+            if (IS产生事件)
+            {
+                On_侦听启动状态(_启动状态_.未启动);
+            }
             try
             {
                 断开所有客户端();
