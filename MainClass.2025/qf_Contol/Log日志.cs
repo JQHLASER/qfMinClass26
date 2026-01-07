@@ -349,7 +349,7 @@ namespace qf_Contol
             saveLog.log = logInfo.内容;
             string logValue = JsonConvert.SerializeObject(saveLog);
 
-            new 文本().Save_25(path, $"{logValue}", false, true);
+            new 文本().Save_25(path, $"{logValue}", false, out string msgErr1);
 
         }
 
