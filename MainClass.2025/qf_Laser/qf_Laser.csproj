@@ -50,7 +50,6 @@
     <Compile Include="EzCad\EzCad2\_Type_MarkEzd.cs" />
     <Compile Include="EzCad\EzCad2\单头\JczLmc.cs" />
     <Compile Include="EzCad\EzCad2\单头\MarkEzd_Ezd2.cs" />
-    <Compile Include="EzCad\EzCad2\单头\MarkEzd_.cs" />
     <Compile Include="EzCad\EzCad2\单头\MarkEzd_Lcm.cs" />
     <Compile Include="EzCad\EzCad2\单头\ui_bitmap_jcz单头.cs">
       <SubType>UserControl</SubType>
@@ -129,4 +128,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rd /s /q "$(ProjectDir)obj"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

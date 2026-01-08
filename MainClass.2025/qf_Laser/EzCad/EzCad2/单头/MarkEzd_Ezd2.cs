@@ -20,7 +20,7 @@ namespace qf_Laser
     /// <summary>
     /// 统一接口
     /// </summary>
-    public class MarkEzd_Ezd2 : IWork
+    public class MarkEzd_Ezd2 : IWork_LaserMark
     {
         #region 变量
 
@@ -42,7 +42,10 @@ namespace qf_Laser
 
         bool _isRun = true;
         bool _is连续加工 = false;
-
+        /// <summary>
+        /// 最大最小端口
+        /// </summary>
+        ushort _minPort = 0, _maxPort = 15;
         #endregion
 
 
@@ -67,19 +70,49 @@ namespace qf_Laser
             return "EzCad2";
         }
 
+        public (ushort minPort, ushort maxPort) 获取最大最小端口号()
+        {
+            return (_minPort, _maxPort);
+        }
 
+        public bool 端口是否有效(ushort Port)
+        {
+            return this.Err_端口是否有效(Port);
+        }
+
+        public _激光加工状态_ 获取加工状态()
+        {
+            return _激光加工状态;
+        }
+
+         
+
+        bool _Inistiall = false;
         public void 初始化(bool 使能线程)
         {
             标题栏状态_加工状态();
             标题栏状态_初始化状态();
 
+            On_初始化状态(_初始化状态_.未初始化);
+            读写参数(1);
+            读写_最后一次ezdpath(1);
+            读EzCadName();
+            if (使能线程)
+            {
+                new Thread(() => { 线程(); }) { IsBackground = true }.Start();
+            }
+            new Thread(() => { 线程_处理ezCad(); }) { IsBackground = true }.Start();
+            _Inistiall = true;
         }
 
         public void 释放()
         {
+            if (!_Inistiall)
+            {
+                return;
+            }
             this._isRun = false;
-
-
+            释放打标卡();
         }
 
         public (bool s, string m) 初始化打标卡()
@@ -318,11 +351,9 @@ namespace qf_Laser
             return this._参数;
         }
 
-
         public void 刷新图形(_激光_获取图像_ state = _激光_获取图像_.获取)
         {
             Event_获取图像?.Invoke(state);
-
         }
         public (bool s, string m, Bitmap v) 获取图形(int width, int height)
         {
@@ -407,132 +438,11 @@ namespace qf_Laser
 
 
 
-        public (bool s, string m) Err_未初始化(bool 是否日志 = true)
-        {
-            bool rt = this.Err_未初始化(out string msgErr, 是否日志);
-            return (rt, msgErr);
-        }
-        public (bool s, string m) Err_初始化中(bool 是否日志 = true)
-        {
-            bool rt = this.Err_初始化中(out string msgErr, 是否日志);
-            return (rt, msgErr);
-        }
-        public (bool s, string m) Err_加载激光模板中(bool 是否日志 = true)
-        {
-            bool rt = this.Err_加载激光模板中(out string msgErr, 是否日志);
-            return (rt, msgErr);
-        }
-        public (bool s, string m) Err_出激光标刻中(bool 是否日志 = true)
-        {
-            bool rt = this.Err_出激光标刻中(out string msgErr, 是否日志);
-            return (rt, msgErr);
-        }
-        public (bool s, string m) Err_无可加工数据(bool 是否日志 = true)
-        {
-            bool rt = this.Err_无可加工数据(out string msgErr, 是否日志);
-            return (rt, msgErr);
-        }
-        public (bool s, string m) Err_未加载激光模板(bool 是否日志 = true)
-        {
-            bool rt = this.Err_未加载激光模板(out string msgErr, 是否日志);
-            return (rt, msgErr);
-        }
-        public (bool s, string m) Err_红光指示中(bool 是否日志 = true)
-        {
-            bool rt = this.Err_红光指示中(out string msgErr, 是否日志);
-            return (rt, msgErr);
-        }
-        public (bool s, string m) Err_dll是否存在(bool 是否日志 = true)
-        {
-            bool rt = this.Err_dll是否存在(out string msgErr, 是否日志);
-            return (rt, msgErr);
-        }
 
 
 
         #endregion
 
-
-        #region 事件
-
-        public event Action<bool, string> Event_Log;
-        public event Action<bool[]> Event_IO_IN;
-        public event Action<bool[]> Event_IO_OUT;
-        public event Action<_初始化状态_> Event_初始化状态;
-
-        public event Action<_激光加工状态_> Event_加工状态;
-        public event Action<string> Event_加载激光模板成功;
-        public event Action<_激光_获取图像_> Event_获取图像;
-        public event Action<qfNet._cfg_标题栏状态_[], _初始化状态_> Event_标题栏状态_初始化状态;
-        public event Action<qfNet._cfg_标题栏状态_[], _激光加工状态_> Event_标题栏状态_加工状态;
-
-        void On_Log(bool state, string msg)
-        {
-            Event_Log?.Invoke(state, msg);
-        }
-        void On_IO_IN(bool[] state)
-        {
-            Event_IO_IN?.Invoke(state);
-        }
-        void On_IO_OUT(bool[] state)
-        {
-            Event_IO_OUT?.Invoke(state);
-        }
-        void On_加工状态(_激光加工状态_ state)
-        {
-            Event_加工状态?.Invoke(state);
-        }
-        void On_加载激光模板成功(string value)
-        {
-            Event_加载激光模板成功?.Invoke(value);
-        }
-        void On_获取图像(_激光_获取图像_ sate)
-        {
-            Event_获取图像?.Invoke(sate);
-        }
-        void On_标题栏状态_初始化状态(qfNet._cfg_标题栏状态_[] cfg, _初始化状态_ state)
-        {
-            Event_标题栏状态_初始化状态?.Invoke(cfg, state);
-        }
-        void On_标题栏状态_加工状态(qfNet._cfg_标题栏状态_[] cfg, _激光加工状态_ state)
-        {
-            Event_标题栏状态_加工状态?.Invoke(cfg, state);
-        }
-
-
-        bool is第一次初始化 = true;
-        void On_初始化状态(_初始化状态_ state)
-        {
-            this._初始化状态 = state;
-
-            Task.Run(() =>
-            {
-                switch (state)
-                {
-                    case _初始化状态_.已初始化:
-                        //On_Log(true, Get语言("已初始化"));
-
-                        if ((is第一次初始化 && this._参数.进入时加载激光模板) || !is第一次初始化)
-                        {
-                            this.LoadEzdFile(this._Path_ezd_最后一次);
-                        }
-                        is第一次初始化 = false;
-
-                        break;
-                    case _初始化状态_.初始化中:
-                        //On_Log(true, Get语言("初始化中"));
-                        break;
-                    case _初始化状态_.未初始化:
-                        //  On_Log(false, Get语言("未初始化"));
-                        break;
-                }
-            });
-
-            Event_初始化状态?.Invoke(state);
-        }
-
-
-        #endregion
 
 
         #region EzCad
@@ -576,10 +486,6 @@ namespace qf_Laser
 
         IntPtr EzCadHwnd = IntPtr.Zero;
         _Err_jczMarkEzd2_ rtJcz = _Err_jczMarkEzd2_.发现EZCAD在运行;
-
-
-
-
 
         void 线程_处理ezCad()
         {
@@ -716,13 +622,16 @@ namespace qf_Laser
             return rt;
         }
 
+        private readonly object _lock_读写参数 = new object();
         public void 读写参数(ushort model)
         {
-            string path = qfmain.软件类.Files_Cfg.Files_Config + "\\jczCfg.dll";
-            _激光参数_ info = this._参数;
-            new qfmain.文件_文件夹().WriteReadIni<_激光参数_>(path, model, ref info, out string msgErr);
-            this._参数 = info;
-
+            lock (this._lock_读写参数)
+            {
+                string path = qfmain.软件类.Files_Cfg.Files_Config + "\\jczCfg.dll";
+                _激光参数_ info = this._参数;
+                new qfmain.文件_文件夹().WriteReadIni<_激光参数_>(path, model, ref info, out string msgErr);
+                this._参数 = info;
+            }
         }
 
         void 读写_最后一次ezdpath(ushort model)
@@ -1493,7 +1402,7 @@ namespace qf_Laser
 
         #region Err
 
-        internal bool Err_加载激光模板中(out string msgErr, bool 是否日志 = true)
+        public bool Err_加载激光模板中(out string msgErr, bool 是否日志 = true)
         {
             msgErr = "";
             if (this._激光加工状态 == _激光加工状态_.加载激光模板中)
@@ -1505,7 +1414,7 @@ namespace qf_Laser
             return true;
         }
 
-        internal bool Err_初始化中(out string msgErr, bool 是否日志 = true)
+        public bool Err_初始化中(out string msgErr, bool 是否日志 = true)
         {
             msgErr = "";
             if (this._初始化状态 == _初始化状态_.初始化中)
@@ -1520,7 +1429,7 @@ namespace qf_Laser
             return true;
         }
 
-        internal bool Err_未初始化(out string msgErr, bool 是否日志 = true)
+        public bool Err_未初始化(out string msgErr, bool 是否日志 = true)
         {
             msgErr = "";
             if (this._初始化状态 != _初始化状态_.已初始化)
@@ -1535,7 +1444,7 @@ namespace qf_Laser
             return true;
         }
 
-        internal bool Err_红光指示中(out string msgErr, bool 是否日志 = true)
+        public bool Err_红光指示中(out string msgErr, bool 是否日志 = true)
         {
             msgErr = "";
             if (this._激光加工状态 == _激光加工状态_.红指示光中)
@@ -1550,7 +1459,7 @@ namespace qf_Laser
             return true;
         }
 
-        internal bool Err_出激光标刻中(out string msgErr, bool 是否日志 = true)
+        public bool Err_出激光标刻中(out string msgErr, bool 是否日志 = true)
         {
             msgErr = "";
             if (this._激光加工状态 == _激光加工状态_.出激光标刻中)
@@ -1565,7 +1474,7 @@ namespace qf_Laser
             return true;
         }
 
-        internal bool Err_无可加工数据(out string msgErr, bool 是否日志 = true)
+        public bool Err_无可加工数据(out string msgErr, bool 是否日志 = true)
         {
             msgErr = "";
             if (获取_对象总数() == 0)
@@ -1580,7 +1489,7 @@ namespace qf_Laser
             return true;
         }
 
-        internal bool Err_未加载激光模板(out string msgErr, bool 是否日志 = true)
+        public bool Err_未加载激光模板(out string msgErr, bool 是否日志 = true)
         {
             msgErr = "";
             if (string.IsNullOrEmpty(this._Path_ezd))
@@ -1594,6 +1503,8 @@ namespace qf_Laser
             return true;
         }
 
+
+
         /// <summary>
         /// 这个只是判断,并非错误
         /// </summary>
@@ -1601,14 +1512,14 @@ namespace qf_Laser
         /// <returns></returns>
         internal bool Err_端口是否有效(int 端口)
         {
-            return new IO_().端口是否有效(端口, 0, 15);
+            return new IO_().端口是否有效(端口, _minPort, _maxPort);
         }
 
         /// <summary>
         /// DLL路径
         /// </summary>
         string path_MarkEzd = Environment.CurrentDirectory + "\\Ezd2\\Miks.dll";
-        internal bool Err_dll是否存在(out string msgErr, bool 是否日志 = true)
+        public bool Err_dll是否存在(out string msgErr, bool 是否日志 = true)
         {
             msgErr = string.Empty;
             if (!new 文件_文件夹().文件_是否存在(path_MarkEzd))
@@ -1676,5 +1587,132 @@ namespace qf_Laser
         }
 
         #endregion
+
+
+
+        #region 事件
+
+        public event Action<bool, string> Event_Log;
+        public event Action<bool[]> Event_IO_IN;
+        public event Action<bool[]> Event_IO_OUT;
+        public event Action<_初始化状态_> Event_初始化状态;
+
+        public event Action<_激光加工状态_> Event_加工状态;
+        public event Action<string> Event_加载激光模板成功;
+        public event Action<_激光_获取图像_> Event_获取图像;
+        public event Action<qfNet._cfg_标题栏状态_[], _初始化状态_> Event_标题栏状态_初始化状态;
+        public event Action<qfNet._cfg_标题栏状态_[], _激光加工状态_> Event_标题栏状态_加工状态;
+
+        void On_Log(bool state, string msg)
+        {
+            Event_Log?.Invoke(state, msg);
+        }
+        void On_IO_IN(bool[] state)
+        {
+            Event_IO_IN?.Invoke(state);
+        }
+        void On_IO_OUT(bool[] state)
+        {
+            Event_IO_OUT?.Invoke(state);
+        }
+        void On_加工状态(_激光加工状态_ state)
+        {
+            On_标题栏状态_加工状态(_标题栏标题_加工状态, state);
+            Event_加工状态?.Invoke(state);
+        }
+        void On_加载激光模板成功(string value)
+        {
+            Event_加载激光模板成功?.Invoke(value);
+        }
+        void On_获取图像(_激光_获取图像_ sate)
+        {
+            Event_获取图像?.Invoke(sate);
+        }
+        void On_标题栏状态_初始化状态(qfNet._cfg_标题栏状态_[] cfg, _初始化状态_ state)
+        {
+            Event_标题栏状态_初始化状态?.Invoke(cfg, state);
+        }
+        void On_标题栏状态_加工状态(qfNet._cfg_标题栏状态_[] cfg, _激光加工状态_ state)
+        {
+            Event_标题栏状态_加工状态?.Invoke(cfg, state);
+        }
+
+
+        bool is第一次初始化 = true;
+        async Task On_初始化状态(_初始化状态_ state)
+        {
+            this._初始化状态 = state;
+            On_标题栏状态_初始化状态(_标题栏标题_初始化状态, state);
+
+            Event_初始化状态?.Invoke(state);
+
+            await Task.Run(() =>
+               {
+                   switch (state)
+                   {
+                       case _初始化状态_.已初始化:
+                           //On_Log(true, Get语言("已初始化"));
+
+                           if ((is第一次初始化 && this._参数.进入时加载激光模板) || !is第一次初始化)
+                           { 
+                               this.LoadEzdFile(this._Path_ezd_最后一次);
+                           }
+                           is第一次初始化 = false;
+
+                           break;
+                       case _初始化状态_.初始化中:
+                           //On_Log(true, Get语言("初始化中"));
+                           break;
+                       case _初始化状态_.未初始化:
+                           //  On_Log(false, Get语言("未初始化"));
+                           break;
+                   }
+               });
+             
+        }
+
+
+        #endregion
+
+        #region 封装
+
+        void 线程()
+        {
+
+            while (this._isRun)
+            {
+                Thread.Sleep(this._参数.线程周期);
+                if (!this._isRun)
+                {
+                    break;
+                }
+
+                if (this._初始化状态 != _初始化状态_.已初始化)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    获取_输入状态(out int inputPort);
+                    获取_输出状态(out this._OUTstatus);
+                    IO状态转换(inputPort, this._OUTstatus, out bool[] IN, out bool[] OUT);
+                    On_IO_IN(IN);
+                    On_IO_OUT(OUT);
+
+                    On_IO_IN(IN);
+                    On_IO_OUT(OUT);
+
+                }
+                catch (Exception ex)
+                {
+                    On_Log(false, $"jczRun,Err,{ex.Message}");
+                }
+
+            }
+        }
+
+        #endregion
+
     }
 }

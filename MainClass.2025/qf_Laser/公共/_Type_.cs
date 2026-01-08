@@ -8,6 +8,10 @@ namespace qf_Laser
 {
     public enum _em_打标卡类型_
     {
+        /// <summary>
+        /// 不使能,无
+        /// </summary>
+        None,
         Ezd2,
         Ezd3,
     }
@@ -76,19 +80,19 @@ namespace qf_Laser
 
     public class _激光IO_IN_
     {
-        public short 启动标刻 { set; get; } = 16;
-        public short 停止 { set; get; } = 16;
-        public short 复位 { set; get; } = 16;
+        public ushort 启动标刻 { set; get; } = 16;
+        public ushort 停止 { set; get; } = 16;
+        public ushort 复位 { set; get; } = 16;
 
     }
 
     public class _激光IO_OUT_
     {
-        public short 软件准备好 { set; get; } = 16;
-        public short 红光 { set; get; } = 16;
-        public short 标刻中 { set; get; } = 16;
-        public short 标刻完成 { set; get; } = 16;
-        public short 报警 { set; get; } = 16;
+        public ushort 软件准备好 { set; get; } = 16;
+        public ushort 红光 { set; get; } = 16;
+        public ushort 标刻中 { set; get; } = 16;
+        public ushort 标刻完成 { set; get; } = 16;
+        public ushort 报警 { set; get; } = 16;
         /// <summary>
         /// ms
         /// </summary>

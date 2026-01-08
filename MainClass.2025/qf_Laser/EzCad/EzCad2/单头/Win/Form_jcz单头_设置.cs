@@ -98,15 +98,15 @@ namespace qf_Laser
         {
             if (this._markEzd != null)
             {
-                this._markEzd._参数.IN.启动标刻 = (short)this.uiComboBox_IN_启动标刻.SelectedIndex;
-                this._markEzd._参数.IN.复位 = (short)this.uiComboBox_IN_复位.SelectedIndex;
-                this._markEzd._参数.IN.停止 = (short)this.uiComboBox_IN_停止.SelectedIndex;
+                this._markEzd._参数.IN.启动标刻 = (ushort)this.uiComboBox_IN_启动标刻.SelectedIndex;
+                this._markEzd._参数.IN.复位 = (ushort)this.uiComboBox_IN_复位.SelectedIndex;
+                this._markEzd._参数.IN.停止 = (ushort)this.uiComboBox_IN_停止.SelectedIndex;
 
-                this._markEzd._参数.OUT.软件准备好 = (short)this.uiComboBox_OUT_ready.SelectedIndex;
-                this._markEzd._参数.OUT.报警 = (short)this.uiComboBox_OUT_报警.SelectedIndex;
-                this._markEzd._参数.OUT.标刻中 = (short)this.uiComboBox_OUT_标刻中.SelectedIndex;
-                this._markEzd._参数.OUT.标刻完成 = (short)this.uiComboBox_OUT_标刻完成.SelectedIndex;
-                this._markEzd._参数.OUT.红光 = (short)this.uiComboBox_OUT_红光.SelectedIndex;
+                this._markEzd._参数.OUT.软件准备好 = (ushort)this.uiComboBox_OUT_ready.SelectedIndex;
+                this._markEzd._参数.OUT.报警 = (ushort)this.uiComboBox_OUT_报警.SelectedIndex;
+                this._markEzd._参数.OUT.标刻中 = (ushort)this.uiComboBox_OUT_标刻中.SelectedIndex;
+                this._markEzd._参数.OUT.标刻完成 = (ushort)this.uiComboBox_OUT_标刻完成.SelectedIndex;
+                this._markEzd._参数.OUT.红光 = (ushort)this.uiComboBox_OUT_红光.SelectedIndex;
 
                 this._markEzd._参数.OUT.输出脉宽 = this.uiTextBox_OUT_输出脉宽.IntValue;
 
@@ -125,15 +125,15 @@ namespace qf_Laser
             else if (this._multilineMarkEzd != null)
             {
 
-                this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.IN.启动标刻 = (short)this.uiComboBox_IN_启动标刻.SelectedIndex;
-                this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.IN.复位 = (short)this.uiComboBox_IN_复位.SelectedIndex;
-                this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.IN.停止 = (short)this.uiComboBox_IN_停止.SelectedIndex;
+                this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.IN.启动标刻 = (ushort)this.uiComboBox_IN_启动标刻.SelectedIndex;
+                this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.IN.复位 = (ushort)this.uiComboBox_IN_复位.SelectedIndex;
+                this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.IN.停止 = (ushort)this.uiComboBox_IN_停止.SelectedIndex;
 
-                this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.OUT.软件准备好 = (short)this.uiComboBox_OUT_ready.SelectedIndex;
-                this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.OUT.报警 = (short)this.uiComboBox_OUT_报警.SelectedIndex;
-                this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.OUT.标刻中 = (short)this.uiComboBox_OUT_标刻中.SelectedIndex;
-                this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.OUT.标刻完成 = (short)this.uiComboBox_OUT_标刻完成.SelectedIndex;
-                this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.OUT.红光 = (short)this.uiComboBox_OUT_红光.SelectedIndex;
+                this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.OUT.软件准备好 = (ushort)this.uiComboBox_OUT_ready.SelectedIndex;
+                this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.OUT.报警 = (ushort)this.uiComboBox_OUT_报警.SelectedIndex;
+                this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.OUT.标刻中 = (ushort)this.uiComboBox_OUT_标刻中.SelectedIndex;
+                this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.OUT.标刻完成 = (ushort)this.uiComboBox_OUT_标刻完成.SelectedIndex;
+                this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.OUT.红光 = (ushort)this.uiComboBox_OUT_红光.SelectedIndex;
 
                 this._multilineMarkEzd._lst_参数[this._CardIndex]._参数.OUT.输出脉宽 = this.uiTextBox_OUT_输出脉宽.IntValue;
 

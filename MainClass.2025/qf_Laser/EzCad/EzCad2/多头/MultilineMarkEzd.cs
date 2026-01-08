@@ -360,7 +360,7 @@ namespace qf_Laser
             _初始化状态_ rt = _初始化状态_.未初始化;
             _Err_jczMarkEzd2_ nErr = _Err_jczMarkEzd2_.未初始化;
             初始化数据();
-            if (new MarkEzd_().EzCad2软件是否打开())
+            if (EzCad2软件是否打开())
             {
                 On_Log(false, $"{Get语言("发现EzCad进程")}");
                 On_初始化状态(_初始化状态_.未初始化);
