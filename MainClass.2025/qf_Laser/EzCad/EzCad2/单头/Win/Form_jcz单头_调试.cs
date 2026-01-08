@@ -532,7 +532,7 @@ namespace qf_Laser
         {
             if (this._markEzd != null)
             {
-                var t0 = await this._markEzd.调试_红光指示();
+                var t0 = await this._markEzd.调试_红光();
             }
             else if (this._multilineMarkEzd != null)
             {

@@ -302,8 +302,7 @@ namespace qf_Laser
         public (bool s, string m) 红光指示()
         {
             _激光_红光指示_ red = this._参数.红光指示轮廓 ? _激光_红光指示_.轮郭 : _激光_红光指示_.外框;
-            bool rt = this.加工_红光指示(red, out string msgErr);
-            return (rt, msgErr);
+           return  this.加工_红光指示(red ); 
         }
 
         public (bool s, string m) 停止()
@@ -1317,13 +1316,14 @@ namespace qf_Laser
         /// <param name="status">轮廓或外框</param>
         /// <param name="msgErr"></param>
         /// <returns></returns>
-        internal bool 加工_红光指示(_激光_红光指示_ status, out string msgErr)
+        internal (bool s, string m) 加工_红光指示(_激光_红光指示_ status)
         {
-            if (!Err_未初始化(out msgErr) || !Err_加载激光模板中(out msgErr) ||
-                !Err_出激光标刻中(out msgErr) || !Err_红光指示中(out msgErr) ||
-                !Err_无可加工数据(out msgErr))
+            string msgErr = string.Empty;
+            if (!Err_未初始化(out msgErr, false) || !Err_加载激光模板中(out msgErr, false) ||
+                !Err_出激光标刻中(out msgErr, false) || !Err_红光指示中(out msgErr, false) ||
+                !Err_无可加工数据(out msgErr, false))
             {
-                return false;
+                return (false, msgErr);
             }
 
 
@@ -1352,12 +1352,12 @@ namespace qf_Laser
             输出(this._参数.OUT.红光, false);
             On_加工状态(_激光加工状态_.闲置);
 
-            return true;
+            return (true, msgErr);
         }
-        internal bool 加工_红光指示(out string msgErr)
+        internal (bool s, string m) 加工_红光指示()
         {
             _激光_红光指示_ status = this._参数.红光指示轮廓 ? _激光_红光指示_.轮郭 : _激光_红光指示_.外框;
-            return this.加工_红光指示(status, out msgErr);
+            return this.加工_红光指示(status);
         }
         internal bool 加工_连续标刻(out string msgErr, bool 是否飞行 = false)
         {
@@ -1390,26 +1390,16 @@ namespace qf_Laser
             return rt;
         }
 
-        internal async Task<bool> 调试_红光指示()
+        internal async Task<(bool s, string m)> 调试_红光()
         {
-            if (!this.Err_红光指示中(out string msgErr, false) || !this.Err_出激光标刻中(out msgErr, false)
-              || !this.Err_加载激光模板中(out msgErr, false)
-              || !this.Err_加载激光模板中(out msgErr, false) || !this.Err_无可加工数据(out msgErr, false))
+            (bool s, string m) rt = (true, "");
+            await Task.Run(() => { rt = 加工_红光指示(); });
+            if (!rt.s )
             {
-                MessageBox.Show(msgErr, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            bool rt = true;
-            Task t0 = Task.Run(() =>
-            {
-                _激光_红光指示_ red = this._参数.红光指示轮廓 ? _激光_红光指示_.轮郭 : _激光_红光指示_.外框;
-                rt = this.加工_红光指示(red, out msgErr);
-            });
-            await t0;
             return rt;
         }
-
-
         internal async Task<bool> 调试_标刻()
         {
             if (!this.Err_红光指示中(out string msgErr, false) || !this.Err_出激光标刻中(out msgErr, false)
