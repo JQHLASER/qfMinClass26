@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Deployment.Internal;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -302,7 +303,7 @@ namespace qf_Laser
         public (bool s, string m) 红光指示(bool is日志)
         {
             _激光_红光指示_ red = this._参数.红光指示轮廓 ? _激光_红光指示_.轮郭 : _激光_红光指示_.外框;
-           return  this.加工_红光指示(red , is日志); 
+            return this.加工_红光指示(red, is日志);
         }
 
         public (bool s, string m) 停止()
@@ -1316,7 +1317,7 @@ namespace qf_Laser
         /// <param name="status">轮廓或外框</param>
         /// <param name="msgErr"></param>
         /// <returns></returns>
-        internal (bool s, string m) 加工_红光指示(_激光_红光指示_ status,bool is日志=false )
+        internal (bool s, string m) 加工_红光指示(_激光_红光指示_ status, bool is日志 = false)
         {
             string msgErr = string.Empty;
             if (!Err_未初始化(out msgErr, is日志) || !Err_加载激光模板中(out msgErr, is日志) ||
@@ -1394,7 +1395,7 @@ namespace qf_Laser
         {
             (bool s, string m) rt = (true, "");
             await Task.Run(() => { rt = 加工_红光指示(); });
-            if (!rt.s )
+            if (!rt.s)
             {
                 MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -1543,10 +1544,20 @@ namespace qf_Laser
         /// DLL路径
         /// </summary>
         string path_MarkEzd = Environment.CurrentDirectory + "\\Ezd2\\Miks.dll";
+        string file_Ezd2 = Environment.CurrentDirectory + "\\Ezd2";
         public bool Err_dll是否存在(out string msgErr, bool 是否日志 = true)
         {
             msgErr = string.Empty;
-            if (!new 文件_文件夹().文件_是否存在(path_MarkEzd))
+            if (!new qfmain.文件_文件夹().文件夹_是否存在(file_Ezd2, out msgErr))
+            {
+                msgErr = $"Not Ezd2";
+                if (是否日志)
+                {
+                    On_Log(false, msgErr);
+                }
+                return false;
+            }
+            else if (!new 文件_文件夹().文件_是否存在(path_MarkEzd))
             {
                 msgErr = qfmain.Language_.Get语言("DL故障");
                 if (是否日志)

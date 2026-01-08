@@ -14,6 +14,14 @@ namespace qfPLC
     /// </summary>
     public interface IWorker
     {
+        /// <summary>
+        /// 存放连接参数的路径
+        /// </summary>
+        string _path { set; get; }
+        qfmain._连接状态_ _连接状态 { set; get; }
+
+
+
         qfmain._连接状态_ Get连接状态();
 
         (bool rt, string msgErr) 连接(bool 是否先读参数 = true);
@@ -41,7 +49,7 @@ namespace qfPLC
         /// <summary>
         /// X
         /// </summary> 
-        (bool rt, string msgErr, bool  value) ReadDiscrete_离散线圈(string address);
+        (bool rt, string msgErr, bool value) ReadDiscrete_离散线圈(string address);
 
         /// <summary>
         /// X

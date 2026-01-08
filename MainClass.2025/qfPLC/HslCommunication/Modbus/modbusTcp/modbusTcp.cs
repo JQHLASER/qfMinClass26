@@ -34,8 +34,8 @@ namespace qfPLC
         /// <summary>
         /// 参数保存路径
         /// </summary>
-        private string _path = Environment.CurrentDirectory + "\\ModbusTcp.txt";
-        public qfmain._连接状态_ _连接状态 = qfmain._连接状态_.未连接;
+        public  string _path { set; get; } = Environment.CurrentDirectory + "\\ModbusTcp.txt";
+        public qfmain._连接状态_ _连接状态 { set; get; } = qfmain._连接状态_.未连接;
 
         /// <summary>
         /// plc对象

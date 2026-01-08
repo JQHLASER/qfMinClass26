@@ -45,8 +45,8 @@ namespace qfPLC
         /// <summary>
         /// 参数保存路径
         /// </summary>
-        private string _path = Environment.CurrentDirectory + "\\McAscii.txt";
-        public qfmain._连接状态_ _连接状态 = qfmain._连接状态_.未连接;
+        public string _path { set; get; } = Environment.CurrentDirectory + "\\McAscii.txt";
+        public qfmain._连接状态_ _连接状态 { set; get; } = qfmain._连接状态_.未连接;
 
         public _Cfg_ _参数 = new _Cfg_();
 
@@ -377,7 +377,7 @@ namespace qfPLC
         /// <summary>
         /// 无此功能
         /// </summary> 
-        public virtual async Task<(bool rt, string msgErr, bool [] value)> ReadCoilAsync(string address, ushort length)
+        public virtual async Task<(bool rt, string msgErr, bool[] value)> ReadCoilAsync(string address, ushort length)
         {
             return await new ReadPlc().ReadCoilAsync(this._MelsecMcAsciiNet, address, length);
         }

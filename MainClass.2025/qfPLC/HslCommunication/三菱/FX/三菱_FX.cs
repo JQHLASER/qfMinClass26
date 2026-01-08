@@ -37,8 +37,8 @@ namespace qfPLC
         /// <summary>
         /// 参数保存路径
         /// </summary>
-        private string _path = Environment.CurrentDirectory + "\\Fx.txt";
-        public qfmain._连接状态_ _连接状态 = qfmain._连接状态_.未连接;
+        public string _path { set; get; } = Environment.CurrentDirectory + "\\Fx.txt";
+        public qfmain._连接状态_ _连接状态 { set; get; } = qfmain._连接状态_.未连接;
 
         /// <summary>
         /// plc对象
@@ -110,7 +110,7 @@ namespace qfPLC
                     //sp.StopBits = stopBits == 0 ? System.IO.Ports.StopBits.None : (stopBits == 1 ? System.IO.Ports.StopBits.One : System.IO.Ports.StopBits.Two);
                     //sp.Parity = 奇偶校验 == 0 ? System.IO.Ports.Parity.None : (奇偶校验 == 1 ? System.IO.Ports.Parity.Odd : System.IO.Ports.Parity.Even);
                 });
-              
+
 
                 this._MelsecFxSerial.Open();
                 rt = this._MelsecFxSerial.IsOpen();
@@ -133,7 +133,7 @@ namespace qfPLC
             string msgErr = string.Empty;
             try
             {
-                this._MelsecFxSerial.Close();               
+                this._MelsecFxSerial.Close();
                 rt = !this._MelsecFxSerial.IsOpen();
 
             }
@@ -145,12 +145,12 @@ namespace qfPLC
             return (rt, msgErr);
         }
 
-        public virtual DialogResult  窗体设置(string Title, bool 重连)
+        public virtual DialogResult 窗体设置(string Title, bool 重连)
         {
             using (Form_FX forms = new Form_FX(this, Title))
             {
                 DialogResult dlt = forms.ShowDialog();
-                if ( 重连 &&dlt == DialogResult.OK)
+                if (重连 && dlt == DialogResult.OK)
                 {
                     连接(true);
                 }
@@ -162,7 +162,7 @@ namespace qfPLC
 
 
 
-        public virtual (bool rt, string msgErr) Write<T>(string address, T value) 
+        public virtual (bool rt, string msgErr) Write<T>(string address, T value)
         {
             return new WritePlc().Write(this._MelsecFxSerial, address, value);
         }
@@ -177,7 +177,7 @@ namespace qfPLC
         }
 
 
-        public virtual async Task<(bool rt, string msgErr)> WriteAsync<T>(string address, T value)  
+        public virtual async Task<(bool rt, string msgErr)> WriteAsync<T>(string address, T value)
         {
             return await new WritePlc().WriteAsync(this._MelsecFxSerial, address, value);
         }
@@ -230,7 +230,7 @@ namespace qfPLC
         /// <summary>
         /// 无此功能
         /// </summary> 
-        public virtual (bool rt, string msgErr, bool [] value) ReadCoil(string address, ushort length)
+        public virtual (bool rt, string msgErr, bool[] value) ReadCoil(string address, ushort length)
         {
             return new ReadPlc().ReadCoil(this._MelsecFxSerial, address, length);
         }
@@ -247,9 +247,9 @@ namespace qfPLC
         {
             return new ReadPlc().Read(this._MelsecFxSerial, address, length, encoding);
         }
-        public virtual (bool rt, string msgErr, string value) Read(string address, ushort length )
+        public virtual (bool rt, string msgErr, string value) Read(string address, ushort length)
         {
-            return new ReadPlc().Read(this._MelsecFxSerial, address, length );
+            return new ReadPlc().Read(this._MelsecFxSerial, address, length);
         }
 
 
@@ -282,9 +282,9 @@ namespace qfPLC
         {
             return await new ReadPlc().ReadAsync(this._MelsecFxSerial, address, length, encoding);
         }
-        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length )
+        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length)
         {
-            return await new ReadPlc().ReadAsync(this._MelsecFxSerial, address, length );
+            return await new ReadPlc().ReadAsync(this._MelsecFxSerial, address, length);
         }
 
 
