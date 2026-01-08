@@ -70,7 +70,7 @@ namespace qf_Laser
         (bool s, string m) 保存模板(string path, bool Is显示日志);
         void ui_图像控件(UserControl control);
 
-        (bool s, string m) 红光指示();
+        (bool s, string m) 红光指示(bool is日志);
         (bool s, string m) 停止();
         (bool s, string m) 标刻(bool bFlyMark, bool is加工状态 = true);
 

@@ -299,10 +299,10 @@ namespace qf_Laser
             UserColor_图像(control);
         }
 
-        public (bool s, string m) 红光指示()
+        public (bool s, string m) 红光指示(bool is日志)
         {
             _激光_红光指示_ red = this._参数.红光指示轮廓 ? _激光_红光指示_.轮郭 : _激光_红光指示_.外框;
-           return  this.加工_红光指示(red ); 
+           return  this.加工_红光指示(red , is日志); 
         }
 
         public (bool s, string m) 停止()
@@ -1316,12 +1316,12 @@ namespace qf_Laser
         /// <param name="status">轮廓或外框</param>
         /// <param name="msgErr"></param>
         /// <returns></returns>
-        internal (bool s, string m) 加工_红光指示(_激光_红光指示_ status)
+        internal (bool s, string m) 加工_红光指示(_激光_红光指示_ status,bool is日志=false )
         {
             string msgErr = string.Empty;
-            if (!Err_未初始化(out msgErr, false) || !Err_加载激光模板中(out msgErr, false) ||
-                !Err_出激光标刻中(out msgErr, false) || !Err_红光指示中(out msgErr, false) ||
-                !Err_无可加工数据(out msgErr, false))
+            if (!Err_未初始化(out msgErr, is日志) || !Err_加载激光模板中(out msgErr, is日志) ||
+                !Err_出激光标刻中(out msgErr, is日志) || !Err_红光指示中(out msgErr, is日志) ||
+                !Err_无可加工数据(out msgErr, is日志))
             {
                 return (false, msgErr);
             }
