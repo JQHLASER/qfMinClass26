@@ -16,7 +16,7 @@ namespace qf_Laser
     {
         //双缓冲显示窗体所有子控件
         protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }
-       MarkEzd_Ezd2  _markEzd = null;
+        MarkEzd_Ezd2 _markEzd = null;
         MultilineMarkEzd _multilineMarkEzd = null;
         int _Cardindex = -1;
 
@@ -492,11 +492,11 @@ namespace qf_Laser
             }
         }
 
-        async void  On_标刻()
+        async void On_标刻()
         {
             if (this._markEzd != null)
             {
-                var rt = await  Mark();
+                var rt = await this._markEzd.调试_标刻();
             }
             else if (this._multilineMarkEzd != null)
             {
@@ -504,12 +504,7 @@ namespace qf_Laser
             }
         }
 
-        async Task<bool> Mark()
-        {
-            Task t0 = Task.Run(() => { this._markEzd.标刻(false, true); });
-            await t0;
-            return true;
-        }
+
 
         async Task<bool> Mark_MultiLine()
         {
@@ -533,28 +528,16 @@ namespace qf_Laser
         }
 
 
-        async void  On_红光()
+        async void On_红光()
         {
             if (this._markEzd != null)
             {
-                var t0 = await  Red();
+                var t0 = await this._markEzd.调试_红光指示();
             }
             else if (this._multilineMarkEzd != null)
             {
-                var t1 = await  Red_multiline();
+                var t1 = await Red_multiline();
             }
-        }
-
-        async Task<bool> Red()
-        {
-            bool rt = true;
-            Task t0 = Task.Run(() =>
-            {
-                 _激光_红光指示_ red = this._markEzd._参数.红光指示轮廓 ? _激光_红光指示_.轮郭 : _激光_红光指示_.外框;
-                rt = this._markEzd.加工_红光指示(red, out string msgErr);
-            });
-            await t0;
-            return rt;
         }
 
         async Task<bool> Red_multiline()
@@ -562,7 +545,7 @@ namespace qf_Laser
             bool rt = true;
             Task t0 = Task.Run(() =>
             {
-                rt = this._multilineMarkEzd.连续_红光指示(this._Cardindex, out string msgErr,true);
+                rt = this._multilineMarkEzd.连续_红光指示(this._Cardindex, out string msgErr, true);
                 if (!rt)
                 {
                     this._multilineMarkEzd.On_Log_指定卡(this._Cardindex, rt, msgErr);

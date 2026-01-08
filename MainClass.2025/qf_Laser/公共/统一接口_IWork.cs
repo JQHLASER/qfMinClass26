@@ -14,13 +14,38 @@ namespace qf_Laser
     /// </summary>
     public interface IWork_LaserMark
     {
+        _激光参数_ _参数 { set; get; }
+        /// <summary>
+        /// 激光模板路径
+        /// </summary>
+        string _Path_激光模板 { set; get; }
+        /// <summary>
+        /// 最后一次加载的激光模板路径
+        /// </summary>
+        string _Path_激光模板_最后一次 { set; get; }
+        string _激光编辑软件名称 { set; get; }
+        string _激光模板后缀 { set; get; }
+        _激光加工状态_ _激光加工状态 { set; get; }
+        _初始化状态_ _初始化状态 { set; get; }
+
+
+        /// <summary>
+        /// 最小端口
+        /// </summary>
+        ushort _minPort { set; get; }
+        /// <summary>
+        /// 最大端口
+        /// </summary>
+        ushort _maxPort { set; get; }
+
+
+
         string 功能说明();
-        string 获取模板后缀名();
-        string 获取激光编辑软件名称();
-        (ushort minPort, ushort maxPort) 获取最大最小端口号();
+
+
         bool 端口是否有效(ushort Port);
 
-        _激光加工状态_ 获取加工状态();
+
 
 
         Task 打开激光编辑软件();
@@ -33,7 +58,7 @@ namespace qf_Laser
         void 释放();
 
         (bool s, string m) 激光参数();
-         
+
         (bool s, string m) 初始化打标卡();
         (bool s, string m) 释放打标卡();
 
@@ -55,7 +80,7 @@ namespace qf_Laser
         void 输出_报警(bool NF);
         void 输出_报警();
         void 输出_标刻完成();
-        _激光参数_  读参数();
+        _激光参数_ 读参数();
 
 
         void 刷新图形(_激光_获取图像_ state = _激光_获取图像_.获取);
@@ -69,12 +94,12 @@ namespace qf_Laser
 
         (bool s, string m) 设置绝对坐标(double x, double y, double xCenter, double yCenter, double a);
 
-       
+
         _变量信息_[] 获取所有变量对象信息();
 
 
 
-        bool Err_未初始化(out string msg,bool 是否日志 = true);
+        bool Err_未初始化(out string msg, bool 是否日志 = true);
         bool Err_初始化中(out string msg, bool 是否日志 = true);
         bool Err_加载激光模板中(out string msg, bool 是否日志 = true);
         bool Err_出激光标刻中(out string msg, bool 是否日志 = true);

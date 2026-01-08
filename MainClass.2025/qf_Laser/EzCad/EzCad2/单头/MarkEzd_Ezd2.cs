@@ -30,23 +30,32 @@ namespace qf_Laser
         public _初始化状态_ _初始化状态 { set; get; } = _初始化状态_.未初始化;
         public _激光加工状态_ _激光加工状态 { set; get; } = _激光加工状态_.闲置;
 
-
         /// <summary>
-        /// 激光模板
+        /// 激光模板全路径
         /// </summary>
-        public string _Path_ezd { set; get; } = string.Empty;
-        public string _Path_ezd_最后一次 { set; get; } = string.Empty;
+        public string _Path_激光模板 { set; get; } = string.Empty;
+        public string _激光模板后缀 { set; get; } = ".ezd";
 
         public _激光参数_ _参数 { set; get; } = new _激光参数_();
 
+        public string _激光编辑软件名称 { set; get; } = "EzCad2.exe";
 
+        /// <summary>
+        /// 最小端口
+        /// </summary>
+        public ushort _minPort { set; get; } = 0;
+        /// <summary>
+        /// 最大端口
+        /// </summary>
+        public ushort _maxPort { set; get; } = 15;
+
+        public string _Path_激光模板_最后一次 { set; get; } = string.Empty;
         bool _isRun = true;
         bool _is连续加工 = false;
-        /// <summary>
-        /// 最大最小端口
-        /// </summary>
-        ushort _minPort = 0, _maxPort = 15;
+
+
         #endregion
+
 
 
         #region 对外接口
@@ -65,27 +74,16 @@ namespace qf_Laser
             return sb.ToString();
         }
 
-        public string 获取激光编辑软件名称()
-        {
-            return "EzCad2";
-        }
 
-        public (ushort minPort, ushort maxPort) 获取最大最小端口号()
-        {
-            return (_minPort, _maxPort);
-        }
+
 
         public bool 端口是否有效(ushort Port)
         {
             return this.Err_端口是否有效(Port);
         }
 
-        public _激光加工状态_ 获取加工状态()
-        {
-            return _激光加工状态;
-        }
 
-         
+
 
         bool _Inistiall = false;
         public void 初始化(bool 使能线程)
@@ -178,7 +176,7 @@ namespace qf_Laser
                 On_Log(false, msgErr);
             }
             int nErr = JczLmc.Close();
-            this._Path_ezd = string.Empty;
+            this._Path_激光模板 = string.Empty;
             bool rt = nErr == (int)_Err_jczMarkEzd2_.成功 ? true : false;
             return (rt, msgErr);
         }
@@ -213,7 +211,7 @@ namespace qf_Laser
              {
                  try
                  {
-                     string ezdPath_ = this._Path_ezd_最后一次;
+                     string ezdPath_ = this._Path_激光模板_最后一次;
                      EzCad2打开状态 = _EzCad2打开状态_.已处理;
                      if (this._初始化状态 == _初始化状态_.已初始化)
                      {
@@ -415,10 +413,6 @@ namespace qf_Laser
             return (rt, msgErr);
         }
 
-        public string 获取模板后缀名()
-        {
-            return ".ezd";
-        }
         public _变量信息_[] 获取所有变量对象信息()
         {
             List<_变量信息_> lst = new List<_变量信息_>();
@@ -637,15 +631,15 @@ namespace qf_Laser
         void 读写_最后一次ezdpath(ushort model)
         {
             string path = Environment.CurrentDirectory + "\\jczdf.crc";
-            string pathEzd = this._Path_ezd_最后一次;
+            string pathEzd = this._Path_激光模板_最后一次;
             new qfmain.文件_文件夹().WriteReadIni(path, model, ref pathEzd, out string msgErr);
             if (!string.IsNullOrEmpty(pathEzd) && new qfmain.文件_文件夹().文件_是否存在(path))
             {
-                this._Path_ezd_最后一次 = pathEzd;
+                this._Path_激光模板_最后一次 = pathEzd;
             }
             else
             {
-                this._Path_ezd_最后一次 = string.Empty;
+                this._Path_激光模板_最后一次 = string.Empty;
             }
         }
 
@@ -709,8 +703,8 @@ namespace qf_Laser
                 nErr = JczLmc.LoadEzdFile(pathEzd);
                 if (nErr == 0)
                 {
-                    this._Path_ezd = pathEzd;
-                    this._Path_ezd_最后一次 = this._Path_ezd;
+                    this._Path_激光模板 = pathEzd;
+                    this._Path_激光模板_最后一次 = this._Path_激光模板;
                     读写_最后一次ezdpath(0);
                     if (是否刷新图像)
                     {
@@ -1396,6 +1390,46 @@ namespace qf_Laser
             return rt;
         }
 
+        internal async Task<bool> 调试_红光指示()
+        {
+            if (!this.Err_红光指示中(out string msgErr, false) || !this.Err_出激光标刻中(out msgErr, false)
+              || !this.Err_加载激光模板中(out msgErr, false)
+              || !this.Err_加载激光模板中(out msgErr, false) || !this.Err_无可加工数据(out msgErr, false))
+            {
+                MessageBox.Show(msgErr, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            bool rt = true;
+            Task t0 = Task.Run(() =>
+            {
+                _激光_红光指示_ red = this._参数.红光指示轮廓 ? _激光_红光指示_.轮郭 : _激光_红光指示_.外框;
+                rt = this.加工_红光指示(red, out msgErr);
+            });
+            await t0;
+            return rt;
+        }
+
+
+        internal async Task<bool> 调试_标刻()
+        {
+            if (!this.Err_红光指示中(out string msgErr, false) || !this.Err_出激光标刻中(out msgErr, false)
+                || !this.Err_加载激光模板中(out msgErr, false)
+                || !this.Err_加载激光模板中(out msgErr, false) || !this.Err_无可加工数据(out msgErr, false))
+            {
+                MessageBox.Show(msgErr, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            Task t0 = Task.Run(() =>
+            {
+                this.On_加工状态(_激光加工状态_.出激光标刻中);
+                this.标刻(false, true);
+                this.On_加工状态(_激光加工状态_.闲置);
+            });
+            await t0;
+            return true;
+        }
+
 
         #endregion
 
@@ -1492,7 +1526,7 @@ namespace qf_Laser
         public bool Err_未加载激光模板(out string msgErr, bool 是否日志 = true)
         {
             msgErr = "";
-            if (string.IsNullOrEmpty(this._Path_ezd))
+            if (string.IsNullOrEmpty(this._Path_激光模板))
             {
                 msgErr = qfmain.Language_.Get语言("未加载激光模板");
                 {
@@ -1615,7 +1649,7 @@ namespace qf_Laser
         {
             Event_IO_OUT?.Invoke(state);
         }
-        void On_加工状态(_激光加工状态_ state)
+        internal void On_加工状态(_激光加工状态_ state)
         {
             On_标题栏状态_加工状态(_标题栏标题_加工状态, state);
             Event_加工状态?.Invoke(state);
@@ -1634,6 +1668,7 @@ namespace qf_Laser
         }
         void On_标题栏状态_加工状态(qfNet._cfg_标题栏状态_[] cfg, _激光加工状态_ state)
         {
+            this._激光加工状态 = state;
             Event_标题栏状态_加工状态?.Invoke(cfg, state);
         }
 
@@ -1654,8 +1689,8 @@ namespace qf_Laser
                            //On_Log(true, Get语言("已初始化"));
 
                            if ((is第一次初始化 && this._参数.进入时加载激光模板) || !is第一次初始化)
-                           { 
-                               this.LoadEzdFile(this._Path_ezd_最后一次);
+                           {
+                               this.LoadEzdFile(this._Path_激光模板_最后一次);
                            }
                            is第一次初始化 = false;
 
@@ -1668,7 +1703,7 @@ namespace qf_Laser
                            break;
                    }
                });
-             
+
         }
 
 
