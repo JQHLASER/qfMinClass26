@@ -26,6 +26,16 @@ namespace qf_Laser
     {
         #region 变量
 
+
+        /// <summary>
+        /// 输入端口
+        /// </summary>
+        public bool[] _IO_InPut { set; get; } = new bool[0];
+        /// <summary>
+        /// 输出端口
+        /// </summary>
+        public bool[] _IO_OutPut { set; get; } = new bool[0];
+
         /// <summary>
         /// 打标卡初始化状态
         /// </summary>
@@ -790,7 +800,7 @@ namespace qf_Laser
         {
             lock (_lock)
             {
-               
+
                 IntPtr ptr = JczLmc.获取图象2(width, height);
                 Bitmap bmp = null;
 
@@ -804,9 +814,9 @@ namespace qf_Laser
                     DeleteObject(ptr);
                 }
 
-                
 
-                return bmp; 
+
+                return bmp;
             }
         }
 
@@ -1744,12 +1754,11 @@ namespace qf_Laser
                     获取_输入状态(out int inputPort);
                     获取_输出状态(out this._OUTstatus);
                     IO状态转换(inputPort, this._OUTstatus, out bool[] IN, out bool[] OUT);
+
+                    _IO_InPut = IN;
+                    _IO_OutPut = OUT;
                     On_IO_IN(IN);
                     On_IO_OUT(OUT);
-
-                    On_IO_IN(IN);
-                    On_IO_OUT(OUT);
-
                 }
                 catch (Exception ex)
                 {

@@ -28,6 +28,15 @@ namespace qf_Laser
         _激光加工状态_ _激光加工状态 { set; get; }
         _初始化状态_ _初始化状态 { set; get; }
 
+        /// <summary>
+        /// 输入端口
+        /// </summary>
+        bool[] _IO_InPut { set; get; }
+        /// <summary>
+        /// 输出端口
+        /// </summary>
+        bool[] _IO_OutPut { set; get; }
+
 
         /// <summary>
         /// 最小端口
