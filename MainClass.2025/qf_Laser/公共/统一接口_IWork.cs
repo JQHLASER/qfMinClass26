@@ -83,6 +83,8 @@ namespace qf_Laser
         (bool s, string m) 停止();
         (bool s, string m) 标刻(bool bFlyMark, bool is加工状态 = true);
 
+        void 输出脉冲式(ushort port);
+        (bool s, string m) 输出(ushort port,bool NF);
         void 输出_标刻中(bool NF);
         void 输出_红光(bool NF);
         void 输出_Ready(bool NF);
@@ -90,7 +92,7 @@ namespace qf_Laser
         void 输出_报警();
         void 输出_标刻完成();
         _激光参数_ 读参数();
-        
+
 
         void 刷新图形(_激光_获取图像_ state = _激光_获取图像_.获取);
         (bool s, string m, Bitmap v) 获取图形(int width, int height);

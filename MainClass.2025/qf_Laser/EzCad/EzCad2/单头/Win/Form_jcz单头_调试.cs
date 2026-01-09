@@ -143,7 +143,7 @@ namespace qf_Laser
         /// <summary>
         /// 输出
         /// </summary>
-        void Out(short port)
+        void Out(ushort port)
         {
             if (port >= StateOut.Length)
             {

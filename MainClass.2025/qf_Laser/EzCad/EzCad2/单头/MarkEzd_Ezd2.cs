@@ -330,6 +330,33 @@ namespace qf_Laser
             return (rt, msgErr);
         }
 
+        public (bool s, string m) 输出(ushort port, bool state)
+        {
+            if (this._初始化状态 != _初始化状态_.已初始化 ||
+              !Err_端口是否有效(port))
+            {
+                return(false,"");
+            }
+
+            _Err_jczMarkEzd2_ nerr = this.输出IO(port, state);
+            bool rt = this.ErrToMsg((int)nerr, out string msgErr);
+            return (rt, msgErr);
+        }
+         
+        public void 输出脉冲式(ushort port)
+        {
+            if (this._初始化状态 != _初始化状态_.已初始化 ||
+                !Err_端口是否有效(port))
+            {
+                return;
+            }
+
+            输出IO(port, true);
+            Thread.Sleep(this._参数.OUT.输出脉宽);
+            输出IO(port, false);
+
+        }
+
         public void 输出_标刻中(bool NF)
         {
             this.输出(this._参数.OUT.标刻中, NF);
@@ -348,11 +375,11 @@ namespace qf_Laser
         }
         public void 输出_报警()
         {
-            this.输出(this._参数.OUT.报警);
+            this.输出脉冲式(this._参数.OUT.报警);
         }
         public void 输出_标刻完成()
         {
-            this.输出(this._参数.OUT.标刻完成);
+            this.输出脉冲式(this._参数.OUT.标刻完成);
         }
         public _激光参数_ 读参数()
         {
@@ -1291,7 +1318,7 @@ namespace qf_Laser
         /// <param name="port"></param>
         /// <param name="state"></param>
         /// <returns></returns>
-        internal _Err_jczMarkEzd2_ 输出(int port, bool state)
+        internal _Err_jczMarkEzd2_ 输出IO(int port, bool state)
         {
             if (this._初始化状态 != _初始化状态_.已初始化)
             {
@@ -1306,24 +1333,6 @@ namespace qf_Laser
         }
 
 
-        /// <summary>
-        /// 脉冲输出口状态
-        /// </summary>
-        /// <param name="port"></param>
-        internal void 输出(int port)
-        {
-            if (this._初始化状态 != _初始化状态_.已初始化 ||
-                !Err_端口是否有效(port))
-            {
-                return;
-            }
-
-
-            输出(port, true);
-            Thread.Sleep(this._参数.OUT.输出脉宽);
-            输出(port, false);
-
-        }
 
 
         #endregion
