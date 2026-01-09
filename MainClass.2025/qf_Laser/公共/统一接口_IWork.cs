@@ -37,6 +37,16 @@ namespace qf_Laser
         /// </summary>
         bool[] _IO_OutPut { set; get; }
 
+        /// <summary>
+        /// 输入端口
+        /// </summary>
+        byte _IO_InPutByte { set; get; }
+        /// <summary>
+        /// 输出端口
+        /// </summary>
+        byte _IO_OutPutByte { set; get; }
+
+
 
         /// <summary>
         /// 最小端口

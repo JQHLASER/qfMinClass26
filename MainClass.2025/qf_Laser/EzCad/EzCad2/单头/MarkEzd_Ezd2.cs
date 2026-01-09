@@ -30,6 +30,16 @@ namespace qf_Laser
         /// <summary>
         /// 输入端口
         /// </summary>
+        public byte  _IO_InPutByte { set; get; } = 0;
+        /// <summary>
+        /// 输出端口
+        /// </summary>
+        public byte _IO_OutPutByte { set; get; } =0;
+
+
+        /// <summary>
+        /// 输入端口
+        /// </summary>
         public bool[] _IO_InPut { set; get; } = new bool[0];
         /// <summary>
         /// 输出端口
