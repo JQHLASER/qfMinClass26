@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -68,10 +69,13 @@ namespace qfNet
 
 
 
-            System.Windows.Forms.Timer _timer = new Timer();
+            System.Windows.Forms.Timer _timer = new System.Windows.Forms.Timer();
             _timer.Interval = this._UI刷新时间;
-            _timer.Tick +=(s,e)=> Timer_Tick(s,e);
+            _timer.Tick += (s, e) => Timer_Tick(s, e);
             _timer.Start();
+
+
+
         }
 
 
@@ -150,7 +154,7 @@ namespace qfNet
             try
             {
                 int a = e.Index;
-                if (a < 0  ) return;
+                if (a < 0) return;
 
                 Color color_ = Color.Black;
                 Brush mybsh = new SolidBrush(Color.Black);
@@ -228,7 +232,9 @@ namespace qfNet
 
 
         bool _IsDraw = false;
-       
+      
+
+
         /// <summary>
         /// UI刷新线程
         /// </summary>
@@ -239,14 +245,14 @@ namespace qfNet
             List<qfmain.log日志._logValue_> tmp;
             lock (_lock)
             {
-                if (this._Queue_buffer.Count == 0 ||_IsDraw)
+                if (this._Queue_buffer.Count == 0 || _IsDraw)
                 {
                     return;
                 }
                 tmp = new List<qfmain.log日志._logValue_>(this._Queue_buffer);
                 this._Queue_buffer.Clear();
             }
-             
+
             _IsDraw = tmp.Count > 0 ? true : false;
             listBox1.BeginUpdate();
             foreach (var item in tmp)

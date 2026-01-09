@@ -16,8 +16,7 @@ namespace qf_Laser
         //双缓冲显示窗体所有子控件
         //protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }
         MarkEzd_Ezd2 _markEzd;
-
-
+         
         public ui_bitmap_jcz单头(MarkEzd_Ezd2 markEzd_)
         {
             InitializeComponent();
@@ -29,8 +28,7 @@ namespace qf_Laser
 
 
         }
-
-
+         
 
         #region 事件响应
 
