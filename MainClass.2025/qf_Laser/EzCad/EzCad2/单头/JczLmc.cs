@@ -112,20 +112,20 @@ namespace qf_Laser
         /// 初始化函数库
         /// PathName 是Ezd2\\Miks.dll所在的目录
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_Initial", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_Initial", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int Initialize(string PathName, bool bTestMode, int handle);
 
 
         /// <summary>
         /// 释放函数库
         /// </summary>     
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_Close", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_Close", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int Close();
 
         /// <summary>
         /// 得到设备参数配置对话框  
         /// </summary> 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_SetDevCfg", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_SetDevCfg", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int SetDevCfg();
 
         /// <summary>
@@ -134,14 +134,14 @@ namespace qf_Laser
         /// <param name="bAxisShow0"></param>
         /// <param name="bAxisShow1"></param>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_SetDevCfg2", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_SetDevCfg2", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int SetDevCfg2(bool bAxisShow0, bool bAxisShow1);
 
 
         /// <summary>
         /// 载入ezd文件到当前数据库里面,并清除旧的数据库
         /// </summary>   
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_LoadEzdFile", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_LoadEzdFile", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int LoadEzdFile(string FileName);
 
 
@@ -150,7 +150,7 @@ namespace qf_Laser
         /// </summary>  
         [DllImport("gdi32.dll")]
         internal static extern bool DeleteObject(IntPtr hObject);
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetPrevBitmap2", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetPrevBitmap2", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern IntPtr GetCurPrevBitmap(int bmpwidth, int bmpheight);
         internal static  Image GetCurPreviewImage(int bmpwidth, int bmpheight)
         {
@@ -163,13 +163,13 @@ namespace qf_Laser
         /// <summary>
         /// 得到对象总数
         /// </summary> 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetEntityCount", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetEntityCount", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern ushort GetEntityCount();
 
         /// <summary>
         /// 得到指定索引号的对象的名称。
         /// </summary>   
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetEntityName", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetEntityName", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int lmc1_GetEntityNameByIndex(int nEntityIndex, StringBuilder entname);
         internal static string GetEntityNameByIndex(int nEntityIndex)
         {
@@ -183,13 +183,13 @@ namespace qf_Laser
         /// </summary>
         /// <param name="hWndMonitor">数据接收窗体句柄</param>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_InitUsbMonitor2", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_InitUsbMonitor2", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern bool InitUsbMonitor2(IntPtr hWndMonitor);
 
         /// <summary>
         ///  关闭USB设备监控
         /// </summary>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_CloseUsbMonitor", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_CloseUsbMonitor", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern bool CloseUsbMonitor();
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace qf_Laser
         /// </summary>
         /// <param name="bValid">当前设备是否正常</param>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_CheckCurrentUsbDev", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_CheckCurrentUsbDev", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int CheckCurrentUsbDev(ref bool bValid);
 
 
@@ -206,7 +206,7 @@ namespace qf_Laser
         /// </summary>
         /// <param name="CardID"></param>
         /// <returns>返回成功标识有效设备</returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_CheckNewUsbDev", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_CheckNewUsbDev", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int CheckNewUsbDev(int CardID);
 
 
@@ -214,13 +214,13 @@ namespace qf_Laser
         ///  获取新设备
         /// </summary>
         /// <returns>返回设备ID编号</returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_UsbMonitorGetNewDevice", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_UsbMonitorGetNewDevice", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int UsbMonitorGetNewDevice();
 
 
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetFuntionID", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetFuntionID", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 获取ID();
         // else if (LmcDll.GetFuntionID() != 474)
         //{
@@ -239,7 +239,7 @@ namespace qf_Laser
         /// <param name="y旋转中心"></param>
         /// <param name="A"></param>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_SetRotateMoveParam", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_SetRotateMoveParam", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 旋转变换(double x坐标, double y坐标, double x旋转中心, double y旋转中心, double A);
 
 
@@ -249,7 +249,7 @@ namespace qf_Laser
         /// </summary>
         /// <param name="bFlyMark"></param>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_Mark", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_Mark", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int Mark(bool bFlyMark);
 
 
@@ -259,7 +259,7 @@ namespace qf_Laser
         /// <param name="As"></param>
         /// <param name=""></param>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_MarkEntity", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_MarkEntity", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int Mark指定对象(string strEntName);
 
 
@@ -267,110 +267,110 @@ namespace qf_Laser
         /// 判断卡是否正在处于工作状态,返回：bool 值，true 表示标刻工作状态false表示停止状态
         /// </summary>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_IsMarking", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_IsMarking", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern bool 获取卡是否处于工作状态();
 
         /// <summary>
         /// 停止标刻或红光
         /// </summary>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_StopMark", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_StopMark", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int StopMark();
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_RedLightMark", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_RedLightMark", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int Red外框();
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_RedLightMarkContour", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_RedLightMarkContour", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int Red轮廓();
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_RedLightMarkByEnt", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_RedLightMarkByEnt", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int Red指定对象(string 对象名称, bool 是否显示轮廓);
 
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetFlySpeed", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetFlySpeed", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 获取飞行速度(ref double 飞行速度);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_LoadEzdFile", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_LoadEzdFile", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 加载ezd(string ezdPath);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetPrevBitmap", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetPrevBitmap",   CallingConvention = CallingConvention.StdCall)]
         internal static extern IntPtr 获取图象_hwnd(IntPtr 需要显示图像的句柄, int 宽度, int 高度);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetPrevBitmap2", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetPrevBitmap2",   CallingConvention = CallingConvention.StdCall)]
         internal static extern IntPtr 获取图象2(int 宽度, int 高度);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_SaveEntLibToFile", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_SaveEntLibToFile", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 保存ezd(string ezdPath);
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetEntSize", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetEntSize", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 获取指定对象的最大最小坐标(string 对象名称, ref double x小, ref double y小, ref double x大, ref double y大, ref double z);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_MoveEnt", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_MoveEnt", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 指定对象移动相对位置(string 对象名称, double x, double y);
 
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_ScaleEnt", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_ScaleEnt", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 指定对象按比例缩放(string 对象名称, double x中心, double y中心, double x缩放比例, double y缩放比例);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_MirrorEnt", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_MirrorEnt", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 指定对象镜像(string 对象名称, double x中心, double y中心, bool 是否x方向镜像, bool 是否y方向镜象);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_RotateEnt", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_RotateEnt", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 指定对象旋转(string 对象名称, double x中心, double y中心, double A);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetEntityCount", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetEntityCount", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 获取对象总数();
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetEntityName", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetEntityName", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 获取指定序号的对象名称(int 对象索引, StringBuilder Name);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_SetEntityName", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_SetEntityName", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 设置指定索引的对象名称(int 对象索引, string Name);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_ReadPort", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_ReadPort", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int ReadInput(ref int input);
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_WritePort", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_WritePort", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int WriteOutput(int OutPut);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetOutPort", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetOutPort", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int ReadOutput(ref int OutPut);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_LaserOn", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_LaserOn", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 激光输出(bool 是否出光);
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_ChangeTextByName", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_ChangeTextByName", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 修改指定对象的内容(string strName, string strData);
 
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetTextByName", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetTextByName", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 获取指定对象的内容(string strName, StringBuilder strData);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_TextResetSn", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_TextResetSn", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 重置序列号(string strName);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_ClearEntLib", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_ClearEntLib", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 删除所有对象();
 
 
@@ -379,11 +379,11 @@ namespace qf_Laser
         /// </summary>
         /// <param name="是否掉电"></param>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_CheckCurrentUsbDev", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_CheckCurrentUsbDev", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 判断当前设备是否掉电(ref bool 是否掉电);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_Reset", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_Reset", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 扩展轴_使能(bool axis0使能, bool axis1使能);
 
 
@@ -392,28 +392,28 @@ namespace qf_Laser
         /// </summary>
         /// <param name="轴号"></param>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_AxisCorrectOrigin", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_AxisCorrectOrigin", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 扩展轴_回零(int 轴号);
 
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_AxisMoveTo", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_AxisMoveTo", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 扩展轴_移动到指定坐标(int 轴号, double 绝对坐标);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_AxisMoveToPulse", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_AxisMoveToPulse", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 扩展轴_移动到指定脉冲位置(int 轴号, int 脉冲数);
 
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetAxisCoor", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetAxisCoor", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern double 扩展轴_获取当前坐标(int 轴号);
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetAxisCoorPulse", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetAxisCoorPulse", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 扩展轴_获取当前脉冲数坐标(int 轴号);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetPenParam", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetPenParam", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 获取笔参数(int 笔号,
                                                  ref int 加工次数,
                                                  ref double 速度,
@@ -443,7 +443,7 @@ namespace qf_Laser
 
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_SetPenParam", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_SetPenParam", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 设置笔参数(int 笔号,
                                                 int 加工次数,
                                                 double 速度,
@@ -468,7 +468,7 @@ namespace qf_Laser
 
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_SetTextEntParam", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_SetTextEntParam", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 设置指定对象的字体参数(string textName,
                                                              double 字体高度,
                                                              double 字体宽度,
@@ -490,7 +490,7 @@ namespace qf_Laser
         /// <param name="行间距"></param>
         /// <param name="等字符宽度模式"></param>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_SetFontParam", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_SetFontParam", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 设置指定字体的参数(string 字体名称,
                                                           double 字体高度,
                                                           double 字体宽度,
@@ -500,7 +500,7 @@ namespace qf_Laser
                                                           bool 等字符宽度模式
                                                            );
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetTextEntParam", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetTextEntParam", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 获取指定文本的字体参数(string textName,
                                                             StringBuilder 字体名称,
                                                             double 字体高度,
@@ -512,20 +512,20 @@ namespace qf_Laser
                                                               );
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_MarkFlyByStartSignal", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_MarkFlyByStartSignal", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 飞行_标刻所有数据();
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_MarkEntityFly", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_MarkEntityFly", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 飞行_标刻指定的对象(string textName);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_ContinueBufferClear", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_ContinueBufferClear", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 清空板卡缓存();
 
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_ContinueBufferSetTextName", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_ContinueBufferSetTextName", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 飞行_设置加工时需要更改内容的对象名称(string textName1,
                                                                            string textName2,
                                                                            string textName3,
@@ -546,7 +546,7 @@ namespace qf_Laser
         /// <param name="data5"></param>
         /// <param name="data6"></param>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_ContinueBufferFlyAdd", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_ContinueBufferFlyAdd", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 飞行_添回需要加工的数据(string textName1,
                                                                          string data2,
                                                                          string tata3,
@@ -560,7 +560,7 @@ namespace qf_Laser
         /// 启动连续飞行模式，启动后，系统会按输入顺序实现数据更换，硬件飞行信号触发加工_飞行专用
         /// </summary>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_ContinueBufferFlyStart", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_ContinueBufferFlyStart", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 飞行_启动连续飞行();
 
 
@@ -571,7 +571,7 @@ namespace qf_Laser
         /// <param name="累计完成次数"></param>
         /// <param name="缓存区数量"></param>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_ContinueBufferFlyGetParam", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_ContinueBufferFlyGetParam", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 飞行_检查加工完成数量(ref int 累计完成次数, ref int 缓存区数量);
 
 
@@ -579,7 +579,7 @@ namespace qf_Laser
         /// 添加加工结束点。加工到此结束点后，自动退出连续飞行加工模式
         /// </summary>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_ContinueBufferPartFinish", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_ContinueBufferPartFinish", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 飞行_添加加工结束点();
 
 
@@ -609,7 +609,7 @@ namespace qf_Laser
         /// <param name="dHatchRotateAngle"></param>
         /// <param name="bHatchCross"></param>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_SetHatchParam3", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_SetHatchParam3", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int SetHatchParam3(bool bEnableContour,//使能轮廓本身
                                                          int nParamIndex,//填充参数序号值为1,2,3
                                                          int bEnableHatch,//使能填充
@@ -647,7 +647,7 @@ namespace qf_Laser
         /// 注意PtBuf必须为2维数组,且第一维为2,如 double[5,2],double[n,2],
         /// ptNum为PtBuf数组的第2维,如PtBuf为double[5,2]数组,则ptNum=5
         /// </summary> 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_AddCurveToLib", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_AddCurveToLib", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 添加曲线([MarshalAs(UnmanagedType.LPArray)] double[,] 曲线顶点数组, int 顶点数量, string 对象名称, int 笔号, int 是否填充);
 
 
@@ -655,10 +655,10 @@ namespace qf_Laser
         ///<summary>
         /// 删除指定名称对象
         ///<summary>
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_DeleteEnt", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_DeleteEnt", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 删除指定对象(string 对象名称);
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetPenNumberFromEnt", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks.dll", EntryPoint = "lmc1_GetPenNumberFromEnt", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         internal static extern int 获取指定对象笔号(string 对象名称);
 
 

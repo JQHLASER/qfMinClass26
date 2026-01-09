@@ -7,6 +7,7 @@ using System.Deployment.Internal;
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -789,13 +790,23 @@ namespace qf_Laser
         {
             lock (_lock)
             {
-                IntPtr pr = JczLmc.获取图象2(width, height);
-                using (Bitmap img = Bitmap.FromHbitmap(pr))
+               
+                IntPtr ptr = JczLmc.获取图象2(width, height);
+                Bitmap bmp = null;
+
+                try
                 {
-                    DeleteObject(pr);
-                    GC.Collect();
-                    return new Bitmap(img);
+                    bmp = Image.FromHbitmap(ptr);
                 }
+                finally
+                {
+                    // 只要 Image.FromHbitmap 成功，就应该释放原句柄
+                    DeleteObject(ptr);
+                }
+
+                
+
+                return bmp; 
             }
         }
 

@@ -299,11 +299,11 @@ namespace qfWork
         internal static extern int 加载ezd(string ezdPath);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetPrevBitmap", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetPrevBitmap",  CallingConvention = CallingConvention.StdCall)]
         internal static extern IntPtr 获取图象_hwnd(IntPtr 需要显示图像的句柄, int 宽度, int 高度);
 
 
-        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetPrevBitmap2", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miks", EntryPoint = "lmc1_GetPrevBitmap2",   CallingConvention = CallingConvention.StdCall)]
         internal static extern IntPtr 获取图象2(int 宽度, int 高度);
 
 

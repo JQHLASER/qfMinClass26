@@ -498,13 +498,18 @@ namespace qf_Laser
             lock (_lock)
             {
                 int id = 获取卡ID(Cardindex);
-                // IntPtr pBmp = JczLmc_Multiline.GetPrevBitmap2(id, (int)handle, bmpwidth, bmpheight);
                 IntPtr pBmp = JczLmc_Multiline.GetPrevBitmap2(id, 0, bmpwidth, bmpheight);
-                using (Bitmap img = Bitmap.FromHbitmap(pBmp))
+                Bitmap bmp = null;
+                try
                 {
-                    DeleteObject(pBmp);
-                    return new Bitmap(img);
+                    bmp = Image.FromHbitmap(pBmp);
                 }
+                finally
+                {
+                    // 只要 Image.FromHbitmap 成功，就应该释放原句柄
+                    DeleteObject(pBmp);
+                }
+                return bmp;
             }
         }
 

@@ -141,7 +141,7 @@ namespace qfWork
         /// <param name="bmpwidth"></param>
         /// <param name="bmpheight"></param>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miksdle.dll", EntryPoint = "lmc1_GetPrevBitmap2", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miksdle.dll", EntryPoint = "lmc1_GetPrevBitmap2",   CallingConvention = CallingConvention.StdCall)]
         internal static extern IntPtr GetPrevBitmap2(int 卡ID, int nhandle, int bmpwidth, int bmpheight);
 
 
@@ -155,7 +155,7 @@ namespace qfWork
         /// <param name="bmpwidth"></param>
         /// <param name="bmpheight"></param>
         /// <returns></returns>
-        [DllImport("Ezd2\\Miksdle.dll", EntryPoint = "lmc1_GetPrevBitmap", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("Ezd2\\Miksdle.dll", EntryPoint = "lmc1_GetPrevBitmap",  CallingConvention = CallingConvention.StdCall)]
         internal static extern IntPtr GetPrevBitmap(int 卡ID, int bmpwidth, int bmpheight);
 
 
