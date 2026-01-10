@@ -27,6 +27,7 @@ namespace qfmain
             {
                 jm_sys = new 解码(cfg);
                 jm_sys.Event_解码 += On_接收数据_jm;
+                 
             }
         }
 

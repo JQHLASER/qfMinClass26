@@ -128,11 +128,11 @@ namespace qfmain
 
                                     #region 后缀
 
-                                    if (this.lst设置后缀_.IndexOf(s) == -1)
+                                    if (!this.lst设置后缀_.Contains(s))
                                     {
                                         lstHC.Add(s);
                                     }
-                                    else if (this.lst后缀.IndexOf(s) == -1)
+                                    else if (!this.lst后缀.Contains(s))
                                     {
                                         this.lst后缀.Add(s);
                                     }
@@ -154,28 +154,26 @@ namespace qfmain
 
                                     #region 前后缀
 
-                                    //前缀
-                                    if (this.lst后缀.Count == 0 &&
-                                        (this.lst前缀.IndexOf(s) == -1 && this.lst设置前缀_.IndexOf(s) > -1))
+                                    //接收到前缀,清空缓存
+                                    if (this.lst设置前缀_.Contains(s) && !this.lst前缀.Contains(s))
                                     {
                                         lstHC.Clear();
                                         this.lst前缀.Add(s);
                                     }
-                                    //多次收到前缀时
-                                    else if (this.lst前缀.Count > 0 && this.lst前缀.Count == this.lst设置前缀_.Count &&
-                                            (this.lst设置前缀_.IndexOf(s) > -1))
-                                    {
-                                        lstHC.Clear();
-                                        this.lst前缀.Add(s);
-                                    }
+                                    ////多次收到前缀时
+                                    //else if (this.lst前缀.Count > 0 && this.lst前缀.Count == this.lst设置前缀_.Count &&
+                                    //        (this.lst设置前缀_.Contains(s)))
+                                    //{
+                                    //    lstHC.Clear();
+                                    //    this.lst前缀.Add(s);
+                                    //}
                                     //后缀
-                                    else if (this.lst前缀.Count > 0 &&
-                                        (this.lst后缀.IndexOf(s) == -1 && this.lst设置后缀_.IndexOf(s) > -1))
+                                    else if (this.lst设置后缀_.Contains(s)
+                                             && (this.lst前缀.Count > 0 && !this.lst后缀.Contains(s)))
                                     {
                                         this.lst后缀.Add(s);
                                     }
-                                    else if ((this.lst前缀.Count > 0 && lst设置后缀_.Count == 0) &&
-                                              this.lst后缀.Count == 0)
+                                    else 
                                     {
                                         lstHC.Add(s);
                                     }
@@ -316,7 +314,7 @@ namespace qfmain
                 queBytes.Clear();
             }
         }
-         
+
 
         /// <summary>
         /// 超时时间:ms
@@ -352,11 +350,11 @@ namespace qfmain
         {
             Event_解码_Sockets?.Invoke(TcpSocket, data);
         }
- 
+
     }
 
 
     #endregion
 
-     
+
 }
