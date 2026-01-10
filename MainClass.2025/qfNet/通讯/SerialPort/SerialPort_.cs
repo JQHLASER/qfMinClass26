@@ -47,7 +47,17 @@ namespace qfNet
         }
 
 
+        public void 标题栏状态(窗体_标题栏状态 标题栏, string Name, _打开状态_  state)
+        {
+            _cfg_标题栏状态_[] beff = new _cfg_标题栏状态_[]
+            {
+                new _cfg_标题栏状态_(Name, $"{Name}"+Language_.Get语言("已打开"),(int)qfmain._打开状态_ .已打开  ),
+                new _cfg_标题栏状态_(Name, $"{Name}"+Language_.Get语言("打开中"),(int)qfmain._打开状态_.打开中  ),
+                new _cfg_标题栏状态_(Name, $"{Name}"+Language_.Get语言("未打开"),(int)qfmain._打开状态_.未打开  ),
+            };
 
+            标题栏.Add(beff, (int)state);
+        }
 
 
 
