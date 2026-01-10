@@ -31,11 +31,11 @@ namespace qfNet
         }
 
 
-        public DialogResult Win_设置()
+        public DialogResult 窗体设置(string Title)
         {
             DialogResult rt = DialogResult.None;
 
-            using (Form_SerialPort_Set forms = new Form_SerialPort_Set(this))
+            using (Form_SerialPort_Set forms = new Form_SerialPort_Set(this, Title))
             {
                 rt = forms.ShowDialog();
                 if (rt == DialogResult.OK)

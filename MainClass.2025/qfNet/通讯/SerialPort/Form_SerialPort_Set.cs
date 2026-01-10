@@ -21,11 +21,11 @@ namespace qfNet
         private string[] _停止位;
         private string[] _校验位;
 
-        internal Form_SerialPort_Set(qfmain.SerialPort_ SerialPort_)
+        internal Form_SerialPort_Set(qfmain.SerialPort_ SerialPort_,string Title)
         {
             InitializeComponent();
             this._SerialPort = SerialPort_;
-
+            this.Text = Title;
             this._串口名称 = this._SerialPort.Get_串口名称();
             this._波特率 = this._SerialPort.Get_波特率();
             this._数据位 = this._SerialPort.Get_数据位();

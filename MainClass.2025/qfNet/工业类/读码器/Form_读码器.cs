@@ -59,7 +59,7 @@ namespace qfNet
 
         void 串口()
         {
-            using (Form_SerialPort_Set forms = new Form_SerialPort_Set(this._readcode.Com_sys))
+            using (Form_SerialPort_Set forms = new Form_SerialPort_Set(this._readcode.Com_sys, $"{this._readcode._读码器名称}"))
             {
                 DialogResult rt = forms.ShowDialog();
                 if (rt == DialogResult.OK)
