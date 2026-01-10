@@ -22,7 +22,7 @@ namespace qfNet
 
 
         //双缓冲显示窗体所有子控件
-        protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }
+      //  protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }
         private List<_ShowInfo_> _lstShowInfo = new List<_ShowInfo_>();
 
         readonly viewModel_ShowInfo _DataContext = new viewModel_ShowInfo();

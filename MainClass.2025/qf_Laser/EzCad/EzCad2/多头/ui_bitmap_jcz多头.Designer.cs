@@ -175,6 +175,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.uiPanel_Log);
             this.Controls.Add(this.工具栏1);
+            this.DoubleBuffered = true;
             this.Name = "ui_bitmap_jcz多头";
             this.Padding = new System.Windows.Forms.Padding(1);
             this.Size = new System.Drawing.Size(400, 341);

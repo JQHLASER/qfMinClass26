@@ -35,6 +35,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.DoubleBuffered = true;
             this.Name = "ui_bitmap_jcz单头";
             this.Size = new System.Drawing.Size(291, 247);
             this.ResumeLayout(false);

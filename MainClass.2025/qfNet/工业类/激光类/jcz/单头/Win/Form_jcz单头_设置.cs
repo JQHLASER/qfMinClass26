@@ -16,7 +16,7 @@ namespace qfNet
     public partial class Form_jcz单头_设置 : Sunny.UI.UIForm
     {
         //双缓冲显示窗体所有子控件
-        protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }
+      //  protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }
         qfNet.MarkEzd _markEzd = null;
         qfNet.MultilineMarkEzd _multilineMarkEzd = null;
         int _CardIndex = -1;

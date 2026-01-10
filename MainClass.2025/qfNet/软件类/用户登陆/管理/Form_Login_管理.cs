@@ -18,7 +18,7 @@ namespace qfNet
             修改,
         }
 
-        protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }//双缓冲显示窗体所有子控件
+       // protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }//双缓冲显示窗体所有子控件
         internal Login登陆 _Login_sys;
         Form_Login_管理 forms;
         internal List<_loginInfo_> lstInfo = new List<_loginInfo_>();

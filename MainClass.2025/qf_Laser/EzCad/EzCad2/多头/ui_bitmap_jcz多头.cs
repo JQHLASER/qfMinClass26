@@ -33,7 +33,7 @@ namespace qf_Laser
             _ItemHeight = 20,
         };
 
-        public ui_bitmap_jcz多头( MultilineMarkEzd markEzd_, int CardIndex_, string files_存放Ezd文件夹)
+        public ui_bitmap_jcz多头(MultilineMarkEzd markEzd_, int CardIndex_, string files_存放Ezd文件夹)
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
@@ -101,11 +101,10 @@ namespace qf_Laser
         {
             try
             {
-
                 Task t0 = Task.Run(() =>
                 {
                     Bitmap bp = null;
-                    if (state ==  _激光_获取图像_.获取)
+                    if (state == _激光_获取图像_.获取)
                     {
                         try
                         {
@@ -118,13 +117,13 @@ namespace qf_Laser
 
                     }
 
-                    this.Invoke((Action)(() =>
+                    this.BeginInvoke((MethodInvoker)(() =>
                     {
-                        if (this.panel1.BackgroundImage != null)
-                        {
-                            this.panel1.BackgroundImage.Dispose();
-                            this.panel1.BackgroundImage = null;
-                        }
+                        //if (this.panel1.BackgroundImage != null)
+                        //{
+                        //   this.panel1.BackgroundImage.Dispose();
+                        //   this.panel1.BackgroundImage = null;
+                        //}
                         this.panel1.BackgroundImage = bp;
 
                     }));
@@ -170,7 +169,7 @@ namespace qf_Laser
         {
             this._markEzd.参数SetDevCfg(this._CardIndex);
         }
-        void On_加载Ezd(int Cardindex, string ezdPath,  _Err_jczMarkEzd2_ rt)
+        void On_加载Ezd(int Cardindex, string ezdPath, _Err_jczMarkEzd2_ rt)
         {
             if (this._CardIndex != Cardindex)
             {
@@ -184,7 +183,7 @@ namespace qf_Laser
 
             if (rt == _Err_jczMarkEzd2_.成功)
             {
-                this.Add(true, $"{qfmain . Language_.Get语言("加载激光模板")},{JczLmc_Multiline.ErrMsg(rt)}, {this._markEzd._lst_参数[this._CardIndex]._Path_ezd}");
+                this.Add(true, $"{qfmain.Language_.Get语言("加载激光模板")},{JczLmc_Multiline.ErrMsg(rt)}, {this._markEzd._lst_参数[this._CardIndex]._Path_ezd}");
             }
             else
             {
@@ -194,7 +193,7 @@ namespace qf_Laser
 
         }
 
-        void On_加工状态(int Cardindex,  _激光加工状态_ state)
+        void On_加工状态(int Cardindex, _激光加工状态_ state)
         {
             if (this._CardIndex != Cardindex)
             {
@@ -205,11 +204,11 @@ namespace qf_Laser
             {
                 switch (state)
                 {
-                    case  _激光加工状态_.加载激光模板中:
+                    case _激光加工状态_.加载激光模板中:
                         this.toolStripLabel_加工状态.Text = qfmain.Language_.Get语言("加载激光模板中");
                         this.工具栏1.BackColor = Color.Yellow;
                         break;
-                    case  _激光加工状态_.出激光标刻中:
+                    case _激光加工状态_.出激光标刻中:
                         this.toolStripLabel_加工状态.Text = qfmain.Language_.Get语言("出激光标刻中");
                         this.工具栏1.BackColor = Color.Yellow;
                         break;
@@ -217,7 +216,7 @@ namespace qf_Laser
                         this.toolStripLabel_加工状态.Text = qfmain.Language_.Get语言("红光指示中");
                         this.工具栏1.BackColor = Color.Yellow;
                         break;
-                    case  _激光加工状态_.闲置:
+                    case _激光加工状态_.闲置:
                         this.toolStripLabel_加工状态.Text = "";
                         this.工具栏1.BackColor = Color.WhiteSmoke;
                         break;

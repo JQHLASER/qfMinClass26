@@ -5,7 +5,7 @@ namespace qfNet
 {
     public partial class Form_软件注册 : Sunny.UI.UIForm
     {
-        protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }//双缓冲显示窗体所有子控件
+       // protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }//双缓冲显示窗体所有子控件
 
         qfNet.软件注册 软件注册_sys;
         private readonly viewModel_软件注册 _DataContext;

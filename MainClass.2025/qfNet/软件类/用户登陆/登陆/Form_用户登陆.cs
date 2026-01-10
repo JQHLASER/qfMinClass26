@@ -14,7 +14,7 @@ namespace qfNet
 {
     public partial class Form_用户登陆 : Sunny.UI.UIForm
     {
-        protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }//双缓冲显示窗体所有子控件
+       // protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }//双缓冲显示窗体所有子控件
         readonly viewModel_Login _DataContext = new viewModel_Login();
         _LoginShowType_ _LoginShowType = _LoginShowType_.用户登陆;
         System.Windows.Forms.Timer _timer = new System.Windows.Forms.Timer();

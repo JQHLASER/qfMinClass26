@@ -83,7 +83,7 @@ namespace qfNet
         /// <summary>
         ///  每 100ms 刷一次 UI,保证流畅
         /// </summary>
-        public int _UI刷新时间 = 100;
+        public int _UI刷新时间 = 30;
         private readonly Queue<qfmain.log日志._logValue_> _Queue_buffer = new Queue<qfmain.log日志._logValue_>();
         private readonly object _lock = new object();
 

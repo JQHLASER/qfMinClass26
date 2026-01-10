@@ -12,7 +12,7 @@ namespace qfNet
 {
     public partial class Form_查看信息 : Sunny.UI.UIForm
     {
-        protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }//双缓冲显示窗体所有子控件
+      //  protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }//双缓冲显示窗体所有子控件
         private readonly viewModel_查看信息 _DataContext = new viewModel_查看信息();
         public Form_查看信息(string Title_, string Value_, Color ForeColor)
         {

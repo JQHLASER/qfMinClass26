@@ -13,7 +13,7 @@ namespace qfNet
 {
     internal partial class Form_Login_修改or添加 : Sunny.UI.UIForm
     {
-        protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }//双缓冲显示窗体所有子控件
+    //    protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }//双缓冲显示窗体所有子控件
         Form_Login_管理._操作方式_ _操作方式 = Form_Login_管理._操作方式_.添加;
         Form_Login_管理 _form管理;
         _loginInfo_ _当前选中用户信息;

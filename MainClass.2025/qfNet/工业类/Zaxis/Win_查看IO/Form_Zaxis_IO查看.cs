@@ -13,7 +13,7 @@ namespace qfNet
 {
     internal partial class Form_Zaxis_IO查看 : Sunny.UI.UIForm
     {
-        protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }//双缓冲显示窗体所有子控件
+       // protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }//双缓冲显示窗体所有子控件
         qfNet.Zaxis _Zaxis;
 
         internal Form_Zaxis_IO查看(qfNet.Zaxis zaxis_)
