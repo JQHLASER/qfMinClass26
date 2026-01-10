@@ -45,7 +45,7 @@ namespace qfmain
                             string str = cells[i].Replace("\"", "").Trim();
                             if (str == null)
                                 str = "";
-                            if (str.IndexOf(",") > -1)
+                            if (str.Contains(","))
                             {
                                 str = "\"" + str + "\"";
                             }
@@ -271,5 +271,5 @@ namespace qfmain
 
     }
 
-     
+
 }
