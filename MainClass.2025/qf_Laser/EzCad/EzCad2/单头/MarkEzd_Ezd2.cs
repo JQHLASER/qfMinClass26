@@ -1774,6 +1774,8 @@ namespace qf_Laser
                     获取_输出状态(out this._OUTstatus);
                     IO状态转换(inputPort, this._OUTstatus, out bool[] IN, out bool[] OUT);
 
+                    _IO_InPutByte =(byte) inputPort;
+                    _IO_OutPutByte = (byte)this._OUTstatus;
                     _IO_InPut = IN;
                     _IO_OutPut = OUT;
                     On_IO_IN(IN);
