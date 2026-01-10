@@ -29,37 +29,34 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_查看信息));
-            this.uiTextBox1 = new Sunny.UI.UITextBox();
+            this.uiRichTextBox1 = new Sunny.UI.UIRichTextBox();
             this.SuspendLayout();
             // 
-            // uiTextBox1
+            // uiRichTextBox1
             // 
-            this.uiTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.uiTextBox1.FillColor = System.Drawing.Color.White;
-            this.uiTextBox1.Font = new System.Drawing.Font("微软雅黑", 10.01739F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiTextBox1.Location = new System.Drawing.Point(53, 79);
-            this.uiTextBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.uiTextBox1.Maximum = 2147483647D;
-            this.uiTextBox1.Minimum = -2147483648D;
-            this.uiTextBox1.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiTextBox1.Multiline = true;
-            this.uiTextBox1.Name = "uiTextBox1";
-            this.uiTextBox1.Padding = new System.Windows.Forms.Padding(5);
-            this.uiTextBox1.ReadOnly = true;
-            this.uiTextBox1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(219)))), ((int)(((byte)(227)))));
-            this.uiTextBox1.Size = new System.Drawing.Size(589, 429);
-            this.uiTextBox1.Style = Sunny.UI.UIStyle.White;
-            this.uiTextBox1.StyleCustomMode = true;
-            this.uiTextBox1.TabIndex = 0;
-            this.uiTextBox1.Text = "uiTextBox1";
-            this.uiTextBox1.填充颜色 = System.Drawing.Color.White;
+            this.uiRichTextBox1.AutoWordSelection = true;
+            this.uiRichTextBox1.FillColor = System.Drawing.Color.White;
+            this.uiRichTextBox1.Font = new System.Drawing.Font("微软雅黑", 11.26957F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiRichTextBox1.Location = new System.Drawing.Point(332, 181);
+            this.uiRichTextBox1.Margin = new System.Windows.Forms.Padding(0);
+            this.uiRichTextBox1.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiRichTextBox1.Name = "uiRichTextBox1";
+            this.uiRichTextBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.uiRichTextBox1.ReadOnly = true;
+            this.uiRichTextBox1.RectSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.None;
+            this.uiRichTextBox1.scrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
+            this.uiRichTextBox1.Size = new System.Drawing.Size(366, 330);
+            this.uiRichTextBox1.Style = Sunny.UI.UIStyle.Custom;
+            this.uiRichTextBox1.StyleCustomMode = true;
+            this.uiRichTextBox1.TabIndex = 2;
+            this.uiRichTextBox1.TextAlignment = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // Form_查看信息
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 600);
-            this.Controls.Add(this.uiTextBox1);
+            this.Controls.Add(this.uiRichTextBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximumSize = new System.Drawing.Size(2194, 1460);
@@ -77,7 +74,6 @@
         }
 
         #endregion
-
-        private Sunny.UI.UITextBox uiTextBox1;
+        private Sunny.UI.UIRichTextBox uiRichTextBox1;
     }
 }
