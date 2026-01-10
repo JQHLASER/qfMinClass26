@@ -177,13 +177,13 @@ namespace qfmain
             Com_sys.ReceivedBytesThreshold = 事件发生前缓冲区大小;
 
             //SerialPort 内置多线程 收发不在一个线程
-            Com_sys.DataReceived += SerialPort_DataReceived;
-            Com_sys.ErrorReceived += On_ErrorReceived;
-            Com_sys.PinChanged += On_PinChanged;
+            Com_sys.DataReceived +=(s,e)=> SerialPort_DataReceived(s,e);
+            Com_sys.ErrorReceived +=(s,e)=> On_ErrorReceived(s,e);
+            Com_sys.PinChanged +=(s,e)=> On_PinChanged(s,e);
 
 
             //默认为: Encoding.ASCII;
-            //Com_sys.Encoding = Encoding.ASCII;
+            //Com_sys.Encoding = Encoding.ASCII;s
 
             读写参数(1);
             if (数据编码 == null)
@@ -211,10 +211,7 @@ namespace qfmain
             {
                 return;
             }
-
-            Com_sys.DataReceived -= SerialPort_DataReceived;
-            Com_sys.ErrorReceived -= On_ErrorReceived;
-            Com_sys.PinChanged -= On_PinChanged;
+             
             Close(out string msgErr);
 
             about_线程 = false;
