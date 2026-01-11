@@ -35,7 +35,7 @@
             // uiRichTextBox1
             // 
             this.uiRichTextBox1.AutoWordSelection = true;
-            this.uiRichTextBox1.FillColor = System.Drawing.Color.White;
+            this.uiRichTextBox1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.uiRichTextBox1.Font = new System.Drawing.Font("微软雅黑", 11.26957F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.uiRichTextBox1.Location = new System.Drawing.Point(332, 181);
             this.uiRichTextBox1.Margin = new System.Windows.Forms.Padding(0);
@@ -44,7 +44,7 @@
             this.uiRichTextBox1.Padding = new System.Windows.Forms.Padding(2);
             this.uiRichTextBox1.ReadOnly = true;
             this.uiRichTextBox1.RectSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.None;
-            this.uiRichTextBox1.scrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
+            this.uiRichTextBox1.scrollBars = System.Windows.Forms.RichTextBoxScrollBars.Both;
             this.uiRichTextBox1.Size = new System.Drawing.Size(366, 330);
             this.uiRichTextBox1.Style = Sunny.UI.UIStyle.Custom;
             this.uiRichTextBox1.StyleCustomMode = true;

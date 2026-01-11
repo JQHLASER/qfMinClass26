@@ -22,18 +22,19 @@ namespace qfNet
             this.uiRichTextBox1  .DataBindings.Add("Text", this._DataContext, nameof(this._DataContext.ShowValue), false);
             this.uiRichTextBox1  .DataBindings.Add("ForeColor", this._DataContext, nameof(this._DataContext.ForeColor), false);
 
-      
+       
             this._DataContext.Title = Title_;
             this._DataContext.ShowValue = Value_;
             this._DataContext.ForeColor = ForeColor;
-
-            
+            this.uiRichTextBox1.FillColor = Color.White;
+             
         }
 
         private void Form_log查看_Load(object sender, EventArgs e)
         {
             new winForm窗体().Set设置_Padding(this, 10);  
             this.uiRichTextBox1  .Dock = DockStyle.Fill;
+         
         }
     }
 }
