@@ -255,6 +255,7 @@
     <Compile Include="数据库\SqlSugar\以前的\SqlSugar_DB_Context.cs" />
     <Compile Include="程序类\GC_.cs" />
     <Compile Include="程序类\Queue_触发队列.cs" />
+    <Compile Include="程序类\日志\Log封装.cs" />
     <Compile Include="程序类\标题栏状态_.cs" />
     <Compile Include="程序类\生产计数.cs" />
     <Compile Include="程序类\软件授权\加密狗\基础版\DogTW.cs" />
