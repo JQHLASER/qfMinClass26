@@ -51,10 +51,18 @@ namespace qf_pipe
         /// <summary>
         /// 启动服务
         /// </summary>
-        public void Start()
+        public (bool s, string m) Start()
         {
-            _cts = new CancellationTokenSource();
-            _ = Task.Run(() => AcceptLoopAsync(_cts.Token));
+            try
+            {
+                _cts = new CancellationTokenSource();
+                _ = Task.Run(() => AcceptLoopAsync(_cts.Token));
+                return (true, "");
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
+            }
         }
 
         private async Task AcceptLoopAsync(CancellationToken token)
@@ -102,79 +110,114 @@ namespace qf_pipe
         /// <summary>
         /// 发送信息,当ClientId为空时,群发
         /// </summary>  
-        public async Task SendStringAsync(string text, int? clientId = null)
+        public async Task<(bool s, string m)> SendStringAsync(string text, int? clientId = null)
         {
-            byte[] data = System.Text.Encoding.UTF8.GetBytes(text);
+            try
+            {
 
-            if (clientId.HasValue)
-            {
-                if (_clients.TryGetValue(clientId.Value, out var stream))
-                    await PipeHelper.SendMessageAsync(stream, PipeHelper.TYPE_STRING, data);
+
+                byte[] data = System.Text.Encoding.UTF8.GetBytes(text);
+
+                if (clientId.HasValue)
+                {
+                    if (_clients.TryGetValue(clientId.Value, out var stream))
+                        await PipeHelper.SendMessageAsync(stream, PipeHelper.TYPE_STRING, data);
+                }
+                else
+                {
+                    foreach (var kv in _clients)
+                        await PipeHelper.SendMessageAsync(kv.Value, PipeHelper.TYPE_STRING, data);
+                }
+                return (true, "");
             }
-            else
+            catch (Exception ex)
             {
-                foreach (var kv in _clients)
-                    await PipeHelper.SendMessageAsync(kv.Value, PipeHelper.TYPE_STRING, data);
+                return (false, ex.Message);
             }
         }
 
         /// <summary>
         /// 发送信息,当ClientId为空时,群发
         /// </summary>  
-        public async Task SendImageAsync(byte[] bytes, int? clientId = null)
+        public async Task<(bool s, string m)> SendImageAsync(byte[] bytes, int? clientId = null)
         {
-            if (clientId.HasValue)
+            try
             {
-                if (_clients.TryGetValue(clientId.Value, out var stream))
-                    await PipeHelper.SendMessageAsync(stream, PipeHelper.TYPE_IMAGE, bytes);
+                if (clientId.HasValue)
+                {
+                    if (_clients.TryGetValue(clientId.Value, out var stream))
+                        await PipeHelper.SendMessageAsync(stream, PipeHelper.TYPE_IMAGE, bytes);
+                }
+                else
+                {
+                    foreach (var kv in _clients)
+                        await PipeHelper.SendMessageAsync(kv.Value, PipeHelper.TYPE_IMAGE, bytes);
+                }
+                return (true, "");
             }
-            else
+            catch (Exception ex)
             {
-                foreach (var kv in _clients)
-                    await PipeHelper.SendMessageAsync(kv.Value, PipeHelper.TYPE_IMAGE, bytes);
+                return (false, ex.Message);
             }
         }
 
         /// <summary>
         /// 关闭服务
         /// </summary>
-        public void Stop(bool 踢掉所有客户 = true)
+        public (bool s, string m) Stop(bool 踢掉所有客户 = true)
         {
-            if (踢掉所有客户)
+            try
             {
-                KickAllClients();
-            }
-            _cts?.Cancel();
 
-            //foreach (var kv in _clients)
-            //{
-            //    kv.Value.Dispose();
-            //}
-            _clients.Clear();
+                if (踢掉所有客户)
+                {
+                    KickAllClients();
+                }
+                _cts?.Cancel();
+
+                //foreach (var kv in _clients)
+                //{
+                //    kv.Value.Dispose();
+                //}
+                _clients.Clear();
+                return (true, "");
+            }
+            catch (Exception ex)
+            {
+                return (true, ex.Message);
+            }
         }
 
 
         /// <summary>
         /// 踢掉指定客户端
         /// </summary>
-        public void KickClient(int clientId)
+        public (bool s, string m) KickClient(int clientId)
         {
-            if (_clients.TryRemove(clientId, out var stream))
+            try
             {
-                try
+                if (_clients.TryRemove(clientId, out var stream))
                 {
-                    if (stream.IsConnected)
+                    try
                     {
-                        // 可选：先断开（.NET Framework 可用）
-                        stream.Disconnect();
+                        if (stream.IsConnected)
+                        {
+                            // 可选：先断开（.NET Framework 可用）
+                            stream.Disconnect();
+                        }
                     }
+                    catch { }
+
+                    stream.Dispose();
+
+                    // 主动触发下线事件
+                    // Event_客户端下线?.Invoke(clientId);
                 }
-                catch { }
-
-                stream.Dispose();
-
-                // 主动触发下线事件
-                // Event_客户端下线?.Invoke(clientId);
+                return (true, "");
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
             }
         }
 

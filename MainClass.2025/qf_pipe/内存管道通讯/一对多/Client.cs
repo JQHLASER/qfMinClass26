@@ -58,29 +58,39 @@ namespace qf_pipe
         /// <summary>
         /// 连接
         /// </summary>  
-        public async Task ConnectAsync(int timeout = 3000)
+        public async Task<(bool s, string m)> ConnectAsync(int timeout = 3000)
         {
-
-            if (_连接状态 != qfmain._连接状态_.未连接)
+            try
             {
-                Disconnect();//如果已连接,先断开
-                await Task.Delay(500);
+
+                if (_连接状态 != qfmain._连接状态_.未连接)
+                {
+                    Disconnect();//如果已连接,先断开
+                    await Task.Delay(500);
+                }
+
+                _manualDisconnect = false;
+                On_连接状态(qfmain._连接状态_.连接中);
+                _cts?.Cancel();
+                _cts = new CancellationTokenSource();
+
+                _client?.Dispose();
+                _client = new NamedPipeClientStream(
+                    ".", _pipeName,
+                    PipeDirection.InOut,
+                    PipeOptions.Asynchronous);
+
+                await _client.ConnectAsync(timeout, _cts.Token);
+                On_连接状态(qfmain._连接状态_.已连接);
+                _ = Task.Run(() => ReceiveLoopAsync(_cts.Token));
+
+                return (true, "");
             }
-
-            _manualDisconnect = false;
-            On_连接状态(qfmain._连接状态_.连接中);
-            _cts?.Cancel();
-            _cts = new CancellationTokenSource();
-
-            _client?.Dispose();
-            _client = new NamedPipeClientStream(
-                ".", _pipeName,
-                PipeDirection.InOut,
-                PipeOptions.Asynchronous);
-
-            await _client.ConnectAsync(timeout, _cts.Token);
-            On_连接状态(qfmain._连接状态_.已连接);
-            _ = Task.Run(() => ReceiveLoopAsync(_cts.Token));
+            catch (Exception ex)
+            {
+                On_连接状态(qfmain._连接状态_.未连接);
+                return (false, ex.Message);
+            }
         }
 
         private async Task ReceiveLoopAsync(CancellationToken token)
@@ -154,36 +164,63 @@ namespace qf_pipe
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        public async Task SendStringAsync(string text)
+        public async Task<(bool s, string m)> SendStringAsync(string text)
         {
-            await PipeHelper.SendStringAsync(_client, text);
+            try
+            {
+
+                await PipeHelper.SendStringAsync(_client, text);
+                return (true, "");
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
+            }
         }
+
         /// <summary>
         /// 发送信息
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        public async Task SendImageAsync(byte[] bytes)
+        public async Task<(bool s, string m)> SendImageAsync(byte[] bytes)
         {
-            await PipeHelper.SendImageAsync(_client, bytes);
+            try
+            {
+                await PipeHelper.SendImageAsync(_client, bytes);
+                return (true, "");
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
+            }
         }
 
         /// <summary>
         /// 释放或断开连接
         /// </summary>
-        public void Disconnect()
+        public (bool s,string m) Disconnect(bool 是否产生事件 = true)
         {
             if (_连接状态 == qfmain._连接状态_.未连接)
             {
-                return;
+                return (true,"");
             }
-            //if (是否产生事件)
-            //{
-            //    On_连接状态(qfmain._连接状态_.未连接);
-            //}
-            _manualDisconnect = true;//手动断开   
-            _cts?.Cancel();
-            _client?.Dispose();
+            try
+            {
+
+                if (是否产生事件)
+                {
+                    On_连接状态(qfmain._连接状态_.未连接);
+                }
+                _manualDisconnect = true;//手动断开   
+                _cts?.Cancel();
+                _client?.Dispose();
+                return (true, "");
+            }
+            catch (Exception ex)
+            {
+               return (false, ex.Message);
+            }
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿
 using qfmain;
 using qfNet;
+using Sunny.UI;
 using System;
 using System.Collections.Generic;
 using System.Deployment.Internal;
@@ -30,11 +31,11 @@ namespace qf_Laser
         /// <summary>
         /// 输入端口
         /// </summary>
-        public byte  _IO_InPutByte { set; get; } = 0;
+        public byte _IO_InPutByte { set; get; } = 0;
         /// <summary>
         /// 输出端口
         /// </summary>
-        public byte _IO_OutPutByte { set; get; } =0;
+        public byte _IO_OutPutByte { set; get; } = 0;
 
 
         /// <summary>
@@ -111,7 +112,7 @@ namespace qf_Laser
         public void 初始化(bool 使能线程)
         {
             标题栏状态_加工状态();
-            标题栏状态_初始化状态(); 
+            标题栏状态_初始化状态();
             读写参数(1);
             读写_最后一次ezdpath(1);
             读EzCadName();
@@ -343,14 +344,14 @@ namespace qf_Laser
             if (this._初始化状态 != _初始化状态_.已初始化 ||
               !Err_端口是否有效(port))
             {
-                return(false,"");
+                return (false, "");
             }
 
             _Err_jczMarkEzd2_ nerr = this.输出IO(port, state);
             bool rt = this.ErrToMsg((int)nerr, out string msgErr);
             return (rt, msgErr);
         }
-         
+
         public void 输出脉冲式(ushort port)
         {
             if (this._初始化状态 != _初始化状态_.已初始化 ||
@@ -476,10 +477,49 @@ namespace qf_Laser
             return lst.ToArray();
         }
 
+        /// <summary>
+        /// xCenter:中心x,yCenter:中心y
+        /// </summary> 
+        public (bool s, string m, double width, double height, double xCenter, double yCenter) 获取对象尺寸(string 对象名)
+        {
+            double width = 0, height = 0, xCenter = 0, yCenter = 0;
+            _Err_jczMarkEzd2_ nErr = 获取_对象中心坐标及尺寸(对象名, ref xCenter, ref yCenter, ref width, ref height);
+            bool rt = ErrToMsg((int)nErr, out string msgErr);
+            return (rt, msgErr, width, height, xCenter, yCenter);
+        }
+        public (bool s, string m) 设置对象尺寸(string 对象名, double width, double height)
+        {
+            bool rt = true;
+            string msgErr;
+            (bool s, string m, double width, double height, double xCenter, double yCenter) rtM = 获取对象尺寸(对象名);
+            rt = rtM.s;
+            msgErr = rtM.m;
+            if (rt)
+            {
+                double xSol = width / rtM.width;
+                double ySol = height / rtM.height;
 
+                _Err_jczMarkEzd2_ nErr = 按比例缩放对象(对象名, rtM.xCenter, rtM.yCenter, xSol, ySol);
+                rt = ErrToMsg((int)nErr, out msgErr);
+            }
+            return (rt, msgErr);
+        }
 
+        public (bool s, string m, _笔参数_ pen) 获取笔参数(int 笔号)
+        {
+            _Err_jczMarkEzd2_ nErr = 获取_笔参数(笔号, out _笔参数_ pen);
+            bool rt = ErrToMsg((int)nErr, out string msgErr);
+            return (rt, msgErr, pen);
+        }
 
+        public (bool s, string m) 设置笔参数(_笔参数_ pen)
+        {
+            _Err_jczMarkEzd2_ nErr = 设置_笔参数(pen);
+            bool rt = ErrToMsg((int)nErr, out string msgErr);
+            return (rt, msgErr);
+        }
 
+         
 
         #endregion
 
@@ -791,9 +831,9 @@ namespace qf_Laser
         /// <summary>
         /// 按比例缩放大小
         /// </summary> 
-        internal _Err_jczMarkEzd2_ 按比例缩放对象(string 对象名称, double xCenter, double yCenter, double x, double y)
+        internal _Err_jczMarkEzd2_ 按比例缩放对象(string 对象名称, double xCenter, double yCenter, double x比例, double y比例)
         {
-            int nErr = JczLmc.指定对象按比例缩放(对象名称, xCenter, yCenter, x, y);
+            int nErr = JczLmc.指定对象按比例缩放(对象名称, xCenter, yCenter, x比例, y比例);
             return (_Err_jczMarkEzd2_)nErr;
         }
 
@@ -1030,14 +1070,10 @@ namespace qf_Laser
 
         }
 
-        internal _Err_jczMarkEzd2_ 获取_对象中心坐标及尺寸(string 对象名称, ref double x, ref double y, ref double width, ref double height)
+        internal _Err_jczMarkEzd2_ 获取_对象中心坐标及尺寸(string 对象名称, ref double xCenter, ref double yCenter, ref double width, ref double height)
         {
 
-
-
-            #region 计算旋转中心点
-
-
+            #region 计算中心点
 
             //再获取这个对象的最大最小坐标
             double x小 = 0, y小 = 0, x大 = 0, y大 = 0, z = 0;
@@ -1046,8 +1082,8 @@ namespace qf_Laser
             width = x大 - x小;
             height = y大 - y小;
 
-            x = (double)(((double)width / 2.0) + x小);
-            y = (double)(((double)height / 2.0) + y小);
+            xCenter = (double)(((double)width / 2.0) + x小);
+            yCenter = (double)(((double)height / 2.0) + y小);
 
 
             #endregion
@@ -1145,9 +1181,9 @@ namespace qf_Laser
             return rt;
         }
 
-        internal _Err_jczMarkEzd2_ 获取笔参数(int 笔号, _笔参数_ info_笔参数)
+        internal _Err_jczMarkEzd2_ 获取_笔参数(int 笔号, out _笔参数_ info_笔参数)
         {
-
+            info_笔参数 = new _笔参数_();
 
             int 加工次数 = 1;
             double 标刻速度 = 1000;
@@ -1213,10 +1249,9 @@ namespace qf_Laser
         /// <summary>
         /// iniSyS.写入前,请设置需要修改的参数
         /// </summary>
-        internal _Err_jczMarkEzd2_ 设置笔参数(int 笔号, _笔参数_ info_笔参数)
+        internal _Err_jczMarkEzd2_ 设置_笔参数(_笔参数_ info_笔参数)
         {
-            info_笔参数.笔号 = 笔号;
-            int nErr = JczLmc.设置笔参数(笔号,
+            int nErr = JczLmc.设置笔参数(info_笔参数.笔号,
                                info_笔参数.加工次数,
                                info_笔参数.标刻速度,
                                info_笔参数.功率百分比,
@@ -1772,7 +1807,7 @@ namespace qf_Laser
                     获取_输出状态(out this._OUTstatus);
                     IO状态转换(inputPort, this._OUTstatus, out bool[] IN, out bool[] OUT);
 
-                    _IO_InPutByte =(byte) inputPort;
+                    _IO_InPutByte = (byte)inputPort;
                     _IO_OutPutByte = (byte)this._OUTstatus;
                     _IO_InPut = IN;
                     _IO_OutPut = OUT;

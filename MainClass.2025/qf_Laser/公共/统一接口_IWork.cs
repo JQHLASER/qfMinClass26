@@ -94,7 +94,7 @@ namespace qf_Laser
         (bool s, string m) 标刻(bool bFlyMark, bool is加工状态 = true);
 
         void 输出脉冲式(ushort port);
-        (bool s, string m) 输出(ushort port,bool NF);
+        (bool s, string m) 输出(ushort port, bool NF);
         void 输出_标刻中(bool NF);
         void 输出_红光(bool NF);
         void 输出_Ready(bool NF);
@@ -113,7 +113,17 @@ namespace qf_Laser
         (bool s, string m, string v) 获取对象名称(int 对象索引, int lenght = 255);
         (bool s, string m, int v) 获取对象总数();
 
+        /// <summary>
+        /// xCenter:中心x,yCenter:中心y
+        /// </summary> 
+        (bool s, string m, double width, double height, double xCenter, double yCenter) 获取对象尺寸(string 对象名);
+        (bool s, string m) 设置对象尺寸(string 对象名, double width, double height);
         (bool s, string m) 设置绝对坐标(double x, double y, double xCenter, double yCenter, double a);
+        (bool s, string m, _笔参数_ pen) 获取笔参数(int 笔号);
+        (bool s, string m) 设置笔参数(_笔参数_ pen);
+
+
+
 
 
         _变量信息_[] 获取所有变量对象信息();

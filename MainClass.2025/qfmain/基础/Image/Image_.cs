@@ -17,30 +17,8 @@ namespace qfmain
     /// </summary>
     public class Image_
     {
-        /// <summary>
-        /// format =  ImageFormat.Jpeg;
-        /// </summary>
-        public virtual byte[] ImageToBytes(Image imagePath, ImageFormat format)
-        {
-            byte[] imgBytes;
 
-            using (var bmp = new Bitmap(imagePath))
-            using (var ms = new MemoryStream())
-            {
-                bmp.Save(ms, format); // PNG / BMP 都行
-                imgBytes = ms.ToArray();
-            }
-            return imgBytes;
-        }
-
-       
-        public virtual Bitmap BytesToImage(byte[] imgBytes)
-        {
-            using (var ms = new MemoryStream(imgBytes))
-            {
-                return new Bitmap(ms);
-            }
-        }
+ 
 
         //byte[] 转换 Bitmap
         public virtual Bitmap BytesToBitmap(byte[] Bytes)
@@ -53,22 +31,38 @@ namespace qfmain
 
         }
 
-        public virtual byte[] BitmapToBytes(Bitmap Bitmap)
+
+        public  virtual  byte[] ImageToBytes(Image img)
         {
             using (MemoryStream ms = new MemoryStream())
             {
-                Bitmap.Save(ms, Bitmap.RawFormat);
-                byte[] byteImage = new Byte[ms.Length];
-                byteImage = ms.ToArray();
-                return byteImage;
-
+                img.Save(ms, img.RawFormat);   // 保存为原始格式
+                return ms.ToArray();
             }
-            byte[] imgBytes;
-
         }
 
+        /// <summary>
+        /// imageFormat : 建议使用png
+        /// </summary>
+        /// <param name="img"></param>
+        /// <param name="imageFormat"></param>
+        /// <returns></returns>
+        public virtual   byte[] ImageToBytes(Image img, System.Drawing.Imaging.ImageFormat  imageFormat)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, imageFormat);
+                return ms.ToArray();
+            }
+        }
 
-
+        public virtual   Image BytesToImage(byte[] bytes)
+        {
+            using (MemoryStream ms = new MemoryStream(bytes))
+            {
+                return new Bitmap(ms);  // Bitmap 内部复制了数据，可释放 ms
+            }
+        }
 
 
 
@@ -99,7 +93,7 @@ namespace qfmain
             File.WriteAllBytes(imagePath, bytes);
         }
 
-         
+
 
 
         /// <summary>
@@ -160,7 +154,7 @@ namespace qfmain
         }
 
 
-     
+
 
         #endregion
 
