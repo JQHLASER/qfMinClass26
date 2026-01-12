@@ -41,7 +41,40 @@ namespace qfmain
                 return new Bitmap(ms);
             }
         }
-         
+
+        //byte[] 转换 Bitmap
+        public virtual Bitmap BytesToBitmap(byte[] Bytes)
+        {
+
+            using (MemoryStream ms = new MemoryStream(Bytes))
+            {
+                return new Bitmap((System.Drawing.Image)new Bitmap(ms));
+            }
+
+        }
+
+        public virtual byte[] BitmapToBytes(Bitmap Bitmap)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                Bitmap.Save(ms, Bitmap.RawFormat);
+                byte[] byteImage = new Byte[ms.Length];
+                byteImage = ms.ToArray();
+                return byteImage;
+
+            }
+            byte[] imgBytes;
+
+        }
+
+
+
+
+
+
+
+
+
 
 
         /// <summary>
@@ -109,7 +142,7 @@ namespace qfmain
 
 
 
-        #region Bitmap与Image与 byte[]互转
+        #region Bitmap与Image 
 
         public virtual System.Drawing.Image Bitmap转Image(Bitmap Bitmap_)
         {
@@ -127,32 +160,7 @@ namespace qfmain
         }
 
 
-        //byte[] 转换 Bitmap
-        public virtual Bitmap Bytes转Bitmap(byte[] Bytes)
-        {
-
-            using (MemoryStream ms = new MemoryStream(Bytes))
-            {
-                return new Bitmap((System.Drawing.Image)new Bitmap(ms));
-            }
-
-        }
-
-        public virtual byte[] Bitmap转Bytes(Bitmap Bitmap)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                Bitmap.Save(ms, Bitmap.RawFormat);
-                byte[] byteImage = new Byte[ms.Length];
-                byteImage = ms.ToArray();
-                return byteImage;
-
-            }
-            byte[] imgBytes;
- 
-        }
-
-
+     
 
         #endregion
 
