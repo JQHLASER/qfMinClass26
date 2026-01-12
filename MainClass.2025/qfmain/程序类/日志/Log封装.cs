@@ -42,8 +42,7 @@ namespace qfmain
             LogValue = (!this._Is日志栏 || !显示到日志栏) ? LogValue : $"{qfmain.log日志._不显示到日志栏}  {LogValue}";
             log_sys.Add(state, LogValue);
         }
-
-
+         
         public void 释放()
         {
             if (!isInistiall)
@@ -52,9 +51,6 @@ namespace qfmain
             }
             log_sys.释放();
         }
-
-
-
-
+         
     }
 }
