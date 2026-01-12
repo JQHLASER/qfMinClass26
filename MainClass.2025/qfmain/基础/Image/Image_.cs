@@ -148,7 +148,8 @@ namespace qfmain
                 return byteImage;
 
             }
-
+            byte[] imgBytes;
+ 
         }
 
 
