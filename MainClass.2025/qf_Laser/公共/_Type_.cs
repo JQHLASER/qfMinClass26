@@ -124,7 +124,7 @@ namespace qf_Laser
 
     }
 
-    public class  _笔参数_
+    public class _笔参数_
     {
         public int 笔号 = 0;
         public int 加工次数 = 1;
@@ -150,8 +150,7 @@ namespace qf_Laser
         public int 脉冲点数目 = 0;
         public double 流水线速度 = 0;
     }
-
-
+ 
 
 
 
