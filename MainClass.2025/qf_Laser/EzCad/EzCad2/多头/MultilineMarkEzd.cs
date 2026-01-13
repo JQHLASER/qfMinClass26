@@ -1497,7 +1497,7 @@ namespace qf_Laser
             {
                 Thread.Sleep(100);
             }
-            On_加工状态(Cardindex, _激光加工状态_.红指示光中);
+            On_加工状态(Cardindex, _激光加工状态_.红光指示光中);
 
             while (this.isRun && this._lst_参数[Cardindex]._Is连续加工)
             {
@@ -1926,7 +1926,7 @@ namespace qf_Laser
         public virtual bool Err_红光指示中(int CardIndex, out string msgErr)
         {
             msgErr = "";
-            if (this._lst_参数[CardIndex]._激光加工状态 == _激光加工状态_.红指示光中)
+            if (this._lst_参数[CardIndex]._激光加工状态 == _激光加工状态_.红光指示光中)
             {
                 msgErr = Get语言("红光指示中");
                 On_Log(false, msgErr);

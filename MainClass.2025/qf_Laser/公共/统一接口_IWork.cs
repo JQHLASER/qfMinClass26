@@ -117,7 +117,7 @@ namespace qf_Laser
         /// xCenter:中心x,yCenter:中心y
         /// </summary> 
         (bool s, string m, double width, double height, double xCenter, double yCenter) 获取对象尺寸(string 对象名);
-        (bool s, string m) 设置对象尺寸(string 对象名, double width, double height);
+        (bool s, string m) 设置对象尺寸(string 对象名, double width, double height, double xCenter, double yCenter);
         (bool s, string m) 设置绝对坐标(double x, double y, double xCenter, double yCenter, double a);
         (bool s, string m, _笔参数_ pen) 获取笔参数(int 笔号);
         (bool s, string m) 设置笔参数(_笔参数_ pen);

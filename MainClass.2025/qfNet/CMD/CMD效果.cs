@@ -11,8 +11,8 @@ namespace qfNet
     public class CMD效果
     {
         Sunny.UI.UIRichTextBox _richTextBox;
-
-        public CMD效果(Sunny.UI.UIRichTextBox richTextBox)
+        int _最大行数 = 100;
+        public CMD效果(Sunny.UI.UIRichTextBox richTextBox, int 最大行数=100)
         {
             this._richTextBox = richTextBox;
             this._richTextBox.KeyDown += (s, e) => On_KeyDown(s, e);
@@ -22,7 +22,7 @@ namespace qfNet
 
             WriteLine("***** QiFengContol *****");
             Event_Load?.Invoke();
-
+           this. _最大行数 = 最大行数;
         }
 
         #region 本地方法
@@ -58,8 +58,7 @@ namespace qfNet
                 }
 
                 // 触发外部命令事件
-                Event_CommandEntered?.Invoke(command);
-
+                Event_CommandEntered?.Invoke(command); 
                 this._richTextBox.AppendText("\n" + _提示符);
                 this._richTextBox.SelectionStart = this._richTextBox.Text.Length;
                 return;
@@ -157,10 +156,8 @@ namespace qfNet
             this._richTextBox.AppendText(text);
             this._richTextBox.AppendText("\n");
             this._richTextBox.AppendText(_提示符);
-            this._richTextBox.SelectionStart = this._richTextBox.Text.Length;
-            // 自动滚动到底部
-            this._richTextBox.ScrollToCaret();
-            this._richTextBox.Focus();
+
+            处理到最后一行();
         }
 
         /// <summary>
@@ -168,16 +165,11 @@ namespace qfNet
         /// </summary> 
         public void WriteLine(string text, Color? color)
         { 
-
             this._richTextBox.SelectionColor = color ?? Color.White;
             this._richTextBox.AppendText(text);
             this._richTextBox.AppendText("\n");
             this._richTextBox.AppendText(_提示符);
-            this._richTextBox.SelectionStart = this._richTextBox.Text.Length;
-
-            // 自动滚动到底部
-            this._richTextBox.ScrollToCaret();
-            this._richTextBox.Focus();
+            处理到最后一行();
         }
 
 
@@ -188,10 +180,7 @@ namespace qfNet
         public void Write(string text)
         {
             this._richTextBox.AppendText(text);
-            this._richTextBox.SelectionStart = this._richTextBox.Text.Length;
-            // 自动滚动到底部
-            this._richTextBox.ScrollToCaret();
-            this._richTextBox.Focus();
+            处理到最后一行();
         }
 
 
@@ -202,14 +191,26 @@ namespace qfNet
         {
             this._richTextBox.SelectionColor = color ?? Color.White;
             this._richTextBox.AppendText(text);
-            this._richTextBox.SelectionStart = this._richTextBox.Text.Length;
-
-            // 自动滚动到底部
-            this._richTextBox.ScrollToCaret();
-            this._richTextBox.Focus();
+            处理到最后一行();
         }
 
         #endregion
 
+
+        void 处理到最后一行()
+        {
+            if (this._richTextBox.Text.Length >= this._最大行数)
+            {
+                var lines = this._richTextBox.Lines.Skip(this._richTextBox.Lines.Length - this._最大行数).ToArray();
+                this._richTextBox.Lines = lines;
+            }
+
+
+
+            this._richTextBox.SelectionStart = this._richTextBox.Text.Length;
+            // 自动滚动到底部
+            this._richTextBox.ScrollToCaret();
+            this._richTextBox.Focus();
+        }
     }
 }

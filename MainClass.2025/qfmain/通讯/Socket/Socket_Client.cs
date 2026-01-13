@@ -442,7 +442,7 @@ namespace qfmain
                     }
                     else if (this._连接状态 == _连接状态_.已连接)
                     {
-                        if (!判断是否连接_1(1000))
+                        if (!判断是否连接(1000))
                         {
                             On_连接状态(_连接状态_.未连接);
                             是否需要延时 = true;
@@ -497,33 +497,25 @@ namespace qfmain
         /// </summary>
         /// <param name="socket_"></param>
         /// <returns></returns>
-        public bool 判断是否连接_1(int 检测超时 = 1000)
+        public bool 判断是否连接( int 检测超时 = 1000)
         {
-            if (client == null)
+            if (client == null || !client.Connected)
                 return false;
 
             try
             {
-                if (!client.Connected)
-                    return false;
-
-                // 优雅断开检测
                 if (client.Poll(检测超时, SelectMode.SelectRead) && client.Available == 0)
                     return false;
 
-                // 强制触发底层 TCP 状态检测
-                client.Send(new byte[0]);
-
-                return true;
+                // ★ 不用 Send 空包(风险大)，用 IOControl 检测
+                return !(client.Poll(0, SelectMode.SelectError));
             }
             catch
             {
                 return false;
             }
-
-
-
         }
+
 
 
 

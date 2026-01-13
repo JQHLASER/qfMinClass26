@@ -212,7 +212,7 @@ namespace qf_Laser
                         this.toolStripLabel_加工状态.Text = qfmain.Language_.Get语言("出激光标刻中");
                         this.工具栏1.BackColor = Color.Yellow;
                         break;
-                    case _激光加工状态_.红指示光中:
+                    case _激光加工状态_.红光指示光中:
                         this.toolStripLabel_加工状态.Text = qfmain.Language_.Get语言("红光指示中");
                         this.工具栏1.BackColor = Color.Yellow;
                         break;

@@ -261,33 +261,24 @@ namespace qfmain
           
             return rt;
         }
-         
-        public bool 判断是否连接(Socket socket_,int 检测超时 = 1000)
+
+        public bool 判断是否连接(Socket socket_, int 检测超时 = 1000)
         {
-            if (socket_ == null)
+            if (socket_ == null || !socket_.Connected)
                 return false;
 
             try
             {
-                if (!socket_.Connected)
-                    return false;
-
-                // 优雅断开检测
                 if (socket_.Poll(检测超时, SelectMode.SelectRead) && socket_.Available == 0)
                     return false;
 
-                // 强制触发底层 TCP 状态检测
-                socket_.Send(new byte[0]);
-
-                return true;
+                // ★ 不用 Send 空包(风险大)，用 IOControl 检测
+                return !(socket_.Poll(0, SelectMode.SelectError));
             }
             catch
             {
                 return false;
             }
-
-
-
         }
 
 
@@ -301,7 +292,13 @@ namespace qfmain
 
         public void 断开指定客户端(Socket socket_)
         {
-            socket_.Shutdown(SocketShutdown.Both);
+           //socket_.Shutdown(SocketShutdown.Both);
+
+            if (socket_ == null) return;
+
+            try { socket_.Shutdown(SocketShutdown.Both); } catch { }
+            try { socket_.Close(); } catch { }
+            try { socket_.Dispose(); } catch { }
         }
 
 
@@ -320,55 +317,103 @@ namespace qfmain
         /// 连接
         /// </summary>
         /// <param name="iar"></param>
+        //private void AcceptCallBack(IAsyncResult iar)
+        //{
+
+        //    try
+        //    {
+        //        Socket socket = iar.AsyncState as Socket;
+        //        Socket client = socket.EndAccept(iar);
+        //        string ip = ((IPEndPoint)client.RemoteEndPoint).Address.ToString();
+        //        int port = ((IPEndPoint)client.RemoteEndPoint).Port;
+
+
+
+
+        //        //if (AcceptAction != null)
+        //        //{
+        //        //    AcceptAction("客户端：" + ip + "  端口：" + port + "连接成功");
+        //        //}          
+
+
+        //        #region 客户端进入
+
+
+        //        //info_IPaddress_ cl = new info_IPaddress_();
+        //        //cl.IP = ip;
+        //        //cl.Port = port;
+
+        //        //string id = $"{cl.IP}:{cl.Port}";
+
+
+        //        //this._lstSocket.Add(client);
+        //        On_客户端上线(client);
+
+        //        #endregion
+
+
+
+        //        //接收数据
+        //        client.BeginReceive(recvDataBuffer, 0, recvDataBuffer.Length, SocketFlags.None, ReceiveCallBack,
+        //            client);
+        //        //等待下一次连接
+        //        socket.BeginAccept(AcceptCallBack, socket);
+
+
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //    }
+        //}
+
         private void AcceptCallBack(IAsyncResult iar)
         {
+            Socket server = iar.AsyncState as Socket;
+            Socket client = null;
 
             try
             {
-                Socket socket = iar.AsyncState as Socket;
-                Socket client = socket.EndAccept(iar);
-                string ip = ((IPEndPoint)client.RemoteEndPoint).Address.ToString();
-                int port = ((IPEndPoint)client.RemoteEndPoint).Port;
+                client = server.EndAccept(iar);
 
-
-
-
-                //if (AcceptAction != null)
-                //{
-                //    AcceptAction("客户端：" + ip + "  端口：" + port + "连接成功");
-                //}          
-
-
-                #region 客户端进入
-
-
-                //info_IPaddress_ cl = new info_IPaddress_();
-                //cl.IP = ip;
-                //cl.Port = port;
-
-                //string id = $"{cl.IP}:{cl.Port}";
-
-
-                //this._lstSocket.Add(client);
                 On_客户端上线(client);
 
-                #endregion
+                // ★ 每个 client 必须有独立 buffer
+                var state = new ClientState()
+                {
+                    Socket = client,
+                    Buffer = new byte[this._参数.接收区大小]
+                };
 
-
-
-                //接收数据
-                client.BeginReceive(recvDataBuffer, 0, recvDataBuffer.Length, SocketFlags.None, ReceiveCallBack,
-                    client);
-                //等待下一次连接
-                socket.BeginAccept(AcceptCallBack, socket);
-
-
+                client.BeginReceive(state.Buffer, 0, state.Buffer.Length, SocketFlags.None,
+                    ReceiveCallBack, state);
             }
-            catch (Exception)
+            catch (ObjectDisposedException)
             {
-
+                return; // 服务器关闭，不再继续 Accept
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine("AcceptErr: " + ex.Message);
+            }
+
+            // ★ 永远继续等待下一个客户端，不要放在 try 里
+            try
+            {
+                server.BeginAccept(AcceptCallBack, server);
+            }
+            catch { }
         }
+
+        // ★ 内部结构体：独立 buffer
+        private class ClientState
+        {
+            public Socket Socket;
+            public byte[] Buffer;
+        }
+
+
+
 
         /// <summary>
         /// 接收数据
@@ -380,75 +425,117 @@ namespace qfmain
         /// 接收数据
         /// </summary>
         /// <param name="iar"></param>
+        //private void ReceiveCallBack(IAsyncResult iar)
+        //{
+        //    Socket socket = iar.AsyncState as Socket;
+        //    try
+        //    {
+
+
+
+        //        string ip = ((IPEndPoint)socket.RemoteEndPoint).Address.ToString();
+        //        int port = ((IPEndPoint)socket.RemoteEndPoint).Port;
+
+
+        //        int recvSize = socket.EndReceive(iar);
+        //        if (recvSize > 0)
+        //        {
+        //            byte[] b = new byte[recvSize];
+        //            Array.Copy(recvDataBuffer, 0, b, 0, recvSize);
+
+
+
+        //            //if (ReveiveDataAction != null)
+        //            //{
+        //            //    ReveiveDataAction(b);//处理收到的数据
+        //            //}
+        //            //接收数据
+        //            socket.BeginReceive(recvDataBuffer, 0, recvDataBuffer.Length, SocketFlags.None, ReceiveCallBack,
+        //                socket);
+
+        //            //Send发送("", Encoding.Default.GetBytes(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " ,ok"));
+        //            //Console.Write(Encoding.Default.GetString(b));
+
+        //            byte[] data = Array.FindAll(b, i => i != 0X0).ToArray();
+        //            On_接收数据(socket, data);
+        //        }
+        //        else
+        //        {
+
+        //            //Console.Write("客户退出\r\n");
+        //            ////断开后移除
+        //            //this._lstClient.RemoveAll(temp => temp.IP.Contains(ip) && temp.Port == port);
+        //            //if (DisconnectAction != null)
+        //            //    DisconnectAction("客户端：" + ip + "  端口：" + port + "断开连接");
+
+
+
+        //            #region 客户退出
+
+        //            //int index =this._lstSocket.IndexOf(socket);
+        //            //if (index > -1)
+        //            //{
+        //            //  this._lstSocket.RemoveAt(index);                      
+        //            //    On_客户端下线(socket);
+        //            //}
+
+
+        //            // this._lstSocket.Remove(socket);
+        //            On_客户端下线(socket);
+
+        //            #endregion
+
+
+        //        }
+
+
+        //    }
+        //    catch (Exception)
+        //    {
+        //        //  On_侦听启动状态(-1);
+        //        On_客户端下线(socket);
+        //    }
+        //}
         private void ReceiveCallBack(IAsyncResult iar)
         {
-            Socket socket = iar.AsyncState as Socket;
+            var state = (ClientState)iar.AsyncState;
+            Socket client = state.Socket;
+
             try
             {
+                int recvSize = client.EndReceive(iar);
 
-
-
-                string ip = ((IPEndPoint)socket.RemoteEndPoint).Address.ToString();
-                int port = ((IPEndPoint)socket.RemoteEndPoint).Port;
-
-
-                int recvSize = socket.EndReceive(iar);
-                if (recvSize > 0)
-                {
-                    byte[] b = new byte[recvSize];
-                    Array.Copy(recvDataBuffer, 0, b, 0, recvSize);
-
-
-
-                    //if (ReveiveDataAction != null)
-                    //{
-                    //    ReveiveDataAction(b);//处理收到的数据
-                    //}
-                    //接收数据
-                    socket.BeginReceive(recvDataBuffer, 0, recvDataBuffer.Length, SocketFlags.None, ReceiveCallBack,
-                        socket);
-
-                    //Send发送("", Encoding.Default.GetBytes(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " ,ok"));
-                    //Console.Write(Encoding.Default.GetString(b));
-
-                    byte[] data = Array.FindAll(b, i => i != 0X0).ToArray();
-                    On_接收数据(socket, data);
-                }
-                else
+                // ★ 客户端正常断开
+                if (recvSize <= 0)
                 {
 
-                    //Console.Write("客户退出\r\n");
-                    ////断开后移除
-                    //this._lstClient.RemoveAll(temp => temp.IP.Contains(ip) && temp.Port == port);
-                    //if (DisconnectAction != null)
-                    //    DisconnectAction("客户端：" + ip + "  端口：" + port + "断开连接");
-
-
-
-                    #region 客户退出
-
-                    //int index =this._lstSocket.IndexOf(socket);
-                    //if (index > -1)
-                    //{
-                    //  this._lstSocket.RemoveAt(index);                      
-                    //    On_客户端下线(socket);
-                    //}
-
-
-                    // this._lstSocket.Remove(socket);
-                    On_客户端下线(socket);
-
-                    #endregion
-
-
+                    断开指定客户端(client);
+                    On_客户端下线(client);
+                    return;
                 }
 
+                byte[] data = new byte[recvSize];
+                Buffer.BlockCopy(state.Buffer, 0, data, 0, recvSize);
+                On_接收数据(client, data);
 
+                // ★ 继续接收
+                client.BeginReceive(state.Buffer, 0, state.Buffer.Length,
+                    SocketFlags.None, ReceiveCallBack, state);
             }
-            catch (Exception)
+            catch (ObjectDisposedException)
             {
-                //  On_侦听启动状态(-1);
-                On_客户端下线(socket);
+                // 已关闭
+            }
+            catch (SocketException)
+            {
+                断开指定客户端(client);
+                On_客户端下线(client);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("RecvErr: " + ex.Message);
+                断开指定客户端(client);
+                On_客户端下线(client);
             }
         }
 

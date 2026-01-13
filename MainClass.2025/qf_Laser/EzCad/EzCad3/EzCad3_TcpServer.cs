@@ -322,7 +322,7 @@ namespace qf_Laser
 
         public async Task<_Err_> 发送指令_红光指示全部对象(float 角度, float X偏移, float Y偏移, float X旋转中心, float Y旋转中心)
         {
-            this._加工状态 = _激光加工状态_.红指示光中;
+            this._加工状态 = _激光加工状态_.红光指示光中;
             string value = "E3_StartMark Red";
             value += " A=" + 角度.ToString();
             value += " X=" + X偏移.ToString();
@@ -336,7 +336,7 @@ namespace qf_Laser
 
         public async Task<_Err_> 发送指令_红光指示全部对象()
         {
-            this._加工状态 = _激光加工状态_.红指示光中;
+            this._加工状态 = _激光加工状态_.红光指示光中;
             string value = "E3_StartMark Red";
             _Err_ rt = await 发送指令(value);
             await 等待标刻或红光完成();
@@ -345,7 +345,7 @@ namespace qf_Laser
 
         public async Task<_Err_> 发送指令_红光指示选中对象(float 角度, float X偏移, float Y偏移, float X旋转中心, float Y旋转中心)
         {
-            this._加工状态 = _激光加工状态_.红指示光中;
+            this._加工状态 = _激光加工状态_.红光指示光中;
             string value = "E3_StartMark Select Red";
             value += " A=" + 角度.ToString();
             value += " X=" + X偏移.ToString();
@@ -359,7 +359,7 @@ namespace qf_Laser
 
         public async Task<_Err_> 发送指令_红光指示选中对象()
         {
-            this._加工状态 = _激光加工状态_.红指示光中;
+            this._加工状态 = _激光加工状态_.红光指示光中;
             string value = "E3_StartMark Select Red";
             _Err_ rt = await 发送指令(value);
             await 等待标刻或红光完成();

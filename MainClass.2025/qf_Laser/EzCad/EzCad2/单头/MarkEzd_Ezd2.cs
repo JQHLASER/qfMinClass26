@@ -487,7 +487,7 @@ namespace qf_Laser
             bool rt = ErrToMsg((int)nErr, out string msgErr);
             return (rt, msgErr, width, height, xCenter, yCenter);
         }
-        public (bool s, string m) 设置对象尺寸(string 对象名, double width, double height)
+        public (bool s, string m) 设置对象尺寸(string 对象名, double width, double height, double xCenter, double yCenter)
         {
             bool rt = true;
             string msgErr;
@@ -499,7 +499,7 @@ namespace qf_Laser
                 double xSol = width / rtM.width;
                 double ySol = height / rtM.height;
 
-                _Err_jczMarkEzd2_ nErr = 按比例缩放对象(对象名, rtM.xCenter, rtM.yCenter, xSol, ySol);
+                _Err_jczMarkEzd2_ nErr = 按比例缩放对象(对象名, xCenter, yCenter, xSol, ySol);
                 rt = ErrToMsg((int)nErr, out msgErr);
             }
             return (rt, msgErr);
@@ -1402,7 +1402,7 @@ namespace qf_Laser
 
 
             this._is连续加工 = true;
-            On_加工状态(_激光加工状态_.红指示光中);
+            On_加工状态(_激光加工状态_.红光指示光中);
             输出(this._参数.OUT.红光, true);
 
             while (this._isRun && this._is连续加工)
@@ -1545,7 +1545,7 @@ namespace qf_Laser
         public bool Err_红光指示中(out string msgErr, bool 是否日志 = true)
         {
             msgErr = "";
-            if (this._激光加工状态 == _激光加工状态_.红指示光中)
+            if (this._激光加工状态 == _激光加工状态_.红光指示光中)
             {
                 msgErr = qfmain.Language_.Get语言("红光指示中");
                 if (是否日志)
@@ -1660,7 +1660,7 @@ namespace qf_Laser
            {
               new  qfNet ._cfg_标题栏状态_(Name,$"{名称}{qfmain .Language_ .Get语言("闲置")}"  ,(int)_激光加工状态_ .闲置 ),
               new  qfNet ._cfg_标题栏状态_(Name,$"{名称}{qfmain .Language_ .Get语言("出激光标刻中")}"  ,(int)_激光加工状态_.出激光标刻中),
-              new  qfNet ._cfg_标题栏状态_(Name  ,$"{名称}{qfmain .Language_ .Get语言("红指示光中")}" ,(int)_激光加工状态_.红指示光中 ),
+              new  qfNet ._cfg_标题栏状态_(Name  ,$"{名称}{qfmain .Language_ .Get语言("红指示光中")}" ,(int)_激光加工状态_.红光指示光中 ),
               new  qfNet ._cfg_标题栏状态_(Name  ,$"{名称}{qfmain .Language_ .Get语言("加载激光模板中")}" ,(int)_激光加工状态_.加载激光模板中  ),
            };
             _标题栏标题_加工状态 = info;

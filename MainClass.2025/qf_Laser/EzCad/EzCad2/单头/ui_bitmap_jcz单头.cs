@@ -25,7 +25,7 @@ namespace qf_Laser
             this.DoubleClick += (s, e) => On_双击查看图像();
 
             this.Dock = DockStyle.Fill;
-
+            
 
         }
 
