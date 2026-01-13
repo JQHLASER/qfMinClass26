@@ -35,8 +35,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\qfmain\bin\Release\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SunnyUI8">
+      <HintPath>..\..\..\UserControl\SunnyUI\SunnyUI\Bin\SunnyUI8.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,6 +51,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Log日志.cs" />
+    <Compile Include="winForm控制台\CMD_.cs" />
+    <Compile Include="winForm控制台\Form_Control.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="winForm控制台\Form_Control.Designer.cs">
+      <DependentUpon>Form_Control.cs</DependentUpon>
+    </Compile>
     <Compile Include="程序_捕获异常_.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -54,6 +66,11 @@
       <Project>{405ad025-8196-461f-909a-938aba8c7af2}</Project>
       <Name>qfmain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="winForm控制台\Form_Control.resx">
+      <DependentUpon>Form_Control.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

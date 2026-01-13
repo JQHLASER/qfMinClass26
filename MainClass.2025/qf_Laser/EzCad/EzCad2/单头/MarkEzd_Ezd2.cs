@@ -496,8 +496,10 @@ namespace qf_Laser
             msgErr = rtM.m;
             if (rt)
             {
-                double xSol = width / rtM.width;
-                double ySol = height / rtM.height;
+                double xSol = rtM.width <= 0 
+                              ? 1 : width / rtM.width;
+                double ySol = rtM.height <= 0 
+                              ? 1 : height / rtM.height;
 
                 _Err_jczMarkEzd2_ nErr = 按比例缩放对象(对象名, xCenter, yCenter, xSol, ySol);
                 rt = ErrToMsg((int)nErr, out msgErr);
@@ -519,7 +521,7 @@ namespace qf_Laser
             return (rt, msgErr);
         }
 
-         
+
 
         #endregion
 
@@ -833,6 +835,11 @@ namespace qf_Laser
         /// </summary> 
         internal _Err_jczMarkEzd2_ 按比例缩放对象(string 对象名称, double xCenter, double yCenter, double x比例, double y比例)
         {
+            x比例 = x比例 <= 0 ?
+                       1 : x比例;
+            y比例 = y比例 <= 0 ?
+                       1 : y比例;
+
             int nErr = JczLmc.指定对象按比例缩放(对象名称, xCenter, yCenter, x比例, y比例);
             return (_Err_jczMarkEzd2_)nErr;
         }

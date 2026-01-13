@@ -201,7 +201,7 @@ namespace qfNet
         {
             if (this._richTextBox.Text.Length >= this._最大行数)
             {
-                var lines = this._richTextBox.Lines.Skip(this._richTextBox.Lines.Length - this._最大行数).ToArray();
+                var lines = this._richTextBox.Lines.Skip(this._richTextBox.Lines.Length - 1).ToArray();
                 this._richTextBox.Lines = lines;
             }
 
