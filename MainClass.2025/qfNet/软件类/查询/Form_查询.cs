@@ -14,16 +14,7 @@ namespace qfNet
 {
     public partial class Form_查询 : Sunny.UI.UIForm
     { 
-        protected override void WndProc(ref Message m)
-        {
-            const int WM_NCLBUTTONDBLCLK = 0x00A3;
-
-            // 屏蔽标题栏双击
-            if (m.Msg == WM_NCLBUTTONDBLCLK)
-                return;
-
-            base.WndProc(ref m);
-        }
+        
 
         public Form_查询()
         {
@@ -74,13 +65,7 @@ namespace qfNet
             {
                 this.Event_FormClosing_关闭时?.Invoke(this);
             };
-            this.Resize += (s, e) =>
-            {
-                if (this.WindowState == FormWindowState.Normal)
-                {
-                    this.WindowState = FormWindowState.Maximized;
-                }
-            };
+            
  
         }
 

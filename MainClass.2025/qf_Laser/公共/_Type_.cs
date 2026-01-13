@@ -149,8 +149,41 @@ namespace qf_Laser
         public bool 脉冲点模式 = false;
         public int 脉冲点数目 = 0;
         public double 流水线速度 = 0;
+
+        /// <summary>
+        /// 深拷贝
+        /// </summary> 
+        public _笔参数_ Clone()
+        {
+            return new _笔参数_
+            {
+                笔号 = this.笔号,
+                加工次数 = this.加工次数,
+                标刻速度 = this.标刻速度,
+                功率百分比 = this.功率百分比,
+                电流 = this.电流,
+                频率 = this.频率,
+                Q脉冲宽度 = this.Q脉冲宽度,
+                开光延时 = this.开光延时,
+                关光延时 = this.关光延时,
+                结束延时 = this.结束延时,
+                拐角延时 = this.拐角延时,
+                跳转速度 = this.跳转速度,
+                跳转位置延时 = this.跳转位置延时,
+                跳转距离延时 = this.跳转距离延时,
+                末点补偿 = this.末点补偿,
+                加速距离 = this.加速距离,
+                打点时间 = this.打点时间,
+                脉冲点模式 = this.脉冲点模式,
+                脉冲点数目 = this.脉冲点数目,
+                流水线速度 = this.流水线速度, 
+
+            };
+        }
+
+
     }
- 
+
 
 
 
