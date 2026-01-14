@@ -48,6 +48,9 @@
   <ItemGroup>
     <Compile Include="Language_.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="编码\数据结构\Type.cs" />
+    <Compile Include="编码\数据结构\常量.cs" />
+    <Compile Include="编码\文件\文件类_本地_.cs" />
     <Compile Include="编码\方法\Err.cs" />
     <Compile Include="编码\方法\json.cs" />
     <Compile Include="编码\方法\文件.cs" />
