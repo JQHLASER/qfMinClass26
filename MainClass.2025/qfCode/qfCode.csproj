@@ -48,20 +48,23 @@
   <ItemGroup>
     <Compile Include="Language_.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="编码\数据结构\Type.cs" />
-    <Compile Include="编码\数据结构\常量.cs" />
-    <Compile Include="编码\文件\文件类_本地_.cs" />
-    <Compile Include="编码\方法\Err.cs" />
-    <Compile Include="编码\方法\json.cs" />
-    <Compile Include="编码\方法\文件.cs" />
-    <Compile Include="编码\方法\编辑.cs" />
-    <Compile Include="编码\方法\编码计算.cs" />
-    <Compile Include="编码\结构\_Type_.cs" />
-    <Compile Include="编码\结构\_元素_.cs" />
-    <Compile Include="编码\结构\_功能_.cs" />
-    <Compile Include="编码\结构\_对象_.cs" />
-    <Compile Include="编码\结构\_文件信息_.cs" />
-    <Compile Include="编码\编码.cs" />
+    <Compile Include="编码 Code2026\主程序\编码_.cs" />
+    <Compile Include="编码 Code2026\功能\_功能_.cs" />
+    <Compile Include="编码 Code2026\数据结构\_Type_.cs" />
+    <Compile Include="编码 Code2026\数据结构\对象及元素\对象\_元素_.cs" />
+    <Compile Include="编码 Code2026\数据结构\对象及元素\元素\_关联对象_.cs" />
+    <Compile Include="编码 Code2026\数据结构\对象及元素\元素\_文本_.cs" />
+    <Compile Include="编码 Code2026\数据结构\对象及元素\对象\_对象_属性.cs" />
+    <Compile Include="编码 Code2026\数据结构\对象及元素\_工具箱_.cs" />
+    <Compile Include="编码 Code2026\数据结构\对象及元素\元素\_序列号_.cs" />
+    <Compile Include="编码 Code2026\数据结构\对象及元素\元素\_日期时间_.cs" />
+    <Compile Include="编码 Code2026\数据结构\对象及元素\元素\_班次_.cs" />
+    <Compile Include="编码 Code2026\数据结构\对象及元素\对象\_对象_.cs" />
+    <Compile Include="编码 Code2026\数据结构\对象及元素\_文件_属性_.cs" />
+    <Compile Include="编码 Code2026\主程序\_文件夹_.cs" />
+    <Compile Include="编码 Code2026\文件\读写\Iwork_文件_统一接口.cs" />
+    <Compile Include="编码 Code2026\常量.cs" />
+    <Compile Include="编码 Code2026\文件\配置文件.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Language\qfLanguage.csproj">
@@ -76,6 +79,7 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rd /s /q "$(ProjectDir)obj"</PostBuildEvent>
