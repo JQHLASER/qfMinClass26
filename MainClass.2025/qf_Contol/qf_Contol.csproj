@@ -35,6 +35,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\qfmain\bin\Release\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="qfNet">
+      <HintPath>..\qfNet\bin\Release\qfNet.dll</HintPath>
+    </Reference>
     <Reference Include="SunnyUI8">
       <HintPath>..\..\..\UserControl\SunnyUI\SunnyUI\Bin\SunnyUI8.dll</HintPath>
     </Reference>
