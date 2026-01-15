@@ -66,16 +66,18 @@ SqlServer 数据库....使用最新库
         public virtual bool 初始化(List<ConnectionConfig> lst, out string msgErr, int 超时时间 = 1000 * 10)
         {
             msgErr = string.Empty;
-            if (lst.Count == 0)
+            if (lst is null || lst.Count == 0)
             {
+                msgErr = "ConnectionConfig is null";
                 this.Db = null;
                 return false;
             }
             bool rt = true;
+
             try
             {
                 this.Db = new SqlSugarScope(lst);
-                this.Db.Ado.CommandTimeOut = 超时时间;
+                this.Db.Ado.CommandTimeOut = 超时时间 > 0 ? (int)超时时间 : 1000 * 10;
                 foreach (ConnectionConfig config in lst)
                 {
                     if (config.DbType == DbType.Sqlite)
@@ -106,17 +108,26 @@ SqlServer 数据库....使用最新库
             return rt;
         }
 
-        /// <summary>
-        /// 读写速度更快,读写可以并发
-        /// <para>只针到SQLite数据库</para>
-        /// <para>需在初始化成功后调用一下</para>
-        /// </summary>
-        public virtual (bool s, string m) 优化_Sqlite()
+        (bool s, string m) 优化_Sqlite()
         {
             try
             {
-                this.Db.Ado.ExecuteCommand("PRAGMA journal_mode=WAL;");//读写速度更快,读写可以并发
-                return (true, default);
+                // WAL 模式：提升并发读写性能
+                this.Db.Ado.ExecuteCommand("PRAGMA journal_mode = WAL;");
+
+                // 缓存大小调整（加快查询性能）
+                this.Db.Ado.ExecuteCommand("PRAGMA cache_size = -20000;"); // 约 20MB
+
+                // 写安全系数降低一点提高性能（正常使用足够安全）
+                this.Db.Ado.ExecuteCommand("PRAGMA synchronous = NORMAL;");
+
+                // 使用内存表加速排序、分组等操作
+                this.Db.Ado.ExecuteCommand("PRAGMA temp_store = MEMORY;");
+
+                // 自动清理 WAL 文件，提高长期运行稳定性
+                this.Db.Ado.ExecuteCommand("PRAGMA wal_checkpoint(TRUNCATE);");
+
+                return (true, "");
             }
             catch (Exception ex)
             {
@@ -179,9 +190,9 @@ SqlServer 数据库....使用最新库
             switch (连接类型)
             {
                 case _SQLite_连接类型_.V2:
-                    return $"data source={SqlLitePath.Path} ";
+                    return $"data source={SqlLitePath.Path} ; Journal Mode=WAL;";
                 case _SQLite_连接类型_.V3:
-                    return $"data source={SqlLitePath.Path}; Version = 3;";
+                    return $"data source={SqlLitePath.Path}; Version = 3; Journal Mode=WAL;";
                 default:
                     return "";
             }

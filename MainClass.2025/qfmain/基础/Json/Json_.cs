@@ -73,7 +73,7 @@ namespace qfmain
             return rt;
         }
 
-         
+
 
         /// <summary>
         /// 序列化,使用自带的 System.Text.Json
@@ -145,7 +145,28 @@ namespace qfmain
             }
         }
 
+        /// <summary>
+        /// 用的 Newtonsoft.Json
+        /// </summary> 
+        public virtual (bool s, string m, T t) 是否为json格式<T>(string jsonStr)
+        {
+            T result = default;
+            if (string.IsNullOrWhiteSpace(jsonStr))
+            {
+                return (false, "JSON string is null or empty", result);
+            }
 
+            try
+            {
+                JToken jt = JToken.Parse(jsonStr);
+                result = JsonConvert.DeserializeObject<T>(jsonStr);
+                return (true, "", result);
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message, result);
+            }
+        }
 
     }
 }

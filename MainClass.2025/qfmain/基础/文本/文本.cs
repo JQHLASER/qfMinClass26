@@ -268,15 +268,15 @@ namespace qfmain
             int currentWidth = TextRenderer.MeasureText(result, font).Width;
 
             // 不断补空格直到达到目标像素宽度
-            while (currentWidth/2 < targetWidthPx/2)
+            while (currentWidth / 2 < targetWidthPx / 2)
             {
-                result = 填充内容 + result+ 填充内容;
+                result = 填充内容 + result + 填充内容;
                 currentWidth = TextRenderer.MeasureText(result, font).Width;
             }
 
             return result;
         }
-         
+
 
         /// <summary>
         /// 判断字符串位数,含中文的处理
@@ -429,11 +429,7 @@ namespace qfmain
 
         }
 
-
-
-
-
-
+         
 
         #endregion
 
@@ -460,6 +456,12 @@ namespace qfmain
             }
             return rt;
         }
+        public virtual (bool s, string m, string value) Read_25(string path, Encoding encoding = null)
+        {
+            bool rt = Read_25(path, out string Text, out string msgErr, encoding);
+            return (rt, msgErr, Text);
+        }
+         
 
         /// <summary>
         /// 流方式，不占内存,一行一行读取,大文件也可以

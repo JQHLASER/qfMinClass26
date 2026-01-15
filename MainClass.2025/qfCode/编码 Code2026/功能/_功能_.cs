@@ -7,62 +7,21 @@ using System.Threading.Tasks;
 namespace qfCode
 {
     public class _功能_
-    {
-        public class _cfg_
-        {
+    {  
             /// <summary>
             /// 编码文件信息后缀
             /// </summary>
-            public _Type_._em_文件类型_  类型 { set; get; } = _Type_._em_文件类型_.ini;
-
+            public _功能_结构_._em_文件类型_  文件类型 { set; get; } = _功能_结构_._em_文件类型_.ini;
+             
             /// <summary>
             /// 编码信息文件后缀
             /// </summary>
             public string 后缀 { set; get; } = 常量.后缀;
              
-
-        }
-
-        public class _工具箱_
-        { 
-            public bool 文本 { set; get; } = true;
-            public bool 序列号 { set; get; } = true;
-            public bool 日期 { set; get; } = true;
-            public bool 时间 { set; get; } = true;
-            public bool 关联对象 { set; get; } = false;
-            public bool 班次 { set; get; } = false;
-            public bool 特殊码 { set; get; } = false;
-            public bool 外部文件 { set; get; } = false;           
-            public bool 通讯TCP { set; get; } = false;
-            public bool 通讯COM { set; get; } = false;
-
-        }
-
-        public class _编辑_
-        {
-            public bool 新建 { set; get; } = false;
-            public bool 打开 { set; get; } = false;
-            public bool 另存为 { set; get; } = false;
-            public bool 删除 { set; get; } = false;
-            public bool 模板 { set; get; } = false;
-        }
-
-        public class _对象属性_
-        {
-            public bool 防重 { set; get; } = false;
-            public bool 读码 { set; get; } = false;
-            /// <summary>
-            /// 判断加载内容到激光模板是否成功
-            /// </summary>
-            public bool 校验模板 { set; get; } = false;
-            public bool 校验位数 { set; get; } = false;
-            public bool 校验关键字 { set; get; } = false;
-         
-             
-        }
-
-
-
+            public _功能_结构_._工具箱_ 工具箱 { set; get; } = new _功能_结构_._工具箱_();
+            public _功能_结构_._编辑_ 编辑 { set; get; } = new _功能_结构_._编辑_();
+            public _对象_属性 对象属性 { set; get; } = new _对象_属性();
+ 
 
     }
 }

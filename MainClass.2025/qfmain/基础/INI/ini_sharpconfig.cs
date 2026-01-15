@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
- 
+
 
 
 namespace qfmain
@@ -52,7 +52,7 @@ namespace qfmain
             (bool rt, string value, string msgErr) rt = ReadStr(sectionName, settingName, 默认值);
             return rt.value;
         }
-        public (bool rt, string value, string msgErr) ReadStr(string sectionName, string settingName, string 默认值 = "")
+        public (bool s, string m, string value) ReadStr(string sectionName, string settingName, string 默认值 = "")
         {
             lock (_lock)
             {
@@ -84,20 +84,30 @@ namespace qfmain
         /// <summary>
         /// 需要配置是否保存
         /// </summary>
-        public void Write<T>(string sectionName, string settingName, T value, bool 是否保存)
+        public (bool s, string m) Write<T>(string sectionName, string settingName, T value, bool 是否保存)
         {
             lock (_lock)
             {
-                if (!_config.Contains(sectionName))
-                    _config.Add(sectionName);
-
-                if (!_config[sectionName].Contains(settingName))
-                    _config[sectionName].Add(settingName, "");
-
-                _config[sectionName][settingName].SetValue(value);
-                if (是否保存)
+                try
                 {
-                    Save();
+
+                    if (!_config.Contains(sectionName))
+                        _config.Add(sectionName);
+
+                    if (!_config[sectionName].Contains(settingName))
+                        _config[sectionName].Add(settingName, "");
+
+                    _config[sectionName][settingName].SetValue(value);
+                    if (是否保存)
+                    {
+                        Save();
+                    }
+
+                    return (true, "");
+                }
+                catch (Exception ex)
+                {
+                    return (false, ex.Message);
                 }
             }
         }

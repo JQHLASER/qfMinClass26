@@ -151,7 +151,7 @@ namespace qfPLC
                 DialogResult dlt = forms.ShowDialog();
                 if (重连 &&  dlt == DialogResult.OK)
                 {
-                    连接(true);
+                    Task.Run(() => { 连接(true); });
                 }
                 return dlt;
             }

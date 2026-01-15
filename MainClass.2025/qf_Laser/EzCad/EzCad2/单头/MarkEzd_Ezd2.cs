@@ -178,6 +178,7 @@ namespace qf_Laser
                 else
                 {
                     msgErr = $"{qfmain.Language_.Get语言("未初始化")},{JczLmc.ErrMsg(nErr)}";
+                    On_Log(false , msgErr);
                     释放打标卡(false);
                 }
             }

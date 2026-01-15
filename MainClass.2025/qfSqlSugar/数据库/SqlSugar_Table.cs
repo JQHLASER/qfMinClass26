@@ -4,11 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace qfSqlSugar
 {
@@ -29,6 +31,15 @@ namespace qfSqlSugar
       */
 
 
+    /*
+     * //开启事务
+       //this.Db.Ado.BeginTran();
+       //提交事务
+       //this.Db.Ado.CommitTran();
+       //事务回滚,异常时
+       //this.Db.Ado.RollbackTran();
+     * */
+
     /// <summary>
     /// 安装 SqlSugar
     /// </summary>
@@ -44,426 +55,230 @@ namespace qfSqlSugar
             this.Db = Db_.Db.GetConnection(id);
         }
 
+        #region Get查询
 
         /// <summary>
-        /// 查询全部记录,非事务处理
-        /// </summary>
-        /// <returns></returns>
-        public List<T> GetList()
+        /// 查询全部记录 
+        /// </summary> 
+        public bool GetList(out List<T> lst, out string msgErr)
         {
-            var list = this.Db.Queryable<T>().ToList();
-            return list;
-        }
-
-
-        /// <summary>
-        /// 查询全部记录,事务处理
-        /// </summary>
-        /// <returns></returns>
-        public bool GetList(out List<T> list, out string msgErr, bool 是否事务处理 = false)
-        {
-
-            list = new List<T>();
-            msgErr = string.Empty;
             bool rt = true;
-
+            lst = new List<T>();
+            msgErr = string.Empty;
             try
             {
-                if (是否事务处理)
-                {
-                    //开启事务
-                    this.Db.Ado.BeginTran();
-                }
-                list = this.Db.Queryable<T>().ToList();
-                if (是否事务处理)
-                {
-                    //提交事务
-                    this.Db.Ado.CommitTran();
-                }
+                lst = this.Db.Queryable<T>().ToList();
             }
             catch (Exception ex)
             {
-                if (是否事务处理)
-                {
-                    //事务回滚
-                    this.Db.Ado.RollbackTran();
-                }
-                msgErr = ex.Message;
                 rt = false;
+                msgErr = ex.Message;
             }
-
             return rt;
         }
 
-
         /// <summary>
-        /// 按条件查询,非事务处理
-        /// </summary>
-        /// <param name="exp"></param>
-        /// <returns></returns>
-        public List<T> GetList(Expression<Func<T, bool>> exp)
+        /// 按条件查询 ,用法
+        /// <para>GetList(u => u.Name == "张三", out lst, out msg);</para>
+        /// <para>GetList(u => u.Age = 20 && u.Name.Contains("小"), out lst, out msg);</para>
+        /// </summary> 
+        public bool GetList(Expression<Func<T, bool>> exp, out List<T> lst, out string msgErr)
         {
-            var list = this.Db.Queryable<T>().Where(exp).ToList();
-            return list;
-        }
+            bool rt = true;
+            lst = new List<T>();
+            msgErr = string.Empty;
+            try
+            {
+                lst = this.Db.Queryable<T>().Where(exp).ToList();
+            }
+            catch (Exception ex)
+            {
+                rt = false;
+                msgErr = ex.Message;
+            }
 
-        /// <summary>
-        /// 根据主键，获取对象,非事务处理
-        /// </summary>
-        /// <param name="pkid"></param>
-        /// <returns></returns>
-        public T GetObj(int pkid)
-        {
-            return this.Db.Queryable<T>().InSingle(pkid);
+            return rt;
         }
 
         /// <summary>
         /// 根据主键，获取对象 
-        /// </summary>
-        /// <param name="pkid"></param>
-        /// <param name="t_"></param>
-        /// <param name="msgErr"></param>
-        /// <returns></returns>
-        public bool GetObj(int pkid, ref T t_, out string msgErr, bool 是否事务处理 = false)
+        /// </summary> 
+        public bool Get(int pkid, out T t_, out string msgErr)
         {
-
-            msgErr = string.Empty;
             bool rt = true;
 
+            msgErr = string.Empty;
             try
             {
-                if (是否事务处理)
-                {
-                    //开启事务
-                    this.Db.Ado.BeginTran();
-                }
                 t_ = this.Db.Queryable<T>().InSingle(pkid);
-                if (是否事务处理)
-                {
-                    //提交事务
-                    this.Db.Ado.CommitTran();
-                }
             }
             catch (Exception ex)
             {
-                if (是否事务处理)
-                {
-                    //事务回滚
-                    this.Db.Ado.RollbackTran();
-                }
-                msgErr = ex.Message;
+                t_ = default;
                 rt = false;
+                msgErr = ex.Message;
             }
             return rt;
-        }
 
-
-        /// <summary>
-        /// 分页获取,非事务处理
-        /// </summary>
-        /// <param name="sqlstr"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="totle"></param>
-        /// <returns></returns>
-        public List<T> GetList(string sqlstr, int pageIndex, int pageSize, out int totle)
-        {
-            List<T> list = this.Db.SqlQueryable<T>(sqlstr).ToPageList(pageIndex, pageSize);
-            totle = list.Count > 0 ? list.Count : 0;
-
-            return list;
         }
 
         /// <summary>
-        /// 分页获取,事务处理
+        /// 分页获取
+        /// <para>pageIndex : 索引</para>
+        /// <para>pageSize :每页数量 </para>
+        /// <para>total : 总页数</para>
         /// </summary>
-        /// <param name="sqlstr"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="totle"></param>
-        /// <param name="list"></param>
-        /// <param name="msgErr"></param>
-        /// <returns></returns>
-        public bool GetList(string sqlstr, int pageIndex, int pageSize, out int totle, out List<T> list, out string msgErr, bool 是否事务处理 = false)
+        /// <param name="sqlstr">  
+        public bool GetList(string sqlstr, int pageIndex, int pageSize, out int total, out List<T> list, out string msgErr)
         {
-
             list = new List<T>();
             msgErr = string.Empty;
-            bool rt = true;
+            total = 0;
 
             try
             {
-                if (是否事务处理)
-                {
-                    //开启事务
-                    this.Db.Ado.BeginTran();
-                }
-                list = this.Db.SqlQueryable<T>(sqlstr).ToPageList(pageIndex, pageSize);
-                if (是否事务处理)
-                {
-                    //提交事务
-                    this.Db.Ado.CommitTran();
-                }
+                list = this.Db.SqlQueryable<T>(sqlstr).ToPageList(pageIndex, pageSize, ref total);
+                return true;
             }
             catch (Exception ex)
             {
-                if (是否事务处理)
-                {
-                    //事务回滚
-                    this.Db.Ado.RollbackTran();
-                }
                 msgErr = ex.Message;
-                rt = false;
+                return false;
             }
-
-            totle = list.Count > 0 ? list.Count : 0;
-            return rt;
-
-
         }
 
-
         /// <summary>
-        /// 自定义sql语句查询,非事务处理
-        /// </summary>
-        /// <param name="sqlstr"></param>
-        /// <returns></returns>
-        public List<T> GetList(string sqlstr)
-        {
-            List<T> list = this.Db.SqlQueryable<T>(sqlstr).ToList();
-            return list;
-        }
-
-
-        /// <summary>
-        /// 自定义sql语句查询,事务处理
-        /// </summary>
-        /// <param name="sqlstr"></param>
-        /// <param name="list"></param>
-        /// <param name="msgErr"></param>
-        /// <returns></returns>
-        public bool GetList(string sqlstr, out List<T> list, out string msgErr, bool 是否事务处理 = false)
+        /// 自定义sql语句查询 
+        /// </summary> 
+        public bool GetList(string sqlstr, out List<T> list, out string msgErr)
         {
             list = new List<T>();
             msgErr = string.Empty;
             bool rt = true;
             try
             {
-                if (是否事务处理)
-                {
-                    //开启事务 
-                    this.Db.Ado.BeginTran();
-                }
                 list = this.Db.SqlQueryable<T>(sqlstr).ToList();
-                if (是否事务处理)
-                {
-                    //提交事务
-                    this.Db.Ado.CommitTran();
-                }
             }
             catch (Exception ex)
             {
-                if (是否事务处理)
-                {
-                    //事务回滚
-                    this.Db.Ado.RollbackTran();
-                }
                 msgErr = ex.Message;
                 rt = false;
             }
-
             return rt;
         }
 
 
-
-        public bool GetList(List<int> lst主键内容, string 表名, string 主键字段名, out List<T> list, out string msgErr, bool 是否事务处理 = false)
-        {
-            string sql = $"select * from {表名} where {主键字段名} in ( ";
-
-            for (int i = 0; i < lst主键内容.Count; i++)
-            {
-                int v = lst主键内容[i];
-                if (i == 0)
-                {
-                    sql += $"{v}";
-                }
-                else
-                {
-                    sql += $",{v}";
-                }
-            }
-            sql += ")";
-            return GetList(sql, out list, out msgErr, 是否事务处理);
-        }
-
-        public bool GetList(List<string> lst主键内容, string 表名, string 主键字段名, out List<T> list, out string msgErr, bool 是否事务处理 = false)
-        {
-            string sql = $"select * from {表名} where {主键字段名} in ( ";
-
-            for (int i = 0; i < lst主键内容.Count; i++)
-            {
-                string v = lst主键内容[i];
-                if (i == 0)
-                {
-                    sql += $"'{v}'";
-                }
-                else
-                {
-                    sql += $",'{v}'";
-                }
-            }
-            sql += ")";
-            return GetList(sql, out list, out msgErr, 是否事务处理);
-        }
-
-
-        /// <summary>
-        /// 添加一条,事务处理
-        /// </summary>
-        /// <param name="insertObj"></param>
-        /// <param name="msgErr"></param>
-        /// <returns></returns>
-        public int Insertable(T insertObj, out string msgErr)
+        public bool GetList<B>(List<B> lst主键内容, string 表名, string 主键字段名, out List<T> list, out string msgErr)
         {
             msgErr = string.Empty;
-            int res = 0;
+            list = new List<T>();
+
             try
             {
-                //开启事务
-                this.Db.Ado.BeginTran();
-                res = this.Db.Insertable(insertObj).ExecuteCommand();
-                //提交事务
-                this.Db.Ado.CommitTran();
+                list = this.Db.Queryable<T>()
+                              .AS(表名)
+                              .In(主键字段名, lst主键内容)
+                              .ToList();
+
+                return true;
             }
             catch (Exception ex)
             {
-                //事务回滚
-                this.Db.Ado.RollbackTran();
                 msgErr = ex.Message;
+                return false;
             }
-            return res;
         }
 
-        /// <summary>
-        /// 批量操作，添加多条，事务处理
-        /// </summary>
-        /// <param name="listObj"></param>
-        /// <param name="msgErr"></param>
-        /// <returns></returns>
-        public int Insertable(List<T> listObj, out string msgErr)
+
+        public bool Get总行数(string 表名, out long totalCount, out string msgErr)
         {
             msgErr = string.Empty;
-            int res = 0;
+            totalCount = 0;
             try
             {
-                //开启事务
-                this.Db.Ado.BeginTran();
-                res = this.Db.Insertable(listObj).ExecuteCommand();
-                //提交事务
-                this.Db.Ado.CommitTran();
+                totalCount = this.Db.Queryable<object>()
+                                    .AS(表名)   // 指定表名
+                                    .Count();   // 获取数量
+                return true;
             }
             catch (Exception ex)
             {
-                //事务回滚
-                this.Db.Ado.RollbackTran();
                 msgErr = ex.Message;
-
+                return false;
             }
-            return res;
         }
 
 
+
+
+
+        #endregion
+
+        #region Insertable 添加
+
+
         /// <summary>
-        /// 批量操作，添加多条，事务处理
-        /// </summary>
-        /// <param name="listObj"></param>
-        /// <param name="msgErr"></param>
-        /// <returns></returns>
+        /// 添加一条,添加一条不需要事务
+        /// </summary> 
+        public bool Insertable(T insertObj, out int 受影响行, out string msgErr)
+        {
+            bool rt = true;
+            msgErr = string.Empty;
+            受影响行 = 0;
+            try
+            {
+                受影响行 = this.Db.Insertable(insertObj).ExecuteCommand();
+            }
+            catch (Exception ex)
+            {
+                msgErr = ex.Message;
+                rt = false;
+            }
+            return rt;
+        }
+
+        /// <summary>
+        /// 批量操作，添加多条 
+        /// </summary> 
         public bool Insertable(List<T> listObj, out int 受影响行, out string msgErr)
         {
             bool rt = true;
             msgErr = string.Empty;
-
-            受影响行 = 0;
-            try
-            {  //开启事务
-                this.Db.Ado.BeginTran();
-                受影响行 = this.Db.Insertable(listObj).ExecuteCommand();
-                //提交事务
-                this.Db.Ado.CommitTran();
-            }
-            catch (Exception ex)
+            int count = 0;
+            var result = this.Db.Ado.UseTran(() =>
             {
-                //事务回滚
-                this.Db.Ado.RollbackTran();
-                msgErr = ex.Message;
-                rt = false;
-
-            }
-            return rt;
-        }
-
-        /// <summary>
-        /// 批量操作，添加多条，事务处理
-        /// </summary>
-        /// <param name="listObj"></param>
-        /// <param name="msgErr"></param>
-        /// <returns></returns>
-        public bool Insertable(T listObj, out int 受影响行, out string msgErr)
-        {
-            bool rt = true;
-            msgErr = string.Empty;
-
-            受影响行 = 0;
-            try
-            {  //开启事务
-                this.Db.Ado.BeginTran();
-                受影响行 = this.Db.Insertable(listObj).ExecuteCommand();
-                //提交事务
-                this.Db.Ado.CommitTran();
-            }
-            catch (Exception ex)
-            {
-                //事务回滚
-                this.Db.Ado.RollbackTran();
-                msgErr = ex.Message;
-                rt = false;
-
-            }
+                count = this.Db.Insertable(listObj).ExecuteCommand();
+            });
+            受影响行 = count;
+            rt = result.IsSuccess;
+            msgErr = !rt ? result.ErrorMessage : "";
             return rt;
         }
 
 
-
         /// <summary>
-        /// 添加,自动去重的
+        /// 添加,自动去重的,已自带事务
         /// <para>使用时,需要在主键结构上增加 [SugarColumn(IsPrimaryKey = true,IsIdentity = true)] </para>
         /// 首先在实体类的 ID 字段上添加 [SugarColumn(IsPrimaryKey = true, IsIdentity = true)] 特性
         /// IsPrimaryKey = true：标识该字段为主键，
         ///IsIdentity = true：标识该字段为自增长字段
-        /// </summary>
-        /// <param name="StorageableObj"></param>
-        /// <returns></returns>
-        public bool Storageable(List<T> StorageableObj, out int 受影响行, out string msgErr)
+        /// </summary> 
+        public bool Storageable(List<T> lstObj, out int 受影响行, out string msgErr)
         {
             bool rt = true;
             msgErr = string.Empty;
             受影响行 = 0;
             try
-            {   //开启事务
-                this.Db.Ado.BeginTran();
-                受影响行 = this.Db.Storageable(StorageableObj).ExecuteCommand();
-                //提交事务
-                this.Db.Ado.CommitTran();
+            {
+                受影响行 = this.Db.Storageable(lstObj).ExecuteCommand();
+
             }
             catch (Exception ex)
             {
-                rt = false;
-                //事务回滚
-                this.Db.Ado.RollbackTran();
                 msgErr = ex.Message;
+                rt = false;
             }
+
             return rt;
         }
 
@@ -482,17 +297,12 @@ namespace qfSqlSugar
             msgErr = string.Empty;
             受影响行 = 0;
             try
-            {   //开启事务
-                this.Db.Ado.BeginTran();
+            {
                 受影响行 = this.Db.Storageable(StorageableObj).ExecuteCommand();
-                //提交事务
-                this.Db.Ado.CommitTran();
             }
             catch (Exception ex)
             {
                 rt = false;
-                //事务回滚
-                this.Db.Ado.RollbackTran();
                 msgErr = ex.Message;
             }
             return rt;
@@ -500,20 +310,33 @@ namespace qfSqlSugar
 
 
 
+        #endregion
+
+        #region Update 更新
 
 
         /// <summary>
-        /// 修改，更新一条
+        /// 修改，更新一条,事务处理
         /// <para>使用时,需要在主键结构上增加 [SugarColumn(IsPrimaryKey = true,IsIdentity = true)] </para>
         /// 首先在实体类的 ID 字段上添加 [SugarColumn(IsPrimaryKey = true, IsIdentity = true)] 特性
         /// IsPrimaryKey = true：标识该字段为主键，
         ///IsIdentity = true：标识该字段为自增长字段
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public int Update(T obj)
+        /// </summary> 
+        public bool Update(T obj, out int 受影响行, out string msgErr)
         {
-            return this.Db.Updateable<T>(obj).ExecuteCommand();
+            msgErr = string.Empty;
+            bool rt = true;
+
+            int count = 0;
+            var result = this.Db.Ado.UseTran(() =>
+            {
+                count = this.Db.Updateable<T>(obj).ExecuteCommand();
+            });
+            受影响行 = count;
+            rt = result.IsSuccess;
+            msgErr = !rt ? result.ErrorMessage : "";
+
+            return rt;
         }
 
         /// <summary>
@@ -522,293 +345,141 @@ namespace qfSqlSugar
         /// 首先在实体类的 ID 字段上添加 [SugarColumn(IsPrimaryKey = true, IsIdentity = true)] 特性
         /// IsPrimaryKey = true：标识该字段为主键，
         ///IsIdentity = true：标识该字段为自增长字段
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="msgErr"></param>
-        /// <returns></returns>
-        public bool Update(T obj, out int 受影响行, out string msgErr)
-        {
-            msgErr = string.Empty;
-            bool rt = true;
-            受影响行 = 0;
-            try
-            {
-                this.Db.Ado.BeginTran();
-                受影响行 = this.Db.Updateable<T>(obj).ExecuteCommand();
-                this.Db.Ado.CommitTran();
-            }
-            catch (Exception ex)
-            {
-                rt = false;
-                this.Db.Ado.RollbackTran();
-                msgErr = ex.Message;
-            }
-            return rt;
-        }
-
-
-        /// <summary>
-        /// 忽略某些列更新
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="columns"></param>
-        /// <returns></returns>
-        public int Update(T obj, List<IgnoreColumn> columns)
-        {
-            if (columns.Count > 0)
-            {
-                columns.ForEach((e) =>
-                {
-                    this.Db.IgnoreColumns.Add(e);
-                });
-            }
-            return this.Db.Updateable<T>(obj).ExecuteCommand();
-        }
-
-
-        /// <summary>
-        /// 批量更新多条，事务处理
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
+        /// </summary> 
         public bool Update(List<T> obj, out int 受影响行, out string msgErr)
         {
-            bool rt = true;
-            受影响行 = 0;
             msgErr = string.Empty;
-            try
+            bool rt = true;
+
+            int count = 0;
+            var result = this.Db.Ado.UseTran(() =>
             {
-                //开启事务
-                this.Db.Ado.BeginTran();
-                //执行更新
-                受影响行 = this.Db.Updateable<T>(obj).ExecuteCommand();
-                //提交事务
-                this.Db.Ado.CommitTran();
-            }
-            catch (Exception ex)
-            {
-                //事务回滚
-                this.Db.Ado.RollbackTran();
-                //抛出异常
-                msgErr = ex.Message;
-                rt = false;
-            }
+                count = this.Db.Updateable<T>(obj).ExecuteCommand();
+            });
+            受影响行 = count;
+            rt = result.IsSuccess;
+            msgErr = !rt ? result.ErrorMessage : "";
             return rt;
         }
 
 
+        #endregion
+
+        #region Delete 删除
+
 
         /// <summary>
-        /// 添加,自动去重的
-        /// 使用时,需要在主键结构上增加 [SugarColumn(IsPrimaryKey = true)]
-        /// </summary>
-        /// <param name="StorageableObj"></param>
-        /// <returns></returns>
-        public int Storageable(T StorageableObj)
-        {
-            return this.Db.Storageable(StorageableObj).ExecuteCommand();
-        }
-
-        /// <summary>
-        /// 添加,自动去重的
-        /// <para>使用时,需要在主键结构上增加 [SugarColumn(IsPrimaryKey = true)] </para>
-        /// </summary>
-        /// <param name="StorageableObj"></param>
-        /// <returns></returns>
-        public int Storageable(List<T> StorageableObj)
-        {
-
-
-            int res = 0;
-            try
-            {
-                //开启事务
-                this.Db.Ado.BeginTran();
-                res = this.Db.Storageable(StorageableObj).ExecuteCommand();
-                //提交事务
-                this.Db.Ado.CommitTran();
-            }
-            catch (Exception ex)
-            {
-                //事务回滚
-                this.Db.Ado.RollbackTran();
-                throw new Exception(ex.Message);
-            }
-            return res;
-        }
-
-
-
-        //删除一条
-        public int Delete(T obj)
-        {
-            return this.Db.Deleteable<T>(obj).ExecuteCommand();
-        }
-        /// <summary>
-        /// 批量删除多条,事务处理
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public bool Delete(List<T> obj, out int 受影响行, out string msgErr)
-        {
-            bool rt = true;
-            受影响行 = 0;
-            msgErr = string.Empty;
-            try
-            {
-                this.Db.Ado.BeginTran();
-                受影响行 = this.Db.Deleteable<T>(obj).ExecuteCommand();
-                this.Db.Ado.CommitTran();
-            }
-            catch (Exception ex)
-            {
-                this.Db.Ado.RollbackTran();
-                msgErr = ex.Message;
-                rt = false;
-            }
-            return rt;
-        }
-
-        /// <summary>
-        /// 删除一条,事务处理
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
+        /// 批量删除多条 
+        /// </summary> 
         public bool Delete(T obj, out int 受影响行, out string msgErr)
         {
             bool rt = true;
-            受影响行 = 0;
+            int count = 0;
             msgErr = string.Empty;
-            try
+            var result = this.Db.Ado.UseTran(() =>
             {
-                this.Db.Ado.BeginTran();
-                受影响行 = this.Db.Deleteable<T>(obj).ExecuteCommand();
-                this.Db.Ado.CommitTran();
-            }
-            catch (Exception ex)
-            {
-                this.Db.Ado.RollbackTran();
-                msgErr = ex.Message;
-                rt = false;
-            }
+                count = this.Db.Deleteable<T>(obj).ExecuteCommand();
+            });
+            受影响行 = count;
+            rt = result.IsSuccess;
+            msgErr = !rt ? result.ErrorMessage : "";
             return rt;
         }
 
-        public int Delete(Expression<Func<T, bool>> exp)
-        {
-            return this.Db.Deleteable<T>().Where(exp).ExecuteCommand();
-
-        }
-
-
-        //*****************************SQL语句
 
         /// <summary>
-        /// sql语句 ,事务操作
-        /// <para>dt : 影响到的数据</para>
-        /// </summary>
-        /// <param name="sqlStr"></param>
-        public bool SQL_语句(string sqlStr, out DataTable dt, out string msgErr, bool 是否事务处理 = true)
-        {
-            msgErr = string.Empty;
-            dt = new DataTable();
-            bool rt = true;
-
-            try
-            {
-                if (是否事务处理)
-                {
-                    this.Db.Ado.BeginTran();
-                }
-                dt = SQL_语句(sqlStr);
-                if (是否事务处理)
-                {
-                    this.Db.Ado.CommitTran();
-                }
-            }
-            catch (Exception ex)
-            {
-                if (是否事务处理)
-                {
-                    this.Db.Ado.RollbackTran();
-                }
-                rt = false;
-                msgErr = ex.Message;
-            }
-
-            return rt;
-        }
-
-        /// <summary>
-        /// 非事务操作
+        /// 批量删除多条 
         /// </summary> 
-        DataTable SQL_语句(string sqlStr)
+        public bool Delete(List<T> obj, out int 受影响行, out string msgErr)
         {
-            DataTable dt = this.Db.SqlQueryable<T>(sqlStr).ToDataTable();
-            return dt;
+            bool rt = true;
+            int count = 0;
+            msgErr = string.Empty;
+            var result = this.Db.Ado.UseTran(() =>
+            {
+                count = this.Db.Deleteable<T>(obj).ExecuteCommand();
+            });
+            受影响行 = count;
+            rt = result.IsSuccess;
+            msgErr = !rt ? result.ErrorMessage : "";
+            return rt;
         }
 
 
-
         /// <summary>
-        /// 多条保存到一个表
-        /// <para>dt : 影响到的数据</para>
-        /// </summary>
-        /// <param name="lst_字段"></param>
-        /// <param name="lst_内容"></param>
-        public bool SQL_储存(string 表名, List<string> lst_字段, List<string[]> lst_内容, out DataTable dt, out string msgErr)
+        /// 条件,用法:
+        /// <para>Delete(u => u.Id == 10)</para>
+        /// <para> Delete(u => u.Name == "张三" && u.Id > 100);</para>
+        /// </summary> 
+        public bool Delete(Expression<Func<T, bool>> exp, out int 受影响行, out string msgErr)
         {
             bool rt = true;
-            dt = new DataTable();
+            int count = 0;
             msgErr = string.Empty;
-            try
+            var result = this.Db.Ado.UseTran(() =>
             {
-                dt = SQL_储存(表名, lst_字段, lst_内容);
+                count = this.Db.Deleteable<T>().Where(exp).ExecuteCommand();
+            });
+            受影响行 = count;
+            rt = result.IsSuccess;
+            msgErr = !rt ? result.ErrorMessage : "";
+            return rt;
+        }
+
+
+        #endregion
+
+ 
+        #region 原生
+
+        /// <summary>
+        /// Is事务 : 操作单行数据时为false,多条时为True;
+        /// </summary> 
+        public bool 执行SQL(string sqlStr, bool Is事务, out string msgErr)
+        {
+            bool rt = true;
+            msgErr = string.Empty;
+
+            if (Is事务)
+            {
+                var result = this.Db.Ado.UseTran(() =>
+                {
+                    DataTable dt = this.Db.SqlQueryable<T>(sqlStr).ToDataTable();
+                });
+                rt = result.IsSuccess;
+                msgErr = !rt ? result.ErrorMessage : "";
             }
-            catch (Exception ex)
+            else
             {
-                msgErr = ex.Message;
-                rt = false;
+                try
+                {
+                    DataTable dt = this.Db.SqlQueryable<T>(sqlStr).ToDataTable();
+                }
+                catch (Exception ex)
+                {
+                    rt = false;
+                    msgErr = ex.Message;
+                }
             }
             return rt;
         }
 
-        public DataTable SQL_储存(string 表名, List<string> lst_字段, List<string[]> lst_内容)
+        /// <summary>
+        /// 添加
+        /// </summary> 
+        public bool 执行SQL_添加(string 表名, List<string> lst_字段, List<string[]> lst_内容, bool Is事务, out string msgErr)
         {
+            #region SQL语句
+
+            string 字段 = string.Join(",", lst_字段);
 
 
-            string 字段 = string.Empty;
-            for (int i = 0; i < lst_字段.Count; i++)
-            {
-                if (i == 0)
-                {
-                    字段 = lst_字段[i];
-                }
-                else
-                {
-                    字段 += "," + lst_字段[i];
-                }
-            }
-
-            string sqlStr = string.Format("insert into {0}({1})", 表名, 字段);
+            string sqlStr = $"insert into{表名}({字段})";
 
             for (int i = 0; i < lst_内容.Count; i++)
             {
                 string[] value = lst_内容[i];
-                string xt = string.Empty;
-                for (int a = 0; a < value.Length; a++)
-                {
-                    if (a == 0)
-                    {
-                        xt = string.Format("'{0}'", value[a]);
-                    }
-                    else
-                    {
-                        xt += string.Format(",'{0}'", value[a]);
-                    }
-                }
-
+                string xt = string.Join(",", value);
                 if (i == 0)
                 {
                     sqlStr += " select " + xt;
@@ -818,68 +489,23 @@ namespace qfSqlSugar
                     sqlStr += "union all ";//添加所有，包括重复项,使用union不添加重复项，最后一项不写union
                     sqlStr += " select " + xt;
                 }
-
-
             }
-            return SQL_语句(sqlStr);
-
-        }
 
 
-        /// <summary>
-        /// sql语句 ,非事务
-        /// </summary>
-        /// <param name="sqlStr"></param>
-        public List<T> GetList_sql语句(string sqlStr)
-        {
-            return this.Db.SqlQueryable<T>(sqlStr).ToList();
-        }
+            #endregion
 
-        /// <summary>
-        /// sql语句 ,事务处理
-        /// </summary>
-        /// <param name="sqlStr"></param>
-        public bool GetList_sql语句(string sqlStr, out List<T> list, out string msgErr, bool 是否事务处理 = false)
-        {
-            msgErr = string.Empty;
-            bool rt = true;
-            list = new List<T>();
-            int res = 0;
-            try
-            {
-                if (是否事务处理)
-                {
-                    this.Db.Ado.BeginTran();
-                }
-                list = this.Db.SqlQueryable<T>(sqlStr).ToList();
-                if (是否事务处理)
-                {
-                    this.Db.Ado.CommitTran();
-                }
-            }
-            catch (Exception ex)
-            {
-                if (是否事务处理)
-                {
-                    this.Db.Ado.RollbackTran();
-                }
-                rt = false;
-                msgErr = ex.Message;
-            }
-            return rt;
+
+            return 执行SQL(sqlStr, Is事务, out msgErr);
 
         }
 
 
 
+
         /// <summary>
-        /// 多条件查询,并将符合的值拼接成新值
-        /// </summary>
-        /// <param name="sql语句"></param>
-        /// <param name="结果"></param>
-        /// <param name="msgErr"></param>
-        /// <returns></returns>
-        public bool 执行(string sql语句, out DataTable row, out string msgErr, bool 是否事务处理 = true)
+        /// 原生SQL查询
+        /// </summary> 
+        public bool Get_DataTable(string sql语句, out DataTable row, out string msgErr)
         {
             #region 例
 
@@ -915,95 +541,56 @@ namespace qfSqlSugar
             row = new DataTable();
             try
             {
-                if (是否事务处理)
-                {
-                    this.Db.Ado.BeginTran();
-                }
                 // 执行原生 SQL 查询
                 row = this.Db.SqlQueryable<T>(sql语句).ToDataTable();
-                if (是否事务处理)
-                {
-                    this.Db.Ado.CommitTran();
-                }
-
 
             }
             catch (Exception ex)
             {
-                if (是否事务处理)
-                {
-                    this.Db.Ado.RollbackTran();
-                }
                 rt = false;
                 msgErr = ex.Message;
             }
             return rt;
         }
 
-
-        public bool 执行(string sql语句, out int 受影响行, out string msgErr, bool 是否事务处理 = true)
+        /// <summary>
+        ///  原生SQL
+        /// </summary> 
+        public bool 执行(string sql语句, out int 受影响行, out string msgErr)
         {
             bool rt = true;
             msgErr = string.Empty;
-            受影响行 = 0;
-            try
+            int count = 0;
+            var result = this.Db.Ado.UseTran(() =>
             {
-                if (是否事务处理)
-                {
-                    this.Db.Ado.BeginTran();
-                }
-                // 执行原生 SQL 查询
-                受影响行 = this.Db.Ado.ExecuteCommand(sql语句);
-                if (是否事务处理)
-                {
-                    this.Db.Ado.CommitTran();
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                if (是否事务处理)
-                {
-                    this.Db.Ado.RollbackTran();
-                }
-                rt = false;
-                msgErr = ex.Message;
-            }
+                // 执行原生 SQL  
+                count = this.Db.Ado.ExecuteCommand(sql语句);
+            });
+            rt = result.IsSuccess;
+            msgErr = !rt ? result.ErrorMessage : "";
+            受影响行 = count;
             return rt;
         }
 
-        public bool 执行(string sql语句, out string msgErr, bool 是否事务处理 = true)
+        public bool 执行(string sql语句, out List<T> lst, out string msgErr)
         {
-
             bool rt = true;
             msgErr = string.Empty;
-
-            try
+            List<T> lst0 = default;
+            var result = this.Db.Ado.UseTran(() =>
             {
-                if (是否事务处理)
-                {
-                    this.Db.Ado.BeginTran();
-                }
-                var result = this.Db.Ado.SqlQuery<string[]>(sql语句);
-                if (是否事务处理)
-                {
-                    this.Db.Ado.CommitTran();
-                }
-            }
-            catch (Exception ex)
-            {
-                if (是否事务处理)
-                {
-                    this.Db.Ado.RollbackTran();
-                }
-                rt = false;
-                msgErr = ex.Message;
-            }
+                lst0 = this.Db.Ado.SqlQuery<T>(sql语句);
+            });
+            rt = result.IsSuccess;
+            msgErr = !rt ? result.ErrorMessage : "";
+            lst = lst0;
             return rt;
         }
 
+        #endregion
 
+
+        #region 其它 
 
         /// <summary>
         /// 不同的数据库对时间格式是不一样的
@@ -1024,265 +611,11 @@ namespace qfSqlSugar
             return "";
         }
 
-
-        /// <summary>
-        /// "SELECT COUNT(*) FROM 表名"
-        /// </summary>
-        /// <param name="Sql语句"></param>
-        /// <returns></returns>
-        public long 获取总行数(string Sql语句)
-        {
-            long totalCount = this.Db.Ado.GetLong(Sql语句);
-            return totalCount;
-        }
-
-        /// <summary>
-        ///  "SELECT COUNT(*) FROM 表名"
-        /// </summary>
-        /// <param name="Sql语句"></param>
-        /// <param name="totalCount"></param>
-        /// <param name="msgErr"></param>
-        /// <returns></returns>
-        public bool 获取总行数(string Sql语句, out long totalCount, out string msgErr, bool 是否事务处理 = false)
-        {
-            msgErr = string.Empty;
-            bool rt = true;
-            totalCount = 0;
-            int res = 0;
-            try
-            {
-                if (是否事务处理)
-                {
-                    this.Db.Ado.BeginTran();
-                }
-                totalCount = this.Db.Ado.GetLong(Sql语句);
-                if (是否事务处理)
-                {
-                    this.Db.Ado.CommitTran();
-                }
-            }
-            catch (Exception ex)
-            {
-                if (是否事务处理)
-                {
-                    this.Db.Ado.RollbackTran();
-                }
-                rt = false;
-                msgErr = ex.Message;
-            }
-            return rt;
-        }
-
-        /// <summary>
-        /// 输入表名就可以了
-        ///  <para>使用语句"SELECT COUNT(*) FROM 表名"</para>
-        /// </summary> 
-        public bool 获取总行数1(string 表名, out long totalCount, out string msgErr, bool 是否事务处理 = false)
-        {
-            msgErr = string.Empty;
-            bool rt = true;
-            totalCount = 0;
-            int res = 0;
-            try
-            {
-                if (是否事务处理)
-                {
-                    this.Db.Ado.BeginTran();
-                }
-                totalCount = this.Db.Ado.GetLong($"SELECT COUNT(*) FROM {表名}");
-                if (是否事务处理)
-                {
-                    this.Db.Ado.CommitTran();
-                }
-            }
-            catch (Exception ex)
-            {
-                if (是否事务处理)
-                {
-                    this.Db.Ado.RollbackTran();
-                }
-                rt = false;
-                msgErr = ex.Message;
-            }
-            return rt;
-        }
-
-
-        #region 高速查询....泛型
-
-
-        /*使用方法
-        var list = QueryInByField<表.dataZX, string, string>(
-                 db_sys.Db,
-                 sns,          // values
-                 "SN条码",     // fieldName
-                 d => d.SN条码 // selectExpr
-                ); 
-         */
-
-        /// <summary>
-        /// 据说效率很高的
-        /// <pata>Expression : 例 d => d.SN条码 //返加一个字段 </pata>
-        /// <para>Expression : 例 d => new {  d.SN条码, d.工厂ID,   d.创建时间  } //可以返回多个字段</para>
-        /// <para>Expression : d=>d //返回整个实体,但不推荐</para>
-        /// </summary> 
-        public List<查结果类型> GetList_高效<字段类型, 查结果类型>(
-                                                 IEnumerable<字段类型> values,
-                                                 string 字段名,
-                                                 Expression<Func<T, 查结果类型>> selectExpr)
-        {
-            var list = values?.Where(v => v != null)
-                              .Distinct()
-                              .ToList();
-
-            if (list == null || list.Count == 0)
-                return new List<查结果类型>();
-
-            return this.Db.Queryable<T>()
-                     .In(字段名, list)
-                     .Select(selectExpr)
-                     .ToList();
-        }
-
-
-
         #endregion
 
 
 
-        #region TPV
-
-        /*
-      1.  在数据库表中执行一次,新建类型
-        CREATE TYPE dbo.SNListType AS TABLE
-        (
-            Value NVARCHAR(100) PRIMARY KEY //就是要查询的列的类型,Value就是列名-- 长度建议和 SN条码 一致
-        );
          
-
-     2.   C#：构造 DataTable（列名必须一致）
-       DataTable dtSN = new DataTable();
-        dtSN.Columns.Add("Value", typeof(string));
-        
-        foreach (var sn in snList)
-        {
-            dtSN.Rows.Add(sn);
-        }
-
-
-
-     3.   创TVP 参数（TypeName 必须一致）
-        var pSN = new SqlParameter("@sns", dtSN)
-        {
-            SqlDbType = SqlDbType.Structured,
-            TypeName = "dbo.SNListType"
-        };
-
-      4.  JOIN TVP（用 Value）
-        string sql = @"
-        SELECT d.SN条码
-        FROM dataZX d
-        INNER JOIN @sns s ON d.SN条码 = s.SN条码
-        ";
-
-      5.  SqlSugar 执行（正确）
-        List<string> result = db.Ado.SqlQuery<string>(sql, pSN);
-
-注意事项
-        1. 目标表一定要有索引
-            CREATE NONCLUSTERED INDEX IX_dataZX_SN条码  ON dataZX(SN条码);
-        2. TVP 列类型、长度要一致
-            例:
-               ❌ NVARCHAR(100) 对 NVARCHAR(80)
-                ✔ NVARCHAR(80) 对 NVARCHAR(80)
-        3. 不要对 SN条码 做函数/转换 
-            例:
-                -- ❌ 会导致索引失效
-                ON LEFT(d.SN条码,10) = s.Value
-        4. 查询条件数量少使用常规方法,>=300条左右合用TPV方法
-
-
-        */
-
-        /// <summary>
-        /// List<string> → TVP 参数
-        /// </summary>
-        public static SqlParameter CreateStringTvp(
-            string paramName,
-            IEnumerable<string> list,
-            string typeName = "dbo.StringListType")
-        {
-            if (list == null)
-                throw new ArgumentNullException(nameof(list));
-
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Value", typeof(string));
-
-            foreach (var item in list)
-            {
-                if (!string.IsNullOrEmpty(item))
-                    dt.Rows.Add(item);
-            }
-
-            return new SqlParameter(paramName, dt)
-            {
-                SqlDbType = SqlDbType.Structured,
-                TypeName = typeName
-            };
-        }
-
-        /// <summary>
-        /// List<int> → TVP 参数
-        /// </summary>
-        public static SqlParameter CreateIntTvp(
-            string paramName,
-            IEnumerable<int> list,
-            string typeName = "dbo.IntListType")
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Value", typeof(int));
-
-            foreach (var item in list)
-            {
-                dt.Rows.Add(item);
-            }
-
-            return new SqlParameter(paramName, dt)
-            {
-                SqlDbType = SqlDbType.Structured,
-                TypeName = typeName
-            };
-
-        }
-
-
-        public static List<T> QueryByList<T>(
-         SqlSugarClient db,
-         string sqlIn,
-         string sqlTvp,
-         string tvpParamName,
-         IEnumerable<string> list,
-         int tvpThreshold = 300)
-        {
-            var arr = list?.ToList();
-            if (arr == null || arr.Count == 0)
-                return new List<T>();
-
-            // 少量数据：IN
-            if (arr.Count <= tvpThreshold)
-            {
-                return db.Ado.SqlQuery<T>(
-                    sqlIn.Replace("@list", string.Join(",", arr.Select(x => $"'{x}'")))
-                );
-            }
-
-            // 大量数据：TVP
-            var p = CreateStringTvp(tvpParamName, arr);
-            return db.Ado.SqlQuery<T>(sqlTvp, p);
-        }
-
-
-        #endregion
 
     }
 }

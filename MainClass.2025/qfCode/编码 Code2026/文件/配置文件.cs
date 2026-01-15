@@ -8,12 +8,12 @@ namespace qfCode
 {
     internal class 配置文件
     {
-        _文件夹_._属性_ _files;
+        public _文件夹_._属性_ _files;
         public 配置文件(_文件夹_._属性_ files)
         {
             this._files = files;
             Get_班次(常量.配置文件名_默认);
-            Get_日期时间(常量.配置文件名_默认,"","");
+            Get_日期时间(常量.配置文件名_默认, "", "");
 
         }
 
