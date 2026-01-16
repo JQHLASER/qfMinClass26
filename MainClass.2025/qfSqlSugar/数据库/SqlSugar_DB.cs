@@ -259,16 +259,16 @@ SqlServer 数据库....使用最新库
 
          
 
-        #region 本地方法...生成连接字符串
+        #region  生成连接字符串
 
-        public virtual string 生成连接字符串(_cfg_SQLite_ SqlLitePath, _SQLite_连接类型_ 连接类型 = _SQLite_连接类型_.V2)
+        public virtual string 生成连接字符串(_cfg_SQLite_ SqlLitePath, _SQLite_连接类型_ 连接类型 = _SQLite_连接类型_.V3)
         {
             switch (连接类型)
             {
                 case _SQLite_连接类型_.V2:
-                    return $"data source={SqlLitePath.Path} ; Journal Mode=WAL;";
+                    return $"data source={SqlLitePath.Path};Journal Mode=WAL;";
                 case _SQLite_连接类型_.V3:
-                    return $"data source={SqlLitePath.Path}; Version = 3; Journal Mode=WAL;";
+                    return $"data source={SqlLitePath.Path};Version=3;Journal Mode=WAL;";
                 default:
                     return "";
             }
