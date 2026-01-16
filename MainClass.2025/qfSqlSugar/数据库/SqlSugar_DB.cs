@@ -78,13 +78,44 @@ SqlServer 数据库....使用最新库
             {
                 this.Db = new SqlSugarScope(lst);
                 this.Db.Ado.CommandTimeOut = 超时时间 > 0 ? (int)超时时间 : 1000 * 10;
+
+
                 foreach (ConnectionConfig config in lst)
                 {
                     if (config.DbType == DbType.Sqlite)
                     {
-                        优化_Sqlite();
-                        break;
+                        #region Sqlite   
+
+                        using (var dbTemp = new SqlSugarScope(config))
+                        {
+                            优化_Sqlite(dbTemp);
+                        }
+
+                        #endregion
                     }
+                    else if (config.DbType == DbType.SqlServer)
+                    {
+                        #region SqlServer
+
+                        using (var dbTemp = new SqlSugarScope(config))
+                        {
+                            优化_SqlServer(dbTemp);
+                        }
+
+                        #endregion 
+                    }
+                    else if (config.DbType == DbType.MySql)
+                    {
+                        #region MySql
+
+                        using (var dbTemp = new SqlSugarScope(config))
+                        {
+                            优化_MySql(dbTemp);
+                        }
+
+                        #endregion
+                    }
+                 
                 }
             }
             catch (Exception ex)
@@ -107,34 +138,6 @@ SqlServer 数据库....使用最新库
             bool rt = 初始化(lst, out msgErr, 超时时间);
             return rt;
         }
-
-        (bool s, string m) 优化_Sqlite()
-        {
-            try
-            {
-                // WAL 模式：提升并发读写性能
-                this.Db.Ado.ExecuteCommand("PRAGMA journal_mode = WAL;");
-
-                // 缓存大小调整（加快查询性能）
-                this.Db.Ado.ExecuteCommand("PRAGMA cache_size = -20000;"); // 约 20MB
-
-                // 写安全系数降低一点提高性能（正常使用足够安全）
-                this.Db.Ado.ExecuteCommand("PRAGMA synchronous = NORMAL;");
-
-                // 使用内存表加速排序、分组等操作
-                this.Db.Ado.ExecuteCommand("PRAGMA temp_store = MEMORY;");
-
-                // 自动清理 WAL 文件，提高长期运行稳定性
-                this.Db.Ado.ExecuteCommand("PRAGMA wal_checkpoint(TRUNCATE);");
-
-                return (true, "");
-            }
-            catch (Exception ex)
-            {
-                return (false, ex.Message);
-            }
-        }
-
 
         /// <summary>
         /// 多库时使用
@@ -180,8 +183,81 @@ SqlServer 数据库....使用最新库
             return new qfmain.文件_文件夹().WriteReadJson(path, model, ref Info, out msgErr);
         }
 
+         
 
+        #region 优化
 
+        (bool s, string m) 优化_Sqlite(SqlSugarScope db_)
+        {
+            try
+            {
+                var Ado = db_.Ado;
+                // WAL 模式：提升并发读写性能
+                Ado.ExecuteCommand("PRAGMA journal_mode = WAL;");
+
+                // 缓存大小调整（加快查询性能）
+                Ado.ExecuteCommand("PRAGMA cache_size = -20000;"); // 约 20MB
+
+                // 写安全系数降低一点提高性能（正常使用足够安全）
+                Ado.ExecuteCommand("PRAGMA synchronous = NORMAL;");
+
+                // 使用内存表加速排序、分组等操作
+                Ado.ExecuteCommand("PRAGMA temp_store = MEMORY;");
+
+                // 自动清理 WAL 文件，提高长期运行稳定性
+                Ado.ExecuteCommand("PRAGMA wal_checkpoint(TRUNCATE);");
+
+                return (true, "");
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
+            }
+        }
+          (bool s, string m) 优化_SqlServer(SqlSugarScope db)
+        {
+            try
+            {
+                var ado = db.Ado;
+
+                // 更新统计信息
+                ado.ExecuteCommand("EXEC sp_updatestats;");
+
+                // 重建所有表索引（数据库小可以使用）
+                // ado.ExecuteCommand("EXEC sys.sp_MSforeachtable 'ALTER INDEX ALL ON ? REBUILD';");
+
+                return (true, "");
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
+            }
+        }
+          (bool s, string m) 优化_MySql(SqlSugarScope db)
+        {
+            try
+            {
+                var tables = db.DbMaintenance.GetTableInfoList();
+                foreach (var t in tables)
+                {
+                    var table = t.Name;
+
+                    db.Ado.ExecuteCommand($"ANALYZE TABLE `{table}`;");
+                    db.Ado.ExecuteCommand($"OPTIMIZE TABLE `{table}`;");
+                    // MyISAM 才需要 REPAIR，InnoDB 不需要
+                }
+
+                return (true, "");
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
+            }
+        }
+         
+        #endregion
+
+         
 
         #region 本地方法...生成连接字符串
 
