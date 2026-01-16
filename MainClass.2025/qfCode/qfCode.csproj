@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Language_.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="编码 Code2026\Type.cs" />
     <Compile Include="编码 Code2026\主程序\编码_.cs" />
     <Compile Include="编码 Code2026\功能\_功能_.cs" />
     <Compile Include="编码 Code2026\功能\_功能_结构_.cs" />

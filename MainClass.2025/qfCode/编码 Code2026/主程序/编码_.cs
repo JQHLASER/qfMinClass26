@@ -19,6 +19,11 @@ namespace qfCode
         internal qfSqlSugar.SqlSugar_DB _Db_sqlSugar;
 
         public _功能_ _功能;
+        public _初始化状态_ _初始化状态 = _初始化状态_.未初始化; 
+
+
+
+
 
         /// <summary>
         /// <para>Db : 使用数据库在存储时必须要传入</para>
