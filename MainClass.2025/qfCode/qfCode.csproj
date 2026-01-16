@@ -70,7 +70,7 @@
     <Compile Include="编码 Code2026\数据结构\对象及元素\对象\_对象_.cs" />
     <Compile Include="编码 Code2026\数据结构\对象及元素\_文件_属性_.cs" />
     <Compile Include="编码 Code2026\主程序\_文件夹_.cs" />
-    <Compile Include="编码 Code2026\文件\读写\文件类\ini文件__.cs" />
+    <Compile Include="编码 Code2026\文件\读写\文件类\ini文件_.cs" />
     <Compile Include="编码 Code2026\文件\读写\Iwork_文件.cs" />
     <Compile Include="编码 Code2026\常量.cs" />
     <Compile Include="编码 Code2026\文件\读写\Json序列化.cs" />
@@ -79,7 +79,7 @@
     <Compile Include="编码 Code2026\文件\读写\文件类\SqlServer文件_.cs" />
     <Compile Include="编码 Code2026\文件\读写\文件类\txt文件_.cs" />
     <Compile Include="编码 Code2026\文件\读写\表.cs" />
-    <Compile Include="编码 Code2026\文件\配置文件.cs" />
+    <Compile Include="编码 Code2026\文件\文件类.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Language\qfLanguage.csproj">

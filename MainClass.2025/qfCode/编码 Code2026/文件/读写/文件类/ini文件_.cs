@@ -10,9 +10,14 @@ namespace qfCode
 {
     public class ini文件_ : Iwork_文件
     {
-
-        public (bool s, string m) Write(string Path, _文件_属性_ cfg)
+        编码_ _codeSys;
+        public ini文件_(编码_ codeSys)
         {
+            this._codeSys = codeSys;
+        }
+
+        public (bool s, string m) Write(string FileName, _文件_属性_ cfg)
+        { 
             string jsonStr = new Json序列化().转成String(cfg);
             return new qfmain.ini_sharpconfig(Path).Write<string>("data", "data", jsonStr, true);
         }

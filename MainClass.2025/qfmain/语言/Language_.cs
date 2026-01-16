@@ -54,7 +54,10 @@ namespace qfmain
         {
             new 文件_文件夹().文件夹_新建(软件类.Files_Cfg.Files_Langeuage, out string msgerr);
             读写参数(1);
-            Get语言包(qfLanguage.LanguageList.lst_Language);//本地语言包
+            string path = Get语言文件路径();
+            ini_sys = new ini_sharpconfig(path);
+
+            Set语言包(qfLanguage.LanguageList.lst_Language);//本地语言包
         }
 
         /// <summary>
@@ -66,27 +69,6 @@ namespace qfmain
             return 软件类.Files_Cfg.Files_Langeuage + $"\\{Config.LangeuageCfg.LangeuageName}.ini";
         }
 
-        /// <summary>
-        /// 生成语言文件
-        /// </summary>   
-        /// <param name="lst"></param>
-        /// <param name="section">节名称</param>
-        public static void Set语言包(List<qfLanguage._language_Value_> lst)
-        {
-
-            new 文件_文件夹().文件夹_新建(软件类.Files_Cfg.Files_Langeuage, out string msgerr);
-            string path = Get语言文件路径();
-
-            for (int i = 0; i < lst.Count; i++)
-            {
-                var s = lst[i];
-                string TypeValue = s.TypeValue;
-                int index = i + 1;
-
-                ini_sys.Write(s.KeyValue, $"{TypeValue}", s.LanguageValue, false);
-            }
-            ini_sys.Save();
-        }
 
 
         private static ini_sharpconfig ini_sys;
@@ -129,7 +111,50 @@ namespace qfmain
             }
         }
 
+        public static qfLanguage._language_Value_[] Get语言包()
+        {
+            List<qfLanguage._language_Value_> lst = new List<qfLanguage._language_Value_>();
+            new 文件_文件夹().文件夹_新建(软件类.Files_Cfg.Files_Langeuage, out string msgerr);
+            string path = Get语言文件路径();
+            var rt = ini_sys.GetAll();
+              
+            foreach (var s in rt.v)
+            {
+                foreach (var b in s.Value)
+                {
+                    var vb = new qfLanguage._language_Value_(s.Key, b.Key, b.Value); 
+                    lst.Add(vb);
+                }
+            }
+            qfLanguage.LanguageList.lst_Language = lst;
+            return lst.ToArray();
+        }
+         
+        public static void Set语言包(List<qfLanguage._language_Value_> lst)
+        {
+            lock (_lock)
+            {
+                new 文件_文件夹().文件夹_新建(软件类.Files_Cfg.Files_Langeuage, out string msgerr);
+                string path = Get语言文件路径();
+                ini_sys = new ini_sharpconfig(path);
+                for (int i = 0; i < lst.Count; i++)
+                {
+                    var s = lst[i];
+                    string TypeValue = s.TypeValue;
+                    string languageVlaue = ini_sys.Read(s.KeyValue, $"{TypeValue}", "");
 
+                    if (string.IsNullOrEmpty(languageVlaue))
+                    {
+                        languageVlaue = s.LanguageValue;
+                        ini_sys.Write(s.KeyValue, $"{TypeValue}", languageVlaue, false);
+
+                    }
+                    lst[i].LanguageValue = languageVlaue; 
+                }
+
+                ini_sys.Save(); 
+            }
+        } 
         public static (string languageValue, qfLanguage._language_Value_[] beff) Get语言(string TypeValue, List<qfLanguage._language_Value_> lst)
         {
             qfLanguage._language_Value_[] ma = lst.Where(p => p.TypeValue == TypeValue).ToArray();
@@ -137,8 +162,7 @@ namespace qfmain
 
             return (value, ma);
         }
- 
-
+         
         /// <summary>
         /// 本地使用
         /// </summary>
@@ -150,7 +174,7 @@ namespace qfmain
             (string languageValue, qfLanguage._language_Value_[] beff) rt = Get语言(TypeValue, qfLanguage.LanguageList.lst_Language);
             return rt.languageValue;
         }
-
+         
 
         /// <summary>
         /// 获取语言目录
@@ -180,17 +204,6 @@ namespace qfmain
             Config.LangeuageCfg = cfg;
         }
 
-        //public   static void 窗体设置()
-        //{
-        //    On_窗体设置();
-        //}
-
-        //public static Action Action_窗体设置;
-
-        //static void On_窗体设置()
-        //{
-        //    Action_窗体设置?.Invoke();
-        //}
-
+        
     }
 }

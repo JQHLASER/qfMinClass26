@@ -8,8 +8,11 @@ namespace qfCode
 {
     public interface Iwork_文件
     {
-        (bool s, string m, _文件_属性_ cfg) Read(string Path);
-        (bool s, string m) Write(string Path, _文件_属性_ cfg);
+        /// <summary>
+        /// 
+        /// </summary> 
+        (bool s, string m, _文件_属性_ cfg) Read(string FileName);
+        (bool s, string m) Write(string FileName, _文件_属性_ cfg);
 
     }
 }

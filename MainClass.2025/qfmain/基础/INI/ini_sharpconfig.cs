@@ -2,6 +2,7 @@
 using SharpConfig;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace qfmain
     public class ini_sharpconfig
     {
         private readonly string _filePath;
-        private readonly object _lock = new object();
+        private static readonly object _lock = new object();
         private Configuration _config;
 
         public ini_sharpconfig(string filePath)
@@ -100,7 +101,7 @@ namespace qfmain
                     _config[sectionName][settingName].SetValue(value);
                     if (是否保存)
                     {
-                        Save();
+                        Save(false);
                     }
 
                     return (true, "");
@@ -167,23 +168,26 @@ namespace qfmain
         /// <returns></returns>
         public (bool state, string msg, Dictionary<int, string> value) Read_Dictionary(string sectionName, int 行数)
         {
-            try
+            lock (_lock)
             {
-
-
-                Configuration cfg = Configuration.LoadFromFile(_filePath);
-                var section = cfg[sectionName];
-                var dict = new Dictionary<int, string>(行数);
-                foreach (var setting in section)
+                try
                 {
-                    dict[int.Parse(setting.Name)] = setting.StringValue;
-                }
-                return (true, default, dict);
 
-            }
-            catch (Exception ex)
-            {
-                return (false, ex.Message, default);
+
+                    Configuration cfg = Configuration.LoadFromFile(_filePath);
+                    var section = cfg[sectionName];
+                    var dict = new Dictionary<int, string>(行数);
+                    foreach (var setting in section)
+                    {
+                        dict[int.Parse(setting.Name)] = setting.StringValue;
+                    }
+                    return (true, default, dict);
+
+                }
+                catch (Exception ex)
+                {
+                    return (false, ex.Message, default);
+                }
             }
         }
 
@@ -192,25 +196,50 @@ namespace qfmain
         /// </summary> 
         public (bool state, string msg, string[] value) Read_Array(string sectionName, int 行数)
         {
-            try
+            lock (_lock)
             {
-
-                Configuration cfg = Configuration.LoadFromFile(_filePath);
-                string[] data = new string[行数];
-
-                foreach (var s in cfg[sectionName])
+                try
                 {
-                    int idx = int.Parse(s.Name);
-                    data[idx] = s.StringValue;
+
+                    Configuration cfg = Configuration.LoadFromFile(_filePath);
+                    string[] data = new string[行数];
+
+                    foreach (var s in cfg[sectionName])
+                    {
+                        int idx = int.Parse(s.Name);
+                        data[idx] = s.StringValue;
+                    }
+                    return (true, default, data);
                 }
-                return (true, default, data);
-            }
-            catch (Exception ex)
-            {
-                return (false, ex.Message, default);
+                catch (Exception ex)
+                {
+                    return (false, ex.Message, default);
+                }
             }
         }
 
+        /// <summary>
+        /// 一次性获取整个 INI 结构
+        /// </summary>
+        public (bool s, string m, Dictionary<string, Dictionary<string, string>> v) GetAll()
+        {
+            lock (_lock)
+            {
+                try
+                {
+                    var dict = _config.ToDictionary(
+                        sec => sec.Name,
+                        sec => sec.ToDictionary(st => st.Name, st => st.StringValue)
+                    );
+
+                    return (true, "", dict);
+                }
+                catch (Exception ex)
+                {
+                    return (false, ex.Message, default);
+                }
+            }
+        }
 
 
 
@@ -218,34 +247,43 @@ namespace qfmain
         /// 保存
         /// <para>将更改持久化到磁盘（高效写入）</para>
         /// </summary>
-        public (bool state, string msg) Save()
+        public (bool state, string msg) Save(bool isLock = true)
         {
-            lock (_lock)
+            if (isLock)
             {
-                try
+                lock (_lock)
                 {
-                    // 确保目录存在
-                    var dir = Path.GetDirectoryName(_filePath);
-                    if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
-                    {
-                        Directory.CreateDirectory(dir);
-                    }
-                    _config.SaveToFile(_filePath);
-                    return (true, default);
-                }
-                catch (IOException ex)
-                {
-                    return (false, ex.Message);
+                    return Save1();
                 }
             }
-
-
-
-
+            else
+            {
+                return Save1();
+            }
 
         }
 
+        (bool state, string msg) Save1()
+        {
 
+            try
+            {
+                // 确保目录存在
+                var dir = Path.GetDirectoryName(_filePath);
+                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+                _config.SaveToFile(_filePath);
+                return (true, default);
+            }
+            catch (IOException ex)
+            {
+                return (false, ex.Message);
+            }
+
+
+        }
 
 
 

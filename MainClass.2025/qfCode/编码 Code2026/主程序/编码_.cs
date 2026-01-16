@@ -9,9 +9,10 @@ namespace qfCode
     public class 编码_
     {
         /// <summary>
-        ///  获取配置文件路径
+        ///  配置文件及编码文件
         /// </summary>
-        internal 配置文件 _配置文件;
+        internal 文件类 _文件类;
+
         /// <summary>
         /// 系统的文件夹
         /// </summary>
@@ -19,7 +20,7 @@ namespace qfCode
         internal qfSqlSugar.SqlSugar_DB _Db_sqlSugar;
 
         public _功能_ _功能;
-        public _初始化状态_ _初始化状态 = _初始化状态_.未初始化; 
+        public _初始化状态_ _初始化状态 = _初始化状态_.未初始化;
 
 
 
@@ -32,13 +33,13 @@ namespace qfCode
         {
             this._功能 = 功能;
             this._Db_sqlSugar = Db;
-
+            this._文件夹_属性 = typeFile;
 
             #region 初始化
 
-            this._文件夹_属性 = typeFile;
-            new _文件夹_(typeFile);
-            this._配置文件 = new 配置文件(typeFile);
+
+            new _文件夹_(this);
+            this._文件类 = new 文件类(this);
 
             #endregion
 
@@ -48,7 +49,6 @@ namespace qfCode
 
 
         }
-
 
 
 
