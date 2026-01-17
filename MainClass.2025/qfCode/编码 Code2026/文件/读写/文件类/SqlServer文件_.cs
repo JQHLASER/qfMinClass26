@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using static qfCode.表;
@@ -11,22 +12,120 @@ namespace qfCode
     {
         编码_ _CodeSys;
         string _ConfigID = "_Code26_sqlserver_";
-     
-
+        string _path = "";
+        qfSqlSugar.SqlSugar_Table<表.Code26> _Table;
+        private static readonly object _lock = new object();
 
         public SqlServer文件_(编码_ CodeSys)
         {
             this._CodeSys = CodeSys;
-           
+            this._path = this._CodeSys._文件夹_属性.参数 + "\\SqlServer_Code26.txt";
 
             this._CodeSys._Db_sqlSugar.Event_ConnectionConfig += (s) =>
             {
-             
+                #region 连接数据库
+                qfSqlSugar._cfg_SQLserver_ cfgSqlserver = new qfSqlSugar._cfg_SQLserver_
+                {
+                    数据库地址 = "127.0.0.1",
+                    数据库名称 = "Code26",
+                    用户 = "sa",
+                    密码 = "QF8888",
+                };
+                this._CodeSys._Db_sqlSugar.读取参数<qfSqlSugar._cfg_SQLserver_>(1, ref cfgSqlserver, this._path, out string msgErr);
+
+                s.Add(this._CodeSys._Db_sqlSugar.生成连接信息(
+                         this._CodeSys._Db_sqlSugar.生成连接字符串(cfgSqlserver)
+                        , this._ConfigID, SqlSugar.DbType.SqlServer)
+                    );
+
+                #endregion
             };
             this._CodeSys._Db_sqlSugar.Event_初始化结束 += (s, e) =>
             {
-
+                _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(e, this._ConfigID);
+                (bool s, string m, _文件_属性_ cfg) rt = Read("text^%&");
+                this._CodeSys._初始化状态 = !rt.s ? _初始化状态_.已初始化 : _初始化状态_.未初始化;
             };
+        }
+
+
+        public (bool s, string m, _文件_属性_ cfg) Read(string FileName)
+        {
+            lock (_lock)
+            {
+                if (!Err_Table未初始化(out string msgErr))
+                {
+                    return (false, msgErr, default);
+                }
+
+                bool rt = this._Table.GetList(u => u.FileName == FileName, out List<表.Code26> lst, out msgErr);
+                if (rt && lst.Count == 0)
+                {
+                    return (rt, Language_.Get语言("未找到文件"), default);
+                }
+                else if (rt && lst.Count > 0)
+                {
+                    return new Json序列化().转成Json(lst[0].CodeValue);
+                }
+                else
+                {
+                    return (rt, msgErr, default);
+                }
+            }
+
+        }
+
+        public (bool s, string m) Save(string FileName, _文件_属性_ cfg)
+        {
+            lock (_lock)
+            {
+                if (!Err_Table未初始化(out string msgErr))
+                {
+                    return (false, msgErr);
+                }
+                表.Code26 cdoe = new 表.Code26
+                {
+                    FileName = FileName,
+                    CodeValue = new Json序列化().转成String(cfg),
+                };
+
+                bool rt = this._Table.Storageable(cdoe, out int count, out msgErr);
+                if (!rt)
+                {
+                    return (rt, msgErr);
+                }
+                else if (count == 0)
+                {
+                    return (false, Language_.Get语言("受影响0行"));
+                }
+                return (rt, Language_.Get语言("执行成功"));
+            }
+        }
+
+        public (bool s, string m) Delete(string FileName)
+        {
+            lock (_lock)
+            {
+                if (!Err_Table未初始化(out string msgErr))
+                {
+                    return (false, msgErr);
+                }
+                bool rt = this._Table.Delete(u => u.FileName == FileName, out int count, out msgErr);
+                return (rt, msgErr);
+            }
+        }
+
+       
+
+        bool Err_Table未初始化(out string msgErr)
+        {
+            msgErr = "";
+            if (this._Table is null)
+            {
+                msgErr = Language_.Get语言("编码模块未初始化");
+                return false;
+            }
+            return true;
         }
 
 

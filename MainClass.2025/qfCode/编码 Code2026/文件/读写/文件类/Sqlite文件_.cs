@@ -16,7 +16,7 @@ namespace qfCode
         string _path = "";
         string _ConfigID = "_Code26_sqlite_";
         qfSqlSugar.SqlSugar_Table<表.Code26> _Table;
-
+        private static readonly object _lock = new object();
 
         public Sqlite文件_(编码_ CodeSys)
         {
@@ -45,56 +45,83 @@ namespace qfCode
             };
         }
 
-
         public (bool s, string m, _文件_属性_ cfg) Read(string FileName)
         {
-            if (this._Table is null)
+            lock (_lock)
             {
-                return (false, "_Table is Null", default);
-            }
+                if (!Err_Table未初始化(out string msgErr))
+                {
+                    return (false, msgErr, default);
+                }
 
-            bool rt = this._Table.GetList(u => u.FileName == FileName, out List<表.Code26> lst, out string msgErr);
-            if (rt && lst.Count == 0)
-            {
-                return (rt, "not cfg", default);
+                bool rt = this._Table.GetList(u => u.FileName == FileName, out List<表.Code26> lst, out msgErr);
+                if (rt && lst.Count == 0)
+                {
+                    return (rt, Language_.Get语言("未找到文件"), default);
+                }
+                else if (rt && lst.Count > 0)
+                {
+                    return new Json序列化().转成Json(lst[0].CodeValue);
+                }
+                else
+                {
+                    return (rt, msgErr, default);
+                }
             }
-            else if (rt && lst.Count > 0)
-            {
-                return new Json序列化().转成Json(lst[0].CodeValue);
-            }
-            else
-            {
-                return (rt, msgErr, default);
-            }
-
 
         }
 
-        public (bool s, string m) Write(string FileName, _文件_属性_ cfg)
+        public (bool s, string m) Save(string FileName, _文件_属性_ cfg)
         {
-            if (this._Table is null)
+            lock (_lock)
             {
-                return (false, "_Table is Null");
-            }
-            表.Code26 cdoe = new 表.Code26
-            {
-                FileName = FileName,
-                CodeValue = new Json序列化().转成String(cfg),
-            };
+                if (!Err_Table未初始化(out string msgErr))
+                {
+                    return (false, msgErr);
+                }
+                表.Code26 cdoe = new 表.Code26
+                {
+                    FileName = FileName,
+                    CodeValue = new Json序列化().转成String(cfg),
+                };
 
-            bool rt = this._Table.Storageable(cdoe, out int count, out string msgErr);
-            if (!rt)
+                bool rt = this._Table.Storageable(cdoe, out int count, out msgErr);
+                if (!rt)
+                {
+                    return (rt, msgErr);
+                }
+                else if (count == 0)
+                {
+                    return (false, Language_.Get语言("受影响0行"));
+                }
+                return (rt, Language_.Get语言("执行成功"));
+            }
+        }
+
+        public (bool s, string m) Delete(string FileName)
+        {
+            lock (_lock)
             {
+                if (!Err_Table未初始化(out string msgErr))
+                {
+                    return (false, msgErr);
+                }
+                bool rt = this._Table.Delete(u => u.FileName == FileName, out int count, out msgErr);
                 return (rt, msgErr);
             }
-            else if (count == 0)
-            {
-                return (false, "受影响0行");
-            }
-            return (rt, "成功");
-
         }
 
+       
+        bool Err_Table未初始化(out string msgErr)
+        {
+            msgErr = "";
+            if (this._Table is null)
+            {
+                msgErr = Language_.Get语言("编码模块未初始化");
+                return false;
+            }
+            return true;
+        }
 
 
 

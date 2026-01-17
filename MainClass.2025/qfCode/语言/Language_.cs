@@ -6,18 +6,16 @@ using System.Threading.Tasks;
 
 namespace qfCode
 {
-    public class Language_ : qfmain.Language_
+    public class Language_  
     {
-        public Language_() : base()
+        public Language_()  
         {
-
+            qfmain.Language_.Set语言包(new qfLanguage.LanguageList().lst_Language);
         }
 
         public new static string Get语言(string TyepValue)
         {
-            (string value, qfLanguage._language_Value_[] beff) rt = qfmain.Language_.Get语言(TyepValue, qfLanguage.LanguageList.lst_Language);
-
-            return rt.value;
+            return qfmain .Language_ .Get语言(TyepValue);
         }
 
 

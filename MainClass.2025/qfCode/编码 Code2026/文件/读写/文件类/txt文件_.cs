@@ -1,4 +1,5 @@
-﻿using System;
+﻿using qfmain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,23 +9,50 @@ namespace qfCode
 {
     public class txt文件_ : Iwork_文件
     {
-        public (bool s, string m) Write(string Path, _文件_属性_ cfg)
+        编码_ _codeSys;
+        private static readonly object _lock = new object();
+        public txt文件_ (编码_ codeSys)
         {
-            string jsonStr = new Json序列化().转成String(cfg);
-            bool rt = new qfmain.文本().Save_25(Path, jsonStr, true, out string msgErr, false);
-            return (rt, msgErr);
+            this._codeSys = codeSys;
+        }
+        public (bool s, string m) Save(string FileName, _文件_属性_ cfg)
+        {
+            lock (_lock)
+            {
+                string Path = this._codeSys._文件类.GetPath_编码文件(FileName);
+                string jsonStr = new Json序列化().转成String(cfg);
+                bool rt = new qfmain.文本().Save_25(Path, jsonStr, true, out string msgErr, false);
+                return (rt, msgErr);
+            }
         }
 
-        public (bool s, string m, _文件_属性_ cfg) Read(string Path)
+        public (bool s, string m, _文件_属性_ cfg) Read(string FileName)
         {
-            (bool s, string m, string json) rt = new qfmain.文本().Read_25(Path);
-            (bool s, string m, _文件_属性_ cfg) rtCfg = new Json序列化().转成Json(rt.json);
-            if (!rt.s || !rtCfg.s)
-            {
+            lock (_lock)
+            { 
+                string Path = this._codeSys._文件类.GetPath_编码文件(FileName);
+                (bool s, string m, string json) rt = new qfmain.文本().Read_25(Path);
+                (bool s, string m, _文件_属性_ cfg) rtCfg = new Json序列化().转成Json(rt.json);
+                if (!rt.s || !rtCfg.s)
+                {
+                    return (rt.s, rt.m, rtCfg.cfg);
+                }
                 return (rt.s, rt.m, rtCfg.cfg);
-            }
-            return (rt.s, rt.m, rtCfg.cfg);
+            } 
         }
+
+        public (bool s, string m) Delete(string FileName)
+        {
+            lock (_lock)
+            {
+                string Path = this._codeSys._文件类.GetPath_编码文件(FileName);
+                bool rt = new qfmain.文件_文件夹().文件_删除文件(Path, out string msgErr);
+                return (rt, msgErr);
+            }
+        }
+
+        
+
 
 
     }

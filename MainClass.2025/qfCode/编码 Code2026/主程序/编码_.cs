@@ -31,6 +31,7 @@ namespace qfCode
         /// </summary> 
         public 编码_(_文件夹_._属性_ typeFile, _功能_ 功能, qfSqlSugar.SqlSugar_DB Db = null)
         {
+            new Language_();
             this._功能 = 功能;
             this._Db_sqlSugar = Db;
             this._文件夹_属性 = typeFile;

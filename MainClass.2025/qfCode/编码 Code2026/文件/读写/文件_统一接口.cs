@@ -18,15 +18,15 @@ namespace qfCode
             switch (this._CodeSys._功能.文件类型)
             {
                 case _功能_结构_._em_文件类型_.ini:
-                    this._Iwork文件 = new ini文件_();
+                    this._Iwork文件 = new ini文件_(this._CodeSys);
                     break;
                 case _功能_结构_._em_文件类型_.txt:
-                    this._Iwork文件 = new txt文件_();
+                    this._Iwork文件 = new txt文件_(this._CodeSys);
                     break;
                 case _功能_结构_._em_文件类型_.Sqlite:
                     this._Iwork文件 = new Sqlite文件_(this._CodeSys);
                     break;
-                case _功能_结构_._em_文件类型_.SqlServer :
+                case _功能_结构_._em_文件类型_.SqlServer:
                     this._Iwork文件 = new SqlServer文件_(this._CodeSys);
                     break;
             }
@@ -34,16 +34,7 @@ namespace qfCode
         }
 
 
-        /// <summary>
-        /// 获取编码文件信息的路径
-        /// <para>仅ini和txt类型有效</para>
-        /// </summary> 
-        public string GetPath_文件(string FileName)
-        {
-            return $"{this._CodeSys._文件夹_属性.信息}\\{FileName}.{this._CodeSys._功能.后缀}";
-        }
-
-
+       
 
 
 
