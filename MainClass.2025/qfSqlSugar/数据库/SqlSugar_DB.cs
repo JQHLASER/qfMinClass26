@@ -68,7 +68,7 @@ SqlServer 数据库....使用最新库
             msgErr = string.Empty;
             if (lst is null || lst.Count == 0)
             {
-                msgErr = "ConnectionConfig is null";
+                msgErr = "ConnectionConfig " + qfmain.Language_.Get语言("不能为空");
                 this.Db = null;
                 return false;
             }
@@ -115,7 +115,7 @@ SqlServer 数据库....使用最新库
 
                         #endregion
                     }
-                 
+
                 }
             }
             catch (Exception ex)
@@ -183,7 +183,7 @@ SqlServer 数据库....使用最新库
             return new qfmain.文件_文件夹().WriteReadJson(path, model, ref Info, out msgErr);
         }
 
-         
+
 
         #region 优化
 
@@ -214,7 +214,7 @@ SqlServer 数据库....使用最新库
                 return (false, ex.Message);
             }
         }
-          (bool s, string m) 优化_SqlServer(SqlSugarScope db)
+        (bool s, string m) 优化_SqlServer(SqlSugarScope db)
         {
             try
             {
@@ -233,7 +233,7 @@ SqlServer 数据库....使用最新库
                 return (false, ex.Message);
             }
         }
-          (bool s, string m) 优化_MySql(SqlSugarScope db)
+        (bool s, string m) 优化_MySql(SqlSugarScope db)
         {
             try
             {
@@ -254,10 +254,10 @@ SqlServer 数据库....使用最新库
                 return (false, ex.Message);
             }
         }
-         
+
         #endregion
 
-         
+
 
         #region  生成连接字符串
 

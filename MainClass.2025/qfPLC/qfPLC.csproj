@@ -70,7 +70,7 @@
     </Compile>
     <Compile Include="HslCommunication\三菱\FX\三菱_FX.cs" />
     <Compile Include="HslCommunication\三菱\MC_Ascii Qna3E\三菱_MC_Ascii_Qna3E.cs" />
-    <Compile Include="HslCommunication\统一接口.cs" />
+    <Compile Include="HslCommunication\Iworker_统一接口.cs" />
     <Compile Include="HslCommunication\解析.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="_Type_.cs" />

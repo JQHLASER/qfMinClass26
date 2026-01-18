@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 
 namespace qfCode
 {
-    public class _文本_
+    public class type_编辑
     {
-        public enum _em_文本_
+        public enum _编辑类型_
         {
-            文本,
-            换行符,
-            空格,
+            添加,
+            修改,
         }
+
+
+
+
+
     }
 }

@@ -10,14 +10,14 @@ namespace qfCode
     internal class Json序列化
     {
 
-        public string 转成String(_文件_属性_ cfg)
+        public string 转成String<T>(T cfg)
         {
             return JsonConvert.SerializeObject(cfg);
         }
 
-        public (bool s, string m, _文件_属性_ cfg) 转成Json(string jsonStr)
+        public (bool s, string m, T cfg) 转成Json<T>(string jsonStr)
         {
-            return new qfmain.Json_().是否为json格式<_文件_属性_>(jsonStr);
+            return new qfmain.Json_().是否为json格式<T>(jsonStr);
         }
 
 

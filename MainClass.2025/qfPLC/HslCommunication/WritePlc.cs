@@ -13,7 +13,7 @@ namespace qfPLC
     {
         #region 三菱_MC_Ascii_Qna3E
 
-        public (bool rt, string msgErr) Write<T>(MelsecMcAsciiNet PlcNet, string address, T value)  
+        public (bool rt, string msgErr) Write<T>(MelsecMcAsciiNet PlcNet, string address, T value)
         {
             try
             {
@@ -122,14 +122,14 @@ namespace qfPLC
             try
             {
 
-            OperateResult result;
-            result = PlcNet.Write(address, value);
-            return new 解析().OperateResult(result);
+                OperateResult result;
+                result = PlcNet.Write(address, value);
+                return new 解析().OperateResult(result);
 
             }
             catch (Exception ex)
             {
-                return (false ,ex.Message );               
+                return (false, ex.Message);
             }
         }
         public (bool rt, string msgErr) Write(MelsecMcAsciiNet PlcNet, Encoding encoding, string address, string value)
@@ -137,21 +137,21 @@ namespace qfPLC
             try
             {
 
-            OperateResult result;
-            result = PlcNet.Write(address, value, encoding);
-            return new 解析().OperateResult(result);
+                OperateResult result;
+                result = PlcNet.Write(address, value, encoding);
+                return new 解析().OperateResult(result);
 
             }
             catch (Exception ex)
             {
 
-                return (false ,ex.Message);
+                return (false, ex.Message);
             }
         }
 
 
 
-        public async Task<(bool rt, string msgErr)> WriteAsync<T>(MelsecMcAsciiNet PlcNet, string address, T value) 
+        public async Task<(bool rt, string msgErr)> WriteAsync<T>(MelsecMcAsciiNet PlcNet, string address, T value)
         {
             try
             {
@@ -260,14 +260,14 @@ namespace qfPLC
             try
             {
 
-            OperateResult result;
-            result = await PlcNet.WriteAsync(address, value);
-            return new 解析().OperateResult(result);
+                OperateResult result;
+                result = await PlcNet.WriteAsync(address, value);
+                return new 解析().OperateResult(result);
             }
             catch (Exception ex)
             {
 
-               return (true, ex.Message);
+                return (true, ex.Message);
             }
         }
         public async Task<(bool rt, string msgErr)> WriteAsync(MelsecMcAsciiNet PlcNet, Encoding encoding, string address, string value)
@@ -275,14 +275,14 @@ namespace qfPLC
             try
             {
 
-            OperateResult result;
-            result = await PlcNet.WriteAsync(address, value, encoding);
-            return new 解析().OperateResult(result);
+                OperateResult result;
+                result = await PlcNet.WriteAsync(address, value, encoding);
+                return new 解析().OperateResult(result);
 
             }
             catch (Exception ex)
             {
-              return (false, ex.Message);
+                return (false, ex.Message);
             }
         }
 
@@ -292,7 +292,7 @@ namespace qfPLC
 
         #region 三菱_FX
 
-        public (bool rt, string msgErr) Write<T>(MelsecFxSerial PlcNet, string address, T value)  
+        public (bool rt, string msgErr) Write<T>(MelsecFxSerial PlcNet, string address, T value)
         {
             try
             {
@@ -430,7 +430,7 @@ namespace qfPLC
 
 
 
-        public async Task<(bool rt, string msgErr)> WriteAsync<T>(MelsecFxSerial PlcNet, string address, T value)  
+        public async Task<(bool rt, string msgErr)> WriteAsync<T>(MelsecFxSerial PlcNet, string address, T value)
         {
             try
             {
@@ -571,7 +571,7 @@ namespace qfPLC
 
         #region ModbusTcp
 
-        public (bool rt, string msgErr) Write<T>(ModbusTcpNet PlcNet, string address, T value) 
+        public (bool rt, string msgErr) Write<T>(ModbusTcpNet PlcNet, string address, T value)
         {
             try
             {
@@ -707,8 +707,8 @@ namespace qfPLC
             }
         }
 
-       
-        public async Task<(bool rt, string msgErr)> WriteAsync<T>(ModbusTcpNet PlcNet, string address, T value)    
+
+        public async Task<(bool rt, string msgErr)> WriteAsync<T>(ModbusTcpNet PlcNet, string address, T value)
         {
             try
             {

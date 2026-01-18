@@ -65,7 +65,7 @@ namespace qfCode
                 }
                 else if (rt && lst.Count > 0)
                 {
-                    return new Json序列化().转成Json(lst[0].CodeValue);
+                    return new Json序列化().转成Json<_文件_属性_>(lst[0].CodeValue);
                 }
                 else
                 {

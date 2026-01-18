@@ -32,13 +32,31 @@ namespace qfPLC
 
         #region Write
 
+        /// <summary>
+        /// 不支持 string
+        /// </summary> 
         (bool rt, string msgErr) Write<T>(string address, T value);
+        /// <summary>
+        /// 只支持 string
+        /// </summary> 
         (bool rt, string msgErr) Write(string address, string value);
+        /// <summary>
+        /// 只支持 string
+        /// </summary> 
         (bool rt, string msgErr) Write(Encoding encoding, string address, string value);
 
 
+        /// <summary>
+        /// 不支持 string
+        /// </summary> 
         Task<(bool rt, string msgErr)> WriteAsync<T>(string address, T value);
+        /// <summary>
+        /// 只支持 string
+        /// </summary> 
         Task<(bool rt, string msgErr)> WriteAsync(string address, string value);
+        /// <summary>
+        /// 只支持 string
+        /// </summary> 
         Task<(bool rt, string msgErr)> WriteAsync(Encoding encoding, string address, string value);
 
 
@@ -67,23 +85,44 @@ namespace qfPLC
         Task<(bool rt, string msgErr, bool[] value)> ReadDiscreteAysnc_离散线圈(string address, ushort length);
 
 
+        /// <summary>
+        /// 不支持 string
+        /// </summary> 
         (bool rt, string msgErr, T value) Read<T>(string address);
-
+        /// <summary>
+        /// 不支持 string
+        /// </summary> 
         (bool rt, string msgErr, T value) Read<T>(string address, ushort length);
         (bool rt, string msgErr, bool value) ReadCoil(string address);
         (bool rt, string msgErr, bool[] value) ReadCoil(string address, ushort length);
+        /// <summary>
+        /// 支持 string
+        /// </summary> 
         (bool rt, string msgErr, string value) Read(string address, ushort length, Encoding encoding);
+        /// <summary>
+        /// 支持 string
+        /// </summary> 
         (bool rt, string msgErr, string value) Read(string address, ushort length);
 
 
-
+        /// <summary>
+        /// 不支持 string
+        /// </summary> 
         Task<(bool rt, string msgErr, T value)> ReadAsync<T>(string address);
-
+        /// <summary>
+        /// 不支持 string
+        /// </summary> 
         Task<(bool rt, string msgErr, T value)> ReadAsync<T>(string address, ushort length);
         Task<(bool rt, string msgErr, bool value)> ReadCoilAsync(string address);
         Task<(bool rt, string msgErr, bool[] value)> ReadCoilAsync(string address, ushort length);
 
+        /// <summary>
+        /// 支持 string
+        /// </summary> 
         Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length, Encoding encoding);
+        /// <summary>
+        /// 支持 string
+        /// </summary> 
         Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length);
 
 

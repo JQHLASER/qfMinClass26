@@ -32,7 +32,7 @@ namespace qfCode
             {
                 string Path = this._codeSys._文件类.GetPath_编码文件(FileName);
                 (bool s, string m, string json) rt = new qfmain.文本().Read_25(Path);
-                (bool s, string m, _文件_属性_ cfg) rtCfg = new Json序列化().转成Json(rt.json);
+                (bool s, string m, _文件_属性_ cfg) rtCfg = new Json序列化().转成Json<_文件_属性_>(rt.json);
                 if (!rt.s || !rtCfg.s)
                 {
                     return (rt.s, rt.m, rtCfg.cfg);

@@ -32,7 +32,7 @@ namespace qfLanguage
             new _language_Value_ ( keys, "保存成功","保存成功"),
             new _language_Value_ ( keys, "删除成功","删除成功"),
             new _language_Value_ ( keys, "密码错误","密码错误"),
-            new _language_Value_ ( keys, "密码不能为空","密码不能为空"),
+           
             new _language_Value_ ( keys, "请输入用户名","请输入用户名"),
             new _language_Value_ ( keys, "未选择用户权限","未选择用户权限"),
             new _language_Value_ ( keys, "登陆","登陆"),
