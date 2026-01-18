@@ -122,16 +122,31 @@ namespace qfCode
                 "查询",
                 "另存为"
             };
-            (bool s, string m, _文件_属性_ cfg) rt = (true, "", default);
+          
             lock (_lock)
             {
+                (bool s, string m) rt = (true, "");
+                _文件_属性_ cfg = new _文件_属性_();
                 foreach (var s in work)
                 {
-                    if (s == "查询")
+                    if (!rt.s)
                     {
-
+                        break;
+                    }
+                    else if (s == "查询")
+                    {
+                        (bool s, string m, _文件_属性_ cfg) rtGet = Read(FileName);
+                        rt.s = rtGet.s;
+                        rt.m = rtGet.m;
+                        cfg = rtGet.cfg;
+                    }
+                    else if (s == "另存为")
+                    {
+                        rt = Save(NewFileName, cfg);
                     }
                 }
+
+                return rt;
             }
         }
 
