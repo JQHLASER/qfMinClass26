@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace qfCode
 {
-    internal class 文件_统一接口
+    public class 文件_统一接口
     {
         编码_ _CodeSys;
         public Iwork_文件 _Iwork文件;
@@ -34,7 +34,7 @@ namespace qfCode
         }
 
 
-       
+
 
 
 

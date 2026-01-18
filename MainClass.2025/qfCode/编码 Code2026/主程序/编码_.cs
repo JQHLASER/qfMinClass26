@@ -19,9 +19,13 @@ namespace qfCode
         internal _文件夹_._属性_ _文件夹_属性;
         internal qfSqlSugar.SqlSugar_DB _Db_sqlSugar;
 
-        public _功能_ _功能;
-        public _初始化状态_ _初始化状态 = _初始化状态_.未初始化;
+        internal _功能_ _功能;
+        internal _初始化状态_ _初始化状态 = _初始化状态_.未初始化;
 
+        /// <summary>
+        /// 编码文件
+        /// </summary>
+        internal 文件_统一接口 _文件;
 
 
 
@@ -36,13 +40,13 @@ namespace qfCode
             this._Db_sqlSugar = Db;
             this._文件夹_属性 = typeFile;
 
-            #region 初始化
-
-
+           
             new _文件夹_(this);
-            this._文件类 = new 文件类(this);
+            this._文件类 = new 文件类(this); 
+            this._文件 = new 文件_统一接口(this);
 
-            #endregion
+
+           
 
 
 
