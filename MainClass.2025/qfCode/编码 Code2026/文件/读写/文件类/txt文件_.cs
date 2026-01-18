@@ -11,7 +11,7 @@ namespace qfCode
     {
         编码_ _codeSys;
         private static readonly object _lock = new object();
-        public txt文件_ (编码_ codeSys)
+        public txt文件_(编码_ codeSys)
         {
             this._codeSys = codeSys;
         }
@@ -29,7 +29,7 @@ namespace qfCode
         public (bool s, string m, _文件_属性_ cfg) Read(string FileName)
         {
             lock (_lock)
-            { 
+            {
                 string Path = this._codeSys._文件类.GetPath_编码文件(FileName);
                 (bool s, string m, string json) rt = new qfmain.文本().Read_25(Path);
                 (bool s, string m, _文件_属性_ cfg) rtCfg = new Json序列化().转成Json(rt.json);
@@ -38,7 +38,7 @@ namespace qfCode
                     return (rt.s, rt.m, rtCfg.cfg);
                 }
                 return (rt.s, rt.m, rtCfg.cfg);
-            } 
+            }
         }
 
         public (bool s, string m) Delete(string FileName)
@@ -51,7 +51,16 @@ namespace qfCode
             }
         }
 
-        
+        public (bool s, string m) 另存为(string FileName, string NewFileName)
+        {
+            lock (_lock)
+            {
+                string Path = this._codeSys._文件类.GetPath_编码文件(FileName);
+                string PathNew = this._codeSys._文件类.GetPath_编码文件(FileName);
+                bool rt = new qfmain.文件_文件夹().文件_复制文件(Path, PathNew, out string msgErr, true);
+                return (rt, msgErr);
+            }
+        }
 
 
 

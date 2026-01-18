@@ -34,7 +34,7 @@ namespace qfPLC
         /// <summary>
         /// 参数保存路径
         /// </summary>
-        public  string _path { set; get; } = Environment.CurrentDirectory + "\\ModbusTcp.txt";
+        public string _path { set; get; } = Environment.CurrentDirectory + "\\ModbusTcp.txt";
         public qfmain._连接状态_ _连接状态 { set; get; } = qfmain._连接状态_.未连接;
 
         /// <summary>
@@ -144,12 +144,12 @@ namespace qfPLC
             return (rt, msgErr);
         }
 
-        public virtual DialogResult  窗体设置(string Title,bool 重连)
+        public virtual DialogResult 窗体设置(string Title, bool 重连)
         {
             using (Form_ModbusTcp forms = new Form_ModbusTcp(this, Title))
             {
                 DialogResult dlt = forms.ShowDialog();
-                if (重连 &&  dlt == DialogResult.OK)
+                if (重连 && dlt == DialogResult.OK)
                 {
                     Task.Run(() => { 连接(true); });
                 }
@@ -161,35 +161,40 @@ namespace qfPLC
         #region Write
 
 
-       
-        public virtual (bool rt, string msgErr) Write<T>(string address, T value) 
+
+        public virtual (bool rt, string msgErr) Write<T>(string address, T value)
         {
-            
-                return new WritePlc().Write(this._ModbusTcpClient, address, value);
-           
+
+            return new WritePlc().Write(this._ModbusTcpClient, address, value);
+
         }
 
-        public virtual (bool rt, string msgErr) Write( string address, string value)
+        public virtual (bool rt, string msgErr) Write(string address, string value)
         {
             return new WritePlc().Write(this._ModbusTcpClient, address, value);
+
         }
-        public virtual (bool rt, string msgErr) Write( Encoding encoding, string address, string value)
+        public virtual (bool rt, string msgErr) Write(Encoding encoding, string address, string value)
         {
+
             return new WritePlc().Write(this._ModbusTcpClient, encoding, address, value);
+
         }
 
 
-        public virtual async Task<(bool rt, string msgErr)> WriteAsync<T>( string address, T value)  
+        public virtual async Task<(bool rt, string msgErr)> WriteAsync<T>(string address, T value)
         {
-            return await  new WritePlc().WriteAsync(this._ModbusTcpClient, address, value);
+            return await new WritePlc().WriteAsync(this._ModbusTcpClient, address, value);
         }
-        public virtual async Task<(bool rt, string msgErr)> WriteAsync( string address, string value)
+        public virtual async Task<(bool rt, string msgErr)> WriteAsync(string address, string value)
         {
-            return await  new WritePlc().WriteAsync(this._ModbusTcpClient, address, value);
+
+            return await new WritePlc().WriteAsync(this._ModbusTcpClient, address, value);
+
         }
-        public virtual async Task<(bool rt, string msgErr)> WriteAsync( Encoding encoding, string address, string value)
+        public virtual async Task<(bool rt, string msgErr)> WriteAsync(Encoding encoding, string address, string value)
         {
-            return await  new WritePlc().WriteAsync(this._ModbusTcpClient, encoding, address, value);
+            return await new WritePlc().WriteAsync(this._ModbusTcpClient, encoding, address, value);
         }
 
 
@@ -200,7 +205,7 @@ namespace qfPLC
 
         #region Read
 
-        public virtual (bool rt, string msgErr, bool  value) ReadDiscrete_离散线圈(string address)
+        public virtual (bool rt, string msgErr, bool value) ReadDiscrete_离散线圈(string address)
         {
             return new ReadPlc().ReadDiscrete_离散线圈(this._ModbusTcpClient, address);
         }
@@ -211,11 +216,11 @@ namespace qfPLC
 
         public virtual async Task<(bool rt, string msgErr, bool value)> ReadDiscreteAysnc_离散线圈(string address)
         {
-            return await  new ReadPlc().ReadDiscreteAysnc_离散线圈(this._ModbusTcpClient, address);
+            return await new ReadPlc().ReadDiscreteAysnc_离散线圈(this._ModbusTcpClient, address);
         }
         public virtual async Task<(bool rt, string msgErr, bool[] value)> ReadDiscreteAysnc_离散线圈(string address, ushort length)
         {
-            return await  new ReadPlc().ReadDiscreteAysnc_离散线圈(this._ModbusTcpClient, address, length);
+            return await new ReadPlc().ReadDiscreteAysnc_离散线圈(this._ModbusTcpClient, address, length);
         }
 
         public virtual (bool rt, string msgErr, T value) Read<T>(string address)
@@ -226,9 +231,9 @@ namespace qfPLC
         {
             return new ReadPlc().Read<T>(this._ModbusTcpClient, address, length);
         }
-        public virtual (bool rt, string msgErr, bool[]  value) ReadCoil (string address, ushort length)
-        { 
-            return new ReadPlc().ReadCoil (this._ModbusTcpClient, address, length);
+        public virtual (bool rt, string msgErr, bool[] value) ReadCoil(string address, ushort length)
+        {
+            return new ReadPlc().ReadCoil(this._ModbusTcpClient, address, length);
         }
         public virtual (bool rt, string msgErr, bool value) ReadCoil(string address)
         {
@@ -254,13 +259,13 @@ namespace qfPLC
         {
             return await new ReadPlc().ReadAsync<T>(this._ModbusTcpClient, address, length);
         }
-        public virtual async Task<(bool rt, string msgErr, bool  value)> ReadCoilAsync(string address)
+        public virtual async Task<(bool rt, string msgErr, bool value)> ReadCoilAsync(string address)
         {
-            return await new ReadPlc().ReadCoilAsync (this._ModbusTcpClient, address);
+            return await new ReadPlc().ReadCoilAsync(this._ModbusTcpClient, address);
         }
-        public virtual async Task<(bool rt, string msgErr, bool[] value)> ReadCoilAsync(string address,ushort length)
+        public virtual async Task<(bool rt, string msgErr, bool[] value)> ReadCoilAsync(string address, ushort length)
         {
-            return await new ReadPlc().ReadCoilAsync (this._ModbusTcpClient, address, length);
+            return await new ReadPlc().ReadCoilAsync(this._ModbusTcpClient, address, length);
         }
 
 
@@ -269,9 +274,9 @@ namespace qfPLC
         {
             return await new ReadPlc().ReadAsync(this._ModbusTcpClient, address, length, encoding);
         }
-        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length )
+        public virtual async Task<(bool rt, string msgErr, string value)> ReadAsync(string address, ushort length)
         {
-            return await new ReadPlc().ReadAsync(this._ModbusTcpClient, address, length );
+            return await new ReadPlc().ReadAsync(this._ModbusTcpClient, address, length);
         }
 
 

@@ -115,7 +115,25 @@ namespace qfCode
             }
         }
 
-       
+        public (bool s, string m) 另存为(string FileName, string NewFileName)
+        {
+            string[] work = new string[]
+            {
+                "查询",
+                "另存为"
+            };
+            (bool s, string m, _文件_属性_ cfg) rt = (true, "", default);
+            lock (_lock)
+            {
+                foreach (var s in work)
+                {
+                    if (s == "查询")
+                    {
+
+                    }
+                }
+            }
+        }
 
         bool Err_Table未初始化(out string msgErr)
         {

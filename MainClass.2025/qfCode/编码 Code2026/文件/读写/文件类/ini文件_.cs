@@ -53,8 +53,17 @@ namespace qfCode
             }
         }
 
-      
 
+        public (bool s, string m) 另存为(string FileName, string NewFileName)
+        {
+            lock (_lock)
+            {
+                string Path = this._codeSys._文件类.GetPath_编码文件(FileName);
+                string PathNew = this._codeSys._文件类.GetPath_编码文件(FileName);
+                bool rt = new qfmain.文件_文件夹().文件_复制文件(Path, PathNew, out string msgErr, true);
+                return (rt, msgErr);
+            }
+        }
 
     }
 }
