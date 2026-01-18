@@ -111,7 +111,41 @@ namespace qfCode
             }
         }
 
-       
+        public (bool s, string m) 另存为(string FileName, string NewFileName)
+        {
+            string[] work = new string[]
+            {
+                "查询",
+                "另存为"
+            };
+
+            lock (_lock)
+            {
+                (bool s, string m) rt = (true, "");
+                _文件_属性_ cfg = new _文件_属性_();
+                foreach (var s in work)
+                {
+                    if (!rt.s)
+                    {
+                        break;
+                    }
+                    else if (s == "查询")
+                    {
+                        (bool s, string m, _文件_属性_ cfg) rtGet = Read(FileName);
+                        rt.s = rtGet.s;
+                        rt.m = rtGet.m;
+                        cfg = rtGet.cfg;
+                    }
+                    else if (s == "另存为")
+                    {
+                        rt = Save(NewFileName, cfg);
+                    }
+                }
+
+                return rt;
+            }
+        }
+
         bool Err_Table未初始化(out string msgErr)
         {
             msgErr = "";
