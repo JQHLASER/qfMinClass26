@@ -40,7 +40,7 @@ namespace qfCode
         /// </summary>
         public void GetCfg()
         {
-            this._cfg.内容 = this.uiTextBox1.Text;
+          
 
         }
 
@@ -56,27 +56,14 @@ namespace qfCode
                 case type_编辑._编辑类型_.添加:
                     #region 添加 
 
-                    this.uiRadioButton_文本.Checked = true;
-                    this.uiTextBox1.Clear();
-
+                 
                     #endregion
                     break;
                 case type_编辑._编辑类型_.修改:
 
                     #region 修改
 
-                    switch (this._cfg.类型)
-                    {
-                        case _文本_._em_文本_.换行:
-                            this.uiRadioButton_换行.Checked = true;
-                            break;
-                        case _文本_._em_文本_.空格:
-                            this.uiRadioButton_空格.Checked = true;
-                            break;
-                        default:
-                            this.uiRadioButton_文本.Checked = true; ;
-                            break;
-                    }
+                    
 
                     #endregion
 
@@ -88,24 +75,7 @@ namespace qfCode
       
         void On_选中()
         {
-            if (this.uiRadioButton_换行.Checked)
-            {
-                this._cfg.类型 = _文本_._em_文本_.换行;
-                this.uiTextBox1.Clear();
-                this.uiTextBox1.Enabled = false;
-            }
-            else if (this.uiRadioButton_空格.Checked)
-            {
-                this._cfg.类型 = _文本_._em_文本_.空格;
-                this.uiTextBox1.Clear();
-                this.uiTextBox1.Enabled = false;
-            }
-            else
-            {
-                this._cfg.类型 = _文本_._em_文本_.文本;
-                this.uiTextBox1.Text = this._cfg.内容;
-                this.uiTextBox1.Enabled = true;
-            }
+           
 
 
         }
