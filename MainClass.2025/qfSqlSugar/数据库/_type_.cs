@@ -58,7 +58,10 @@ namespace qfSqlSugar
         /// </summary>
         public string 密码 { set; get; } = "QIFENG8888";
 
-
+        /// <summary>
+        /// 默认值: 1433
+        /// </summary>
+        public int 端口 { set; get; } = 1433;
 
     }
 

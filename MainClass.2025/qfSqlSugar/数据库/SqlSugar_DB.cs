@@ -297,7 +297,7 @@ SqlServer 数据库....使用最新库
 
             //下面是要解决长期连接会失效的问题 
             StringBuilder sb = new StringBuilder();
-            sb.Append($"Data Source={Info_SQLserver.数据库地址};");
+            sb.Append($"Data Source={Info_SQLserver.数据库地址},{Info_SQLserver.端口};");
             sb.Append($"database={Info_SQLserver.数据库名称};");
             sb.Append($"User ID={Info_SQLserver.用户};");
             sb.Append($"Password={Info_SQLserver.密码};");
