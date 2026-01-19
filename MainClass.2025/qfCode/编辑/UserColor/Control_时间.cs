@@ -10,23 +10,22 @@ using System.Windows.Forms;
 
 namespace qfCode
 {
-    public partial class Control_序列号 : Sunny.UI.UITitlePanel
+    public partial class Control_时间 : Sunny.UI.UITitlePanel
     {
         type_编辑._编辑类型_ _type;
-        _元素_.序列号 _cfg;
-        public Control_序列号(type_编辑._编辑类型_ type, _元素_.序列号  cfg)
+        _元素_.时间 _cfg;
+        public Control_时间(type_编辑._编辑类型_ type, _元素_.时间   cfg)
         {
             InitializeComponent();
             this._type = type;
-            this._cfg = new _元素_.序列号().Clone();
+            this._cfg = new _元素_.时间().Clone();
 
             this.Load += (s, e) =>
             {
 
 
             };
- 
-
+            
 
             show();
         }
@@ -38,7 +37,7 @@ namespace qfCode
         /// </summary>
         public void GetCfg()
         {
-          
+           
 
         }
 
@@ -55,14 +54,13 @@ namespace qfCode
                     #region 添加 
 
                    
-
                     #endregion
                     break;
                 case type_编辑._编辑类型_.修改:
 
                     #region 修改
 
-                    
+                   
 
                     #endregion
 
@@ -73,9 +71,7 @@ namespace qfCode
          
       
         void On_选中()
-        {
-            
-
+        { 
         }
 
         #endregion

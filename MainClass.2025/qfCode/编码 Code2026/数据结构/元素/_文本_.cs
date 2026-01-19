@@ -11,7 +11,7 @@ namespace qfCode
         public enum _em_文本_
         {
             文本,
-            换行符,
+            换行,
             空格,
         }
     }
