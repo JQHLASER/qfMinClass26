@@ -25,9 +25,9 @@ namespace qfSqlSugar
 
         /// <summary>
         /// 过程名,如 SP_Get_Scan
-        /// <para>传入参数,如new SugarParameter("@ordernumber", "123456")</para>
+        /// <para>传入参数,如new SugarParameter("@ordernumber","123456")</para>
         /// </summary> 
-        public (bool s, string m, _cfg_信息_[] cfg) Get(SqlSugar_DB e, string 过程名, SugarParameter[] 传入参数)
+        public (bool s, string m, _cfg_信息_[] cfg) Get查询(SqlSugar_DB e, string 过程名, SugarParameter[] 传入参数)
         { 
             try
             {
