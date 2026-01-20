@@ -34,6 +34,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.uiButton_Yes = new Sunny.UI.UIButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.uiRadioButton1 = new Sunny.UI.UIRadioButton();
             this.SuspendLayout();
             // 
             // uiRadioButton_文本
@@ -42,7 +43,7 @@
             this.uiRadioButton_文本.Cursor = System.Windows.Forms.Cursors.Default;
             this.uiRadioButton_文本.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.uiRadioButton_文本.ImageSize = 18;
-            this.uiRadioButton_文本.Location = new System.Drawing.Point(56, 184);
+            this.uiRadioButton_文本.Location = new System.Drawing.Point(56, 203);
             this.uiRadioButton_文本.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiRadioButton_文本.Name = "uiRadioButton_文本";
             this.uiRadioButton_文本.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
@@ -58,7 +59,7 @@
             this.uiRadioButton_换行.Cursor = System.Windows.Forms.Cursors.Default;
             this.uiRadioButton_换行.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.uiRadioButton_换行.ImageSize = 18;
-            this.uiRadioButton_换行.Location = new System.Drawing.Point(56, 214);
+            this.uiRadioButton_换行.Location = new System.Drawing.Point(56, 234);
             this.uiRadioButton_换行.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiRadioButton_换行.Name = "uiRadioButton_换行";
             this.uiRadioButton_换行.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
@@ -74,7 +75,7 @@
             this.uiRadioButton_空格.Cursor = System.Windows.Forms.Cursors.Default;
             this.uiRadioButton_空格.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.uiRadioButton_空格.ImageSize = 18;
-            this.uiRadioButton_空格.Location = new System.Drawing.Point(56, 244);
+            this.uiRadioButton_空格.Location = new System.Drawing.Point(56, 265);
             this.uiRadioButton_空格.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiRadioButton_空格.Name = "uiRadioButton_空格";
             this.uiRadioButton_空格.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
@@ -119,14 +120,31 @@
             // panel1
             // 
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(5, 295);
+            this.panel1.Location = new System.Drawing.Point(5, 345);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(540, 200);
+            this.panel1.Size = new System.Drawing.Size(540, 150);
             this.panel1.TabIndex = 6;
+            // 
+            // uiRadioButton1
+            // 
+            this.uiRadioButton1.BackColor = System.Drawing.Color.Transparent;
+            this.uiRadioButton1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiRadioButton1.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiRadioButton1.ImageSize = 18;
+            this.uiRadioButton1.Location = new System.Drawing.Point(56, 172);
+            this.uiRadioButton1.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiRadioButton1.Name = "uiRadioButton1";
+            this.uiRadioButton1.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
+            this.uiRadioButton1.Size = new System.Drawing.Size(450, 25);
+            this.uiRadioButton1.StyleCustomMode = true;
+            this.uiRadioButton1.TabIndex = 7;
+            this.uiRadioButton1.Tag = "文本";
+            this.uiRadioButton1.Text = "全部";
             // 
             // Control_关联对象
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.uiRadioButton1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.uiButton_Yes);
             this.Controls.Add(this.textBox1);
@@ -152,5 +170,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private Sunny.UI.UIButton uiButton_Yes;
         private System.Windows.Forms.Panel panel1;
+        private Sunny.UI.UIRadioButton uiRadioButton1;
     }
 }

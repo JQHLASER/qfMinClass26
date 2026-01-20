@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,6 +24,28 @@ namespace qfCode
             public bool 通讯COM { set; get; } = false;
 
         }
+
+        public class _序列号_
+        {
+            /// <summary>
+            /// 每个加工数量
+            /// </summary>
+            public bool 加工  { set; get; } = false;
+
+            /// <summary>
+            /// 十六进制序列号
+            /// </summary>
+            public bool 类型_HEX { set; get; } = false;
+        }
+
+
+        public class _日期_
+        { 
+            public bool 偏移计算 { set; get; } = false;
+ 
+        }
+
+
 
         public class _编辑_
         {

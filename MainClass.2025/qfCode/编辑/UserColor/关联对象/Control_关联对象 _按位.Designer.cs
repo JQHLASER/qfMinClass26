@@ -43,10 +43,10 @@
             this.uiTextBox4.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.uiTextBox4.HasMinimum = true;
             this.uiTextBox4.IntValue = 1;
-            this.uiTextBox4.Location = new System.Drawing.Point(242, 65);
+            this.uiTextBox4.Location = new System.Drawing.Point(242, 46);
             this.uiTextBox4.Margin = new System.Windows.Forms.Padding(0);
             this.uiTextBox4.Maximum = 2147483647D;
-            this.uiTextBox4.Minimum = 0D;
+            this.uiTextBox4.Minimum = 1D;
             this.uiTextBox4.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiTextBox4.Name = "uiTextBox4";
             this.uiTextBox4.Padding = new System.Windows.Forms.Padding(5);
@@ -61,7 +61,7 @@
             // 
             this.ui_Label_85.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.ui_Label_85.ForeColor = System.Drawing.Color.Gray;
-            this.ui_Label_85.Location = new System.Drawing.Point(36, 65);
+            this.ui_Label_85.Location = new System.Drawing.Point(36, 46);
             this.ui_Label_85.Name = "ui_Label_85";
             this.ui_Label_85.Size = new System.Drawing.Size(200, 26);
             this.ui_Label_85.Style = Sunny.UI.UIStyle.Custom;
@@ -77,7 +77,7 @@
             this.uiTextBox1.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.uiTextBox1.HasMinimum = true;
             this.uiTextBox1.IntValue = 1;
-            this.uiTextBox1.Location = new System.Drawing.Point(242, 96);
+            this.uiTextBox1.Location = new System.Drawing.Point(242, 77);
             this.uiTextBox1.Margin = new System.Windows.Forms.Padding(0);
             this.uiTextBox1.Maximum = 2147483647D;
             this.uiTextBox1.Minimum = 0D;
@@ -95,7 +95,7 @@
             // 
             this.ui_Label_81.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.ui_Label_81.ForeColor = System.Drawing.Color.Gray;
-            this.ui_Label_81.Location = new System.Drawing.Point(36, 96);
+            this.ui_Label_81.Location = new System.Drawing.Point(36, 77);
             this.ui_Label_81.Name = "ui_Label_81";
             this.ui_Label_81.Size = new System.Drawing.Size(200, 26);
             this.ui_Label_81.Style = Sunny.UI.UIStyle.Custom;
@@ -113,7 +113,8 @@
             this.Name = "Control_关联对象_按位";
             this.Padding = new System.Windows.Forms.Padding(5);
             this.RadiusSides = Sunny.UI.UICornerRadiusSides.None;
-            this.Size = new System.Drawing.Size(540, 200);
+            this.RectSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.None;
+            this.Size = new System.Drawing.Size(540, 150);
             this.Text = "文本";
             this.TitleHeight = 0;
             this.ResumeLayout(false);

@@ -20,26 +20,32 @@ namespace qfCode
         public class _按位_
         {
             /// <summary>
-            /// 从1开始;=0时表示取全部数据,
+            /// 从1开始; 
             /// </summary>
-            public uint 开始位 { set; get; } = 0;
+            public uint 开始位 { set; get; } = 1;
             /// <summary>
-            /// =0时表示取剩下全部数据
+            /// 从1开始
             /// </summary>
-            public uint 数量 { set; get; } = 0;
+            public uint 数量 { set; get; } = 1;
         }
 
         public class _按字符_
         {
             public string 分割符 { set; get; } = ";";
-            public uint 索引 { set; get; } = 0;
+            /// <summary>
+            /// 从1开始
+            /// </summary>
+            public uint 索引 { set; get; } = 1;
         }
 
         public class _按首尾_
         {
             public string 首 { set; get; } = "";
             public string 尾{ set; get; } = "";
-            public uint 索引 { set; get; } = 0;
+            /// <summary>
+            /// 从1开始
+            /// </summary>
+            public uint 索引 { set; get; } = 1;
         }
 
 

@@ -66,6 +66,11 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="编码 Code2026\计算\编码_计算.cs" />
+    <Compile Include="编码 Code2026\计算\计算_关联对象.cs" />
+    <Compile Include="编码 Code2026\计算\计算_序列号.cs" />
+    <Compile Include="编码 Code2026\计算\计算_日期时间.cs" />
+    <Compile Include="编码 Code2026\计算\计算_班次.cs" />
     <Compile Include="编辑\Form_主窗体.cs">
       <SubType>Form</SubType>
     </Compile>

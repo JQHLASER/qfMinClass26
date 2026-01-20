@@ -18,7 +18,7 @@ namespace qfLanguage
             new _language_Value_ ( keys, "未找到文件","未找到文件"),
             new _language_Value_ ( keys, "受影响0行","受影响0行"),
             new _language_Value_ ( keys, "执行成功","执行成功"),
-
+            new _language_Value_ ( keys, "关联的对象名不能为空值","关联的对象名不能为空值"),
             
         };
         

@@ -60,29 +60,29 @@ namespace qfCode
         /// <summary>
         /// 获取班次
         /// </summary> 
-        internal _班次_._Cfg_[] Get_班次(string FileName)
+        internal _班次_[] Get_班次(string FileName)
         {
             string path = GetPath_班次(FileName);
-            _班次_._Cfg_[] Beff = new _班次_._Cfg_[0];
+            _班次_[] Beff = new _班次_[0];
             if (!new qfmain.文件_文件夹().文件_是否存在(path))
             {
                 return Beff;
             }
 
-            List<_班次_._Cfg_> lst = new List<_班次_._Cfg_>
+            List<_班次_> lst = new List<_班次_>
             {
-                new _班次_._Cfg_
+                new _班次_
                 {
                     代码 = "A",
                     上班时间 = "08:00:00",
                     下班时间 = "16:00:00",
                 },
-                 new _班次_._Cfg_
+                 new _班次_
                 {
                     代码 = "B",
                     上班时间 = "16:00:00",
                     下班时间 = "01:00:00",
-                },  new _班次_._Cfg_
+                },  new _班次_
                 {
                     代码 = "C",
                     上班时间 = "01:00:00",
