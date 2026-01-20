@@ -1,4 +1,4 @@
-﻿using qfWork;
+﻿ 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,17 +75,17 @@ namespace qfWPFmain
 
 
         private readonly object _lock = new object();
-        void On_获取图像(qfWork._激光_获取图像_ state)
+        void On_获取图像(qf_Laser._激光_获取图像_ state)
         {
             lock (this._lock)
             {
 
-                if (state == qfWork._激光_获取图像_.获取)
+                if (state == qf_Laser ._激光_获取图像_.获取)
                 {
                     this.markezd.显示图像((int)this.DataContent_.Width, (int)this.DataContent_.Height, out ImageSource img_, out string msgErr);
                     this.DataContent_.Img = img_;
                 }
-                else if (state == qfWork._激光_获取图像_.清除)
+                else if (state == qf_Laser._激光_获取图像_.清除)
                 {
                     this.DataContent_.Img = new BitmapImage();
                 }
@@ -97,13 +97,13 @@ namespace qfWPFmain
 
 
 
-        void On_初始化状态(qfWork._初始化状态_ state)
+        void On_初始化状态(qf_Laser._初始化状态_ state)
         { 
            
             switch (state)
             {
 
-                case _初始化状态_.已初始化:
+                case qf_Laser._初始化状态_.已初始化:
 
                     #region 已初始化
  
@@ -120,7 +120,7 @@ namespace qfWPFmain
                     #endregion
 
                     break;
-                case _初始化状态_.未初始化:
+                case qf_Laser._初始化状态_.未初始化:
 
                     #region 未初始化
 

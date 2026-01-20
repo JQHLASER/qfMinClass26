@@ -23,9 +23,9 @@ namespace qfWPFmain
         private viewMoel_jcz2_调试 DataContext_;
         MarkEzd markezd;
 
-        void On_加工状态(qfWork._激光加工状态_ state)
+        void On_加工状态(qf_Laser._激光加工状态_ state)
         {
-            this.markezd.标题栏状态_加工状态(this._标题栏 );
+            this.markezd.标题栏状态_加工状态(this._标题栏);
         }
 
         public Win_jcz2_调试(MarkEzd markezd_)
@@ -39,7 +39,7 @@ namespace qfWPFmain
             markezd.Event_IO_IN += this.DataContext_.On_In;
             markezd.Event_IO_OUT += this.DataContext_.On_Out;
             markezd.Event_加工状态 += this.On_加工状态;
- 
+
 
         }
 
@@ -70,7 +70,7 @@ namespace qfWPFmain
 
         private void _button_停止_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Task.Run(() => { this.markezd.停止标刻和红光(); });
+            Task.Run(() => { this.markezd.停止(); });
         }
 
         private void _button_设置_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -82,12 +82,12 @@ namespace qfWPFmain
         {
             new Thread(() =>
             {
-                bool rt = this.markezd.加工_红光指示(out string msgErr);
-                if (!rt)
+                var  rt = this.markezd.红光指示( false );
+                if (!rt.s)
                 {
                     this.Dispatcher.Invoke(() =>
                     {
-                        MessageBox.Show(msgErr, "", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show(rt.m , "", MessageBoxButton.OK, MessageBoxImage.Error);
                     });
                 }
             })
@@ -98,12 +98,12 @@ namespace qfWPFmain
         {
             new Thread(() =>
             {
-                bool rt = this.markezd.标刻(false,out string msgErr);               
-                if (!rt)
+                var  rt = this.markezd.标刻(false );
+                if (!rt.s)
                 {
                     this.Dispatcher.Invoke(() =>
                     {
-                        MessageBox.Show(msgErr, "", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show(rt.m, "", MessageBoxButton.OK, MessageBoxImage.Error);
                     });
                 }
             })

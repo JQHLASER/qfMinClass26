@@ -53,6 +53,7 @@
     <ProjectReference Include="..\Language\qfLanguage.csproj" />
     <ProjectReference Include="..\qfmain\qfmain.csproj" />
     <ProjectReference Include="..\qfWork\qfWork.csproj" />
+    <ProjectReference Include="..\qf_Laser\qf_Laser.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,11 +1,13 @@
 ﻿
 using Microsoft.Win32;
+using SqlSugar.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Markup;
 
 namespace qfWPFmain
@@ -15,10 +17,10 @@ namespace qfWPFmain
     /// </summary>
     public class LaserMark_单头_All : Language_
     {
-        public qfWork._激光参数_ _激光参数;
+        public qf_Laser._激光参数_ _激光参数;
         public string _激光模板Path = string.Empty;
-        public qfWork._初始化状态_ _初始化态 = qfWork._初始化状态_.未初始化;
-        public qfWork._激光加工状态_ _激光加工状态 = qfWork._激光加工状态_.闲置;
+        public qf_Laser._初始化状态_ _初始化态 = qf_Laser._初始化状态_.未初始化;
+        public qf_Laser._激光加工状态_ _激光加工状态 = qf_Laser._激光加工状态_.闲置;
         public _打标卡类型_ _打标卡类型 = _打标卡类型_.EzCad2;
         public string _打标软件名称 = "EzCad2.exe";
         private ui_window_Title _标题栏;
@@ -33,7 +35,7 @@ namespace qfWPFmain
         /// <summary>
         /// 金橙子EzCad2.0
         /// </summary>
-        public MarkEzd _Markezd =new MarkEzd ();
+        public MarkEzd _Markezd = new MarkEzd();
 
         #endregion
 
@@ -56,7 +58,7 @@ namespace qfWPFmain
         public void 初始化(_打标卡类型_ 打标卡类型_, ui_window_Title 标题栏)
         {
             this._打标卡类型 = 打标卡类型_;
-          
+
 
             switch (this._打标卡类型)
             {
@@ -64,21 +66,21 @@ namespace qfWPFmain
 
                     #region 初始化
 
-                    this._标题栏 = 标题栏;              
-                     
+                    this._标题栏 = 标题栏;
+
                     this._Markezd.Event_IO_IN += On_IO_IN;
                     this._Markezd.Event_IO_OUT += On_IO_OUT;
                     this._Markezd.Event_初始化状态 += On_初始化状态;
                     this._Markezd.Event_Log += On_Log;
                     this._Markezd.Event_加工状态 += On_加工状态;
-                    this._Markezd.Event_加载Ezd成功 += On_加载激光模板成功;
+                    this._Markezd.Event_加载激光模板成功 += On_加载激光模板成功;
                     this._Markezd.Event_获取图像 += On_获取图像;
 
                     this._激光参数 = this._Markezd._参数;
                     this._打标软件名称 = this._激光参数.激光软件名称;
-                  
 
-                    this._Markezd.初始化();
+
+                    this._Markezd.初始化(true );
 
                     #endregion
 
@@ -102,7 +104,7 @@ namespace qfWPFmain
                     this._Markezd.Event_初始化状态 -= On_初始化状态;
                     this._Markezd.Event_Log -= On_Log;
                     this._Markezd.Event_加工状态 -= On_加工状态;
-                    this._Markezd.Event_加载Ezd成功 -= On_加载激光模板成功;
+                    this._Markezd.Event_加载激光模板成功 -= On_加载激光模板成功;
                     this._Markezd.Event_获取图像 -= On_获取图像;
                     this._Markezd.释放();
 
@@ -113,15 +115,13 @@ namespace qfWPFmain
             }
         }
 
-        public void 打开激光软件()
+        public async Task 打开激光软件()
         {
 
             switch (this._打标卡类型)
             {
                 case _打标卡类型_.EzCad2:
-
-                    this._Markezd.EzCad2软件_打开();
-                  
+                    await this._Markezd.打开激光编辑软件();
                     break;
 
             }
@@ -137,10 +137,9 @@ namespace qfWPFmain
                 case _打标卡类型_.EzCad2:
 
                     #region EzCad2
-
-                    qfWork._Err_jczMarkEzd2_ nErr = this._Markezd.LoadEzdFile(path, 是否刷新图形)!;
-                    rt = nErr != qfWork._Err_jczMarkEzd2_.成功 ? false : true;
-                    this._Markezd.ErrToMsg((int)nErr, out msgErr);
+                    var rts = this._Markezd.打开模板(path, 是否刷新图形, false);
+                    rt = rts.s;
+                    msgErr = rts.m;
 
                     #endregion
 
@@ -215,7 +214,7 @@ namespace qfWPFmain
             读参数();
         }
 
-        public bool 红光指示(out string msgErr)
+        public bool 红光指示(out string msgErr, bool is日志 = false)
         {
             msgErr = string.Empty;
             bool rt = true;
@@ -223,9 +222,10 @@ namespace qfWPFmain
             {
                 case _打标卡类型_.EzCad2:
 
-                    qfWork._激光_红光指示_ red = this._Markezd._参数.红光指示轮廓 ? qfWork._激光_红光指示_.轮郭 : qfWork._激光_红光指示_.外框;
-                    rt = this._Markezd.加工_红光指示(red, out msgErr);
-
+                    qf_Laser._激光_红光指示_ red = this._Markezd._参数.红光指示轮廓 ? qf_Laser._激光_红光指示_.轮郭 : qf_Laser._激光_红光指示_.外框;
+                    var rts = this._Markezd.红光指示(is日志);
+                    rt = rts.s;
+                    msgErr = rts.m;
                     break;
 
             }
@@ -238,7 +238,7 @@ namespace qfWPFmain
             switch (this._打标卡类型)
             {
                 case _打标卡类型_.EzCad2:
-                    this._Markezd.停止标刻和红光();
+                    this._Markezd.停止();
                     break;
 
             }
@@ -252,10 +252,10 @@ namespace qfWPFmain
             switch (this._打标卡类型)
             {
                 case _打标卡类型_.EzCad2:
+                    var rts = this._Markezd.标刻(bFlyMark);
+                    rt = rts.s;
+                    msgErr = rts.m;
 
-                    qfWork._Err_jczMarkEzd2_ nErr = this._Markezd.标刻(bFlyMark, is加工状态);
-                    rt = nErr == qfWork._Err_jczMarkEzd2_.成功 ? true : false;
-                    this._Markezd.ErrToMsg((int)nErr, out msgErr);
                     break;
 
             }
@@ -316,7 +316,7 @@ namespace qfWPFmain
             switch (this._打标卡类型)
             {
                 case _打标卡类型_.EzCad2:
-                    this._Markezd.输出(this._Markezd._参数.OUT.报警);
+                    this._Markezd.输出脉冲式(this._Markezd._参数.OUT.报警);
                     break;
             }
 
@@ -327,7 +327,8 @@ namespace qfWPFmain
             switch (this._打标卡类型)
             {
                 case _打标卡类型_.EzCad2:
-                    this._Markezd.输出(this._Markezd._参数.OUT.标刻完成);
+                    this._Markezd.输出脉冲式(this._Markezd._参数.OUT.标刻完成);
+
                     break;
             }
 
@@ -349,13 +350,13 @@ namespace qfWPFmain
 
         }
 
-        public void 刷新图形(qfWork._激光_获取图像_ state = qfWork._激光_获取图像_.获取)
+        public void 刷新图形(qf_Laser._激光_获取图像_ state = qf_Laser._激光_获取图像_.获取)
         {
 
             switch (this._打标卡类型)
             {
                 case _打标卡类型_.EzCad2:
-                    this._Markezd.获取_图像(state);
+                    this._Markezd.刷新图形(state);
                     break;
 
             }
@@ -370,9 +371,9 @@ namespace qfWPFmain
             switch (this._打标卡类型)
             {
                 case _打标卡类型_.EzCad2:
-                    qfWork._Err_jczMarkEzd2_ nErr = this._Markezd.修改_指定对象的内容(对象名, 内容);
-                    this._Markezd.ErrToMsg((int)nErr, out msgErr);
-                    rt = nErr == qfWork._Err_jczMarkEzd2_.成功 ? true : false;
+                    var rts = this._Markezd.修改对象内容(对象名, 内容);
+                    rt = rts.s;
+                    msgErr = rts.m;
                     break;
 
             }
@@ -387,11 +388,11 @@ namespace qfWPFmain
             switch (this._打标卡类型)
             {
                 case _打标卡类型_.EzCad2:
-                    string value = string.Empty;
-                    qfWork._Err_jczMarkEzd2_ nErr = this._Markezd.获取_对象内容(对象名, ref value);
-                    内容 = value;
-                    this._Markezd.ErrToMsg((int)nErr, out msgErr);
-                    rt = nErr == qfWork._Err_jczMarkEzd2_.成功 ? true : false;
+
+                    var rts = this._Markezd.获取对象内容(对象名);
+                    rt = rts.s;
+                    msgErr = rts.m;
+                    内容 = rts.v;
                     break;
 
             }
@@ -406,11 +407,11 @@ namespace qfWPFmain
             switch (this._打标卡类型)
             {
                 case _打标卡类型_.EzCad2:
-                    string value = string.Empty;
-                    qfWork._Err_jczMarkEzd2_ nErr = this._Markezd.获取_对象名称(对象索引, ref value);
-                    对象名 = value;
-                    this._Markezd.ErrToMsg((int)nErr, out msgErr);
-                    rt = nErr == qfWork._Err_jczMarkEzd2_.成功 ? true : false;
+
+                    var rts = this._Markezd.获取对象名称(对象索引);
+                    对象名 = rts.v;
+                    rt = rts.s;
+                    msgErr = rts.m;
                     break;
 
             }
@@ -423,7 +424,7 @@ namespace qfWPFmain
             {
                 case _打标卡类型_.EzCad2:
                     string value = string.Empty;
-                    count = this._Markezd.获取_对象总数();
+                    count = this._Markezd.获取对象总数().v;
                     break;
 
             }
@@ -568,7 +569,7 @@ namespace qfWPFmain
             return rt;
         }
 
-        public bool Err_dll是否存在(out string msgErr )
+        public bool Err_dll是否存在(out string msgErr)
         {
             bool rt = false;
             msgErr = string.Empty;
@@ -577,7 +578,7 @@ namespace qfWPFmain
             {
                 case _打标卡类型_.EzCad2:
 
-                    rt = this._Markezd .Err_dll是否存在(out msgErr );
+                    rt = this._Markezd.Err_dll是否存在(out msgErr);
                     break;
 
             }
@@ -639,8 +640,8 @@ namespace qfWPFmain
         }
 
 
-        public event Action<qfWork._初始化状态_> Event_初始化状态;
-        void On_初始化状态(qfWork._初始化状态_ state)
+        public event Action<qf_Laser._初始化状态_> Event_初始化状态;
+        void On_初始化状态(qf_Laser._初始化状态_ state)
         {
             this._初始化态 = state;
             标题栏状态_初始化();
@@ -658,8 +659,8 @@ namespace qfWPFmain
 
 
 
-        public event Action<qfWork._激光加工状态_> Event_加工状态;
-        void On_加工状态(qfWork._激光加工状态_ state)
+        public event Action<qf_Laser._激光加工状态_> Event_加工状态;
+        void On_加工状态(qf_Laser._激光加工状态_ state)
         {
             this._激光加工状态 = state;
             标题栏状态_加工状态();
@@ -675,8 +676,8 @@ namespace qfWPFmain
         }
 
 
-        public event Action<qfWork._激光_获取图像_> Event_获取图像;
-        void On_获取图像(qfWork._激光_获取图像_ state)
+        public event Action<qf_Laser._激光_获取图像_> Event_获取图像;
+        void On_获取图像(qf_Laser._激光_获取图像_ state)
         {
             Event_获取图像?.Invoke(state);
         }

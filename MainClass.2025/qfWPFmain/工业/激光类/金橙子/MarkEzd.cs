@@ -9,10 +9,10 @@ using System.Windows.Media.Imaging;
 
 namespace qfWPFmain
 {
-    public class MarkEzd : qfWork.MarkEzd
+    public class MarkEzd : qf_Laser.MarkEzd_Ezd2
     {
- 
 
+        // qfWork.MarkEzd
 
         /// <summary>
         /// 显示激光模板中的图像
@@ -27,10 +27,13 @@ namespace qfWPFmain
             img = new BitmapImage();
             msgErr = string.Empty;
             bool rt = true;
+
             try
             {
-                System.Drawing.Bitmap img0 = 获取_图形(width, height);
-                new bitmapImage_().ImageToBitmapImage(img0, out BitmapImage img1, out msgErr);
+                var rtMark = 获取图形(width, height);
+                rt = rtMark.s;
+                msgErr = rtMark.m;
+                new bitmapImage_().ImageToBitmapImage(rtMark.v, out BitmapImage img1, out msgErr);
                 img = img1;
             }
             catch (Exception ex)
@@ -49,7 +52,7 @@ namespace qfWPFmain
         /// <param name="state"></param>
         public void 刷新图像(ushort state)
         {
-            获取_图像((qfWork._激光_获取图像_)state);
+            刷新图形((qf_Laser._激光_获取图像_)state);
         }
 
         public void 窗体_设置(Window d)
@@ -66,8 +69,8 @@ namespace qfWPFmain
         /// <param name="d"></param>
         public void 窗体_显示图像(Window d)
         {
-            if (this._初始化状态 != qfWork._初始化状态_.已初始化 ||
-                this._激光加工状态 != qfWork._激光加工状态_.闲置)
+            if (this._初始化状态  != qf_Laser ._初始化状态_.已初始化 ||
+                this._激光加工状态 != qf_Laser._激光加工状态_.闲置)
             {
                 return;
             }
@@ -115,7 +118,11 @@ namespace qfWPFmain
             ui标题栏.Add(info, (int)this._激光加工状态);
         }
 
- 
 
+        public event Action<bool, string> Event_Log;
+        void On_Log(bool s, string m)
+        {
+            Event_Log?.Invoke(s, m);
+        }
     }
 }

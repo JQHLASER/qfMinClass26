@@ -19,7 +19,7 @@ namespace qfWPFmain
             public string 设置 { set; get; } = Language_.Get语言("设置");
             public string 标题 { set; get; } = Language_.Get语言("调试");
         }
-        
+
 
         public viewMoel_jcz2_调试(MarkEzd markezd_)
         {
@@ -58,7 +58,7 @@ namespace qfWPFmain
         [ObservableProperty]
         private bool io_IN_13 = false;
         [ObservableProperty]
-        private bool io_IN_14= false;
+        private bool io_IN_14 = false;
         [ObservableProperty]
         private bool io_IN_15 = false;
 
@@ -70,7 +70,7 @@ namespace qfWPFmain
         [ObservableProperty]
         private bool io_OUT_2 = false;
         [ObservableProperty]
-        private bool io_OUT_3 = false;         
+        private bool io_OUT_3 = false;
         [ObservableProperty]
         private bool io_OUT_4 = false;
         [ObservableProperty]
@@ -109,7 +109,7 @@ namespace qfWPFmain
             this.Io_IN_4 = value[4];
             this.Io_IN_5 = value[5];
             this.Io_IN_6 = value[6];
-            this.Io_IN_7= value[7];
+            this.Io_IN_7 = value[7];
             this.Io_IN_8 = value[8];
             this.Io_IN_9 = value[9];
             this.Io_IN_10 = value[10];
@@ -140,9 +140,9 @@ namespace qfWPFmain
             this.Io_OUT_15 = value[15];
         }
 
-        internal void On_SetOut_0(ushort port )
+        internal void On_SetOut_0(ushort port)
         {
-            bool value1 = false ;
+            bool value1 = false;
             switch (port)
             {
                 case 0:
@@ -175,9 +175,9 @@ namespace qfWPFmain
         }
 
 
-        internal void On_SetOut_1(ushort port )
+        internal void On_SetOut_1(ushort port)
         {
-            bool value1 = false ;
+            bool value1 = false;
             switch (port)
             {
                 case 0:
@@ -206,7 +206,7 @@ namespace qfWPFmain
                     break;
             }
 
-            this.markezd.输出(port + 8, value1);
+            this.markezd.输出((ushort)(port + 8), value1);
         }
 
 

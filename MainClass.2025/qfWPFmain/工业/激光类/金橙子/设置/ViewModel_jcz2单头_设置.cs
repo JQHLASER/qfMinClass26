@@ -127,15 +127,15 @@ namespace qfWPFmain
         /// </summary>
         void show()
         {
-            this.Io_IN_启动标刻 = this.markezd._参数.IN.启动标刻;
-            this.Io_IN_停止 = this.markezd._参数.IN.停止;
-            this.Io_IN_复位 = this.markezd._参数.IN.复位;
+            this.Io_IN_启动标刻 = (short)this.markezd._参数.IN.启动标刻;
+            this.Io_IN_停止 = (short)this.markezd._参数.IN.停止;
+            this.Io_IN_复位 = (short)this.markezd._参数.IN.复位;
 
-            this.Io_OUT_软件准备好 = this.markezd._参数.OUT.软件准备好;
-            this.Io_OUT_红光 = this.markezd._参数.OUT.红光;
-            this.Io_OUT_标刻中 = this.markezd._参数.OUT.标刻中;
-            this.Io_OUT_标刻完成 = this.markezd._参数.OUT.标刻完成;
-            this.Io_OUT_报警 = this.markezd._参数.OUT.报警;
+            this.Io_OUT_软件准备好 = (short)this.markezd._参数.OUT.软件准备好;
+            this.Io_OUT_红光 = (short)this.markezd._参数.OUT.红光;
+            this.Io_OUT_标刻中 = (short)this.markezd._参数.OUT.标刻中;
+            this.Io_OUT_标刻完成 = (short)this.markezd._参数.OUT.标刻完成;
+            this.Io_OUT_报警 = (short)this.markezd._参数.OUT.报警;
             this.Io_OUT_输出脉宽 = this.markezd._参数.OUT.输出脉宽;
 
             this.CheckBox_进入时加载激光模板 = this.markezd._参数.进入时加载激光模板;
@@ -154,15 +154,15 @@ namespace qfWPFmain
         /// </summary>
         internal void Save()
         {
-            this.markezd._参数.IN.启动标刻 = this.Io_IN_启动标刻;
-            this.markezd._参数.IN.停止 = this.Io_IN_停止;
-            this.markezd._参数.IN.复位 = this.Io_IN_复位;
+            this.markezd._参数.IN.启动标刻 =(ushort ) this.Io_IN_启动标刻;
+            this.markezd._参数.IN.停止 = (ushort)this.Io_IN_停止;
+            this.markezd._参数.IN.复位 = (ushort)this.Io_IN_复位;
 
-            this.markezd._参数.OUT.软件准备好 = this.Io_OUT_软件准备好;
-            this.markezd._参数.OUT.红光 = this.Io_OUT_红光;
-            this.markezd._参数.OUT.标刻中 = this.Io_OUT_标刻中;
-            this.markezd._参数.OUT.标刻完成 = this.Io_OUT_标刻完成;
-            this.markezd._参数.OUT.报警 = this.Io_OUT_报警;
+            this.markezd._参数.OUT.软件准备好 = (ushort)this.Io_OUT_软件准备好;
+            this.markezd._参数.OUT.红光 = (ushort)this.Io_OUT_红光;
+            this.markezd._参数.OUT.标刻中 = (ushort)this.Io_OUT_标刻中;
+            this.markezd._参数.OUT.标刻完成 = (ushort)this.Io_OUT_标刻完成;
+            this.markezd._参数.OUT.报警 = (ushort)this.Io_OUT_报警;
             this.markezd._参数.OUT.输出脉宽 = this.Io_OUT_输出脉宽;
 
             this.markezd._参数.进入时加载激光模板 = this.CheckBox_进入时加载激光模板;
