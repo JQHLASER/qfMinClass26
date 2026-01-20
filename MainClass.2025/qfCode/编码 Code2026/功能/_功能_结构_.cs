@@ -10,11 +10,7 @@ namespace qfCode
     public class _功能_结构_
     {
         public class _工具箱_
-        {
-            public bool 文本 { set; get; } = true;
-            public bool 序列号 { set; get; } = true;
-            public bool 日期 { set; get; } = true;
-            public bool 时间 { set; get; } = true;
+        { 
             public bool 关联对象 { set; get; } = false;
             public bool 班次 { set; get; } = false;
             public bool 特殊码 { set; get; } = false;

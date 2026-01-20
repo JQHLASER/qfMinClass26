@@ -161,6 +161,7 @@
     <Compile Include="编码 Code2026\文件\读写\表.cs" />
     <Compile Include="编码 Code2026\文件\文件类.cs" />
     <Compile Include="语言\LanguageList.cs" />
+    <Compile Include="通讯\Server\Iworker_通讯.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Language\qfLanguage.csproj">
