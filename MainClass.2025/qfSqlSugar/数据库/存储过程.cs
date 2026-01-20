@@ -25,7 +25,7 @@ namespace qfSqlSugar
 
         /// <summary>
         /// 过程名,如 SP_Get_Scan
-        /// <para>传入参数,如new SugarParameter("@ordernumber","123456")</para>
+        /// <para>传入参数,如 new SugarParameter[] { new SugarParameter  ("@ordernumber", scanCode) }</para>
         /// </summary> 
         public (bool s, string m, _cfg_信息_[] cfg) Get查询(SqlSugar_DB e, string 过程名, SugarParameter[] 传入参数)
         { 
@@ -37,6 +37,27 @@ namespace qfSqlSugar
                       传入参数
                    ); 
                 return DataTable转List(dt); 
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message, default);
+            }
+        }
+
+        /// <summary>
+        /// 过程名,如 SP_Get_Scan
+        /// <para>传入参数,如new SugarParameter("@ordernumber","123456")</para>
+        /// </summary> 
+        public (bool s, string m, _cfg_信息_[] cfg) Get查询(SqlSugar_DB e, string 过程名, SugarParameter 传入参数)
+        {
+            try
+            {
+                var dt = e.Db.Ado.UseStoredProcedure()
+                   .GetDataTable(
+                       过程名,
+                      传入参数
+                   );
+                return DataTable转List(dt);
             }
             catch (Exception ex)
             {
