@@ -15,8 +15,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static qfNet.LaserMark_单头_All;
-using static System.Windows.Forms.AxHost;
+ 
 
 namespace qf_Laser
 {
@@ -116,6 +115,7 @@ namespace qf_Laser
             读写参数(1);
             读写_最后一次ezdpath(1);
             读EzCadName();
+     
             if (使能线程)
             {
                 new Thread(() => { 线程(); }) { IsBackground = true }.Start();
@@ -633,6 +633,7 @@ namespace qf_Laser
                                 this.is第一次初始化_EzCad = false;
                                 rtJcz = _Err_jczMarkEzd2_.未初始化;
                                 On_Log(false, $"{qfmain.Language_.Get语言("发现EzCad进程")}");
+                                On_初始化状态(_初始化状态_.未初始化 );
                             }
                         }
                         catch (Exception ex)
@@ -1756,13 +1757,15 @@ namespace qf_Laser
 
 
         bool is第一次初始化 = true;
+        private readonly object _lock初始化=new object();
         async Task On_初始化状态(_初始化状态_ state)
         {
-            this._初始化状态 = state;
-            On_标题栏状态_初始化状态(_标题栏标题_初始化状态, state);
-
-            Event_初始化状态?.Invoke(state);
-
+            lock (this._lock初始化)
+            {
+                this._初始化状态 = state;
+                On_标题栏状态_初始化状态(_标题栏标题_初始化状态, state); 
+                Event_初始化状态?.Invoke(state);
+            }
             await Task.Run(() =>
                {
                    switch (state)

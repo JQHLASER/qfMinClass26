@@ -109,7 +109,7 @@ namespace qfCode
 
         #region 工具箱
 
-        void 工具箱_初始化工具()
+        void  初始化工具()
         {
 
             uiradioButton_文本 = 生成工具(Language_.Get语言("文本"));
@@ -124,7 +124,7 @@ namespace qfCode
 
         void 工具箱_初始化()
         {
-            工具箱_初始化工具();
+            初始化工具();
             this.uiTitlePanel_工具箱.Controls.Clear();
             显示工具(true, this.uiradioButton_文本);
             显示工具(true, this.uiradioButton_序列号);
@@ -154,7 +154,25 @@ namespace qfCode
                 this.panel_控件.Controls.Clear();
                 this.panel_控件.Controls.Add(new Control_序列号(this._编辑类型, _cfg_序列号));
             };
-
+            this.uiradioButton_日期 .Click += (s, e) =>
+            {
+                this.panel_控件.Controls.Clear();
+                this.panel_控件.Controls.Add(new Control_日期(this._编辑类型, _cfg_日期 ));
+            };
+            this.uiradioButton_时间.Click += (s, e) =>
+            {
+                this.panel_控件.Controls.Clear();
+                this.panel_控件.Controls.Add(new Control_时间(this._编辑类型, _cfg_时间));
+            };
+            this.uiradioButton_关联对象.Click += (s, e) =>
+            {
+                this.panel_控件.Controls.Clear();
+                this.panel_控件.Controls.Add(new Control_关联对象(this._编辑类型, _cfg_关联对象));
+            };
+            this.uiradioButton_班次.Click += (s, e) =>
+            {
+                this.panel_控件.Controls.Clear(); 
+            };
 
 
 

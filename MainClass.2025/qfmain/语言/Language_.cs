@@ -111,6 +111,10 @@ namespace qfmain
             }
         }
 
+        /// <summary>
+        /// 读取所有字段,并赋值到 qfLanguage.LanguageList.lst_Language ,
+        /// <para>查询时统一到 qfLanguage.LanguageList.lst_Language 去查询</para>
+        /// </summary> 
         public static qfLanguage._language_Value_[] Get语言包()
         {
             List<qfLanguage._language_Value_> lst = new List<qfLanguage._language_Value_>();
@@ -163,12 +167,7 @@ namespace qfmain
             return (value, ma);
         }
          
-        /// <summary>
-        /// 本地使用
-        /// </summary>
-        /// <param name="TypeValue"></param>
-        /// <param name=""></param>
-        /// <returns></returns>
+      
         public static string Get语言(string TypeValue)
         {
             (string languageValue, qfLanguage._language_Value_[] beff) rt = Get语言(TypeValue, qfLanguage.LanguageList.lst_Language);

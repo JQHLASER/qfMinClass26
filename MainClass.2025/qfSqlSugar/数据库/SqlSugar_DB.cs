@@ -266,9 +266,9 @@ SqlServer 数据库....使用最新库
             switch (连接类型)
             {
                 case _SQLite_连接类型_.V2:
-                    return $"data source={SqlLitePath.Path};Journal Mode=WAL;";
+                    return $"data source={SqlLitePath.Path};";
                 case _SQLite_连接类型_.V3:
-                    return $"data source={SqlLitePath.Path};Version=3;Journal Mode=WAL;";
+                    return $"data source={SqlLitePath.Path};Version=3;";
                 default:
                     return "";
             }

@@ -19,7 +19,13 @@ namespace qfLanguage
             new _language_Value_ ( keys, "受影响0行","受影响0行"),
             new _language_Value_ ( keys, "执行成功","执行成功"),
             new _language_Value_ ( keys, "关联的对象名不能为空值","关联的对象名不能为空值"),
-             
+            new _language_Value_ ( keys, "不能为空","不能为空"),
+            new _language_Value_ ( keys, "检测到已重复","检测到已重复"),
+            new _language_Value_ ( keys, "添加","添加"),
+            new _language_Value_ ( keys, "修改","修改"),
+            new _language_Value_ (keys,"未选中要操作的对象","未选中要操作的对象"),
+
+
             new _language_Value_ ( keys, "文本","文本"),
             new _language_Value_ ( keys, "序列号","序列号"),
             new _language_Value_ ( keys, "日期","日期"),

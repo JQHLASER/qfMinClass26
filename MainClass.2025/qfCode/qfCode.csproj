@@ -132,6 +132,12 @@
     <Compile Include="编辑\UserColor\Control_文本.Designer.cs">
       <DependentUpon>Control_文本.cs</DependentUpon>
     </Compile>
+    <Compile Include="编辑\Win\Form_对象.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="编辑\Win\Form_对象.Designer.cs">
+      <DependentUpon>Form_对象.cs</DependentUpon>
+    </Compile>
     <Compile Include="编辑\编辑_.cs" />
     <Compile Include="语言\Language_.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -206,6 +212,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="编辑\UserColor\Control_文本.resx">
       <DependentUpon>Control_文本.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="编辑\Win\Form_对象.resx">
+      <DependentUpon>Form_对象.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
