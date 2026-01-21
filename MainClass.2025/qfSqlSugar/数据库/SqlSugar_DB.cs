@@ -166,14 +166,22 @@ SqlServer 数据库....使用最新库
 
         /// <summary>
         /// 获取要使用的数据库
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns></returns>
-        public virtual SqlSugarProvider Get连接的数据库(string ID)
+        /// <para>会复制 Db ,以方便多线程使用</para>
+        /// </summary> 
+        public virtual SqlSugarProvider Get连接的数据库(SqlSugarScope DB, string ID)
         {
-            return this.Db.GetConnection(ID);
+            return DB.CopyNew().GetConnection(ID);
         }
 
+        /// <summary>
+        /// 获取要使用的数据库
+        /// <para>会复制 Db ,以方便多线程使用</para>
+        /// </summary> 
+        public virtual SqlSugarProvider Get连接的数据库(SqlSugar_DB DB, string ID)
+        {
+            return DB.Db.CopyNew().GetConnection(ID);
+        }
+         
 
         /// <summary>
         /// model: =0:写 =1:读
@@ -182,8 +190,16 @@ SqlServer 数据库....使用最新库
         {
             return new qfmain.文件_文件夹().WriteReadJson(path, model, ref Info, out msgErr);
         }
-         
 
+
+        /// <summary>
+        /// 复制 Db
+        /// </summary> 
+        public virtual SqlSugarClient  CopyNew_Db()
+        {
+            return this.Db.CopyNew();
+        }
+         
         #region 优化
 
         (bool s, string m) 优化_Sqlite(SqlSugarScope db_)
@@ -256,7 +272,7 @@ SqlServer 数据库....使用最新库
 
         #endregion
 
-         
+
         #region  生成连接字符串
 
         public virtual string 生成连接字符串(_cfg_SQLite_ SqlLitePath, _SQLite_连接类型_ 连接类型 = _SQLite_连接类型_.V3)

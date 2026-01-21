@@ -52,7 +52,7 @@ namespace qfSqlSugar
         /// </summary> 
         public SqlSugar_Table(SqlSugar_DB Db_, string id)
         {
-            this.Db = Db_.Db.GetConnection(id);
+            this.Db = Db_.Get连接的数据库(Db_, id);
         }
 
         #region Get查询
@@ -429,7 +429,7 @@ namespace qfSqlSugar
 
         #endregion
 
- 
+
         #region 原生
 
         /// <summary>
@@ -615,7 +615,7 @@ namespace qfSqlSugar
 
 
 
-         
+
 
     }
 }
