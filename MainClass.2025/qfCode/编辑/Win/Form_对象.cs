@@ -32,6 +32,7 @@ namespace qfCode
                 case type_编辑._编辑类型_.修改:
                     this.Text = Language_.Get语言("修改");
                     this._对象名称 = 对象名称;
+                    this.uiTextBox_对象.Text = this._对象名称;
                     break;
             }
 

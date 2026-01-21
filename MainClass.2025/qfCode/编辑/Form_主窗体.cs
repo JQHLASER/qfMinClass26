@@ -33,6 +33,10 @@ namespace qfCode
 
             this.ui_Button_对象_添加.Event_Click += () => this.On_对象_添加修改(type_编辑._编辑类型_.添加);
             this.ui_Button_对象_修改.Event_Click += () => this.On_对象_添加修改(type_编辑._编辑类型_.修改);
+            this.ui_Button_对象_删除.Event_Click += () => this.On_对象_删除();
+
+
+
 
             #endregion
 
@@ -69,7 +73,7 @@ namespace qfCode
                             if (forms.ShowDialog() == DialogResult.OK)
                             {
                                 this.lst对象列表[index] = forms._对象名称;
-                                this.uiListBox_对象列表.Items[index] = forms._对象名称; 
+                                this.uiListBox_对象列表.Items[index] = forms._对象名称;
                             }
                         }
                     }
@@ -80,6 +84,20 @@ namespace qfCode
 
 
         }
+
+        void On_对象_删除()
+        {
+            if (Err_未选中要操作的对象(this.uiListBox_对象列表, out int index)
+                && MessageBox.Show(Language_.Get语言("确认删除?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                this.lst对象列表.RemoveAt(index);
+                this.uiListBox_对象列表.Items.RemoveAt(index);
+            }
+        }
+
+
+
+
 
 
         #endregion
