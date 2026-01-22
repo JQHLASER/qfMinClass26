@@ -145,8 +145,8 @@ SqlServer 数据库....使用最新库
         /// </summary>       
         public virtual bool 初始化(out string msgErr, int 超时时间 = 1000 * 10)
         {
-            List<ConnectionConfig> lst = new List<ConnectionConfig>();
-            On_ConnectionConfig(lst);
+            List<ConnectionConfig> lst = new List<ConnectionConfig>();   
+            Event_ConnectionConfig?.Invoke(lst, this);
             bool rt = 初始化(lst, out msgErr, 超时时间);
             return rt;
         }
@@ -384,15 +384,13 @@ SqlServer 数据库....使用最新库
         #endregion
 
         #region 事件
+ 
 
         /// <summary>
         /// 连接信息跟
         /// </summary>
-        public event Action<List<ConnectionConfig>> Event_ConnectionConfig;
-        void On_ConnectionConfig(List<ConnectionConfig> lst)
-        {
-            Event_ConnectionConfig?.Invoke(lst);
-        }
+        public event Action<List<ConnectionConfig>, SqlSugar_DB> Event_ConnectionConfig;
+
 
         /// <summary>
         /// 此时可以获取表结构和操作数据库了

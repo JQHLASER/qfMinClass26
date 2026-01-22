@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="数据库\其它\SqlSugar_DB_封装.cs" />
     <Compile Include="数据库\基础类\SqlSugar_DB.cs" />
     <Compile Include="数据库\基础类\SqlSugar_Table.cs" />
     <Compile Include="数据库\_type_.cs" />

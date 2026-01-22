@@ -43,7 +43,8 @@ namespace qfSqlSugar
     /// <summary>
     /// 安装 SqlSugar
     /// </summary>
-    public class SqlSugar_Table<T> where T : class, IDisposable, new()
+    public class SqlSugar_Table<T>: IDisposable
+        where T : class, new()
     {
         public SqlSugarProvider Db { get; private set; } = null;
         private SqlSugarClient _scope;
