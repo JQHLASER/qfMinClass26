@@ -3,6 +3,7 @@ using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,6 +38,17 @@ SqlServer 数据库....使用最新库
    必须将发布编译时生成的sni.dll复制到程序目录下, 否则会提示连接字符串不正确
   */
 
+
+    /*
+     * 正确使用方法,支持多线程
+              using (var db = RootDb.CopyNew())
+             {
+                 var sqliteDb = db.GetConnection("sqlite");
+                 var sqlDb = db.GetConnection("sqlserver");
+
+                 // 执行操作
+             }
+     * */
 
     /// <summary>
     /// 下载SqlSugar.dll包  
@@ -165,23 +177,24 @@ SqlServer 数据库....使用最新库
 
 
         /// <summary>
-        /// 获取要使用的数据库
-        /// <para>会复制 Db ,以方便多线程使用</para>
+        /// 获取要使用的数据库 
         /// </summary> 
-        public virtual SqlSugarProvider Get连接的数据库(SqlSugarScope DB, string ID)
+        private SqlSugarProvider Get连接的数据库(SqlSugarScope _SqlSugarScope, string ID)
         {
-            return DB.CopyNew().GetConnection(ID);
+            return _SqlSugarScope.GetConnection(ID);
         }
 
         /// <summary>
-        /// 获取要使用的数据库
-        /// <para>会复制 Db ,以方便多线程使用</para>
+        /// 获取要使用的数据库 
         /// </summary> 
-        public virtual SqlSugarProvider Get连接的数据库(SqlSugar_DB DB, string ID)
+        private SqlSugarProvider Get连接的数据库(SqlSugarClient _SqlSugarClient, string ID)
         {
-            return DB.Db.CopyNew().GetConnection(ID);
+            return _SqlSugarClient.GetConnection(ID);
         }
-         
+
+
+
+
 
         /// <summary>
         /// model: =0:写 =1:读
@@ -195,11 +208,11 @@ SqlServer 数据库....使用最新库
         /// <summary>
         /// 复制 Db
         /// </summary> 
-        public virtual SqlSugarClient  CopyNew_Db()
+        public virtual SqlSugarClient CopyNew_Db()
         {
             return this.Db.CopyNew();
         }
-         
+
         #region 优化
 
         (bool s, string m) 优化_Sqlite(SqlSugarScope db_)

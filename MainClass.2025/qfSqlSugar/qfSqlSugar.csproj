@@ -48,10 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="数据库\SqlSugar_DB.cs" />
-    <Compile Include="数据库\SqlSugar_Table.cs" />
+    <Compile Include="数据库\基础类\SqlSugar_DB.cs" />
+    <Compile Include="数据库\基础类\SqlSugar_Table.cs" />
     <Compile Include="数据库\_type_.cs" />
-    <Compile Include="数据库\存储过程.cs" />
+    <Compile Include="数据库\其它\存储过程.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\qfmain\qfmain.csproj">

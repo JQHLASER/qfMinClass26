@@ -8,8 +8,33 @@ using System.Threading.Tasks;
 
 namespace qfSqlSugar
 {
-    public class 存储过程
+    public class 存储过程 : IDisposable
     {
+        public SqlSugarProvider Db { get; private set; } = null;
+        private SqlSugarClient _scope;
+
+        /// <summary>
+        /// id:连接数据库的ID
+        /// </summary> 
+        public 存储过程(SqlSugar_DB Db_, string id)
+        {
+            this._scope = Db_.Db.CopyNew();
+            this.Db = this._scope.GetConnection(id);
+        }
+
+        public void Dispose()
+        {
+            if (this._scope != null)
+            {
+                this._scope.Dispose();
+                this._scope = null;
+                this.Db = null;
+            }
+        }
+
+
+
+
         public class _cfg_信息_
         {
             /// <summary>
@@ -27,16 +52,16 @@ namespace qfSqlSugar
         /// 过程名,如 SP_Get_Scan
         /// <para>传入参数,如 new SugarParameter[] { new SugarParameter  ("@ordernumber", scanCode) }</para>
         /// </summary> 
-        public (bool s, string m, _cfg_信息_[] cfg) Get查询(SqlSugar_DB e, string 过程名, SugarParameter[] 传入参数)
-        { 
+        public (bool s, string m, _cfg_信息_[] cfg) Get查询(string 过程名, SugarParameter[] 传入参数)
+        {
             try
             {
-                var dt = e.Db.Ado.UseStoredProcedure()
+                var dt = this.Db.Ado.UseStoredProcedure()
                    .GetDataTable(
                        过程名,
                       传入参数
-                   ); 
-                return DataTable转List(dt); 
+                   );
+                return DataTable转List(dt);
             }
             catch (Exception ex)
             {
@@ -48,11 +73,11 @@ namespace qfSqlSugar
         /// 过程名,如 SP_Get_Scan
         /// <para>传入参数,如new SugarParameter("@ordernumber","123456")</para>
         /// </summary> 
-        public (bool s, string m, _cfg_信息_[] cfg) Get查询(SqlSugar_DB e, string 过程名, SugarParameter 传入参数)
+        public (bool s, string m, _cfg_信息_[] cfg) Get查询(string 过程名, SugarParameter 传入参数)
         {
             try
             {
-                var dt = e.Db.Ado.UseStoredProcedure()
+                var dt = this.Db.Ado.UseStoredProcedure()
                    .GetDataTable(
                        过程名,
                       传入参数

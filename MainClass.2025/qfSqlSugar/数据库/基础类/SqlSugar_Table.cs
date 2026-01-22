@@ -43,17 +43,31 @@ namespace qfSqlSugar
     /// <summary>
     /// 安装 SqlSugar
     /// </summary>
-    public class SqlSugar_Table<T> where T : class, new()
+    public class SqlSugar_Table<T> where T : class, IDisposable, new()
     {
-        public SqlSugarProvider Db = null;
+        public SqlSugarProvider Db { get; private set; } = null;
+        private SqlSugarClient _scope;
+
 
         /// <summary>
         /// id:连接数据库的ID
         /// </summary> 
         public SqlSugar_Table(SqlSugar_DB Db_, string id)
         {
-            this.Db = Db_.Get连接的数据库(Db_, id);
+            this._scope = Db_.Db.CopyNew();
+            this.Db = this._scope.GetConnection(id);
         }
+
+        public void Dispose()
+        {
+            if (this._scope != null)
+            {
+                this._scope.Dispose();
+                this._scope = null;
+                this.Db = null;
+            }
+        }
+
 
         #region Get查询
 
