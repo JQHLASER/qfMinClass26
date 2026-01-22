@@ -124,7 +124,6 @@
     </Compile>
     <Compile Include="工业类\读码器\读码器.cs" />
     <Compile Include="控件类\DataGridview_.cs" />
-    <Compile Include="控件类\List.cs" />
     <Compile Include="控件类\listbox.cs" />
     <Compile Include="控件类\ListView_.cs" />
     <Compile Include="控件类\PictrueBoxSys.cs" />

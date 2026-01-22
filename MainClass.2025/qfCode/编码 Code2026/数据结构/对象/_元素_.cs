@@ -35,7 +35,7 @@ namespace qfCode
             public int 递增量 { set; get; } = 1;
             public _序列号_._加工_ 加工 { set; get; } = new _序列号_._加工_();
             public _序列号_._em_复位_ 复位方式 { set; get; } = _序列号_._em_复位_.按日;
-
+           
             public 序列号 Clone()
             {
                 return new 序列号
@@ -59,7 +59,11 @@ namespace qfCode
             public _日期时间_._em_日期_ 类型 { set; get; } = _日期时间_._em_日期_.年4位;
             public _日期时间_._em_偏移类型_ 偏移类型 { set; get; } = _日期时间_._em_偏移类型_.无;
             public int 偏移值 { set; get; } = 0;
-         
+
+            /// <summary>
+            /// 自定义编码的配置文件
+            /// </summary>
+            public string 配置 { set; get; } = 常量.配置文件名_默认;
             public 日期 Clone()
             {
                 return new 日期
@@ -68,7 +72,7 @@ namespace qfCode
                     类型 = this.类型,
                     偏移类型  = this.偏移类型  ,
                     偏移值 =this.偏移值  ,
-                  
+                    配置 =this.配置 ,
                 };
 
             }
@@ -77,17 +81,25 @@ namespace qfCode
         {
             public _em_工具箱_ 工具 { set; get; } = _em_工具箱_.时间;
             public _日期时间_._em_时间_ 类型 { set; get; } = _日期时间_._em_时间_.时24;
-           
+
+            /// <summary>
+            /// 自定义编码的配置文件
+            /// </summary>
+            public string 配置 { set; get; } = 常量.配置文件名_默认;
+
+
             public 时间 Clone()
             {
                 return new 时间
                 {
                     工具 = this.工具,
-                    类型 = this.类型, 
-    
+                    类型 = this.类型,
+                    配置 = this.配置,
                 };
 
             }
+
+
         }
         public class 关联对象
         {

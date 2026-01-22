@@ -1,6 +1,6 @@
 ﻿namespace qfCode
 {
-    partial class Form_工具
+    partial class Form_工具箱_元素
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_工具));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_工具箱_元素));
             this.panel_控件 = new System.Windows.Forms.Panel();
             this.panel_按钮 = new System.Windows.Forms.Panel();
             this.uiButton_No = new Sunny.UI.UIButton();
             this.uiButton_Yes = new Sunny.UI.UIButton();
-            this.uiTitlePanel_工具箱 = new Sunny.UI.UITitlePanel();
+            this.uiPanel_工具箱 = new Sunny.UI.UIPanel();
             this.panel_按钮.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -41,9 +41,9 @@
             // 
             this.panel_控件.BackColor = System.Drawing.Color.White;
             this.panel_控件.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_控件.Location = new System.Drawing.Point(200, 35);
+            this.panel_控件.Location = new System.Drawing.Point(205, 40);
             this.panel_控件.Name = "panel_控件";
-            this.panel_控件.Size = new System.Drawing.Size(600, 500);
+            this.panel_控件.Size = new System.Drawing.Size(590, 490);
             this.panel_控件.TabIndex = 1;
             // 
             // panel_按钮
@@ -52,9 +52,9 @@
             this.panel_按钮.Controls.Add(this.uiButton_No);
             this.panel_按钮.Controls.Add(this.uiButton_Yes);
             this.panel_按钮.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel_按钮.Location = new System.Drawing.Point(200, 535);
+            this.panel_按钮.Location = new System.Drawing.Point(205, 530);
             this.panel_按钮.Name = "panel_按钮";
-            this.panel_按钮.Size = new System.Drawing.Size(600, 65);
+            this.panel_按钮.Size = new System.Drawing.Size(590, 65);
             this.panel_按钮.TabIndex = 2;
             // 
             // uiButton_No
@@ -99,40 +99,37 @@
             this.uiButton_Yes.TabIndex = 0;
             this.uiButton_Yes.Text = "确定";
             // 
-            // uiTitlePanel_工具箱
+            // uiPanel_工具箱
             // 
-            this.uiTitlePanel_工具箱.Dock = System.Windows.Forms.DockStyle.Left;
-            this.uiTitlePanel_工具箱.FillColor = System.Drawing.Color.Transparent;
-            this.uiTitlePanel_工具箱.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiTitlePanel_工具箱.ForeColor = System.Drawing.Color.White;
-            this.uiTitlePanel_工具箱.Location = new System.Drawing.Point(0, 35);
-            this.uiTitlePanel_工具箱.Margin = new System.Windows.Forms.Padding(0);
-            this.uiTitlePanel_工具箱.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiTitlePanel_工具箱.Name = "uiTitlePanel_工具箱";
-            this.uiTitlePanel_工具箱.Padding = new System.Windows.Forms.Padding(5);
-            this.uiTitlePanel_工具箱.RadiusSides = Sunny.UI.UICornerRadiusSides.None;
-            this.uiTitlePanel_工具箱.RectColor = System.Drawing.Color.Silver;
-            this.uiTitlePanel_工具箱.Size = new System.Drawing.Size(200, 565);
-            this.uiTitlePanel_工具箱.Style = Sunny.UI.UIStyle.Custom;
-            this.uiTitlePanel_工具箱.StyleCustomMode = true;
-            this.uiTitlePanel_工具箱.TabIndex = 3;
-            this.uiTitlePanel_工具箱.Text = "uiTitlePanel1";
-            this.uiTitlePanel_工具箱.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
-            this.uiTitlePanel_工具箱.TitleHeight = 0;
-            this.uiTitlePanel_工具箱.标题栏字体Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.uiPanel_工具箱.Dock = System.Windows.Forms.DockStyle.Left;
+            this.uiPanel_工具箱.FillColor = System.Drawing.Color.Transparent;
+            this.uiPanel_工具箱.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiPanel_工具箱.Location = new System.Drawing.Point(5, 40);
+            this.uiPanel_工具箱.Margin = new System.Windows.Forms.Padding(0);
+            this.uiPanel_工具箱.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiPanel_工具箱.Name = "uiPanel_工具箱";
+            this.uiPanel_工具箱.Padding = new System.Windows.Forms.Padding(2);
+            this.uiPanel_工具箱.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(219)))), ((int)(((byte)(227)))));
+            this.uiPanel_工具箱.Size = new System.Drawing.Size(200, 555);
+            this.uiPanel_工具箱.Style = Sunny.UI.UIStyle.Custom;
+            this.uiPanel_工具箱.StyleCustomMode = true;
+            this.uiPanel_工具箱.TabIndex = 3;
+            this.uiPanel_工具箱.Text = null;
             // 
-            // Form_工具
+            // Form_工具箱_元素
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(800, 600);
             this.Controls.Add(this.panel_控件);
             this.Controls.Add(this.panel_按钮);
-            this.Controls.Add(this.uiTitlePanel_工具箱);
+            this.Controls.Add(this.uiPanel_工具箱);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form_工具";
+            this.Name = "Form_工具箱_元素";
+            this.Padding = new System.Windows.Forms.Padding(5, 40, 5, 5);
             this.ShowInTaskbar = false;
+            this.StyleCustomMode = true;
             this.Text = "";
             this.panel_按钮.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -144,6 +141,6 @@
         private System.Windows.Forms.Panel panel_按钮;
         private Sunny.UI.UIButton uiButton_No;
         private Sunny.UI.UIButton uiButton_Yes;
-        private Sunny.UI.UITitlePanel uiTitlePanel_工具箱;
+        private Sunny.UI.UIPanel uiPanel_工具箱;
     }
 }

@@ -114,7 +114,7 @@
             this.Padding = new System.Windows.Forms.Padding(5);
             this.RadiusSides = Sunny.UI.UICornerRadiusSides.None;
             this.RectSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.None;
-            this.Size = new System.Drawing.Size(540, 150);
+            this.Size = new System.Drawing.Size(580, 150);
             this.Text = "文本";
             this.TitleHeight = 0;
             this.ResumeLayout(false);

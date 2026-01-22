@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace qfCode
 {
-    public partial class Control_时间 : Sunny.UI.UITitlePanel
+    public partial class Control_时间 : Sunny.UI.UIPanel 
     {
         type_编辑._编辑类型_ _type;
         _元素_.时间 _cfg;

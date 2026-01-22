@@ -93,26 +93,17 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(540, 80);
+            this.textBox1.Size = new System.Drawing.Size(580, 80);
             this.textBox1.TabIndex = 4;
             // 
             // uiButton_Yes
             // 
             this.uiButton_Yes.Cursor = System.Windows.Forms.Cursors.Default;
-            this.uiButton_Yes.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(190)))), ((int)(((byte)(40)))));
-            this.uiButton_Yes.FillHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(202)))), ((int)(((byte)(81)))));
-            this.uiButton_Yes.FillPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(168)))), ((int)(((byte)(35)))));
-            this.uiButton_Yes.FillSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(168)))), ((int)(((byte)(35)))));
             this.uiButton_Yes.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiButton_Yes.Location = new System.Drawing.Point(445, 94);
+            this.uiButton_Yes.Location = new System.Drawing.Point(483, 94);
             this.uiButton_Yes.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiButton_Yes.Name = "uiButton_Yes";
-            this.uiButton_Yes.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(190)))), ((int)(((byte)(40)))));
-            this.uiButton_Yes.RectHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(202)))), ((int)(((byte)(81)))));
-            this.uiButton_Yes.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(168)))), ((int)(((byte)(35)))));
-            this.uiButton_Yes.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(168)))), ((int)(((byte)(35)))));
             this.uiButton_Yes.Size = new System.Drawing.Size(100, 40);
-            this.uiButton_Yes.Style = Sunny.UI.UIStyle.Green;
             this.uiButton_Yes.StyleCustomMode = true;
             this.uiButton_Yes.TabIndex = 5;
             this.uiButton_Yes.Text = "测试";
@@ -120,9 +111,9 @@
             // panel1
             // 
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(5, 345);
+            this.panel1.Location = new System.Drawing.Point(5, 335);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(540, 150);
+            this.panel1.Size = new System.Drawing.Size(580, 150);
             this.panel1.TabIndex = 6;
             // 
             // uiRadioButton1
@@ -151,12 +142,15 @@
             this.Controls.Add(this.uiRadioButton_空格);
             this.Controls.Add(this.uiRadioButton_换行);
             this.Controls.Add(this.uiRadioButton_文本);
+            this.FillColor = System.Drawing.SystemColors.Control;
             this.Name = "Control_关联对象";
             this.Padding = new System.Windows.Forms.Padding(5);
             this.RadiusSides = Sunny.UI.UICornerRadiusSides.None;
-            this.Size = new System.Drawing.Size(550, 500);
-            this.Text = "文本";
-            this.TitleHeight = 0;
+            this.RectSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.None;
+            this.Size = new System.Drawing.Size(590, 490);
+            this.Style = Sunny.UI.UIStyle.Custom;
+            this.StyleCustomMode = true;
+            this.Text = "";
             this.ResumeLayout(false);
             this.PerformLayout();
 

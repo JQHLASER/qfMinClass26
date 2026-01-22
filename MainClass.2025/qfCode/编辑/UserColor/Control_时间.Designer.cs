@@ -28,11 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.uiRadioButton_文本 = new Sunny.UI.UIRadioButton();
             this.uiRadioButton_换行 = new Sunny.UI.UIRadioButton();
             this.uiRadioButton_空格 = new Sunny.UI.UIRadioButton();
             this.uiRadioButton1 = new Sunny.UI.UIRadioButton();
             this.uiRadioButton2 = new Sunny.UI.UIRadioButton();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.uiComboBox2 = new Sunny.UI.UIComboBox();
+            this.ui_Label_81 = new Sunny.ui_Label_8(this.components);
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // uiRadioButton_文本
@@ -115,20 +120,63 @@
             this.uiRadioButton2.Tag = "空格";
             this.uiRadioButton2.Text = "毫秒";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.uiComboBox2);
+            this.panel1.Controls.Add(this.ui_Label_81);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(5, 323);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(580, 162);
+            this.panel1.TabIndex = 20;
+            // 
+            // uiComboBox2
+            // 
+            this.uiComboBox2.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
+            this.uiComboBox2.FillColor = System.Drawing.Color.White;
+            this.uiComboBox2.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiComboBox2.Location = new System.Drawing.Point(206, 5);
+            this.uiComboBox2.Margin = new System.Windows.Forms.Padding(0);
+            this.uiComboBox2.MaxDropDownItems = 15;
+            this.uiComboBox2.MinimumSize = new System.Drawing.Size(63, 0);
+            this.uiComboBox2.Name = "uiComboBox2";
+            this.uiComboBox2.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
+            this.uiComboBox2.Size = new System.Drawing.Size(246, 26);
+            this.uiComboBox2.Style = Sunny.UI.UIStyle.Custom;
+            this.uiComboBox2.TabIndex = 21;
+            this.uiComboBox2.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // ui_Label_81
+            // 
+            this.ui_Label_81.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.ui_Label_81.ForeColor = System.Drawing.Color.Gray;
+            this.ui_Label_81.Location = new System.Drawing.Point(42, 5);
+            this.ui_Label_81.Name = "ui_Label_81";
+            this.ui_Label_81.Size = new System.Drawing.Size(160, 26);
+            this.ui_Label_81.Style = Sunny.UI.UIStyle.Custom;
+            this.ui_Label_81.TabIndex = 20;
+            this.ui_Label_81.Text = "配置";
+            this.ui_Label_81.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // Control_时间
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.uiRadioButton2);
             this.Controls.Add(this.uiRadioButton1);
             this.Controls.Add(this.uiRadioButton_空格);
             this.Controls.Add(this.uiRadioButton_换行);
             this.Controls.Add(this.uiRadioButton_文本);
+            this.FillColor = System.Drawing.SystemColors.Control;
             this.Name = "Control_时间";
             this.Padding = new System.Windows.Forms.Padding(5);
             this.RadiusSides = Sunny.UI.UICornerRadiusSides.None;
-            this.Size = new System.Drawing.Size(550, 500);
-            this.Text = "时间";
-            this.TitleHeight = 0;
+            this.RectSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.None;
+            this.Size = new System.Drawing.Size(590, 490);
+            this.Style = Sunny.UI.UIStyle.Custom;
+            this.StyleCustomMode = true;
+            this.Text = "";
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -140,5 +188,8 @@
         private Sunny.UI.UIRadioButton uiRadioButton_空格;
         private Sunny.UI.UIRadioButton uiRadioButton1;
         private Sunny.UI.UIRadioButton uiRadioButton2;
+        private System.Windows.Forms.Panel panel1;
+        private Sunny.UI.UIComboBox uiComboBox2;
+        private Sunny.ui_Label_8 ui_Label_81;
     }
 }

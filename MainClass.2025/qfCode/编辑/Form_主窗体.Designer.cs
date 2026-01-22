@@ -32,13 +32,13 @@
             this.uiTitlePanel2 = new Sunny.UI.UITitlePanel();
             this.uiListBox_元素列表 = new Sunny.UI.UIListBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.ui_Button28 = new Sunny.ui_Button2();
-            this.ui_Button29 = new Sunny.ui_Button2();
-            this.ui_Button210 = new Sunny.ui_Button2();
-            this.ui_Button211 = new Sunny.ui_Button2();
-            this.ui_Button212 = new Sunny.ui_Button2();
-            this.ui_Button213 = new Sunny.ui_Button2();
-            this.ui_Button214 = new Sunny.ui_Button2();
+            this.ui_Button_元素_预览 = new Sunny.ui_Button2();
+            this.ui_Button_元素_保存 = new Sunny.ui_Button2();
+            this.ui_Button_元素_下移 = new Sunny.ui_Button2();
+            this.ui_Button_元素_上移 = new Sunny.ui_Button2();
+            this.ui_Button_元素_删除 = new Sunny.ui_Button2();
+            this.ui_Button_元素_修改 = new Sunny.ui_Button2();
+            this.ui_Button_元素_添加 = new Sunny.ui_Button2();
             this.uiTitlePanel1 = new Sunny.UI.UITitlePanel();
             this.uiListBox_对象列表 = new Sunny.UI.UIListBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -120,13 +120,13 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel2.Controls.Add(this.ui_Button28);
-            this.panel2.Controls.Add(this.ui_Button29);
-            this.panel2.Controls.Add(this.ui_Button210);
-            this.panel2.Controls.Add(this.ui_Button211);
-            this.panel2.Controls.Add(this.ui_Button212);
-            this.panel2.Controls.Add(this.ui_Button213);
-            this.panel2.Controls.Add(this.ui_Button214);
+            this.panel2.Controls.Add(this.ui_Button_元素_预览);
+            this.panel2.Controls.Add(this.ui_Button_元素_保存);
+            this.panel2.Controls.Add(this.ui_Button_元素_下移);
+            this.panel2.Controls.Add(this.ui_Button_元素_上移);
+            this.panel2.Controls.Add(this.ui_Button_元素_删除);
+            this.panel2.Controls.Add(this.ui_Button_元素_修改);
+            this.panel2.Controls.Add(this.ui_Button_元素_添加);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel2.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.panel2.Location = new System.Drawing.Point(442, 35);
@@ -135,159 +135,159 @@
             this.panel2.Size = new System.Drawing.Size(100, 413);
             this.panel2.TabIndex = 6;
             // 
-            // ui_Button28
+            // ui_Button_元素_预览
             // 
-            this.ui_Button28.BackColor = System.Drawing.Color.Transparent;
-            this.ui_Button28.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ui_Button28.Location = new System.Drawing.Point(5, 230);
-            this.ui_Button28.Name = "ui_Button28";
-            this.ui_Button28.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.ui_Button28.Radius_圆角 = 5;
-            this.ui_Button28.Size = new System.Drawing.Size(93, 38);
-            this.ui_Button28.TabIndex = 23;
-            this.ui_Button28.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ui_Button28.Text文本 = "预览";
-            this.ui_Button28.文本颜色 = System.Drawing.Color.White;
-            this.ui_Button28.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
-            this.ui_Button28.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button28.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
-            this.ui_Button28.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button28.边框颜色 = System.Drawing.Color.Silver;
-            this.ui_Button28.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
-            this.ui_Button28.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
-            this.ui_Button28.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_预览.BackColor = System.Drawing.Color.Transparent;
+            this.ui_Button_元素_预览.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ui_Button_元素_预览.Location = new System.Drawing.Point(5, 230);
+            this.ui_Button_元素_预览.Name = "ui_Button_元素_预览";
+            this.ui_Button_元素_预览.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.ui_Button_元素_预览.Radius_圆角 = 5;
+            this.ui_Button_元素_预览.Size = new System.Drawing.Size(93, 38);
+            this.ui_Button_元素_预览.TabIndex = 23;
+            this.ui_Button_元素_预览.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ui_Button_元素_预览.Text文本 = "预览";
+            this.ui_Button_元素_预览.文本颜色 = System.Drawing.Color.White;
+            this.ui_Button_元素_预览.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+            this.ui_Button_元素_预览.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button_元素_预览.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
+            this.ui_Button_元素_预览.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button_元素_预览.边框颜色 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_预览.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_预览.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_预览.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
             // 
-            // ui_Button29
+            // ui_Button_元素_保存
             // 
-            this.ui_Button29.BackColor = System.Drawing.Color.Transparent;
-            this.ui_Button29.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ui_Button29.Location = new System.Drawing.Point(5, 192);
-            this.ui_Button29.Name = "ui_Button29";
-            this.ui_Button29.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.ui_Button29.Radius_圆角 = 5;
-            this.ui_Button29.Size = new System.Drawing.Size(93, 38);
-            this.ui_Button29.TabIndex = 22;
-            this.ui_Button29.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ui_Button29.Text文本 = "保存";
-            this.ui_Button29.文本颜色 = System.Drawing.Color.White;
-            this.ui_Button29.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
-            this.ui_Button29.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button29.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
-            this.ui_Button29.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button29.边框颜色 = System.Drawing.Color.Silver;
-            this.ui_Button29.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
-            this.ui_Button29.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
-            this.ui_Button29.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_保存.BackColor = System.Drawing.Color.Transparent;
+            this.ui_Button_元素_保存.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ui_Button_元素_保存.Location = new System.Drawing.Point(5, 192);
+            this.ui_Button_元素_保存.Name = "ui_Button_元素_保存";
+            this.ui_Button_元素_保存.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.ui_Button_元素_保存.Radius_圆角 = 5;
+            this.ui_Button_元素_保存.Size = new System.Drawing.Size(93, 38);
+            this.ui_Button_元素_保存.TabIndex = 22;
+            this.ui_Button_元素_保存.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ui_Button_元素_保存.Text文本 = "保存";
+            this.ui_Button_元素_保存.文本颜色 = System.Drawing.Color.White;
+            this.ui_Button_元素_保存.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+            this.ui_Button_元素_保存.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button_元素_保存.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
+            this.ui_Button_元素_保存.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button_元素_保存.边框颜色 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_保存.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_保存.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_保存.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
             // 
-            // ui_Button210
+            // ui_Button_元素_下移
             // 
-            this.ui_Button210.BackColor = System.Drawing.Color.Transparent;
-            this.ui_Button210.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ui_Button210.Location = new System.Drawing.Point(5, 154);
-            this.ui_Button210.Name = "ui_Button210";
-            this.ui_Button210.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.ui_Button210.Radius_圆角 = 5;
-            this.ui_Button210.Size = new System.Drawing.Size(93, 38);
-            this.ui_Button210.TabIndex = 21;
-            this.ui_Button210.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ui_Button210.Text文本 = "下移";
-            this.ui_Button210.文本颜色 = System.Drawing.Color.White;
-            this.ui_Button210.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
-            this.ui_Button210.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button210.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
-            this.ui_Button210.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button210.边框颜色 = System.Drawing.Color.Silver;
-            this.ui_Button210.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
-            this.ui_Button210.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
-            this.ui_Button210.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_下移.BackColor = System.Drawing.Color.Transparent;
+            this.ui_Button_元素_下移.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ui_Button_元素_下移.Location = new System.Drawing.Point(5, 154);
+            this.ui_Button_元素_下移.Name = "ui_Button_元素_下移";
+            this.ui_Button_元素_下移.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.ui_Button_元素_下移.Radius_圆角 = 5;
+            this.ui_Button_元素_下移.Size = new System.Drawing.Size(93, 38);
+            this.ui_Button_元素_下移.TabIndex = 21;
+            this.ui_Button_元素_下移.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ui_Button_元素_下移.Text文本 = "下移";
+            this.ui_Button_元素_下移.文本颜色 = System.Drawing.Color.White;
+            this.ui_Button_元素_下移.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+            this.ui_Button_元素_下移.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button_元素_下移.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
+            this.ui_Button_元素_下移.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button_元素_下移.边框颜色 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_下移.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_下移.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_下移.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
             // 
-            // ui_Button211
+            // ui_Button_元素_上移
             // 
-            this.ui_Button211.BackColor = System.Drawing.Color.Transparent;
-            this.ui_Button211.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ui_Button211.Location = new System.Drawing.Point(5, 116);
-            this.ui_Button211.Name = "ui_Button211";
-            this.ui_Button211.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.ui_Button211.Radius_圆角 = 5;
-            this.ui_Button211.Size = new System.Drawing.Size(93, 38);
-            this.ui_Button211.TabIndex = 20;
-            this.ui_Button211.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ui_Button211.Text文本 = "上移";
-            this.ui_Button211.文本颜色 = System.Drawing.Color.White;
-            this.ui_Button211.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
-            this.ui_Button211.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button211.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
-            this.ui_Button211.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button211.边框颜色 = System.Drawing.Color.Silver;
-            this.ui_Button211.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
-            this.ui_Button211.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
-            this.ui_Button211.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_上移.BackColor = System.Drawing.Color.Transparent;
+            this.ui_Button_元素_上移.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ui_Button_元素_上移.Location = new System.Drawing.Point(5, 116);
+            this.ui_Button_元素_上移.Name = "ui_Button_元素_上移";
+            this.ui_Button_元素_上移.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.ui_Button_元素_上移.Radius_圆角 = 5;
+            this.ui_Button_元素_上移.Size = new System.Drawing.Size(93, 38);
+            this.ui_Button_元素_上移.TabIndex = 20;
+            this.ui_Button_元素_上移.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ui_Button_元素_上移.Text文本 = "上移";
+            this.ui_Button_元素_上移.文本颜色 = System.Drawing.Color.White;
+            this.ui_Button_元素_上移.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+            this.ui_Button_元素_上移.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button_元素_上移.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
+            this.ui_Button_元素_上移.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button_元素_上移.边框颜色 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_上移.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_上移.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_上移.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
             // 
-            // ui_Button212
+            // ui_Button_元素_删除
             // 
-            this.ui_Button212.BackColor = System.Drawing.Color.Transparent;
-            this.ui_Button212.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ui_Button212.Location = new System.Drawing.Point(5, 78);
-            this.ui_Button212.Name = "ui_Button212";
-            this.ui_Button212.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.ui_Button212.Radius_圆角 = 5;
-            this.ui_Button212.Size = new System.Drawing.Size(93, 38);
-            this.ui_Button212.TabIndex = 19;
-            this.ui_Button212.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ui_Button212.Text文本 = "删除";
-            this.ui_Button212.文本颜色 = System.Drawing.Color.White;
-            this.ui_Button212.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
-            this.ui_Button212.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button212.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
-            this.ui_Button212.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button212.边框颜色 = System.Drawing.Color.Silver;
-            this.ui_Button212.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
-            this.ui_Button212.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
-            this.ui_Button212.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_删除.BackColor = System.Drawing.Color.Transparent;
+            this.ui_Button_元素_删除.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ui_Button_元素_删除.Location = new System.Drawing.Point(5, 78);
+            this.ui_Button_元素_删除.Name = "ui_Button_元素_删除";
+            this.ui_Button_元素_删除.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.ui_Button_元素_删除.Radius_圆角 = 5;
+            this.ui_Button_元素_删除.Size = new System.Drawing.Size(93, 38);
+            this.ui_Button_元素_删除.TabIndex = 19;
+            this.ui_Button_元素_删除.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ui_Button_元素_删除.Text文本 = "删除";
+            this.ui_Button_元素_删除.文本颜色 = System.Drawing.Color.White;
+            this.ui_Button_元素_删除.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+            this.ui_Button_元素_删除.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button_元素_删除.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
+            this.ui_Button_元素_删除.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button_元素_删除.边框颜色 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_删除.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_删除.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_删除.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
             // 
-            // ui_Button213
+            // ui_Button_元素_修改
             // 
-            this.ui_Button213.BackColor = System.Drawing.Color.Transparent;
-            this.ui_Button213.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ui_Button213.Location = new System.Drawing.Point(5, 40);
-            this.ui_Button213.Name = "ui_Button213";
-            this.ui_Button213.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.ui_Button213.Radius_圆角 = 5;
-            this.ui_Button213.Size = new System.Drawing.Size(93, 38);
-            this.ui_Button213.TabIndex = 18;
-            this.ui_Button213.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ui_Button213.Text文本 = "修改";
-            this.ui_Button213.文本颜色 = System.Drawing.Color.White;
-            this.ui_Button213.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
-            this.ui_Button213.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button213.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
-            this.ui_Button213.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button213.边框颜色 = System.Drawing.Color.Silver;
-            this.ui_Button213.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
-            this.ui_Button213.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
-            this.ui_Button213.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_修改.BackColor = System.Drawing.Color.Transparent;
+            this.ui_Button_元素_修改.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ui_Button_元素_修改.Location = new System.Drawing.Point(5, 40);
+            this.ui_Button_元素_修改.Name = "ui_Button_元素_修改";
+            this.ui_Button_元素_修改.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.ui_Button_元素_修改.Radius_圆角 = 5;
+            this.ui_Button_元素_修改.Size = new System.Drawing.Size(93, 38);
+            this.ui_Button_元素_修改.TabIndex = 18;
+            this.ui_Button_元素_修改.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ui_Button_元素_修改.Text文本 = "修改";
+            this.ui_Button_元素_修改.文本颜色 = System.Drawing.Color.White;
+            this.ui_Button_元素_修改.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+            this.ui_Button_元素_修改.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button_元素_修改.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
+            this.ui_Button_元素_修改.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button_元素_修改.边框颜色 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_修改.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_修改.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_修改.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
             // 
-            // ui_Button214
+            // ui_Button_元素_添加
             // 
-            this.ui_Button214.BackColor = System.Drawing.Color.Transparent;
-            this.ui_Button214.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ui_Button214.Location = new System.Drawing.Point(5, 2);
-            this.ui_Button214.Name = "ui_Button214";
-            this.ui_Button214.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.ui_Button214.Radius_圆角 = 5;
-            this.ui_Button214.Size = new System.Drawing.Size(93, 38);
-            this.ui_Button214.TabIndex = 17;
-            this.ui_Button214.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ui_Button214.Text文本 = "添加";
-            this.ui_Button214.文本颜色 = System.Drawing.Color.White;
-            this.ui_Button214.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
-            this.ui_Button214.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button214.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
-            this.ui_Button214.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button214.边框颜色 = System.Drawing.Color.Silver;
-            this.ui_Button214.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
-            this.ui_Button214.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
-            this.ui_Button214.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_添加.BackColor = System.Drawing.Color.Transparent;
+            this.ui_Button_元素_添加.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ui_Button_元素_添加.Location = new System.Drawing.Point(5, 2);
+            this.ui_Button_元素_添加.Name = "ui_Button_元素_添加";
+            this.ui_Button_元素_添加.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.ui_Button_元素_添加.Radius_圆角 = 5;
+            this.ui_Button_元素_添加.Size = new System.Drawing.Size(93, 38);
+            this.ui_Button_元素_添加.TabIndex = 17;
+            this.ui_Button_元素_添加.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ui_Button_元素_添加.Text文本 = "添加";
+            this.ui_Button_元素_添加.文本颜色 = System.Drawing.Color.White;
+            this.ui_Button_元素_添加.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+            this.ui_Button_元素_添加.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button_元素_添加.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
+            this.ui_Button_元素_添加.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button_元素_添加.边框颜色 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_添加.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_添加.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
+            this.ui_Button_元素_添加.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
             // 
             // uiTitlePanel1
             // 
@@ -671,13 +671,13 @@
         private System.Windows.Forms.ToolStripMenuItem 配置ToolStripMenuItem;
         private Sunny.ui_Button2 ui_Button_对象_修改;
         private Sunny.ui_Button2 ui_Button_对象_添加;
-        private Sunny.ui_Button2 ui_Button28;
-        private Sunny.ui_Button2 ui_Button29;
-        private Sunny.ui_Button2 ui_Button210;
-        private Sunny.ui_Button2 ui_Button211;
-        private Sunny.ui_Button2 ui_Button212;
-        private Sunny.ui_Button2 ui_Button213;
-        private Sunny.ui_Button2 ui_Button214;
+        private Sunny.ui_Button2 ui_Button_元素_预览;
+        private Sunny.ui_Button2 ui_Button_元素_保存;
+        private Sunny.ui_Button2 ui_Button_元素_下移;
+        private Sunny.ui_Button2 ui_Button_元素_上移;
+        private Sunny.ui_Button2 ui_Button_元素_删除;
+        private Sunny.ui_Button2 ui_Button_元素_修改;
+        private Sunny.ui_Button2 ui_Button_元素_添加;
         private Sunny.ui_Button2 ui_Button_对象_预览;
         private Sunny.ui_Button2 ui_Button_对象_保存;
         private Sunny.ui_Button2 ui_Button_对象_下移;

@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace qfNet
 {
-    public class listbox_ 
+    public class listbox_
     {
-
+       
 
         /// <summary>
         /// NG标识用来将当前有故障的行变成红色;;代码放在DrawItem事件下
@@ -176,269 +176,94 @@ namespace qfNet
         }
 
 
-
-
-        public void 上移(ListBox listbox_, int 上移数量)
+        public void 上移(ListBox listBox, int MoveCount)
         {
-            try
-            {
-                string item = listbox_.SelectedItem.ToString();
-                int index = listbox_.SelectedIndex;
-                if (index <= 0)
-                {
-                    return;
-                }
-                else if (index - 上移数量 < 0)
-                {
-                    return;
-                }
-                listbox_.Items.RemoveAt(index);
-                listbox_.Items.Insert(index - 上移数量, item);
-                listbox_.SelectedIndex = index - 上移数量;
-            }
-            catch (Exception)
-            {
-            }
-
-        }
-
-
-        public void 下移(ListBox listbox_, int 下移数量)
-        {
-            try
-            {
-                string item = listbox_.SelectedItem.ToString();
-                int count = listbox_.Items.Count;
-                int index = listbox_.SelectedIndex;
-                if (index >= count - 1 || index < 0)
-                {
-                    return;
-                }
-                else if (index + 下移数量 > count - 1)
-                {
-                    return;
-                }
-                listbox_.Items.RemoveAt(index);
-                listbox_.Items.Insert(index + 下移数量, item);
-                listbox_.SelectedIndex = index + 下移数量;
-            }
-            catch (Exception)
-            {
-            }
-
-        }
-
-
-
-        public void 上移(UIListBox listbox_, int 上移数量)
-        {
-            try
-            {
-                int index = listbox_.SelectedIndex;
-                string item = listbox_.Items[index].ToString();
-
-                if (index <= 0)
-                {
-                    return;
-                }
-                else if (index - 上移数量 < 0)
-                {
-                    return;
-                }
-                listbox_.Items.RemoveAt(index);
-                listbox_.Items.Insert(index - 上移数量, item);
-                listbox_.SelectedIndex = index - 上移数量;
-            }
-            catch (Exception)
-            {
-            }
-
-        }
-
-
-        public void 下移(UIListBox listbox_, int 下移数量)
-        {
-            try
-            {
-                int count = listbox_.Items.Count;
-                int index = listbox_.SelectedIndex;
-                string item = listbox_.Items[index].ToString();
-
-
-                if (index >= count - 1 || index < 0)
-                {
-                    return;
-                }
-                else if (index + 下移数量 > count - 1)
-                {
-                    return;
-                }
-                listbox_.Items.RemoveAt(index);
-                listbox_.Items.Insert(index + 下移数量, item);
-                listbox_.SelectedIndex = index + 下移数量;
-            }
-            catch (Exception)
-            {
-            }
-
-        }
-
-
-
-        public void 上移指定行(UIListBox listbox_, int 上移数量, int 当前行索引)
-        {
-            try
-            {
-                int index = 当前行索引;
-                // int indexSet= listbox_.SelectedIndex;
-                string item = listbox_.Items[index].ToString();
-
-                if (index <= 0)
-                {
-                    return;
-                }
-                else if (index - 上移数量 < 0)
-                {
-                    return;
-                }
-                listbox_.Items.RemoveAt(index);
-                listbox_.Items.Insert(index - 上移数量, item);
-                listbox_.SelectedIndex = index - 上移数量;
-            }
-            catch (Exception)
-            {
-            }
-
-        }
-
-
-        public void 下移指定行(ListBox listbox_, int 下移数量, int 当前行索引)
-        {
-
-
-            try
-            {
-                string item = listbox_.SelectedItem.ToString();
-                int count = listbox_.Items.Count;
-                int index = 当前行索引;
-                //int indexSel = listbox_.SelectedIndex;
-                if (index >= count - 1 || index < 0)
-                {
-                    return;
-                }
-                else if (index + 下移数量 > count - 1)
-                {
-                    return;
-                }
-                listbox_.Items.Remove(item);
-                listbox_.Items.Insert(index + 下移数量, item);
-                listbox_.SelectedIndex = index + 下移数量;
-            }
-            catch (Exception)
-            {
-            }
-
-        }
-
-
-
-
-        public void 上移指定行(ListBox listbox_, int 上移数量, int 当前行索引)
-        {
-            try
-            {
-                int index = 当前行索引;
-                // int indexSet= listbox_.SelectedIndex;
-                string item = listbox_.Items[index].ToString();
-
-                if (index <= 0)
-                {
-                    return;
-                }
-                else if (index - 上移数量 < 0)
-                {
-                    return;
-                }
-                listbox_.Items.RemoveAt(index);
-                listbox_.Items.Insert(index - 上移数量, item);
-                listbox_.SelectedIndex = index - 上移数量;
-            }
-            catch (Exception)
-            {
-            }
-
-        }
-
-
-        public void 下移指定行(UIListBox listbox_, int 下移数量, int 当前行索引)
-        {
-
-
-            try
-            {
-                string item = listbox_.SelectedItem.ToString();
-                int count = listbox_.Items.Count;
-                int index = 当前行索引;
-                //int indexSel = listbox_.SelectedIndex;
-                if (index >= count - 1 || index < 0)
-                {
-                    return;
-                }
-                else if (index + 下移数量 > count - 1)
-                {
-                    return;
-                }
-                listbox_.Items.Remove(item);
-                listbox_.Items.Insert(index + 下移数量, item);
-                listbox_.SelectedIndex = index + 下移数量;
-            }
-            catch (Exception)
-            {
-            }
-
-        }
-
-
-
-
-        /// <summary>
-        /// 在添加数据后,调用此方法
-        /// </summary>
-        /// <param name="listbox_"></param>
-        public void 在指定位置插入(UIListBox listbox_)
-        {
-
-            int count = listbox_.Items.Count;
-            int index = listbox_.SelectedIndex;
-            if (index < 0)
-            {
+            if (MoveCount <= 0 || MoveCount >= listBox.Items.Count)
                 return;
-            }
-            int 上移数量 = count - index - 2;
-            上移指定行(listbox_, 上移数量, count - 1);
-            listbox_.SelectedIndex = index + 1;
-        }
-
-
-        /// <summary>
-        /// 在添加数据后,调用此方法
-        /// </summary>
-        /// <param name="listbox_"></param>
-        public void 在指定位置插入(ListBox listbox_)
-        {
-
-            int count = listbox_.Items.Count;
-            int index = listbox_.SelectedIndex;
-            if (index < 0)
+            var indices = listBox.SelectedIndices.Cast<int>().OrderBy(i => i).ToList();
+            foreach (var index in indices)
             {
-                return;
+                int newIndex = index - MoveCount;
+                if (newIndex < 0) continue;
+
+                var item = listBox.Items[index];
+                listBox.Items.RemoveAt(index);
+                listBox.Items.Insert(newIndex, item);
+                listBox.SetSelected(newIndex, true);
             }
-            int 上移数量 = count - index - 2;
-            上移指定行(listbox_, 上移数量, count - 1);
-            listbox_.SelectedIndex = index + 1;
         }
 
-        public void 选中指定行(ListBox listbox_,int index)
+        public void 下移(ListBox listBox, int MoveCount)
+        {
+            if (MoveCount <= 0 || MoveCount >= listBox.Items.Count)
+                return;
+
+            var indices = listBox.SelectedIndices.Cast<int>()
+                            .OrderByDescending(i => i) // 关键点：倒序
+                            .ToList();
+
+            foreach (var index in indices)
+            {
+                int newIndex = index + MoveCount;
+                if (newIndex >= listBox.Items.Count) continue;
+
+                var item = listBox.Items[index];
+                listBox.Items.RemoveAt(index);
+                listBox.Items.Insert(newIndex, item);
+                listBox.SetSelected(newIndex, true);
+
+            }
+        }
+
+
+        public void 上移(Sunny.UI.UIListBox listBox, int MoveCount)
+        {
+            if (MoveCount <= 0 || MoveCount >= listBox.Items.Count)
+                return;
+            int index = listBox.SelectedIndex;
+            if (index < 0) return; // 没有选中项就直接返回
+
+            int newIndex = index - MoveCount;
+            if (newIndex < 0)
+                newIndex = 0; // 防止越界
+
+            var item = listBox.Items[index];
+            listBox.Items.RemoveAt(index);
+            listBox.Items.Insert(newIndex, item);
+
+            listBox.SelectedIndex = newIndex; // 重新选中新位置
+        }
+
+
+        public void 下移(Sunny.UI.UIListBox listBox, int MoveCount)
+        {
+            if (MoveCount <= 0 || MoveCount >= listBox.Items.Count)
+                return;
+            int index = listBox.SelectedIndex;
+            if (index < 0) return;
+
+            int newIndex = index + MoveCount;
+            if (newIndex >= listBox.Items.Count)
+                newIndex = listBox.Items.Count - 1;
+
+            var item = listBox.Items[index];
+            listBox.Items.RemoveAt(index);
+            listBox.Items.Insert(newIndex, item);
+
+            listBox.SelectedIndex = newIndex; // 重新选中新位置
+        }
+
+
+        public void 在指定位置插入<T>(UIListBox listbox_, T item, int index)
+        {
+            listbox_.Items.Insert(index, item);
+        }
+        public void 在指定位置插入<T>(ListBox listbox_, T item, int index)
+        {
+            listbox_.Items.Insert(index, item);
+        }
+
+        public void 选中指定行(ListBox listbox_, int index)
         {
             listbox_.SelectedIndex = index;
         }

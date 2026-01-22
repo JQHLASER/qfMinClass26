@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace qfCode
 {
-    public partial class Control_文本 : Sunny.UI.UITitlePanel
+    public partial class Control_文本 : Sunny.UI.UIPanel
     {
         type_编辑._编辑类型_ _type;
         _元素_.文本 _cfg;
@@ -20,14 +20,10 @@ namespace qfCode
             this._type = type;
             this._cfg = new _元素_.文本().Clone();
 
-            this.Load += (s, e) =>
-            {
-
-
-            };
-            this.uiRadioButton_文本.Click += (s, e) => On_选中();
-            this.uiRadioButton_换行.Click += (s, e) => On_选中();
-            this.uiRadioButton_空格.Click += (s, e) => On_选中();
+           
+            this.uiRadioButton_文本.ValueChanged  += (s, e) => On_选中();
+            this.uiRadioButton_换行.ValueChanged += (s, e) => On_选中();
+            this.uiRadioButton_空格.ValueChanged += (s, e) => On_选中();
 
 
             show();
@@ -56,8 +52,8 @@ namespace qfCode
                 case type_编辑._编辑类型_.添加:
                     #region 添加 
 
-                    this.uiRadioButton_文本.Checked = true;
                     this.uiTextBox1.Clear();
+                    this.uiRadioButton_文本.Checked = true; 
 
                     #endregion
                     break;
@@ -84,8 +80,8 @@ namespace qfCode
             }
 
         }
-         
-      
+
+
         void On_选中()
         {
             if (this.uiRadioButton_换行.Checked)

@@ -77,11 +77,11 @@
     <Compile Include="编辑\Form_主窗体.Designer.cs">
       <DependentUpon>Form_主窗体.cs</DependentUpon>
     </Compile>
-    <Compile Include="编辑\Form_工具.cs">
+    <Compile Include="编辑\Form_工具箱_元素.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="编辑\Form_工具.Designer.cs">
-      <DependentUpon>Form_工具.cs</DependentUpon>
+    <Compile Include="编辑\Form_工具箱_元素.Designer.cs">
+      <DependentUpon>Form_工具箱_元素.cs</DependentUpon>
     </Compile>
     <Compile Include="编辑\type_编辑.cs" />
     <Compile Include="编辑\UserColor\关联对象\Control_关联对象 _按字符.cs">
@@ -138,6 +138,7 @@
     <Compile Include="编辑\Win\Form_对象.Designer.cs">
       <DependentUpon>Form_对象.cs</DependentUpon>
     </Compile>
+    <Compile Include="编辑\上下移动.cs" />
     <Compile Include="编辑\编辑_.cs" />
     <Compile Include="语言\Language_.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -178,6 +179,10 @@
       <Project>{405ad025-8196-461f-909a-938aba8c7af2}</Project>
       <Name>qfmain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\qfNet\qfNet.csproj">
+      <Project>{7fe49f82-695f-4069-9ed4-0484e9111fcd}</Project>
+      <Name>qfNet</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -186,8 +191,8 @@
     <EmbeddedResource Include="编辑\Form_主窗体.resx">
       <DependentUpon>Form_主窗体.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="编辑\Form_工具.resx">
-      <DependentUpon>Form_工具.cs</DependentUpon>
+    <EmbeddedResource Include="编辑\Form_工具箱_元素.resx">
+      <DependentUpon>Form_工具箱_元素.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="编辑\UserColor\关联对象\Control_关联对象 _按字符.resx">
       <DependentUpon>Control_关联对象 _按字符.cs</DependentUpon>
