@@ -30,20 +30,18 @@ namespace qfSqlSugar
 
       */
 
-
-    /*
-     * //开启事务
-       //this.Db.Ado.BeginTran();
-       //提交事务
-       //this.Db.Ado.CommitTran();
-       //事务回滚,异常时
-       //this.Db.Ado.RollbackTran();
-     * */
+    /* //开启事务
+      //this.Db.Ado.BeginTran();
+      //提交事务
+      //this.Db.Ado.CommitTran();
+      //事务回滚,异常时
+      //this.Db.Ado.RollbackTran();
+    * */
 
     /// <summary>
     /// 安装 SqlSugar
     /// </summary>
-    public class SqlSugar_Table<T>: IDisposable
+    public class SqlSugar_Table<T> : IDisposable
         where T : class, new()
     {
         public SqlSugarProvider Db { get; private set; } = null;
@@ -59,12 +57,25 @@ namespace qfSqlSugar
             this.Db = this._scope.GetConnection(id);
         }
 
+
+        /// <summary>
+        /// id:连接数据库的ID
+        /// </summary> 
+        public SqlSugar_Table(SqlSugarProvider db_)
+        {
+            this.Db = db_;
+        }
+         
         public void Dispose()
         {
             if (this._scope != null)
             {
                 this._scope.Dispose();
                 this._scope = null;
+            }
+
+            if (this.Db != null)
+            {
                 this.Db = null;
             }
         }
@@ -78,7 +89,7 @@ namespace qfSqlSugar
         public bool GetList(out List<T> lst, out string msgErr)
         {
             bool rt = true;
-            lst = new List<T>();
+            lst = default;
             msgErr = string.Empty;
             try
             {
@@ -100,7 +111,7 @@ namespace qfSqlSugar
         public bool GetList(Expression<Func<T, bool>> exp, out List<T> lst, out string msgErr)
         {
             bool rt = true;
-            lst = new List<T>();
+            lst = default;
             msgErr = string.Empty;
             try
             {
@@ -146,7 +157,7 @@ namespace qfSqlSugar
         /// <param name="sqlstr">  
         public bool GetList(string sqlstr, int pageIndex, int pageSize, out int total, out List<T> list, out string msgErr)
         {
-            list = new List<T>();
+            list = default;
             msgErr = string.Empty;
             total = 0;
 
@@ -167,7 +178,7 @@ namespace qfSqlSugar
         /// </summary> 
         public bool GetList(string sqlstr, out List<T> list, out string msgErr)
         {
-            list = new List<T>();
+            list = default;
             msgErr = string.Empty;
             bool rt = true;
             try
@@ -186,7 +197,7 @@ namespace qfSqlSugar
         public bool GetList<B>(List<B> lst主键内容, string 表名, string 主键字段名, out List<T> list, out string msgErr)
         {
             msgErr = string.Empty;
-            list = new List<T>();
+            list = default;
 
             try
             {

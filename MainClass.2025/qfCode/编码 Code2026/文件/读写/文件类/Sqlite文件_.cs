@@ -23,7 +23,7 @@ namespace qfCode
             this._CodeSys = CodeSys;
             this._path = this._CodeSys._文件夹_属性.参数 + "\\Code26.db";
 
-            this._CodeSys._Db_sqlSugar.Event_ConnectionConfig += (s) =>
+            this._CodeSys._Db_sqlSugar.Event_ConnectionConfig += (s,e) =>
             {
                 #region 连接数据库
 
