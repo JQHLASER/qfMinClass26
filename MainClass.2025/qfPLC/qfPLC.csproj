@@ -57,11 +57,11 @@
       <DependentUpon>Form_ModbusTcp.cs</DependentUpon>
     </Compile>
     <Compile Include="HslCommunication\Modbus\ModbusTcp\ModbusTcp.cs" />
-    <Compile Include="HslCommunication\HslCommunication_.cs" />
+    <Compile Include="HslCommunication\Main\HslCommunication_.cs" />
     <Compile Include="HslCommunication\Modbus\Modbus_地址转换.cs" />
-    <Compile Include="HslCommunication\PLC_Hsl.cs" />
-    <Compile Include="HslCommunication\ReadPlc.cs" />
-    <Compile Include="HslCommunication\WritePlc.cs" />
+    <Compile Include="HslCommunication\Main\PLC_Hsl.cs" />
+    <Compile Include="HslCommunication\读写\ReadPlc.cs" />
+    <Compile Include="HslCommunication\读写\WritePlc.cs" />
     <Compile Include="HslCommunication\三菱\FX\Form_FX.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,8 +70,8 @@
     </Compile>
     <Compile Include="HslCommunication\三菱\FX\三菱_FX.cs" />
     <Compile Include="HslCommunication\三菱\MC_Ascii Qna3E\三菱_MC_Ascii_Qna3E.cs" />
-    <Compile Include="HslCommunication\Iworker_统一接口.cs" />
-    <Compile Include="HslCommunication\解析.cs" />
+    <Compile Include="HslCommunication\Main\Iworker_统一接口.cs" />
+    <Compile Include="HslCommunication\其它\解析.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="_Type_.cs" />
   </ItemGroup>

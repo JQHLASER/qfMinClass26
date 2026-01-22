@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace qfCode
 {
@@ -20,9 +21,7 @@ namespace qfCode
         type_编辑._编辑类型_ _编辑类型 = type_编辑._编辑类型_.添加;
         internal string _元素信息 = "";
 
-
-
-
+         
         public Form_工具箱_元素(type_编辑._编辑类型_ 编辑类型, string 元素信息)
         {
             InitializeComponent();
@@ -54,8 +53,18 @@ namespace qfCode
 
             };
 
+            this.uiButton_No.Click += (s, e) =>
+            {
+                this.Close();
+            };
+            this.uiButton_Yes.Click += (s, e) =>
+            {
+                #region Yes
 
 
+
+                #endregion 
+            };
 
         }
 
@@ -84,7 +93,6 @@ namespace qfCode
 
 
         #endregion
-
          
 
         #region 本地方法
