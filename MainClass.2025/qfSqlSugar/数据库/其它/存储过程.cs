@@ -22,12 +22,25 @@ namespace qfSqlSugar
             this.Db = this._scope.GetConnection(id);
         }
 
+        /// <summary>
+        /// id:连接数据库的ID
+        /// </summary> 
+        public 存储过程(SqlSugarProvider Db_)
+        { 
+            this.Db = Db_;
+        }
+
+
+
         public void Dispose()
         {
             if (this._scope != null)
             {
                 this._scope.Dispose();
                 this._scope = null;
+            }
+            if (this.Db != null)
+            {
                 this.Db = null;
             }
         }

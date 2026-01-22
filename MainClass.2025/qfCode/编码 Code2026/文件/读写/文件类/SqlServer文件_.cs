@@ -24,6 +24,7 @@ namespace qfCode
             qfSqlSugar.SqlSugar_DB_封装.Event_ConnectionConfig += (s, e) =>
             {
                 #region 连接数据库
+
                 qfSqlSugar._cfg_SQLserver_ cfgSqlserver = new qfSqlSugar._cfg_SQLserver_
                 {
                     数据库地址 = "127.0.0.1",
@@ -31,8 +32,7 @@ namespace qfCode
                     用户 = "sa",
                     密码 = "QF8888",
                 };
-                e.读取参数<qfSqlSugar._cfg_SQLserver_>(1, ref cfgSqlserver, this._path, out string msgErr);
-
+                e.读取参数<qfSqlSugar._cfg_SQLserver_>(1, ref cfgSqlserver, this._path, out string msgErr); 
                 s.Add(e.生成连接信息(
                          e.生成连接字符串(cfgSqlserver)
                         , this._ConfigID, SqlSugar.DbType.SqlServer)
