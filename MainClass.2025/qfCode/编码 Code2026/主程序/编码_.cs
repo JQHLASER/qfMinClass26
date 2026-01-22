@@ -16,8 +16,7 @@ namespace qfCode
         /// <summary>
         /// 系统的文件夹
         /// </summary>
-        internal _文件夹_._属性_ _文件夹_属性;
-        internal qfSqlSugar.SqlSugar_DB _Db_sqlSugar;
+        internal _文件夹_._属性_ _文件夹_属性; 
 
         internal _功能_ _功能;
         internal _初始化状态_ _初始化状态 = _初始化状态_.未初始化;
@@ -33,11 +32,10 @@ namespace qfCode
         /// <summary>
         /// <para>Db : 使用数据库在存储时必须要传入</para>
         /// </summary> 
-        public 编码_(_文件夹_._属性_ typeFile, _功能_ 功能, qfSqlSugar.SqlSugar_DB Db = null)
+        public 编码_(_文件夹_._属性_ typeFile, _功能_ 功能 )
         {
             new Language_();
-            this._功能 = 功能;
-            this._Db_sqlSugar = Db;
+            this._功能 = 功能; 
             this._文件夹_属性 = typeFile;
 
            

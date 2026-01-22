@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -145,8 +146,8 @@ SqlServer 数据库....使用最新库
         /// </summary>       
         public virtual bool 初始化(out string msgErr, int 超时时间 = 1000 * 10)
         {
-            List<ConnectionConfig> lst = new List<ConnectionConfig>();   
-            Event_ConnectionConfig?.Invoke(lst, this);
+            List<ConnectionConfig> lst = new List<ConnectionConfig>();
+            On_Event_ConnectionConfig(lst, this);
             bool rt = 初始化(lst, out msgErr, 超时时间);
             return rt;
         }
@@ -193,15 +194,16 @@ SqlServer 数据库....使用最新库
         }
 
 
-
-
-
+        private readonly object _Lock = new object();
         /// <summary>
         /// model: =0:写 =1:读
         /// </summary>      
         public virtual bool 读取参数<T>(ushort model, ref T Info, string path, out string msgErr)
         {
-            return new qfmain.文件_文件夹().WriteReadJson(path, model, ref Info, out msgErr);
+            lock (_Lock)
+            {
+                return new qfmain.文件_文件夹().WriteReadJson(path, model, ref Info, out msgErr);
+            }
         }
 
 
@@ -384,18 +386,30 @@ SqlServer 数据库....使用最新库
         #endregion
 
         #region 事件
- 
+
 
         /// <summary>
         /// 连接信息跟
         /// </summary>
         public event Action<List<ConnectionConfig>, SqlSugar_DB> Event_ConnectionConfig;
-
-
         /// <summary>
         /// 此时可以获取表结构和操作数据库了
         /// </summary>
         public event Action<bool, SqlSugar_DB> Event_初始化结束;
+
+        private readonly object _lockDb = new object();
+
+        private void On_Event_ConnectionConfig(List<ConnectionConfig> lst, SqlSugar_DB db)
+        {
+            lock (_lockDb)
+            {
+                Event_ConnectionConfig?.Invoke(lst, db);
+            }
+        }
+
+
+
+
 
         #endregion
 

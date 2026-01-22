@@ -15,7 +15,6 @@ namespace qfCode
         编码_ _CodeSys;
         string _path = "";
         string _ConfigID = "_Code26_sqlite_";
-        qfSqlSugar.SqlSugar_Table<表.Code26> _Table;
         private static readonly object _lock = new object();
 
         public Sqlite文件_(编码_ CodeSys)
@@ -23,12 +22,12 @@ namespace qfCode
             this._CodeSys = CodeSys;
             this._path = this._CodeSys._文件夹_属性.参数 + "\\Code26.db";
 
-            this._CodeSys._Db_sqlSugar.Event_ConnectionConfig += (s,e) =>
+            qfSqlSugar.SqlSugar_DB_封装.Event_ConnectionConfig += (s, e) =>
             {
                 #region 连接数据库
 
-                s.Add(this._CodeSys._Db_sqlSugar.生成连接信息(
-               this._CodeSys._Db_sqlSugar.生成连接字符串(new qfSqlSugar._cfg_SQLite_
+                s.Add(e.生成连接信息(
+               e.生成连接字符串(new qfSqlSugar._cfg_SQLite_
                {
                    Path = this._path,
                })
@@ -36,36 +35,37 @@ namespace qfCode
 
                 #endregion
             };
-            this._CodeSys._Db_sqlSugar.Event_初始化结束 += (s, e) =>
-            {
-                _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(e, this._ConfigID);
-                (bool s, string m, _文件_属性_ cfg) rt = Read("text^%&");
-                this._CodeSys._初始化状态 = !rt.s ? _初始化状态_.已初始化 : _初始化状态_.未初始化;
+            qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += (s, e) =>
+             {
+                 (bool s, string m, _文件_属性_ cfg) rt = Read("text^%&");
+                 this._CodeSys._初始化状态 = !rt.s ? _初始化状态_.已初始化 : _初始化状态_.未初始化;
 
-            };
+             };
         }
 
         public (bool s, string m, _文件_属性_ cfg) Read(string FileName)
         {
             lock (_lock)
             {
-                if (!Err_Table未初始化(out string msgErr))
+             
+                using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(qfSqlSugar.SqlSugar_DB_封装._DB, _ConfigID))
                 {
-                    return (false, msgErr, default);
-                }
-
-                bool rt = this._Table.GetList(u => u.FileName == FileName, out List<表.Code26> lst, out msgErr);
-                if (rt && lst.Count == 0)
-                {
-                    return (rt, Language_.Get语言("未找到文件"), default);
-                }
-                else if (rt && lst.Count > 0)
-                {
-                    return new Json序列化().转成Json<_文件_属性_>(lst[0].CodeValue);
-                }
-                else
-                {
-                    return (rt, msgErr, default);
+                    using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
+                    {
+                        bool rt = _Table.GetList(u => u.FileName == FileName, out List<表.Code26> lst, out string msgErr);
+                        if (rt && lst.Count == 0)
+                        {
+                            return (rt, Language_.Get语言("未找到文件"), default);
+                        }
+                        else if (rt && lst.Count > 0)
+                        {
+                            return new Json序列化().转成Json<_文件_属性_>(lst[0].CodeValue);
+                        }
+                        else
+                        {
+                            return (rt, msgErr, default);
+                        }
+                    }
                 }
             }
 
@@ -75,26 +75,28 @@ namespace qfCode
         {
             lock (_lock)
             {
-                if (!Err_Table未初始化(out string msgErr))
-                {
-                    return (false, msgErr);
-                }
+            
                 表.Code26 cdoe = new 表.Code26
                 {
                     FileName = FileName,
                     CodeValue = new Json序列化().转成String(cfg),
                 };
-
-                bool rt = this._Table.Storageable(cdoe, out int count, out msgErr);
-                if (!rt)
+                using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(qfSqlSugar.SqlSugar_DB_封装._DB, _ConfigID))
                 {
-                    return (rt, msgErr);
+                    using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
+                    {
+                        bool rt = _Table.Storageable(cdoe, out int count, out string msgErr);
+                        if (!rt)
+                        {
+                            return (rt, msgErr);
+                        }
+                        else if (count == 0)
+                        {
+                            return (false, Language_.Get语言("受影响0行"));
+                        }
+                        return (rt, Language_.Get语言("执行成功"));
+                    }
                 }
-                else if (count == 0)
-                {
-                    return (false, Language_.Get语言("受影响0行"));
-                }
-                return (rt, Language_.Get语言("执行成功"));
             }
         }
 
@@ -102,12 +104,14 @@ namespace qfCode
         {
             lock (_lock)
             {
-                if (!Err_Table未初始化(out string msgErr))
+                using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(qfSqlSugar.SqlSugar_DB_封装._DB, _ConfigID))
                 {
-                    return (false, msgErr);
+                    using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
+                    {
+                        bool rt = _Table.Delete(u => u.FileName == FileName, out int count, out string  msgErr);
+                        return (rt, msgErr);
+                    }
                 }
-                bool rt = this._Table.Delete(u => u.FileName == FileName, out int count, out msgErr);
-                return (rt, msgErr);
             }
         }
 
@@ -146,17 +150,7 @@ namespace qfCode
             }
         }
 
-        bool Err_Table未初始化(out string msgErr)
-        {
-            msgErr = "";
-            if (this._Table is null)
-            {
-                msgErr = Language_.Get语言("编码模块未初始化");
-                return false;
-            }
-            return true;
-        }
-
+     
 
 
 
