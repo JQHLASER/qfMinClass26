@@ -40,13 +40,13 @@ namespace qfCode
             cfgFZ.当前加工计数 = info.加工.计数;
 
 
-            if (info.类型 == _序列号_._em_类型_.十进制)
+            if (info.types  == _序列号_._em_类型_.十进制)
             {
                 cfgFZ.当前序号 = long.Parse(info.当前序号);
                 cfgFZ.开始序号 = long.Parse(info.开始序号);
                 cfgFZ.最大序号 = long.Parse(info.最大序号);
             }
-            else if (info.类型 == _序列号_._em_类型_.十六进制HEX || info.类型 == _序列号_._em_类型_.十六进制hex)
+            else if (info.types  == _序列号_._em_类型_.十六进制HEX || info.types  == _序列号_._em_类型_.十六进制hex)
             {
                 cfgFZ.当前序号 = new qfmain.进制().十六进制To十进制(info.当前序号);
                 cfgFZ.开始序号 = new qfmain.进制().十六进制To十进制(info.开始序号);
@@ -72,7 +72,7 @@ namespace qfCode
             }
             else
             {
-                switch (info.类型)
+                switch (info.types )
                 {
                     case _序列号_._em_类型_.十进制:
                         结果 = cfgFZ.当前序号.ToString().PadLeft(位数, '0');

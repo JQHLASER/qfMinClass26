@@ -98,6 +98,7 @@
             this.uiListBox_元素列表.FillColor = System.Drawing.Color.White;
             this.uiListBox_元素列表.Font = new System.Drawing.Font("新宋体", 10.01739F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.uiListBox_元素列表.HoverColor = System.Drawing.Color.Transparent;
+            this.uiListBox_元素列表.ItemHeight = 35;
             this.uiListBox_元素列表.Items.AddRange(new object[] {
             "元素1",
             "元素2"});
@@ -318,6 +319,7 @@
             this.uiListBox_对象列表.FillColor = System.Drawing.Color.White;
             this.uiListBox_对象列表.Font = new System.Drawing.Font("微软雅黑", 8.765218F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.uiListBox_对象列表.HoverColor = System.Drawing.Color.Transparent;
+            this.uiListBox_对象列表.ItemHeight = 35;
             this.uiListBox_对象列表.Items.AddRange(new object[] {
             "序列号",
             "固定文本"});

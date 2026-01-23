@@ -24,7 +24,7 @@ namespace qfCode
             string msgErr = string.Empty;
             try
             {
-                switch (info.类型)
+                switch (info.types )
                 {
                     case _文本_._em_文本_.文本:
                         结果 = info.内容;
@@ -207,7 +207,7 @@ namespace qfCode
             {
 
                 DateTime nows =new 计算_日期时间 ().  偏移计算( this._sys ,时间, info);
-                switch (info.类型)
+                switch (info.types )
                 {
                     case _日期时间_._em_日期_.年4位:
                         结果 = nows.ToString("yyyy").ToString();
@@ -317,7 +317,7 @@ namespace qfCode
 
             try
             {
-                switch (info.类型)
+                switch (info.types)
                 {
                     case _关联对象_._em_类型_.全部:
                         结果 = 关联对象的内容;

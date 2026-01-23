@@ -13,12 +13,12 @@ namespace qfCode
     public partial class Control_关联对象 : Sunny.UI.UIPanel 
     {
         type_编辑._编辑类型_ _type;
-        _元素_.关联对象 _cfg;
+        public _元素_.关联对象 _cfg;
         public Control_关联对象(type_编辑._编辑类型_ type, _元素_.关联对象  cfg)
         {
             InitializeComponent();
             this._type = type;
-            this._cfg = new _元素_.关联对象().Clone();
+            this._cfg = _cfg .Clone();
 
             this.Load += (s, e) =>
             {

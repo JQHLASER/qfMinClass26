@@ -13,19 +13,17 @@ namespace qfCode
     public partial class Control_文本 : Sunny.UI.UIPanel
     {
         type_编辑._编辑类型_ _type;
-        _元素_.文本 _cfg;
+        public _元素_.文本 _cfg;
         public Control_文本(type_编辑._编辑类型_ type, _元素_.文本 cfg)
         {
             InitializeComponent();
             this._type = type;
-            this._cfg = new _元素_.文本().Clone();
-
-           
-            this.uiRadioButton_文本.ValueChanged  += (s, e) => On_选中();
+            this._cfg = cfg.Clone();
+            
+            this.uiRadioButton_文本.ValueChanged += (s, e) => On_选中();
             this.uiRadioButton_换行.ValueChanged += (s, e) => On_选中();
             this.uiRadioButton_空格.ValueChanged += (s, e) => On_选中();
-
-
+      
             show();
         }
 
@@ -36,8 +34,7 @@ namespace qfCode
         /// </summary>
         public void GetCfg()
         {
-            this._cfg.内容 = this.uiTextBox1.Text;
-
+            this._cfg.内容 = this.uiTextBox1.Text; 
         }
 
         #endregion
@@ -53,7 +50,7 @@ namespace qfCode
                     #region 添加 
 
                     this.uiTextBox1.Clear();
-                    this.uiRadioButton_文本.Checked = true; 
+                    this.uiRadioButton_文本.Checked = true;
 
                     #endregion
                     break;
@@ -61,16 +58,16 @@ namespace qfCode
 
                     #region 修改
 
-                    switch (this._cfg.类型)
+                    switch (this._cfg.types )
                     {
                         case _文本_._em_文本_.换行:
-                            this.uiRadioButton_换行.Checked = true;
+                            this.uiRadioButton_换行.Checked = true; 
                             break;
                         case _文本_._em_文本_.空格:
-                            this.uiRadioButton_空格.Checked = true;
+                            this.uiRadioButton_空格.Checked = true; 
                             break;
                         default:
-                            this.uiRadioButton_文本.Checked = true; ;
+                            this.uiRadioButton_文本.Checked = true; 
                             break;
                     }
 
@@ -86,21 +83,22 @@ namespace qfCode
         {
             if (this.uiRadioButton_换行.Checked)
             {
-                this._cfg.类型 = _文本_._em_文本_.换行;
+                this._cfg.types = _文本_._em_文本_.换行;
                 this.uiTextBox1.Clear();
                 this.uiTextBox1.Enabled = false;
             }
             else if (this.uiRadioButton_空格.Checked)
             {
-                this._cfg.类型 = _文本_._em_文本_.空格;
+                this._cfg.types  = _文本_._em_文本_.空格;
                 this.uiTextBox1.Clear();
                 this.uiTextBox1.Enabled = false;
             }
             else
             {
-                this._cfg.类型 = _文本_._em_文本_.文本;
-                this.uiTextBox1.Text = this._cfg.内容;
+                this._cfg.types  = _文本_._em_文本_.文本; 
                 this.uiTextBox1.Enabled = true;
+                this.uiTextBox1.Text = this._cfg.内容;
+               
             }
 
 

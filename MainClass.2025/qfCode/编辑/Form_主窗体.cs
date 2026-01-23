@@ -177,13 +177,13 @@ namespace qfCode
                             int index0 = this.uiListBox_对象列表.SelectedIndex;
                             if (index0 < 0)
                             {
-                                this.lst元素列表.Add(forms._元素信息);
-                                this.uiListBox_元素列表.Items.Add(forms._元素信息);
+                                this.lst元素列表.Add(forms._json元素信息 );
+                                this.uiListBox_元素列表.Items.Add(forms._json元素信息);
                             }
                             else
                             {
-                                new 上下移动().在指定处插入(this.lst元素列表, forms._元素信息, index0 + 1);
-                                new 上下移动().在指定处插入(this.uiListBox_元素列表, forms._元素信息, index0 + 1);
+                                new 上下移动().在指定处插入(this.lst元素列表, forms._json元素信息, index0 + 1);
+                                new 上下移动().在指定处插入(this.uiListBox_元素列表, forms._json元素信息, index0 + 1);
                             }
 
                         }
@@ -192,18 +192,18 @@ namespace qfCode
                     break;
                 case type_编辑._编辑类型_.修改:
                     #region 修改
-                    //if (Err_未选中要操作的对象(this.uiListBox_对象列表, out int index))
-                    //{
-                    //    string txt = this.lst对象列表[index];
-                    //    using (Form_对象 forms = new Form_对象(类型, txt))
-                    //    {
-                    //        if (forms.ShowDialog() == DialogResult.OK)
-                    //        {
-                    //            this.lst对象列表[index] = forms._对象名称;
-                    //            this.uiListBox_对象列表.Items[index] = forms._对象名称;
-                    //        }
-                    //    }
-                    //}
+                    if (Err_未选中要操作的对象(this.uiListBox_元素列表 , out int index))
+                    {
+                        string txt = this.lst元素列表 [index];
+                        using (Form_工具箱_元素  forms = new Form_工具箱_元素(类型, txt))
+                        {
+                            if (forms.ShowDialog() == DialogResult.OK)
+                            {
+                                this.lst元素列表 [index] = forms._json元素信息 ;
+                                this.uiListBox_元素列表 .Items[index] = forms._json元素信息;
+                            }
+                        }
+                    }
                     #endregion
                     break;
             }
