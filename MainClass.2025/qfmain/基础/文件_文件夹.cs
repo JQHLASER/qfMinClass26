@@ -600,9 +600,8 @@ namespace qfmain
 
         /// <summary>
         /// 快捷方式文件的路径 = @"d:\Test.lnk";
-        /// </summary>
-        /// <param name="快捷方式文件的路径"></param>
-        /// <returns></returns>       
+        /// <para>安装库 IWshRuntimeLibrary</para>
+        /// </summary>  
         public virtual bool 文件_获取快捷方式文件指向的路径(string 快捷方式文件的路径, out string value, out string msgErr)
         {
             bool rt = true;
@@ -616,7 +615,7 @@ namespace qfmain
 
                     // 在项目中添加“Windows Script Host Object Model”的引用
                     //在项目上单击右键，选择“添加引用”，在“添加引用”对话框中选择“COM”组件选项卡，然后单击选择“Windows Script Host Object Model”，最后确定。在项目中就会出现“IWshRuntimeLibrary”.
-
+             
                     IWshRuntimeLibrary.WshShell shell = new IWshRuntimeLibrary.WshShell();
                     IWshRuntimeLibrary.IWshShortcut 当前快捷方式文件IWshShortcut类 = (IWshRuntimeLibrary.IWshShortcut)shell.CreateShortcut(快捷方式文件的路径);
                     //快捷方式文件指向的路径.Text = 当前快捷方式文件IWshShortcut类.TargetPath;

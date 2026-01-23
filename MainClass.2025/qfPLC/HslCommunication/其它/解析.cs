@@ -14,7 +14,7 @@ namespace qfPLC
         /// <summary>
         /// 对OperateResult的解析
         /// </summary> 
-        public (bool rt, string msgErr, T value) OperateResult<T>(OperateResult<T> result)
+        public (bool s, string m, T value) OperateResult<T>(OperateResult<T> result)
         {
             return result.IsSuccess ?
                       (true, "", (T)(object)result.Content) :
@@ -24,7 +24,7 @@ namespace qfPLC
         /// <summary>
         /// 对OperateResult的解析
         /// </summary> 
-        public (bool rt, string msgErr) OperateResult(OperateResult result)
+        public (bool s, string m) OperateResult(OperateResult result)
         {
             bool rt = true;
             string msgErr = string.Empty;

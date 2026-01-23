@@ -234,7 +234,9 @@ namespace qfLanguage
             new _language_Value_ ( keys, "页","页"),
             new _language_Value_ ( keys, "当前页","当前页"),
             new _language_Value_ ( keys, "共","共"),
-
+            new _language_Value_ ( keys, "不支持读取类型","不支持读取类型"),
+            new _language_Value_ ( keys, "无此功能","无此功能"),
+            new _language_Value_ ( keys, "写入异常","写入异常"),
         };
 
     }

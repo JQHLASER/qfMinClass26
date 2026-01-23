@@ -26,11 +26,50 @@ namespace qfPLC
 
     }
 
+    /// <summary>
+    /// 读取类型
+    /// </summary>
+    public enum _ReadType_
+    { 
+        Read,
+
+        /// <summary>
+        /// 读取输入线圈,有的用来读X端
+        /// <para>功能码: 0x02</para>
+        /// </summary>
+        ReadDiscrete, 
+
+        /// <summary>
+        /// 读取输入线圈,有的用来读X端
+        /// <para>功能码: 0x01</para>
+        /// </summary>
+        ReadCoil,
+       
+    }
 
 
+    /// <summary>
+    /// 读取类型
+    /// </summary>
+    public enum _ReadTypeAsync_
+    {
+      
 
+        ReadAsync,
 
-
+        /// <summary>
+        /// 读取输入线圈,有的用来读X端
+        /// <para>功能码: 0x02</para>
+        /// </summary>
+        
+        ReadDiscreteAsync,
+        
+        /// <summary>
+        /// 读取输入线圈,有的用来读X端
+        /// <para>功能码: 0x01</para>
+        /// </summary>
+        ReadCoilAsync,
+    }
 
 
 
