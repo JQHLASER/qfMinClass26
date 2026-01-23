@@ -17,6 +17,7 @@ namespace qfCode
         public bool 校验关键字 { set; get; } = false;
         /// <summary>
         /// =0;不使能,>0:使能
+        /// <para>为功能时,大于表示使能</para>
         /// </summary>
         public int 校验位数 { set; get; } = 0;
          

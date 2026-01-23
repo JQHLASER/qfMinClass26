@@ -29,17 +29,15 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_主窗体));
-            this.uiTitlePanel2 = new Sunny.UI.UITitlePanel();
+            this.uiTitlePanel_元素列表 = new Sunny.UI.UITitlePanel();
             this.uiListBox_元素列表 = new Sunny.UI.UIListBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.ui_Button_元素_预览 = new Sunny.ui_Button2();
-            this.ui_Button_元素_保存 = new Sunny.ui_Button2();
             this.ui_Button_元素_下移 = new Sunny.ui_Button2();
             this.ui_Button_元素_上移 = new Sunny.ui_Button2();
             this.ui_Button_元素_删除 = new Sunny.ui_Button2();
             this.ui_Button_元素_修改 = new Sunny.ui_Button2();
             this.ui_Button_元素_添加 = new Sunny.ui_Button2();
-            this.uiTitlePanel1 = new Sunny.UI.UITitlePanel();
+            this.uiTitlePanel_对象列表 = new Sunny.UI.UITitlePanel();
             this.uiListBox_对象列表 = new Sunny.UI.UIListBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.ui_Button_对象_预览 = new Sunny.ui_Button2();
@@ -61,36 +59,36 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uiTextBox1 = new Sunny.UI.UITextBox();
-            this.uiTitlePanel2.SuspendLayout();
+            this.uiTitlePanel_元素列表.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.uiTitlePanel1.SuspendLayout();
+            this.uiTitlePanel_对象列表.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // uiTitlePanel2
+            // uiTitlePanel_元素列表
             // 
-            this.uiTitlePanel2.Controls.Add(this.uiListBox_元素列表);
-            this.uiTitlePanel2.Controls.Add(this.panel2);
-            this.uiTitlePanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uiTitlePanel2.FillColor = System.Drawing.SystemColors.Control;
-            this.uiTitlePanel2.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiTitlePanel2.ForeColor = System.Drawing.Color.White;
-            this.uiTitlePanel2.Location = new System.Drawing.Point(256, 5);
-            this.uiTitlePanel2.Margin = new System.Windows.Forms.Padding(0);
-            this.uiTitlePanel2.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiTitlePanel2.Name = "uiTitlePanel2";
-            this.uiTitlePanel2.Padding = new System.Windows.Forms.Padding(2, 35, 2, 2);
-            this.uiTitlePanel2.RectColor = System.Drawing.Color.Gray;
-            this.uiTitlePanel2.Size = new System.Drawing.Size(544, 450);
-            this.uiTitlePanel2.Style = Sunny.UI.UIStyle.Custom;
-            this.uiTitlePanel2.StyleCustomMode = true;
-            this.uiTitlePanel2.TabIndex = 4;
-            this.uiTitlePanel2.Text = null;
-            this.uiTitlePanel2.TitleColor = System.Drawing.Color.Black;
-            this.uiTitlePanel2.TitleHeight = 30;
-            this.uiTitlePanel2.标题栏字体Font = new System.Drawing.Font("微软雅黑", 8.765218F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiTitlePanel_元素列表.Controls.Add(this.uiListBox_元素列表);
+            this.uiTitlePanel_元素列表.Controls.Add(this.panel2);
+            this.uiTitlePanel_元素列表.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uiTitlePanel_元素列表.FillColor = System.Drawing.SystemColors.Control;
+            this.uiTitlePanel_元素列表.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiTitlePanel_元素列表.ForeColor = System.Drawing.Color.White;
+            this.uiTitlePanel_元素列表.Location = new System.Drawing.Point(256, 5);
+            this.uiTitlePanel_元素列表.Margin = new System.Windows.Forms.Padding(0);
+            this.uiTitlePanel_元素列表.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiTitlePanel_元素列表.Name = "uiTitlePanel_元素列表";
+            this.uiTitlePanel_元素列表.Padding = new System.Windows.Forms.Padding(2, 35, 2, 2);
+            this.uiTitlePanel_元素列表.RectColor = System.Drawing.Color.Gray;
+            this.uiTitlePanel_元素列表.Size = new System.Drawing.Size(544, 450);
+            this.uiTitlePanel_元素列表.Style = Sunny.UI.UIStyle.Custom;
+            this.uiTitlePanel_元素列表.StyleCustomMode = true;
+            this.uiTitlePanel_元素列表.TabIndex = 4;
+            this.uiTitlePanel_元素列表.Text = null;
+            this.uiTitlePanel_元素列表.TitleColor = System.Drawing.Color.Black;
+            this.uiTitlePanel_元素列表.TitleHeight = 30;
+            this.uiTitlePanel_元素列表.标题栏字体Font = new System.Drawing.Font("微软雅黑", 8.765218F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             // 
             // uiListBox_元素列表
             // 
@@ -121,8 +119,6 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel2.Controls.Add(this.ui_Button_元素_预览);
-            this.panel2.Controls.Add(this.ui_Button_元素_保存);
             this.panel2.Controls.Add(this.ui_Button_元素_下移);
             this.panel2.Controls.Add(this.ui_Button_元素_上移);
             this.panel2.Controls.Add(this.ui_Button_元素_删除);
@@ -135,50 +131,6 @@
             this.panel2.Padding = new System.Windows.Forms.Padding(5, 2, 2, 2);
             this.panel2.Size = new System.Drawing.Size(100, 413);
             this.panel2.TabIndex = 6;
-            // 
-            // ui_Button_元素_预览
-            // 
-            this.ui_Button_元素_预览.BackColor = System.Drawing.Color.Transparent;
-            this.ui_Button_元素_预览.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ui_Button_元素_预览.Location = new System.Drawing.Point(5, 230);
-            this.ui_Button_元素_预览.Name = "ui_Button_元素_预览";
-            this.ui_Button_元素_预览.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.ui_Button_元素_预览.Radius_圆角 = 5;
-            this.ui_Button_元素_预览.Size = new System.Drawing.Size(93, 38);
-            this.ui_Button_元素_预览.TabIndex = 23;
-            this.ui_Button_元素_预览.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ui_Button_元素_预览.Text文本 = "预览";
-            this.ui_Button_元素_预览.文本颜色 = System.Drawing.Color.White;
-            this.ui_Button_元素_预览.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
-            this.ui_Button_元素_预览.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button_元素_预览.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
-            this.ui_Button_元素_预览.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button_元素_预览.边框颜色 = System.Drawing.Color.Silver;
-            this.ui_Button_元素_预览.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
-            this.ui_Button_元素_预览.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
-            this.ui_Button_元素_预览.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
-            // 
-            // ui_Button_元素_保存
-            // 
-            this.ui_Button_元素_保存.BackColor = System.Drawing.Color.Transparent;
-            this.ui_Button_元素_保存.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ui_Button_元素_保存.Location = new System.Drawing.Point(5, 192);
-            this.ui_Button_元素_保存.Name = "ui_Button_元素_保存";
-            this.ui_Button_元素_保存.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.ui_Button_元素_保存.Radius_圆角 = 5;
-            this.ui_Button_元素_保存.Size = new System.Drawing.Size(93, 38);
-            this.ui_Button_元素_保存.TabIndex = 22;
-            this.ui_Button_元素_保存.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ui_Button_元素_保存.Text文本 = "保存";
-            this.ui_Button_元素_保存.文本颜色 = System.Drawing.Color.White;
-            this.ui_Button_元素_保存.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
-            this.ui_Button_元素_保存.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button_元素_保存.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
-            this.ui_Button_元素_保存.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button_元素_保存.边框颜色 = System.Drawing.Color.Silver;
-            this.ui_Button_元素_保存.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
-            this.ui_Button_元素_保存.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
-            this.ui_Button_元素_保存.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
             // 
             // ui_Button_元素_下移
             // 
@@ -290,28 +242,28 @@
             this.ui_Button_元素_添加.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
             this.ui_Button_元素_添加.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
             // 
-            // uiTitlePanel1
+            // uiTitlePanel_对象列表
             // 
-            this.uiTitlePanel1.Controls.Add(this.uiListBox_对象列表);
-            this.uiTitlePanel1.Controls.Add(this.panel1);
-            this.uiTitlePanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uiTitlePanel1.FillColor = System.Drawing.SystemColors.Control;
-            this.uiTitlePanel1.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiTitlePanel1.ForeColor = System.Drawing.Color.White;
-            this.uiTitlePanel1.Location = new System.Drawing.Point(0, 5);
-            this.uiTitlePanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.uiTitlePanel1.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiTitlePanel1.Name = "uiTitlePanel1";
-            this.uiTitlePanel1.Padding = new System.Windows.Forms.Padding(2, 35, 2, 2);
-            this.uiTitlePanel1.RectColor = System.Drawing.Color.Gray;
-            this.uiTitlePanel1.Size = new System.Drawing.Size(251, 450);
-            this.uiTitlePanel1.Style = Sunny.UI.UIStyle.Custom;
-            this.uiTitlePanel1.StyleCustomMode = true;
-            this.uiTitlePanel1.TabIndex = 3;
-            this.uiTitlePanel1.Text = "对象列表";
-            this.uiTitlePanel1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.uiTitlePanel1.TitleHeight = 30;
-            this.uiTitlePanel1.标题栏字体Font = new System.Drawing.Font("微软雅黑", 8.765218F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiTitlePanel_对象列表.Controls.Add(this.uiListBox_对象列表);
+            this.uiTitlePanel_对象列表.Controls.Add(this.panel1);
+            this.uiTitlePanel_对象列表.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uiTitlePanel_对象列表.FillColor = System.Drawing.SystemColors.Control;
+            this.uiTitlePanel_对象列表.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiTitlePanel_对象列表.ForeColor = System.Drawing.Color.White;
+            this.uiTitlePanel_对象列表.Location = new System.Drawing.Point(0, 5);
+            this.uiTitlePanel_对象列表.Margin = new System.Windows.Forms.Padding(0);
+            this.uiTitlePanel_对象列表.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiTitlePanel_对象列表.Name = "uiTitlePanel_对象列表";
+            this.uiTitlePanel_对象列表.Padding = new System.Windows.Forms.Padding(2, 35, 2, 2);
+            this.uiTitlePanel_对象列表.RectColor = System.Drawing.Color.Gray;
+            this.uiTitlePanel_对象列表.Size = new System.Drawing.Size(251, 450);
+            this.uiTitlePanel_对象列表.Style = Sunny.UI.UIStyle.Custom;
+            this.uiTitlePanel_对象列表.StyleCustomMode = true;
+            this.uiTitlePanel_对象列表.TabIndex = 3;
+            this.uiTitlePanel_对象列表.Text = "对象列表";
+            this.uiTitlePanel_对象列表.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.uiTitlePanel_对象列表.TitleHeight = 30;
+            this.uiTitlePanel_对象列表.标题栏字体Font = new System.Drawing.Font("微软雅黑", 8.765218F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             // 
             // uiListBox_对象列表
             // 
@@ -519,8 +471,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.uiTitlePanel1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.uiTitlePanel2, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.uiTitlePanel_对象列表, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.uiTitlePanel_元素列表, 2, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 70);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -641,9 +593,9 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form_主窗体";
             this.Text = "";
-            this.uiTitlePanel2.ResumeLayout(false);
+            this.uiTitlePanel_元素列表.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.uiTitlePanel1.ResumeLayout(false);
+            this.uiTitlePanel_对象列表.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
@@ -654,10 +606,10 @@
         }
 
         #endregion
-        private Sunny.UI.UITitlePanel uiTitlePanel2;
+        private Sunny.UI.UITitlePanel uiTitlePanel_元素列表;
         private Sunny.UI.UIListBox uiListBox_元素列表;
         private System.Windows.Forms.Panel panel2;
-        private Sunny.UI.UITitlePanel uiTitlePanel1;
+        private Sunny.UI.UITitlePanel uiTitlePanel_对象列表;
         private Sunny.UI.UIListBox uiListBox_对象列表;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
@@ -673,8 +625,6 @@
         private System.Windows.Forms.ToolStripMenuItem 配置ToolStripMenuItem;
         private Sunny.ui_Button2 ui_Button_对象_修改;
         private Sunny.ui_Button2 ui_Button_对象_添加;
-        private Sunny.ui_Button2 ui_Button_元素_预览;
-        private Sunny.ui_Button2 ui_Button_元素_保存;
         private Sunny.ui_Button2 ui_Button_元素_下移;
         private Sunny.ui_Button2 ui_Button_元素_上移;
         private Sunny.ui_Button2 ui_Button_元素_删除;

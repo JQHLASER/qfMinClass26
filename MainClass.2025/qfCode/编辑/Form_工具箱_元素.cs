@@ -191,18 +191,23 @@ namespace qfCode
             switch (this._编辑类型)
             {
                 case type_编辑._编辑类型_.添加:
+
+                    #region 添加 
+
                     this.Text = Language_.Get语言("添加");
                     this.uiradioButton_文本.Checked = true;
+
+                    #endregion
+
                     break;
                 case type_编辑._编辑类型_.修改:
 
-                    this.Text = Language_.Get语言("修改");
-
-                    (bool s, string m) rt = (false, "");
-
                     #region 修改
 
-                    (bool s, string m, _元素_.班次 v) rtAll = new Json序列化().转成Json<_元素_.班次>(this._json元素信息);
+                    this.Text = Language_.Get语言("修改");
+                    (bool s, string m) rt = (false, "");
+
+                    (bool s, string m, _元素_.工具 v) rtAll = new Json序列化().转成Json<_元素_.工具>(this._json元素信息);
                     rt.s = rtAll.s;
                     rt.m = rtAll.m;
                     if (rtAll.s)
@@ -220,6 +225,86 @@ namespace qfCode
                                 {
                                     this._cfg_文本 = rt文本.cfg.Clone();
                                     this.uiradioButton_文本.Checked = true;
+                                }
+
+                                #endregion
+
+                                break;
+                            case _em_工具箱_.序列号:
+
+                                #region 序列号
+
+                                var rt序列号 = new Json序列化().转成Json<_元素_.序列号>(this._json元素信息);
+                                rt.s = rt序列号.s;
+                                rt.m = rt序列号.m;
+                                if (rt.s)
+                                {
+                                    this._cfg_序列号 = rt序列号.cfg.Clone();
+                                    this.uiradioButton_序列号.Checked = true;
+                                }
+
+                                #endregion
+
+                                break;
+                            case _em_工具箱_.日期:
+
+                                #region 日期
+
+                                var rt日期 = new Json序列化().转成Json<_元素_.日期>(this._json元素信息);
+                                rt.s = rt日期.s;
+                                rt.m = rt日期.m;
+                                if (rt.s)
+                                {
+                                    this._cfg_日期 = rt日期.cfg.Clone();
+                                    this.uiradioButton_日期.Checked = true;
+                                }
+
+                                #endregion
+
+                                break;
+                            case _em_工具箱_.时间:
+
+                                #region 时间
+
+                                var rt时间 = new Json序列化().转成Json<_元素_.时间>(this._json元素信息);
+                                rt.s = rt时间.s;
+                                rt.m = rt时间.m;
+                                if (rt.s)
+                                {
+                                    this._cfg_时间 = rt时间.cfg.Clone();
+                                    this.uiradioButton_时间.Checked = true;
+                                }
+
+                                #endregion
+
+                                break;
+                            case _em_工具箱_.关联对象:
+
+                                #region 关联对象
+
+                                var rt关联对象 = new Json序列化().转成Json<_元素_.关联对象>(this._json元素信息);
+                                rt.s = rt关联对象.s;
+                                rt.m = rt关联对象.m;
+                                if (rt.s)
+                                {
+                                    this._cfg_关联对象 = rt关联对象.cfg.Clone();
+                                    this.uiradioButton_关联对象.Checked = true;
+                                }
+
+                                #endregion
+
+                                break;
+                            case _em_工具箱_.班次:
+
+                                #region 关联对象
+
+                                var rt班次 = new Json序列化().转成Json<_元素_.班次>(this._json元素信息);
+                                rt.s = rt班次.s;
+                                rt.m = rt班次.m;
+                                if (rt.s)
+                                {
+                                    this._cfg_班次 = rt班次.cfg;
+                                    this.uiradioButton_班次.Checked = true;
                                 }
 
                                 #endregion
@@ -271,8 +356,7 @@ namespace qfCode
 
 
 
-        #endregion
-
+        #endregion 
 
         #region 本地方法
 
@@ -329,7 +413,7 @@ namespace qfCode
 
         #endregion
 
-
+       
 
     }
 }

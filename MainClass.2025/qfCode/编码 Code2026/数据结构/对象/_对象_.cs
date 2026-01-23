@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace qfCode
 {
-    public  class _对象_
+    public class _对象_
     {
 
         public string 对象名 { set; get; } = "";
@@ -14,7 +14,7 @@ namespace qfCode
         /// <summary>
         /// json格式
         /// </summary>
-        public string[] 元素 { set; get; } = new string[0];
+        public List<string> 元素 { set; get; } = new List<string>();
 
         /// <summary>
         /// 计算后的内容
@@ -25,8 +25,8 @@ namespace qfCode
             return new _对象_
             {
                 对象名 = this.对象名,
-                属性 = this.属性,
-                元素 = this.元素,
+                属性 = this.属性.Clone(),
+                元素 = this.元素 is null ? null : new List<string>(this.元素),
                 内容 = this.内容,
             };
         }

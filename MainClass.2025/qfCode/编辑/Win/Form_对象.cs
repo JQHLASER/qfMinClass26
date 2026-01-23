@@ -27,7 +27,7 @@ namespace qfCode
             {
                 case type_编辑._编辑类型_.添加:
                     this.Text = Language_.Get语言("添加");
-                    this._对象名称 = ""; 
+                    this._对象名称 = "";
                     break;
                 case type_编辑._编辑类型_.修改:
                     this.Text = Language_.Get语言("修改");
@@ -50,13 +50,13 @@ namespace qfCode
 
                 #region 确定
 
-                string txt = this.uiTextBox_对象.Text.Trim ();
+                string txt = this.uiTextBox_对象.Text.Trim();
                 if (string.IsNullOrEmpty(txt))
                 {
                     MessageBox.Show(Language_.Get语言("不能为空"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                else if (txt != this._对象名称 && Form_主窗体.forms.lst对象列表.Contains(txt))
+                else if (txt != this._对象名称 && !Form_主窗体.forms.Err_对象名重复(txt))
                 {
                     MessageBox.Show(Language_.Get语言("检测到已重复"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;

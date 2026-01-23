@@ -158,7 +158,16 @@ namespace qfCode
             public _em_工具箱_ Tool { set; get; } = _em_工具箱_.班次;
         }
 
-
+        /// <summary>
+        /// 解析json格式时,用来获取当前工具
+        /// </summary>
+        public class 工具
+        { 
+            /// <summary>
+           /// 工具
+           /// </summary>
+            public _em_工具箱_ Tool { set; get; } 
+        }
 
     }
 }
