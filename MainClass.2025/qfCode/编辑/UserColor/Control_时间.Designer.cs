@@ -29,122 +29,122 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.uiRadioButton_文本 = new Sunny.UI.UIRadioButton();
-            this.uiRadioButton_换行 = new Sunny.UI.UIRadioButton();
-            this.uiRadioButton_空格 = new Sunny.UI.UIRadioButton();
-            this.uiRadioButton1 = new Sunny.UI.UIRadioButton();
-            this.uiRadioButton2 = new Sunny.UI.UIRadioButton();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.uiComboBox2 = new Sunny.UI.UIComboBox();
+            this.uiRadioButton_时24 = new Sunny.UI.UIRadioButton();
+            this.uiRadioButton_时12 = new Sunny.UI.UIRadioButton();
+            this.uiRadioButton_分 = new Sunny.UI.UIRadioButton();
+            this.uiRadioButton_秒 = new Sunny.UI.UIRadioButton();
+            this.uiRadioButton_毫秒 = new Sunny.UI.UIRadioButton();
+            this.panel_配置文件 = new System.Windows.Forms.Panel();
+            this.uiComboBox_配置文件 = new Sunny.UI.UIComboBox();
             this.ui_Label_81 = new Sunny.ui_Label_8(this.components);
-            this.panel1.SuspendLayout();
+            this.panel_配置文件.SuspendLayout();
             this.SuspendLayout();
             // 
-            // uiRadioButton_文本
+            // uiRadioButton_时24
             // 
-            this.uiRadioButton_文本.BackColor = System.Drawing.Color.Transparent;
-            this.uiRadioButton_文本.Cursor = System.Windows.Forms.Cursors.Default;
-            this.uiRadioButton_文本.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiRadioButton_文本.ImageSize = 18;
-            this.uiRadioButton_文本.Location = new System.Drawing.Point(174, 118);
-            this.uiRadioButton_文本.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiRadioButton_文本.Name = "uiRadioButton_文本";
-            this.uiRadioButton_文本.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
-            this.uiRadioButton_文本.Size = new System.Drawing.Size(220, 25);
-            this.uiRadioButton_文本.StyleCustomMode = true;
-            this.uiRadioButton_文本.TabIndex = 0;
-            this.uiRadioButton_文本.Tag = "文本";
-            this.uiRadioButton_文本.Text = "时 24";
+            this.uiRadioButton_时24.BackColor = System.Drawing.Color.Transparent;
+            this.uiRadioButton_时24.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiRadioButton_时24.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiRadioButton_时24.ImageSize = 18;
+            this.uiRadioButton_时24.Location = new System.Drawing.Point(174, 118);
+            this.uiRadioButton_时24.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiRadioButton_时24.Name = "uiRadioButton_时24";
+            this.uiRadioButton_时24.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
+            this.uiRadioButton_时24.Size = new System.Drawing.Size(220, 25);
+            this.uiRadioButton_时24.StyleCustomMode = true;
+            this.uiRadioButton_时24.TabIndex = 0;
+            this.uiRadioButton_时24.Tag = "文本";
+            this.uiRadioButton_时24.Text = "时 24";
             // 
-            // uiRadioButton_换行
+            // uiRadioButton_时12
             // 
-            this.uiRadioButton_换行.BackColor = System.Drawing.Color.Transparent;
-            this.uiRadioButton_换行.Cursor = System.Windows.Forms.Cursors.Default;
-            this.uiRadioButton_换行.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiRadioButton_换行.ImageSize = 18;
-            this.uiRadioButton_换行.Location = new System.Drawing.Point(174, 154);
-            this.uiRadioButton_换行.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiRadioButton_换行.Name = "uiRadioButton_换行";
-            this.uiRadioButton_换行.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
-            this.uiRadioButton_换行.Size = new System.Drawing.Size(220, 25);
-            this.uiRadioButton_换行.StyleCustomMode = true;
-            this.uiRadioButton_换行.TabIndex = 2;
-            this.uiRadioButton_换行.Tag = "换行";
-            this.uiRadioButton_换行.Text = "时 12";
+            this.uiRadioButton_时12.BackColor = System.Drawing.Color.Transparent;
+            this.uiRadioButton_时12.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiRadioButton_时12.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiRadioButton_时12.ImageSize = 18;
+            this.uiRadioButton_时12.Location = new System.Drawing.Point(174, 154);
+            this.uiRadioButton_时12.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiRadioButton_时12.Name = "uiRadioButton_时12";
+            this.uiRadioButton_时12.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
+            this.uiRadioButton_时12.Size = new System.Drawing.Size(220, 25);
+            this.uiRadioButton_时12.StyleCustomMode = true;
+            this.uiRadioButton_时12.TabIndex = 2;
+            this.uiRadioButton_时12.Tag = "换行";
+            this.uiRadioButton_时12.Text = "时 12";
             // 
-            // uiRadioButton_空格
+            // uiRadioButton_分
             // 
-            this.uiRadioButton_空格.BackColor = System.Drawing.Color.Transparent;
-            this.uiRadioButton_空格.Cursor = System.Windows.Forms.Cursors.Default;
-            this.uiRadioButton_空格.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiRadioButton_空格.ImageSize = 18;
-            this.uiRadioButton_空格.Location = new System.Drawing.Point(174, 190);
-            this.uiRadioButton_空格.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiRadioButton_空格.Name = "uiRadioButton_空格";
-            this.uiRadioButton_空格.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
-            this.uiRadioButton_空格.Size = new System.Drawing.Size(220, 25);
-            this.uiRadioButton_空格.StyleCustomMode = true;
-            this.uiRadioButton_空格.TabIndex = 3;
-            this.uiRadioButton_空格.Tag = "空格";
-            this.uiRadioButton_空格.Text = "分";
+            this.uiRadioButton_分.BackColor = System.Drawing.Color.Transparent;
+            this.uiRadioButton_分.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiRadioButton_分.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiRadioButton_分.ImageSize = 18;
+            this.uiRadioButton_分.Location = new System.Drawing.Point(174, 190);
+            this.uiRadioButton_分.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiRadioButton_分.Name = "uiRadioButton_分";
+            this.uiRadioButton_分.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
+            this.uiRadioButton_分.Size = new System.Drawing.Size(220, 25);
+            this.uiRadioButton_分.StyleCustomMode = true;
+            this.uiRadioButton_分.TabIndex = 3;
+            this.uiRadioButton_分.Tag = "空格";
+            this.uiRadioButton_分.Text = "分";
             // 
-            // uiRadioButton1
+            // uiRadioButton_秒
             // 
-            this.uiRadioButton1.BackColor = System.Drawing.Color.Transparent;
-            this.uiRadioButton1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.uiRadioButton1.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiRadioButton1.ImageSize = 18;
-            this.uiRadioButton1.Location = new System.Drawing.Point(174, 226);
-            this.uiRadioButton1.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiRadioButton1.Name = "uiRadioButton1";
-            this.uiRadioButton1.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
-            this.uiRadioButton1.Size = new System.Drawing.Size(220, 25);
-            this.uiRadioButton1.StyleCustomMode = true;
-            this.uiRadioButton1.TabIndex = 4;
-            this.uiRadioButton1.Tag = "空格";
-            this.uiRadioButton1.Text = "秒";
+            this.uiRadioButton_秒.BackColor = System.Drawing.Color.Transparent;
+            this.uiRadioButton_秒.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiRadioButton_秒.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiRadioButton_秒.ImageSize = 18;
+            this.uiRadioButton_秒.Location = new System.Drawing.Point(174, 226);
+            this.uiRadioButton_秒.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiRadioButton_秒.Name = "uiRadioButton_秒";
+            this.uiRadioButton_秒.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
+            this.uiRadioButton_秒.Size = new System.Drawing.Size(220, 25);
+            this.uiRadioButton_秒.StyleCustomMode = true;
+            this.uiRadioButton_秒.TabIndex = 4;
+            this.uiRadioButton_秒.Tag = "空格";
+            this.uiRadioButton_秒.Text = "秒";
             // 
-            // uiRadioButton2
+            // uiRadioButton_毫秒
             // 
-            this.uiRadioButton2.BackColor = System.Drawing.Color.Transparent;
-            this.uiRadioButton2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.uiRadioButton2.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiRadioButton2.ImageSize = 18;
-            this.uiRadioButton2.Location = new System.Drawing.Point(174, 262);
-            this.uiRadioButton2.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiRadioButton2.Name = "uiRadioButton2";
-            this.uiRadioButton2.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
-            this.uiRadioButton2.Size = new System.Drawing.Size(220, 25);
-            this.uiRadioButton2.StyleCustomMode = true;
-            this.uiRadioButton2.TabIndex = 5;
-            this.uiRadioButton2.Tag = "空格";
-            this.uiRadioButton2.Text = "毫秒";
+            this.uiRadioButton_毫秒.BackColor = System.Drawing.Color.Transparent;
+            this.uiRadioButton_毫秒.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiRadioButton_毫秒.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiRadioButton_毫秒.ImageSize = 18;
+            this.uiRadioButton_毫秒.Location = new System.Drawing.Point(174, 262);
+            this.uiRadioButton_毫秒.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiRadioButton_毫秒.Name = "uiRadioButton_毫秒";
+            this.uiRadioButton_毫秒.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
+            this.uiRadioButton_毫秒.Size = new System.Drawing.Size(220, 25);
+            this.uiRadioButton_毫秒.StyleCustomMode = true;
+            this.uiRadioButton_毫秒.TabIndex = 5;
+            this.uiRadioButton_毫秒.Tag = "空格";
+            this.uiRadioButton_毫秒.Text = "毫秒";
             // 
-            // panel1
+            // panel_配置文件
             // 
-            this.panel1.Controls.Add(this.uiComboBox2);
-            this.panel1.Controls.Add(this.ui_Label_81);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(5, 323);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(580, 162);
-            this.panel1.TabIndex = 20;
+            this.panel_配置文件.Controls.Add(this.uiComboBox_配置文件);
+            this.panel_配置文件.Controls.Add(this.ui_Label_81);
+            this.panel_配置文件.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel_配置文件.Location = new System.Drawing.Point(5, 323);
+            this.panel_配置文件.Name = "panel_配置文件";
+            this.panel_配置文件.Size = new System.Drawing.Size(580, 162);
+            this.panel_配置文件.TabIndex = 20;
             // 
-            // uiComboBox2
+            // uiComboBox_配置文件
             // 
-            this.uiComboBox2.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
-            this.uiComboBox2.FillColor = System.Drawing.Color.White;
-            this.uiComboBox2.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiComboBox2.Location = new System.Drawing.Point(206, 5);
-            this.uiComboBox2.Margin = new System.Windows.Forms.Padding(0);
-            this.uiComboBox2.MaxDropDownItems = 15;
-            this.uiComboBox2.MinimumSize = new System.Drawing.Size(63, 0);
-            this.uiComboBox2.Name = "uiComboBox2";
-            this.uiComboBox2.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
-            this.uiComboBox2.Size = new System.Drawing.Size(246, 26);
-            this.uiComboBox2.Style = Sunny.UI.UIStyle.Custom;
-            this.uiComboBox2.TabIndex = 21;
-            this.uiComboBox2.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            this.uiComboBox_配置文件.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
+            this.uiComboBox_配置文件.FillColor = System.Drawing.Color.White;
+            this.uiComboBox_配置文件.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiComboBox_配置文件.Location = new System.Drawing.Point(206, 5);
+            this.uiComboBox_配置文件.Margin = new System.Windows.Forms.Padding(0);
+            this.uiComboBox_配置文件.MaxDropDownItems = 15;
+            this.uiComboBox_配置文件.MinimumSize = new System.Drawing.Size(63, 0);
+            this.uiComboBox_配置文件.Name = "uiComboBox_配置文件";
+            this.uiComboBox_配置文件.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
+            this.uiComboBox_配置文件.Size = new System.Drawing.Size(246, 26);
+            this.uiComboBox_配置文件.Style = Sunny.UI.UIStyle.Custom;
+            this.uiComboBox_配置文件.TabIndex = 21;
+            this.uiComboBox_配置文件.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ui_Label_81
             // 
@@ -161,12 +161,12 @@
             // Control_时间
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.uiRadioButton2);
-            this.Controls.Add(this.uiRadioButton1);
-            this.Controls.Add(this.uiRadioButton_空格);
-            this.Controls.Add(this.uiRadioButton_换行);
-            this.Controls.Add(this.uiRadioButton_文本);
+            this.Controls.Add(this.panel_配置文件);
+            this.Controls.Add(this.uiRadioButton_毫秒);
+            this.Controls.Add(this.uiRadioButton_秒);
+            this.Controls.Add(this.uiRadioButton_分);
+            this.Controls.Add(this.uiRadioButton_时12);
+            this.Controls.Add(this.uiRadioButton_时24);
             this.FillColor = System.Drawing.SystemColors.Control;
             this.Name = "Control_时间";
             this.Padding = new System.Windows.Forms.Padding(5);
@@ -176,20 +176,20 @@
             this.Style = Sunny.UI.UIStyle.Custom;
             this.StyleCustomMode = true;
             this.Text = "";
-            this.panel1.ResumeLayout(false);
+            this.panel_配置文件.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Sunny.UI.UIRadioButton uiRadioButton_文本;
-        private Sunny.UI.UIRadioButton uiRadioButton_换行;
-        private Sunny.UI.UIRadioButton uiRadioButton_空格;
-        private Sunny.UI.UIRadioButton uiRadioButton1;
-        private Sunny.UI.UIRadioButton uiRadioButton2;
-        private System.Windows.Forms.Panel panel1;
-        private Sunny.UI.UIComboBox uiComboBox2;
+        private Sunny.UI.UIRadioButton uiRadioButton_时24;
+        private Sunny.UI.UIRadioButton uiRadioButton_时12;
+        private Sunny.UI.UIRadioButton uiRadioButton_分;
+        private Sunny.UI.UIRadioButton uiRadioButton_秒;
+        private Sunny.UI.UIRadioButton uiRadioButton_毫秒;
+        private System.Windows.Forms.Panel panel_配置文件;
+        private Sunny.UI.UIComboBox uiComboBox_配置文件;
         private Sunny.ui_Label_8 ui_Label_81;
     }
 }

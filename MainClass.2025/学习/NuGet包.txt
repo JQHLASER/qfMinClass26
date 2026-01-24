@@ -31,7 +31,7 @@ SqlServer 数据库....使用最新库
 	直接使用.net8时,必须使用NuGet下载SqlSugarCore
 
 	使用.net4.8开发dll给.net8调用时,
-	必须使用NuGet下载 	 System.Data.SqlClient  
+	必须使用NuGet下载 	 System.Data.SqlClient   //装在.net8下
 						 System.Security.Permissions
 	最好将 SqlSugarCore 也一起下载,然后DB初始化时选择"新驱动"
 

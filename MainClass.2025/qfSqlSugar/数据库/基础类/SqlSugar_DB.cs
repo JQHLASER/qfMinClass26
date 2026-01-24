@@ -136,8 +136,8 @@ SqlServer 数据库....使用最新库
                 rt = false;
                 msgErr = ex.Message;
             }
-
             Event_初始化结束?.Invoke(rt, this);
+            Event_初始化结束1?.Invoke(rt,msgErr , this);
             return rt;
         }
 
@@ -396,6 +396,12 @@ SqlServer 数据库....使用最新库
         /// 此时可以获取表结构和操作数据库了
         /// </summary>
         public event Action<bool, SqlSugar_DB> Event_初始化结束;
+        /// <summary>
+        /// 此时可以获取表结构和操作数据库了
+        /// <para>参数 (状态,消息,DB)</para>
+        /// </summary>
+        public event Action<bool, string,SqlSugar_DB> Event_初始化结束1;
+
 
         private readonly object _lockDb = new object();
 

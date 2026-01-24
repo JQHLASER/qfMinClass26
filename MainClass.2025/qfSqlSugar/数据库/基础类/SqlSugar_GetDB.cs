@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace qfSqlSugar
 {
     /// <summary>
-    /// 
+    /// 复制Db出来用
     /// </summary>
     public class SqlSugar_GetDB : IDisposable
     {

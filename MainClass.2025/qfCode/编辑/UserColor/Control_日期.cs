@@ -127,11 +127,19 @@ namespace qfCode
                             this.uiRadioButton_星期.Checked = true; break;
                     }
 
-                    this.uiComboBox_偏移_类型.SelectedIndex = (int)this._cfg.偏移类型;
-                    this.uiTextBox_偏移值.IntValue = this._cfg.偏移值;
-                    int index = this.uiComboBox_配置文件.Items.IndexOf(this._cfg.配置);
-                    this.uiComboBox_配置文件.SelectedIndex = index;
 
+                    if (Form_主窗体.forms._编辑._功能.日期时间.偏移计算)
+                    {
+                        this.uiComboBox_偏移_类型.SelectedIndex = (int)this._cfg.偏移类型;
+                        this.uiTextBox_偏移值.IntValue = this._cfg.偏移值;
+                    }
+
+                    if (Form_主窗体.forms._编辑._功能.日期时间.配置编码)
+                    {
+
+                        int index = this.uiComboBox_配置文件.Items.IndexOf(this._cfg.配置);
+                        this.uiComboBox_配置文件.SelectedIndex = index;
+                    }
 
                     #endregion
 

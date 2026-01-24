@@ -27,9 +27,9 @@ namespace qfSqlSugar
                 Event_ConnectionConfig?.Invoke(s, e);
             };
 
-            _DB.Event_初始化结束 += (s, e) =>
+            _DB.Event_初始化结束1 += (s, m,e) =>
             {
-                Event_初始化结束?.Invoke(s, e);
+                Event_初始化结束?.Invoke(s,m, e);
             };
 
             return _DB.初始化(out msgErr, 超时时间);
@@ -41,9 +41,9 @@ namespace qfSqlSugar
         /// </summary>
         public static event Action<List<ConnectionConfig>, SqlSugar_DB> Event_ConnectionConfig;
         /// <summary>
-        /// 参数(初始化状态,DB)
+        /// 参数(初始化状态,消息,DB)
         /// </summary>
-        public static event Action<bool, SqlSugar_DB> Event_初始化结束;
+        public static event Action<bool,string, SqlSugar_DB> Event_初始化结束;
 
 
 
