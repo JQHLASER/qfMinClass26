@@ -22,7 +22,7 @@ namespace qfCode
         /// <summary>
         /// 班次规则的配置文件
         /// </summary>
-        public string 班次文件 { set; get; } = "";
+        public string 班次文件 { set; get; } = 常量 .配置文件名_默认 ;
 
 
 

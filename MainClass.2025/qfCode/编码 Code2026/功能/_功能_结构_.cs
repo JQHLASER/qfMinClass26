@@ -35,10 +35,10 @@ namespace qfCode
         }
 
 
-        public class _日期_
+        public class _日期时间_
         { 
             public bool 偏移计算 { set; get; } = false;
- 
+            public bool 配置编码 { set; get; } = false;
         }
 
 

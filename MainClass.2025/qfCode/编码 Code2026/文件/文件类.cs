@@ -43,12 +43,28 @@ namespace qfCode
         /// 获取存放编码信息的文件路径
         /// <para>仅ini或txt类型时有效</para>
         /// </summary> 
-        public string GetPath_编码文件(string FileName)
+        public string GetPath_配方(string FileName)
         {
-            return this._codeSys._文件夹_属性.编码文件 + $"\\{FileName}{this._codeSys._功能.后缀}";
+            return this._codeSys._文件夹_属性.配方 + $"\\{FileName}{this._codeSys._功能.后缀}";
+        }
+
+        public string[] Get目录_班次()
+        {
+            new qfmain.文件_文件夹().文件夹_获取所有文件_有后缀(this._codeSys._文件夹_属性.班次, out List<string> lst, "*.txt");
+            return lst.ToArray();
+        }
+        public string[] Get目录_日期时间()
+        {
+            new qfmain.文件_文件夹().文件夹_获取所有文件_有后缀(this._codeSys._文件夹_属性.日期时间, out List<string> lst, "*.txt");
+            return lst.ToArray();
         }
 
 
+        public string[] Get目录_配方()
+        {
+            new qfmain.文件_文件夹().文件夹_获取所有文件_有后缀(this._codeSys._文件夹_属性.配方, out List<string> lst, $"*{this._codeSys._功能.后缀}");
+            return lst.ToArray();
+        }
 
 
         #endregion

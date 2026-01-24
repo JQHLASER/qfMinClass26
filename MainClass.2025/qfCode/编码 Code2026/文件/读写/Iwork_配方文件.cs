@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace qfCode
 {
-    public interface Iwork_文件
+    internal  interface Iwork_文件
     {
         /// <summary>
         /// 读取

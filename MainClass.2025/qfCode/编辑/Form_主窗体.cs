@@ -17,7 +17,7 @@ namespace qfCode
         internal static Form_主窗体 forms;
         internal _文件_属性_ _文件信息 = new _文件_属性_();
         internal int _编辑对象索引 = -1;
-
+      
         public Form_主窗体(编辑_ 编辑)
         {
             InitializeComponent();
@@ -32,7 +32,7 @@ namespace qfCode
 
             #region 按钮....对象
 
-            this.uiListBox_对象列表.ItemClick  += (s, e) =>
+            this.uiListBox_对象列表.ItemClick += (s, e) =>
             {
                 if (Err_未选中要操作的对象(this.uiListBox_对象列表, out int index))
                 {
@@ -93,7 +93,7 @@ namespace qfCode
                 new 上下移动().下移一行(this.uiListBox_元素列表);
             };
 
-        
+
 
             #endregion
 
@@ -157,8 +157,8 @@ namespace qfCode
                 this.uiListBox_对象列表.Items.RemoveAt(index);
                 if (index == this._编辑对象索引)
                 {
-                    this._编辑对象索引 = -1;
-                    显示编辑对象信息();
+                    清空显示的元素信息(-1);
+
                 }
             }
         }
@@ -248,7 +248,7 @@ namespace qfCode
         {
             this.uiTitlePanel_元素列表.Text = string.Empty;
             if (!Err_未选中要编辑的对象(out string 对象名, false))
-            { 
+            {
                 return;
             }
             int index = this._编辑对象索引;
@@ -274,7 +274,7 @@ namespace qfCode
             {
                 sb.Append($"<{Language_.Get语言("校验关键字")}>");
             }
-            if (this._编辑._功能.对象属性.校验位数 > 0 && objc.属性.校验位数 > 0)
+            if (this._编辑._功能.对象属性.校验位数 && objc.属性.校验位数 > 0)
             {
                 sb.Append($"<{Language_.Get语言("校验位数")} {objc.属性.校验位数}>");
             }
@@ -285,15 +285,22 @@ namespace qfCode
 
         void 显示元素信息()
         {
-            this.uiListBox_元素列表 .Items.Clear();
+            this.uiListBox_元素列表.Items.Clear();
             if (!Err_未选中要编辑的对象(out string 对象名, false))
             {
                 return;
-            } 
-            foreach (var item in this._文件信息.对象[this._编辑对象索引 ].元素 )
+            }
+            foreach (var item in this._文件信息.对象[this._编辑对象索引].元素)
             {
                 this.uiListBox_元素列表.Items.Add(item);
             }
+        }
+
+        void 清空显示的元素信息(int 对象索引)
+        {
+            this._编辑对象索引 = 对象索引;
+            this.uiTitlePanel_元素列表.Text = string.Empty;
+            this.uiListBox_元素列表.Items.Clear();
         }
 
         #endregion

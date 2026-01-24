@@ -77,10 +77,10 @@
     <Compile Include="编辑\Form_主窗体.Designer.cs">
       <DependentUpon>Form_主窗体.cs</DependentUpon>
     </Compile>
-    <Compile Include="编辑\Form_工具箱_元素.cs">
+    <Compile Include="编辑\Win\Form_工具箱_元素.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="编辑\Form_工具箱_元素.Designer.cs">
+    <Compile Include="编辑\Win\Form_工具箱_元素.Designer.cs">
       <DependentUpon>Form_工具箱_元素.cs</DependentUpon>
     </Compile>
     <Compile Include="编辑\type_编辑.cs" />
@@ -139,6 +139,9 @@
       <DependentUpon>Form_对象.cs</DependentUpon>
     </Compile>
     <Compile Include="编辑\上下移动.cs" />
+    <Compile Include="编辑\文件\子接口\Iworker_文件目录.cs" />
+    <Compile Include="编辑\文件\文件目录_统一接口.cs" />
+    <Compile Include="编辑\文件\子接口\文件目录_本地.cs" />
     <Compile Include="编辑\编辑_.cs" />
     <Compile Include="语言\Language_.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -158,7 +161,7 @@
     <Compile Include="编码 Code2026\数据结构\_文件_属性_.cs" />
     <Compile Include="编码 Code2026\主程序\_文件夹_.cs" />
     <Compile Include="编码 Code2026\文件\读写\文件类\ini文件_.cs" />
-    <Compile Include="编码 Code2026\文件\读写\Iwork_文件.cs" />
+    <Compile Include="编码 Code2026\文件\读写\Iwork_配方文件.cs" />
     <Compile Include="编码 Code2026\常量.cs" />
     <Compile Include="编码 Code2026\文件\Json序列化.cs" />
     <Compile Include="编码 Code2026\文件\读写\文件_统一接口.cs" />
@@ -191,7 +194,7 @@
     <EmbeddedResource Include="编辑\Form_主窗体.resx">
       <DependentUpon>Form_主窗体.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="编辑\Form_工具箱_元素.resx">
+    <EmbeddedResource Include="编辑\Win\Form_工具箱_元素.resx">
       <DependentUpon>Form_工具箱_元素.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="编辑\UserColor\关联对象\Control_关联对象 _按字符.resx">
@@ -222,7 +225,9 @@
       <DependentUpon>Form_对象.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="编码 Code2026\文件\配方\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rd /s /q "$(ProjectDir)obj"</PostBuildEvent>

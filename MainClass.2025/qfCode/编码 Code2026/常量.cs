@@ -35,6 +35,7 @@ namespace qfCode
         internal static string 后缀 { get; } = ".cqf";
         /// <summary>
         /// 配置文件的默认名称
+        /// <para>Default</para>
         /// </summary>
         internal static string 配置文件名_默认 { get; } = "Default";
 

@@ -14,6 +14,25 @@ namespace qfCode
             修改,
         }
 
+        public enum _文件类型_
+        {
+            本地,
+            /// <summary>
+            /// 内存通讯
+            /// </summary>
+            Pipc通讯,
+            /// <summary>
+            /// 网络通讯
+            /// </summary>
+            TCP通讯,
+            /// <summary>
+            /// 网络通讯
+            /// </summary>
+            http通讯,
+        }
+
+
+
         public class _对象信息_
         {
             public string 对象名 { set; get; } = string.Empty;

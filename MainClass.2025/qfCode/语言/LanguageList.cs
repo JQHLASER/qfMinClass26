@@ -38,8 +38,14 @@ namespace qfLanguage
             new _language_Value_ ( keys, "关联对象","关联对象"),
             new _language_Value_ ( keys, "班次","班次"),
 
-
-
+            new _language_Value_ ( keys, "年","年"),
+            new _language_Value_ ( keys, "月","月"),
+            new _language_Value_ ( keys, "日","日"),
+            new _language_Value_ ( keys, "天","天"),
+            new _language_Value_ ( keys, "周","周"),
+            new _language_Value_ ( keys, "星期","星期"),
+            new _language_Value_ ( keys, "时","时"),
+            new _language_Value_ ( keys, "分","分"),
 
 
 

@@ -11,7 +11,7 @@ namespace qfCode
         internal DateTime  偏移计算(编码_ 编码sys, DateTime 时间, _元素_.日期 info)
         {
             DateTime 当前时间 = 时间;
-            if (编码sys._功能.日期.偏移计算)
+            if (编码sys._功能.日期时间.偏移计算)
             {
                 switch (info.偏移类型)
                 {

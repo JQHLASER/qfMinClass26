@@ -9,7 +9,7 @@ namespace qfCode
     public class 文件_统一接口
     {
         编码_ _CodeSys;
-        public Iwork_文件 _Iwork文件;
+        Iwork_文件 _Iwork文件;
 
         public 文件_统一接口(编码_ CodeSys)
         {

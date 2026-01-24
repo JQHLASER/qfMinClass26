@@ -126,7 +126,7 @@ namespace qfCode
                     this.con_序列号 = null;
                     this.con_序列号 = new Control_序列号(this._编辑类型, this._cfg_序列号);
                     this.panel_控件.Controls.Clear();
-                    this.panel_控件.Controls.Add(this.con_序列号);
+                    this.panel_控件.Controls.Add(this.con_序列号); 
                 }
             };
             #endregion
@@ -328,9 +328,7 @@ namespace qfCode
 
         }
 
-
-
-
+         
 
         #region 工具箱及参数
 
@@ -413,7 +411,7 @@ namespace qfCode
 
         #endregion
 
-       
+
 
     }
 }

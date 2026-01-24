@@ -32,9 +32,9 @@ namespace qfCode
             public string 日期时间 { set; get; } = 常量.日期时间;
 
             /// <summary>
-            /// 存编码信息的文件夹
+            /// 存编码配方的文件夹
             /// </summary>
-            public string 编码文件 { set; get; } = 常量.信息;
+            public string 配方 { set; get; } = 常量.信息;
         } 
         public _文件夹_( 编码_  codeSys)
         {
@@ -42,7 +42,7 @@ namespace qfCode
             new qfmain.文件_文件夹().文件夹_新建(codeSys._文件夹_属性.参数, out msgErr);
             new qfmain.文件_文件夹().文件夹_新建(codeSys._文件夹_属性.班次, out msgErr);
             new qfmain.文件_文件夹().文件夹_新建(codeSys._文件夹_属性.日期时间, out msgErr);
-            new qfmain.文件_文件夹().文件夹_新建(codeSys._文件夹_属性.编码文件, out msgErr);
+            new qfmain.文件_文件夹().文件夹_新建(codeSys._文件夹_属性.配方, out msgErr);
         }
 
 

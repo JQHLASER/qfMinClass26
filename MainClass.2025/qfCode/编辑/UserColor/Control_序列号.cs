@@ -18,7 +18,7 @@ namespace qfCode
         {
             InitializeComponent();
             this._type = type;
-            this._cfg =_cfg .Clone();
+            this._cfg = cfg.Clone();
 
             this.Load += (s, e) =>
             {
