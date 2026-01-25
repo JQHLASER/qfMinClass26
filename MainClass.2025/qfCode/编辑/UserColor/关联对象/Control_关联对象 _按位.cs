@@ -10,24 +10,19 @@ using System.Windows.Forms;
 
 namespace qfCode
 {
-    public partial class Control_关联对象_按位 : Sunny.UI.UITitlePanel
+    public partial class Control_关联对象_按位 : Sunny.UI.UIPanel 
     {
         type_编辑._编辑类型_ _type;
-        _元素_.关联对象 _cfg;
-        public Control_关联对象_按位(type_编辑._编辑类型_ type, _元素_.关联对象  cfg)
+        _关联对象_._按位_ _cfg;
+        public Control_关联对象_按位(type_编辑._编辑类型_ type, _关联对象_._按位_ cfg)
         {
             InitializeComponent();
             this._type = type;
-            this._cfg = new _元素_.关联对象().Clone();
+            this._cfg = cfg.Clone();
 
-            this.Load += (s, e) =>
-            {
+            this.uiTextBox_起始位.IntValue = (int)this._cfg.开始位;
+            this.uiTextBox_数量.IntValue = (int)this._cfg.数量;
 
-
-            };
-          
-
-            show();
         }
 
         #region 对外方法
@@ -37,43 +32,14 @@ namespace qfCode
         /// </summary>
         public void GetCfg()
         {
-             
+            this._cfg.开始位 = (uint)this.uiTextBox_起始位.IntValue;
+            this._cfg.数量 = (uint)this.uiTextBox_数量.IntValue;
         }
 
         #endregion
 
 
-        #region 本地方法
 
-        void show()
-        {
-            switch (this._type)
-            {
-                case type_编辑._编辑类型_.添加:
-                    #region 添加 
-
-                    
-                    #endregion
-                    break;
-                case type_编辑._编辑类型_.修改:
-
-                    #region 修改
-                     
-                    #endregion
-
-                    break;
-            }
-
-        }
-         
-      
-        void On_选中()
-        {
-          
-
-        }
-
-        #endregion
 
 
     }

@@ -27,6 +27,16 @@ namespace qfCode
             /// 从1开始
             /// </summary>
             public uint 数量 { set; get; } = 1;
+
+            public _按位_ Clone()
+            {
+                return new _按位_
+                {
+                    开始位 = this.开始位,
+                    数量 = this.数量,
+                };
+            }
+
         }
 
         public class _按字符_
@@ -36,6 +46,16 @@ namespace qfCode
             /// 从1开始
             /// </summary>
             public uint 索引 { set; get; } = 1;
+
+
+            public _按字符_ Clone()
+            {
+                return new _按字符_
+                {
+                    分割符 = this.分割符,
+                    索引 = this.索引,
+                };
+            }
         }
 
         public class _按首尾_
@@ -46,6 +66,16 @@ namespace qfCode
             /// 从1开始
             /// </summary>
             public uint 索引 { set; get; } = 1;
+
+            public _按首尾_ Clone()
+            {
+                return new _按首尾_
+                {
+                    首 = this.首,
+                    尾= this.尾,
+                    索引 = this.索引,
+                };
+            }
         }
 
 

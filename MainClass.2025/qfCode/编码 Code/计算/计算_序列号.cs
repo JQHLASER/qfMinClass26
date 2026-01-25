@@ -178,7 +178,7 @@ namespace qfCode
                 {
                     #region 其它
 
-                    switch (info.复位方式)
+                    switch (info.resets)
                     {
                         case _序列号_._em_复位_.按最大:
 

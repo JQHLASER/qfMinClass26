@@ -86,7 +86,8 @@
             this.uiTitlePanel_元素列表.StyleCustomMode = true;
             this.uiTitlePanel_元素列表.TabIndex = 4;
             this.uiTitlePanel_元素列表.Text = null;
-            this.uiTitlePanel_元素列表.TitleColor = System.Drawing.Color.Black;
+            this.uiTitlePanel_元素列表.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.uiTitlePanel_元素列表.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
             this.uiTitlePanel_元素列表.TitleHeight = 30;
             this.uiTitlePanel_元素列表.标题栏字体Font = new System.Drawing.Font("微软雅黑", 8.765218F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             // 
@@ -262,6 +263,7 @@
             this.uiTitlePanel_对象列表.TabIndex = 3;
             this.uiTitlePanel_对象列表.Text = "对象列表";
             this.uiTitlePanel_对象列表.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.uiTitlePanel_对象列表.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
             this.uiTitlePanel_对象列表.TitleHeight = 30;
             this.uiTitlePanel_对象列表.标题栏字体Font = new System.Drawing.Font("微软雅黑", 8.765218F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             // 

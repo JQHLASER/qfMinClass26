@@ -10,70 +10,37 @@ using System.Windows.Forms;
 
 namespace qfCode
 {
-    public partial class Control_关联对象_按首尾字符 : Sunny.UI.UITitlePanel
+    public partial class Control_关联对象_按首尾字符 : Sunny.UI.UIPanel 
     {
         type_编辑._编辑类型_ _type;
-        _元素_.关联对象 _cfg;
-        public Control_关联对象_按首尾字符(type_编辑._编辑类型_ type, _元素_.关联对象  cfg)
+        _关联对象_._按首尾_ _cfg;
+        public Control_关联对象_按首尾字符(type_编辑._编辑类型_ type, _关联对象_._按首尾_ cfg)
         {
             InitializeComponent();
             this._type = type;
-            this._cfg = new _元素_.关联对象().Clone();
-
-            this.Load += (s, e) =>
-            {
+            this._cfg = cfg.Clone();
 
 
-            };
-          
+            this.uiTextBox_分割符首.Text = this._cfg.首;
+            this.uiTextBox_分割符尾.Text = this._cfg.尾;
+            this.uiTextBox_索引.IntValue = (int)this._cfg.索引;
 
-            show();
+
+
         }
 
-        #region 对外方法
+
 
         /// <summary>
         /// 赋值
         /// </summary>
         public void GetCfg()
         {
-             
+            this._cfg.首 = this.uiTextBox_分割符首.Text;
+            this._cfg.尾 = this.uiTextBox_分割符尾.Text;
+            this._cfg.索引 = (uint)this.uiTextBox_索引.IntValue;
         }
 
-        #endregion
-
-
-        #region 本地方法
-
-        void show()
-        {
-            switch (this._type)
-            {
-                case type_编辑._编辑类型_.添加:
-                    #region 添加 
-
-                    
-                    #endregion
-                    break;
-                case type_编辑._编辑类型_.修改:
-
-                    #region 修改
-                     
-                    #endregion
-
-                    break;
-            }
-
-        }
-         
-      
-        void On_选中()
-        {
-          
-
-        }
-
-        #endregion
 
 
     }

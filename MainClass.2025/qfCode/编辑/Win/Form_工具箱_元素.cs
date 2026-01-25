@@ -37,14 +37,7 @@ namespace qfCode
 
             工具箱_初始化();
 
-
-            this.Shown += (s, e) =>
-            {
-
-
-
-            };
-
+  
             this.uiButton_No.Click += (s, e) =>
             {
                 this.Close();
@@ -86,8 +79,8 @@ namespace qfCode
                 }
                 else if (this.uiradioButton_班次.Checked)
                 {
-                    this._json元素信息 = new Json序列化().转成String(this._cfg_班次);
-                    isOk = true;
+                    this._json元素信息 = new Json序列化().转成String(this._cfg_班次); 
+                    isOk = true; 
                 }
 
                 if (isOk)

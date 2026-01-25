@@ -37,9 +37,68 @@ namespace qfCode
             this.panel_配置文件.Visible = Form_主窗体.forms._编辑._功能.日期时间.配置编码;
 
 
+            语言(); 
 
-            #region 语言
+            #region 初始值
 
+
+            this.uiRadioButton_年4位.Checked = true;
+            this.uiComboBox_偏移_类型.SelectedIndex = 0;
+            this.uiTextBox_偏移值.IntValue = 1;
+            this.uiComboBox_配置文件.SelectedIndex = this.uiComboBox_配置文件.Items.Count > 0 ? 0 : -1;
+
+            #endregion
+
+            #region 偏移值
+
+            if (Form_主窗体.forms._编辑._功能.日期时间.偏移计算)
+            {
+                this.uiComboBox_偏移_类型.SelectedIndex = (int)this._cfg.偏移类型;
+                this.uiTextBox_偏移值.IntValue = this._cfg.偏移值;
+            }
+
+            #endregion
+
+            #region 配置文件
+
+            if (Form_主窗体.forms._编辑._功能.日期时间.配置编码)
+            {
+                int index = this.uiComboBox_配置文件.Items.IndexOf(this._cfg.配置);
+                this.uiComboBox_配置文件.SelectedIndex = index;
+            }
+
+            #endregion
+
+
+            #region 日期
+
+            switch (this._cfg.types)
+            {
+                case _日期时间_._em_日期_.年4位:
+                    this.uiRadioButton_年4位.Checked = true; break;
+                case _日期时间_._em_日期_.年2位:
+                    this.uiRadioButton_年2位.Checked = true; break;
+                case _日期时间_._em_日期_.月:
+                    this.uiRadioButton_月.Checked = true; break;
+                case _日期时间_._em_日期_.日:
+                    this.uiRadioButton_日.Checked = true; break;
+                case _日期时间_._em_日期_.天:
+                    this.uiRadioButton_天.Checked = true; break;
+                case _日期时间_._em_日期_.周:
+                    this.uiRadioButton_周.Checked = true; break;
+                case _日期时间_._em_日期_.星期:
+                    this.uiRadioButton_星期.Checked = true; break;
+            }
+             
+            #endregion
+
+
+
+        }
+
+
+        void 语言()
+        {
             DateTime now = DateTime.Now;
             this.uiRadioButton_年4位.Text = $"{Language_.Get语言("年")} {now.ToString("yyyy")}";
             this.uiRadioButton_年2位.Text = $"{Language_.Get语言("年")} {now.ToString("yy")}";
@@ -48,15 +107,8 @@ namespace qfCode
             this.uiRadioButton_周.Text = $"{Language_.Get语言("周")} {new qfmain.日期时间_().Get_weeks(now).ToString("00")}";
             this.uiRadioButton_星期.Text = $"{Language_.Get语言("星期")} {new qfmain.日期时间_().Get_星期(now)}";
             this.uiRadioButton_天.Text = $"{Language_.Get语言("天")} {new qfmain.日期时间_().Get_days(now).ToString("000")}";
-
-            #endregion
-
-
-
-            show();
         }
-
-        #region 对外方法
+         
 
         /// <summary>
         /// 赋值
@@ -85,73 +137,10 @@ namespace qfCode
             }
 
         }
-
-        #endregion
-
-
-        #region 本地方法
-
-        void show()
-        {
-
-            switch (this._type)
-            {
-                case type_编辑._编辑类型_.添加:
-                    #region 添加  
-                    this.uiRadioButton_年4位.Checked = true;
-                    this.uiComboBox_偏移_类型.SelectedIndex = 0;
-                    this.uiTextBox_偏移值.IntValue = 1;
-                    this.uiComboBox_配置文件.SelectedIndex = this.uiComboBox_配置文件.Items.Count > 0 ? 0 : -1;
-
-                    #endregion
-                    break;
-                case type_编辑._编辑类型_.修改:
-
-                    #region 修改
-
-                    switch (this._cfg.types)
-                    {
-                        case _日期时间_._em_日期_.年4位:
-                            this.uiRadioButton_年4位.Checked = true; break;
-                        case _日期时间_._em_日期_.年2位:
-                            this.uiRadioButton_年2位.Checked = true; break;
-                        case _日期时间_._em_日期_.月:
-                            this.uiRadioButton_月.Checked = true; break;
-                        case _日期时间_._em_日期_.日:
-                            this.uiRadioButton_日.Checked = true; break;
-                        case _日期时间_._em_日期_.天:
-                            this.uiRadioButton_天.Checked = true; break;
-                        case _日期时间_._em_日期_.周:
-                            this.uiRadioButton_周.Checked = true; break;
-                        case _日期时间_._em_日期_.星期:
-                            this.uiRadioButton_星期.Checked = true; break;
-                    }
+ 
 
 
-                    if (Form_主窗体.forms._编辑._功能.日期时间.偏移计算)
-                    {
-                        this.uiComboBox_偏移_类型.SelectedIndex = (int)this._cfg.偏移类型;
-                        this.uiTextBox_偏移值.IntValue = this._cfg.偏移值;
-                    }
-
-                    if (Form_主窗体.forms._编辑._功能.日期时间.配置编码)
-                    {
-
-                        int index = this.uiComboBox_配置文件.Items.IndexOf(this._cfg.配置);
-                        this.uiComboBox_配置文件.SelectedIndex = index;
-                    }
-
-                    #endregion
-
-                    break;
-            }
-
-        }
-
-
-
-        #endregion
-
+ 
 
     }
 }

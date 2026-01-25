@@ -45,7 +45,11 @@ namespace qfCode
             public string 最大序号 { set; get; } = "9999";
             public int 递增量 { set; get; } = 1;
             public _序列号_._加工_ 加工 { set; get; } = new _序列号_._加工_();
-            public _序列号_._em_复位_ 复位方式 { set; get; } = _序列号_._em_复位_.按日;
+
+            /// <summary>
+            /// 复位方式
+            /// </summary>
+            public _序列号_._em_复位_ resets { set; get; } = _序列号_._em_复位_.按最大 ;
 
             public 序列号 Clone()
             {
@@ -58,7 +62,7 @@ namespace qfCode
                     最大序号 = this.最大序号,
                     递增量 = this.递增量,
                     加工 = this.加工,
-                    复位方式 = this.复位方式,
+                    resets = this.resets,
                 };
 
             }
@@ -136,7 +140,7 @@ namespace qfCode
             /// <summary>
             /// json参数
             /// </summary>
-            public string param { set; get; } = "";
+            public string param { set; get; } = "{}";
 
             public 关联对象 Clone()
             {

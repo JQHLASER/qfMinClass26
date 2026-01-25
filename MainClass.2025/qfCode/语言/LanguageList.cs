@@ -25,7 +25,7 @@ namespace qfLanguage
             new _language_Value_ ( keys, "修改","修改"),
             new _language_Value_ (keys,"未选中要操作的对象","未选中要操作的对象"),
             new _language_Value_ (keys,"确认删除?","确认删除?"),
-
+            new _language_Value_ ( keys, "对象","对象"),
 
 
 

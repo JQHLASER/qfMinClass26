@@ -29,72 +29,68 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.uiTextBox1 = new Sunny.UI.UITextBox();
+            this.uiTextBox_索引 = new Sunny.UI.UITextBox();
             this.ui_Label_81 = new Sunny.ui_Label_8(this.components);
-            this.uiTextBox4 = new Sunny.UI.UITextBox();
+            this.uiTextBox_分割符 = new Sunny.UI.UITextBox();
             this.ui_Label_85 = new Sunny.ui_Label_8(this.components);
             this.SuspendLayout();
             // 
-            // uiTextBox1
+            // uiTextBox_索引
             // 
-            this.uiTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.uiTextBox1.DoubleValue = 1D;
-            this.uiTextBox1.FillColor = System.Drawing.Color.White;
-            this.uiTextBox1.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiTextBox1.HasMinimum = true;
-            this.uiTextBox1.IntValue = 1;
-            this.uiTextBox1.Location = new System.Drawing.Point(248, 76);
-            this.uiTextBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.uiTextBox1.Maximum = 2147483647D;
-            this.uiTextBox1.Minimum = 1D;
-            this.uiTextBox1.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiTextBox1.Name = "uiTextBox1";
-            this.uiTextBox1.Padding = new System.Windows.Forms.Padding(5);
-            this.uiTextBox1.Size = new System.Drawing.Size(100, 26);
-            this.uiTextBox1.Style = Sunny.UI.UIStyle.Custom;
-            this.uiTextBox1.TabIndex = 22;
-            this.uiTextBox1.Text = "1";
-            this.uiTextBox1.Type = Sunny.UI.UITextBox.UIEditType.Integer;
-            this.uiTextBox1.填充颜色 = System.Drawing.Color.White;
+            this.uiTextBox_索引.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.uiTextBox_索引.DoubleValue = 1D;
+            this.uiTextBox_索引.FillColor = System.Drawing.Color.White;
+            this.uiTextBox_索引.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiTextBox_索引.HasMinimum = true;
+            this.uiTextBox_索引.IntValue = 1;
+            this.uiTextBox_索引.Location = new System.Drawing.Point(248, 63);
+            this.uiTextBox_索引.Margin = new System.Windows.Forms.Padding(0);
+            this.uiTextBox_索引.Maximum = 2147483647D;
+            this.uiTextBox_索引.Minimum = 1D;
+            this.uiTextBox_索引.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiTextBox_索引.Name = "uiTextBox_索引";
+            this.uiTextBox_索引.Padding = new System.Windows.Forms.Padding(5);
+            this.uiTextBox_索引.Size = new System.Drawing.Size(100, 26);
+            this.uiTextBox_索引.TabIndex = 22;
+            this.uiTextBox_索引.Text = "1";
+            this.uiTextBox_索引.Type = Sunny.UI.UITextBox.UIEditType.Integer;
+            this.uiTextBox_索引.填充颜色 = System.Drawing.Color.White;
             // 
             // ui_Label_81
             // 
             this.ui_Label_81.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.ui_Label_81.ForeColor = System.Drawing.Color.Gray;
-            this.ui_Label_81.Location = new System.Drawing.Point(42, 76);
+            this.ui_Label_81.Location = new System.Drawing.Point(42, 63);
             this.ui_Label_81.Name = "ui_Label_81";
             this.ui_Label_81.Size = new System.Drawing.Size(200, 26);
-            this.ui_Label_81.Style = Sunny.UI.UIStyle.Custom;
             this.ui_Label_81.TabIndex = 21;
             this.ui_Label_81.Text = "索引";
             this.ui_Label_81.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // uiTextBox4
+            // uiTextBox_分割符
             // 
-            this.uiTextBox4.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.uiTextBox4.FillColor = System.Drawing.Color.White;
-            this.uiTextBox4.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiTextBox4.HasMinimum = true;
-            this.uiTextBox4.Location = new System.Drawing.Point(248, 45);
-            this.uiTextBox4.Margin = new System.Windows.Forms.Padding(0);
-            this.uiTextBox4.Maximum = 2147483647D;
-            this.uiTextBox4.Minimum = 0D;
-            this.uiTextBox4.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiTextBox4.Name = "uiTextBox4";
-            this.uiTextBox4.Padding = new System.Windows.Forms.Padding(5);
-            this.uiTextBox4.Size = new System.Drawing.Size(100, 26);
-            this.uiTextBox4.Style = Sunny.UI.UIStyle.Custom;
-            this.uiTextBox4.TabIndex = 20;
-            this.uiTextBox4.填充颜色 = System.Drawing.Color.White;
+            this.uiTextBox_分割符.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.uiTextBox_分割符.FillColor = System.Drawing.Color.White;
+            this.uiTextBox_分割符.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiTextBox_分割符.HasMinimum = true;
+            this.uiTextBox_分割符.Location = new System.Drawing.Point(248, 32);
+            this.uiTextBox_分割符.Margin = new System.Windows.Forms.Padding(0);
+            this.uiTextBox_分割符.Maximum = 2147483647D;
+            this.uiTextBox_分割符.Minimum = 0D;
+            this.uiTextBox_分割符.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiTextBox_分割符.Name = "uiTextBox_分割符";
+            this.uiTextBox_分割符.Padding = new System.Windows.Forms.Padding(5);
+            this.uiTextBox_分割符.Size = new System.Drawing.Size(100, 26);
+            this.uiTextBox_分割符.TabIndex = 20;
+            this.uiTextBox_分割符.填充颜色 = System.Drawing.Color.White;
             // 
             // ui_Label_85
             // 
             this.ui_Label_85.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.ui_Label_85.ForeColor = System.Drawing.Color.Gray;
-            this.ui_Label_85.Location = new System.Drawing.Point(42, 45);
+            this.ui_Label_85.Location = new System.Drawing.Point(42, 32);
             this.ui_Label_85.Name = "ui_Label_85";
             this.ui_Label_85.Size = new System.Drawing.Size(200, 26);
-            this.ui_Label_85.Style = Sunny.UI.UIStyle.Custom;
             this.ui_Label_85.TabIndex = 19;
             this.ui_Label_85.Text = "分割符";
             this.ui_Label_85.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -102,26 +98,28 @@
             // Control_关联对象_按字符
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.Controls.Add(this.uiTextBox1);
+            this.Controls.Add(this.uiTextBox_索引);
             this.Controls.Add(this.ui_Label_81);
-            this.Controls.Add(this.uiTextBox4);
+            this.Controls.Add(this.uiTextBox_分割符);
             this.Controls.Add(this.ui_Label_85);
+            this.FillColor = System.Drawing.SystemColors.Control;
             this.Name = "Control_关联对象_按字符";
             this.Padding = new System.Windows.Forms.Padding(5);
             this.RadiusSides = Sunny.UI.UICornerRadiusSides.None;
             this.RectSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.None;
-            this.Size = new System.Drawing.Size(580, 150);
-            this.Text = "文本";
-            this.TitleHeight = 0;
+            this.Size = new System.Drawing.Size(580, 120);
+            this.Style = Sunny.UI.UIStyle.Custom;
+            this.StyleCustomMode = true;
+            this.Text = "";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Sunny.UI.UITextBox uiTextBox1;
+        private Sunny.UI.UITextBox uiTextBox_索引;
         private Sunny.ui_Label_8 ui_Label_81;
-        private Sunny.UI.UITextBox uiTextBox4;
+        private Sunny.UI.UITextBox uiTextBox_分割符;
         private Sunny.ui_Label_8 ui_Label_85;
     }
 }

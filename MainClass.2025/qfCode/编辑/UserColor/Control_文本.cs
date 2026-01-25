@@ -23,11 +23,28 @@ namespace qfCode
             this.uiRadioButton_文本.ValueChanged += (s, e) => On_选中();
             this.uiRadioButton_换行.ValueChanged += (s, e) => On_选中();
             this.uiRadioButton_空格.ValueChanged += (s, e) => On_选中();
-      
-            show();
+             
+
+            #region 文本
+
+            switch (this._cfg.types)
+            {
+                case _文本_._em_文本_.换行:
+                    this.uiRadioButton_换行.Checked = true;
+                    break;
+                case _文本_._em_文本_.空格:
+                    this.uiRadioButton_空格.Checked = true;
+                    break;
+                default:
+                    this.uiRadioButton_文本.Checked = true;
+                    break;
+            }
+
+            #endregion
+
         }
 
-        #region 对外方法
+
 
         /// <summary>
         /// 赋值
@@ -37,47 +54,11 @@ namespace qfCode
             this._cfg.内容 = this.uiTextBox1.Text; 
         }
 
-        #endregion
+      
 
 
         #region 本地方法
-
-        void show()
-        {
-            switch (this._type)
-            {
-                case type_编辑._编辑类型_.添加:
-                    #region 添加 
-
-                    this.uiTextBox1.Clear();
-                    this.uiRadioButton_文本.Checked = true;
-
-                    #endregion
-                    break;
-                case type_编辑._编辑类型_.修改:
-
-                    #region 修改
-
-                    switch (this._cfg.types )
-                    {
-                        case _文本_._em_文本_.换行:
-                            this.uiRadioButton_换行.Checked = true; 
-                            break;
-                        case _文本_._em_文本_.空格:
-                            this.uiRadioButton_空格.Checked = true; 
-                            break;
-                        default:
-                            this.uiRadioButton_文本.Checked = true; 
-                            break;
-                    }
-
-                    #endregion
-
-                    break;
-            }
-
-        }
-
+         
 
         void On_选中()
         {

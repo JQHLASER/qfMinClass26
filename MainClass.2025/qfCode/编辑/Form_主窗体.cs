@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,7 +18,7 @@ namespace qfCode
         internal static Form_主窗体 forms;
         internal _文件_属性_ _文件信息 = new _文件_属性_();
         internal int _编辑对象索引 = -1;
-      
+
         public Form_主窗体(编辑_ 编辑)
         {
             InitializeComponent();
@@ -101,7 +102,6 @@ namespace qfCode
         }
 
 
-
         #region 对象
 
         void On_对象_添加修改(type_编辑._编辑类型_ 类型)
@@ -120,9 +120,16 @@ namespace qfCode
                             {
                                 对象名 = forms._对象名称,
                             };
-                            new 上下移动().在指定处插入(this._文件信息.对象, objc, index0 + 1);
-                            new 上下移动().在指定处插入(this.uiListBox_对象列表, forms._对象名称, index0 + 1);
-
+                            if (index0 < 0)
+                            {
+                                this._文件信息.对象.Add(objc);
+                                this.uiListBox_对象列表.Items.Add(forms._对象名称);
+                            }
+                            else
+                            {
+                                new 上下移动().在指定处插入(this._文件信息.对象, objc, index0 + 1);
+                                new 上下移动().在指定处插入(this.uiListBox_对象列表, forms._对象名称, index0 + 1);
+                            }
                         }
                     }
                     #endregion
@@ -165,7 +172,6 @@ namespace qfCode
 
         #endregion
 
-
         #region 元素
 
         void On_元素_添加修改(type_编辑._编辑类型_ 类型)
@@ -184,8 +190,16 @@ namespace qfCode
                         if (forms.ShowDialog() == DialogResult.OK)
                         {
                             int index0 = this.uiListBox_元素列表.SelectedIndex;
-                            new 上下移动().在指定处插入(this._文件信息.对象[this._编辑对象索引].元素, forms._json元素信息, index0 + 1);
-                            new 上下移动().在指定处插入(this.uiListBox_元素列表, forms._json元素信息, index0 + 1);
+                            if (index0 < 0)
+                            {
+                                this._文件信息.对象[this._编辑对象索引].元素.Add(forms._json元素信息);
+                                this.uiListBox_元素列表.Items.Add(forms._json元素信息);
+                            }
+                            else
+                            {
+                                new 上下移动().在指定处插入(this._文件信息.对象[this._编辑对象索引].元素, forms._json元素信息, index0 + 1);
+                                new 上下移动().在指定处插入(this.uiListBox_元素列表, forms._json元素信息, index0 + 1);
+                            }
                         }
                     }
                     #endregion
@@ -241,7 +255,6 @@ namespace qfCode
 
         #endregion
 
-
         #region 编辑对象显示信息
 
         void 显示编辑对象信息()
@@ -256,7 +269,7 @@ namespace qfCode
 
 
             StringBuilder sb = new StringBuilder();
-            sb.Append($"{objc.对象名}");
+            sb.Append($"{Language_.Get语言("对象")}: {objc.对象名}");
 
             if (this._编辑._功能.对象属性.防重 && objc.属性.防重)
             {
@@ -304,8 +317,6 @@ namespace qfCode
         }
 
         #endregion
-
-
 
         #region Err
 
