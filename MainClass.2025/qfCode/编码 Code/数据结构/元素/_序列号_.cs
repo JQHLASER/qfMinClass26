@@ -38,18 +38,7 @@ namespace qfCode
             强制递减,
             加工数量递增,
         }
-        public enum _em_计算类型_
-        {
-            /// <summary>
-            /// 加工时生成
-            /// </summary>
-            加工递增,
-            /// <summary>
-            /// 测试时生成,并判断复位
-            /// </summary>
-            测试并判断复位,
-
-        }
+      
 
         public class _加工_
         {

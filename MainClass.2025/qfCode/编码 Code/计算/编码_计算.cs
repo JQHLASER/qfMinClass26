@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 
 
@@ -17,6 +18,8 @@ namespace qfCode
             this._sys = _sys_;
         }
 
+        #region 计算
+
         internal (bool s, string m, string v) 计算(_元素_.文本 info)
         {
             bool rt = true;
@@ -24,7 +27,7 @@ namespace qfCode
             string msgErr = string.Empty;
             try
             {
-                switch (info.types )
+                switch (info.types)
                 {
                     case _文本_._em_文本_.文本:
                         结果 = info.内容;
@@ -196,7 +199,7 @@ namespace qfCode
         /// <summary>
         /// <para>编码文件 : 不含路径,但含后缀</para>
         /// </summary> 
-        internal (bool s, string m, string v) 计算(_元素_.日期 info, DateTime 时间, string 编码文件)
+        internal (bool s, string m, string v) 计算(_元素_.日期 info, DateTime 时间)
         {
             bool rt = true;
             string msgErr = string.Empty;
@@ -206,8 +209,8 @@ namespace qfCode
             try
             {
 
-                DateTime nows =new 计算_日期时间 ().  偏移计算( this._sys ,时间, info);
-                switch (info.types )
+                DateTime nows = new 计算_日期时间().偏移计算(this._sys, 时间, info);
+                switch (info.types)
                 {
                     case _日期时间_._em_日期_.年4位:
                         结果 = nows.ToString("yyyy").ToString();
@@ -239,7 +242,7 @@ namespace qfCode
                         break;
                 }
 
-                结果 = this._sys._文件类.Get_日期时间(编码文件, $"{编码类型}", 结果);
+                结果 = this._sys._文件类.Get_日期时间(info.配置, $"{编码类型}", 结果);
 
             }
             catch (Exception ex)
@@ -253,7 +256,7 @@ namespace qfCode
         /// <summary>
         /// <para>编码文件 : 不含路径,但含后缀</para>
         /// </summary> 
-        internal (bool s, string m, string v) 计算(_元素_.时间 info, DateTime 时间, string 编码文件)
+        internal (bool s, string m, string v) 计算(_元素_.时间 info, DateTime 时间)
         {
             bool rt = true;
             string msgErr = string.Empty;
@@ -261,7 +264,7 @@ namespace qfCode
             _日期时间_._em_编码类型_ 编码类型 = _日期时间_._em_编码类型_.时;
             try
             {
-                switch (info.types )
+                switch (info.types)
                 {
                     case _日期时间_._em_时间_.时24:
                         结果 = 时间.ToString("HH").ToString();
@@ -285,9 +288,9 @@ namespace qfCode
 
                 }
 
-                if (info.types  != _日期时间_._em_时间_.毫秒)
+                if (info.types != _日期时间_._em_时间_.毫秒)
                 {
-                    结果 = this._sys._文件类.Get_日期时间(编码文件, $"{编码类型}", 结果);
+                    结果 = this._sys._文件类.Get_日期时间(info.配置, $"{编码类型}", 结果);
                 }
 
             }
@@ -358,7 +361,7 @@ namespace qfCode
                         结果 = rt按首尾.v;
 
                         #endregion
-                         
+
                         break;
                 }
 
@@ -367,14 +370,88 @@ namespace qfCode
             {
                 msgErr = ex.Message;
                 rt = false;
-            } 
+            }
             return (rt, msgErr, 结果);
         }
 
-         
+
+        #endregion
+
+
+        #region 计算
+
+        internal (bool s, string m, string v) 文本(string jsonStr)
+        {
+            var rt = new Json序列化().转成Json<_元素_.文本>(jsonStr);
+            if (!rt.s)
+            {
+                return (rt.s, rt.m, "");
+            }
+            return new 编码_计算(this._sys).计算(rt.cfg);
+        }
+
+        internal (bool s, string m, string v) 序列号(ref string jsonStr, _序列号_._em_操作_ 操作, DateTime 时间, DateTime 最后一次加工时间, _班次_[] 班次结构)
+        {
+            var rt = new Json序列化().转成Json<_元素_.序列号>(jsonStr);
+            if (!rt.s)
+            {
+                return (rt.s, rt.m, "");
+            }
+            _元素_.序列号 cfg = rt.cfg;
+            var rtSn = new 编码_计算(this._sys).计算(ref cfg, 操作, 时间, 最后一次加工时间, 班次结构); 
+            jsonStr = new Json序列化().转成String<_元素_.序列号>(cfg);
+            return rtSn;
+        }
+
+        internal (bool s, string m, string v) 时间(string jsonStr, DateTime 时间)
+        {
+            var rt = new Json序列化().转成Json<_元素_.时间>(jsonStr);
+            if (!rt.s)
+            {
+                return (rt.s, rt.m, "");
+            }
+            return new 编码_计算(this._sys).计算(rt.cfg, 时间);
+        }
+
+        internal (bool s, string m, string v) 日期(string jsonStr, DateTime 时间)
+        {
+            var rt = new Json序列化().转成Json<_元素_.日期>(jsonStr);
+            if (!rt.s)
+            {
+                return (rt.s, rt.m, "");
+            }
+            return new 编码_计算(this._sys).计算(rt.cfg, 时间);
+        }
+
+        internal (bool s, string m, string v) 班次(string jsonStr, _班次_[] info, DateTime 时间)
+        {
+            // var rt = new Json序列化().转成Json<_元素_.班次>(jsonStr);
+            return new 编码_计算(this._sys).计算(info, 时间);
+        }
+
+        internal (bool s, string m, string v) 关联对象(string jsonStr, List<_对象_内容_> lst)
+        {
+            var rt = new Json序列化().转成Json<_元素_.关联对象>(jsonStr); 
+            if (!rt.s )
+            {
+                return (rt.s, rt.m, "");
+            }
+            string v = "";
+            foreach (var s in lst)
+            {
+                if (s.对象.对象名 == rt.cfg.对象)
+                {
+                    v = s.Value;
+                    break;
+                }
+            } 
+            return new 编码_计算(this._sys).计算(rt.cfg, v);
+        }
 
 
 
+
+        #endregion
 
     }
 }
