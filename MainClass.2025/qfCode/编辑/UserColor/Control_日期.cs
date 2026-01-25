@@ -20,7 +20,7 @@ namespace qfCode
             this._type = type;
             this._cfg = cfg.Clone();
 
-            this.uiComboBox_配置文件.DataSource = new 文件目录_本地(Form_主窗体.forms._编辑).Get配置文件_日期时间();
+            this.uiComboBox_配置文件.DataSource = new 编辑交互_本地(Form_主窗体.forms._编辑).Get配置文件_日期时间();
             #region 偏移
 
             string[] py = Enum.GetNames(typeof(_日期时间_._em_偏移类型_));

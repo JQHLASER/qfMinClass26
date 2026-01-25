@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace qfCode 
 {
-    public class 文件目录_本地 : Iworker_文件目录
+    public class 编辑交互_本地 : Iworker_编辑交互
     {
         编辑_ _编辑;
-        public 文件目录_本地(编辑_ 编辑)
+        public 编辑交互_本地(编辑_ 编辑)
         {
             this._编辑 = 编辑;
         }
@@ -18,7 +18,6 @@ namespace qfCode
         {
             return this._编辑._编码._文件类.Get目录_日期时间();
         }
-
         public string[] Get配置文件_班次()
         {
             return this._编辑._编码._文件类.Get目录_班次();
@@ -27,6 +26,17 @@ namespace qfCode
         {
             return this._编辑._编码._文件类.Get目录_配方();
         }
+
+        public (bool s, string m, string v) 计算_对象(_文件_属性_ files, string 对象名)
+        {
+            (bool s, string m, string v) rt = (true, "", "");
+
+            this._编辑._编码.计算编码_对象();
+
+
+            return rt;
+        }
+
 
 
     }

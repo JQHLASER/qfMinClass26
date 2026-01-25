@@ -10,17 +10,17 @@ namespace qfCode
     /// <summary>
     /// 编辑
     /// </summary>
-    internal class 文件目录_统一接口
+    internal class 编辑交互_统一接口
     {
-        Iworker_文件目录 _Iworker;
+        Iworker_编辑交互 _Iworker;
 
 
-        public 文件目录_统一接口(type_编辑._文件类型_ 文件类型, 编辑_ 编辑)
+        public 编辑交互_统一接口(type_编辑._文件类型_ 文件类型, 编辑_ 编辑)
         {
             switch (文件类型)
             {
                 case type_编辑._文件类型_.本地:
-                    this._Iworker = new 文件目录_本地(编辑); break;
+                    this._Iworker = new 编辑交互_本地(编辑); break;
             }
         }
 

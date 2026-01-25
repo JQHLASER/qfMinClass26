@@ -139,12 +139,10 @@
       <DependentUpon>Form_对象.cs</DependentUpon>
     </Compile>
     <Compile Include="编辑\上下移动.cs" />
-    <Compile Include="编辑\文件\子接口\Iworker_文件目录.cs" />
-    <Compile Include="编辑\文件\文件目录_统一接口.cs" />
-    <Compile Include="编辑\文件\子接口\文件目录_本地.cs" />
+    <Compile Include="编辑\交互\子接口\Iworker_编辑交互.cs" />
+    <Compile Include="编辑\交互\编辑交互_统一接口.cs" />
+    <Compile Include="编辑\交互\子接口\编辑交互_本地.cs" />
     <Compile Include="编辑\编辑_.cs" />
-    <Compile Include="编辑\计算\Iworker_计算_编辑.cs" />
-    <Compile Include="编辑\计算\计算_本地_编辑.cs" />
     <Compile Include="语言\Language_.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="编码 Code\Type.cs" />
