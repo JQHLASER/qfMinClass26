@@ -66,6 +66,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="V2026\Err.cs" />
     <Compile Include="V2026\编码 Code\计算\编码_计算.cs" />
     <Compile Include="V2026\编码 Code\计算\计算_关联对象.cs" />
     <Compile Include="V2026\编码 Code\计算\计算_序列号.cs" />
@@ -142,11 +143,11 @@
     <Compile Include="V2026\编辑\交互\子接口\Iworker_编辑交互.cs" />
     <Compile Include="V2026\编辑\交互\编辑交互_统一接口.cs" />
     <Compile Include="V2026\编辑\交互\子接口\编辑交互_本地.cs" />
-    <Compile Include="V2026\编辑\编辑_.cs" />
+    <Compile Include="V2026\主程序\编辑_.cs" />
     <Compile Include="语言\Language_.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="V2026\编码 Code\Type.cs" />
-    <Compile Include="V2026\编码 Code\主程序\编码_.cs" />
+    <Compile Include="V2026\主程序\编码_.cs" />
     <Compile Include="V2026\功能\_功能_.cs" />
     <Compile Include="V2026\功能\_功能_结构_.cs" />
     <Compile Include="V2026\编码 Code\数据结构\对象\_元素_.cs" />
@@ -159,7 +160,7 @@
     <Compile Include="V2026\编码 Code\数据结构\元素\_班次_.cs" />
     <Compile Include="V2026\编码 Code\数据结构\对象\_对象_.cs" />
     <Compile Include="V2026\编码 Code\数据结构\_配方文件_属性_.cs" />
-    <Compile Include="V2026\编码 Code\主程序\_文件夹_.cs" />
+    <Compile Include="V2026\主程序\_文件夹_.cs" />
     <Compile Include="V2026\编码 Code\文件\读写\文件类\ini文件_.cs" />
     <Compile Include="V2026\编码 Code\文件\读写\Iwork_配方文件.cs" />
     <Compile Include="V2026\编码 Code\常量.cs" />
