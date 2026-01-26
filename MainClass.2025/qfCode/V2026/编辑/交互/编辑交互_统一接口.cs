@@ -40,9 +40,8 @@ namespace qfCode
         }
 
         public (bool s, string m, string v) 计算编码_对象(_配方文件_属性_ 配方, DateTime dates, string 对象名)
-        {
-            (bool s, string m, string v) rt = _Iworker.计算编码_对象(配方, dates, 对象名);
-            return rt;
+        { 
+            return _Iworker.计算编码_对象(配方, dates, 对象名); ;
         }
 
 

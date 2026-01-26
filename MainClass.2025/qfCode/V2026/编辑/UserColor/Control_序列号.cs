@@ -80,7 +80,7 @@ namespace qfCode
         /// <summary>
         /// 赋值
         /// </summary>
-        public void GetCfg()
+        public bool GetCfg()
         {
             #region  序列号类型
 
@@ -116,6 +116,33 @@ namespace qfCode
             this._cfg.递增量 = this.uiTextBox_递增.IntValue;
 
             #endregion
+
+
+            var rt = new 计算_序列号().序列号_转换成可计算值(this._cfg, out 计算_序列号._fz_序列号_ cfgFz);
+            if (!rt.s)
+            {
+                MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (cfgFz.当前序号 < cfgFz.开始序号)
+            {
+                MessageBox.Show(Language_.Get语言("当前序列号不能小于开始序列号"));
+                return false;
+            }
+            else if (cfgFz.当前序号 > cfgFz.最大序号)
+            {
+                MessageBox.Show(Language_.Get语言("当前序列号不能大于最大序列号"));
+                return false;
+            }
+            if (cfgFz.开始序号 > cfgFz.最大序号)
+            {
+                MessageBox.Show(Language_.Get语言("开始序列号不能大于最大序列号"));
+                return false;
+            }
+
+
+
+            return true;
         }
 
         #endregion

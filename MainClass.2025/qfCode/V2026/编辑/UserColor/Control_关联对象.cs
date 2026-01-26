@@ -1,4 +1,5 @@
 ﻿using Sunny;
+using Sunny.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -88,13 +90,15 @@ namespace qfCode
             #endregion
 
         }
-         
+
 
         /// <summary>
         /// 赋值
         /// </summary>
-        public void GetCfg()
+        public bool GetCfg()
         {
+
+
             #region 参数...param
 
             string jsonStr = "{}";
@@ -129,6 +133,7 @@ namespace qfCode
 
             #endregion
 
+
             this._cfg.param = jsonStr;
             this._cfg.types = this.uiRadioButton_全部.Checked ? _关联对象_._em_类型_.全部 :
                               this.uiRadioButton_位.Checked ? _关联对象_._em_类型_.按位 :
@@ -137,6 +142,28 @@ namespace qfCode
                               _关联对象_._em_类型_.全部;
             this._cfg.对象 = this.uiComboBox_对象.SelectedText;
 
+
+
+            if (this._cfg.types == _关联对象_._em_类型_.按字符 && string.IsNullOrEmpty(this._cfg_按字符.分割符))
+            {
+                MessageBox.Show(Language_.Get语言("请输入分割符"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            else if (this._cfg.types == _关联对象_._em_类型_.按首尾 && string.IsNullOrEmpty(this._cfg_按首尾.首))
+            {
+
+                MessageBox.Show(Language_.Get语言("请输入首分割符"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            else if (this._cfg.types == _关联对象_._em_类型_.按首尾 && string.IsNullOrEmpty(this._cfg_按首尾.尾))
+            {
+
+                MessageBox.Show(Language_.Get语言("请输入尾分割符"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+
+            return true;
         }
 
 

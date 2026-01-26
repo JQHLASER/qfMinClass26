@@ -50,7 +50,8 @@ namespace qfCode
                     {
                         if (cfg_按位.开始位 <= 0)
                         {
-                            结果 = 关联的内容;
+                            msg = Language_.Get语言("索引超出范围");
+                            rt = false;
                         }
                         else
                         {
@@ -126,7 +127,12 @@ namespace qfCode
                     try
                     {
                         string[] dataBeff = 关联的内容.Split(new string[] { cfg_按字符.分割符 }, StringSplitOptions.None);
-                        if (cfg_按字符.索引 >= dataBeff.Length)
+                        if (cfg_按字符.索引 <= 0)
+                        {
+                            rt = false;
+                            msg = Language_.Get语言("索引超出范围");
+                        }
+                        else if (cfg_按字符.索引 >= dataBeff.Length)
                         {
                             结果 = dataBeff[dataBeff.Length - 1];
                         }
@@ -193,6 +199,11 @@ namespace qfCode
                         if (data.Length == 0)
                         {
                             结果 = "";
+                        }
+                        else if (cfg_按首尾.索引 <= 0)
+                        {
+                            rt = false;
+                            Language_.Get语言("索引超出范围");
                         }
                         else if (cfg_按首尾.索引 >= data.Length)
                         {

@@ -32,32 +32,72 @@ namespace qfCode
 
 
 
-        internal void 序列号_转换成可计算值(_元素_.序列号 info, out _fz_序列号_ cfgFZ)
+        internal (bool s, string m) 序列号_转换成可计算值(_元素_.序列号 info, out _fz_序列号_ cfgFZ)
         {
             cfgFZ = new _fz_序列号_();
             cfgFZ.递增量 = info.递增量;
             cfgFZ.每个加工数量 = info.加工.数量;
             cfgFZ.当前加工计数 = info.加工.计数;
 
+            bool rt = true;
+            string msg = "";
+            if (info.types == _序列号_._em_类型_.十进制)
+            {
+                #region 十进制
 
-            if (info.types  == _序列号_._em_类型_.十进制)
-            {
-                cfgFZ.当前序号 = long.Parse(info.当前序号);
-                cfgFZ.开始序号 = long.Parse(info.开始序号);
-                cfgFZ.最大序号 = long.Parse(info.最大序号);
+                try
+                {
+                    cfgFZ.当前序号 = long.Parse(info.当前序号);
+                    cfgFZ.开始序号 = long.Parse(info.开始序号);
+                    cfgFZ.最大序号 = long.Parse(info.最大序号);
+                }
+                catch (Exception ex)
+                {
+                    rt = false;
+                    msg = ex.Message;
+                }
+
+                #endregion
             }
-            else if (info.types  == _序列号_._em_类型_.十六进制HEX || info.types  == _序列号_._em_类型_.十六进制hex)
+            else if (info.types == _序列号_._em_类型_.十六进制HEX || info.types == _序列号_._em_类型_.十六进制hex)
             {
-                cfgFZ.当前序号 = new qfmain.进制().十六进制To十进制(info.当前序号);
-                cfgFZ.开始序号 = new qfmain.进制().十六进制To十进制(info.开始序号);
-                cfgFZ.最大序号 = new qfmain.进制().十六进制To十进制(info.最大序号);
+                #region 十六进制
+
+                try
+                {
+                    cfgFZ.当前序号 = new qfmain.进制().十六进制To十进制(info.当前序号);
+                    cfgFZ.开始序号 = new qfmain.进制().十六进制To十进制(info.开始序号);
+                    cfgFZ.最大序号 = new qfmain.进制().十六进制To十进制(info.最大序号);
+                }
+                catch (Exception ex)
+                {
+                    rt = false;
+                    msg = ex.Message;
+                }
+
+                #endregion
             }
             //else if (info.类型 == _序列号_._em_类型_.三十六进制)
+            //{
+            #region 三十六进制
+
+            //try
             //{
             //    序号结构.当前序号 = new 进制_自定义().i36ToInt(info.当前序号);
             //    序号结构.开始序号 = new 进制_自定义().i36ToInt(info.开始序号);
             //    序号结构.最大序号 = new 进制_自定义().i36ToInt(info.最大序号);
             //}
+            //catch (Exception ex )
+            //{
+            //    rt = false;
+            //    msg = ex.Message;
+            //}
+
+            #endregion
+            //}
+
+
+            return (rt, msg); 
         }
 
         internal void 序列号_转换成最终值(ref _元素_.序列号 info, _fz_序列号_ cfgFZ)
@@ -72,7 +112,7 @@ namespace qfCode
             }
             else
             {
-                switch (info.types )
+                switch (info.types)
                 {
                     case _序列号_._em_类型_.十进制:
                         结果 = cfgFZ.当前序号.ToString().PadLeft(位数, '0');

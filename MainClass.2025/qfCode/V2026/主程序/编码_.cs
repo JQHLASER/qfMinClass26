@@ -86,7 +86,7 @@ namespace qfCode
         /// <summary>
         /// Is计算完保存  =true:计算完成后保存,=false:不保存,在一次性计算多次时,就不需要马上保存
         /// </summary> 
-        public (bool s, string m, List<_对象_内容_> lstObject) 计算编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime dates, _em_计算类型_ 计算类型, bool Is计算完保存 = false)
+        public (bool s, string m,   List<_对象_内容_> lstObject) 计算编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime dates, _em_计算类型_ 计算类型, bool Is计算完保存 = false)
         {
             return 计算_编码(配方文件名, 配方文件, dates, 计算类型, Is计算完保存, "");
         }
@@ -97,7 +97,7 @@ namespace qfCode
         /// <para>对象名 : 不为空时,计算指定对象及之前的内容</para>
         /// </summary> 
         public (bool s, string m, List<_对象_内容_> lstObject) 计算编码_对象(_配方文件_属性_ 配方文件, DateTime dates, string 对象名)
-        {
+        { 
             return 计算_编码("", 配方文件, dates, _em_计算类型_.测试, false, 对象名);
         }
 
@@ -161,11 +161,12 @@ namespace qfCode
         /// <para>Is计算完保存  =true:计算完成后保存,=false:不保存,在一次性计算多次时,就不需要马上保存</para>
         /// <para>对象名 : 不为空时,计算指定对象及之前的内容</para>
         /// </summary> 
-        private (bool s, string m, List<_对象_内容_> lstObject) 计算_编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime dates, _em_计算类型_ 计算类型, bool Is计算完保存, string 对象名)
+        private (bool s, string m,  List<_对象_内容_> lstObject) 计算_编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime dates, _em_计算类型_ 计算类型, bool Is计算完保存, string 对象名)
         {
             List<_对象_内容_> lstObject = new List<_对象_内容_>();
             bool rt = true;
             string msg = string.Empty;
+           
 
             //深拷贝出来一份,用来防止源文件被意外修改
             _配方文件_属性_ 配方 = 配方文件.Clone();
@@ -176,13 +177,15 @@ namespace qfCode
             for (int i = 0; i < 配方.对象.Count; i++)
             {
                 _对象_ s = 配方.对象[i].Clone();
-                string ObjectName = s.对象名;
-                string v = "";
+                string ObjectName = s.对象名; 
+                StringBuilder sb = new StringBuilder();
+
 
                 #region 元素计算
 
                 for (global::System.Int32 j = 0; j < s.元素.Count; j++)
                 {
+                    string v = "";
                     string y = s.元素[j];
                     var rtType = new Json序列化().转成Json<_元素_.工具>(y);
                     _元素_.工具 type = rtType.cfg;
@@ -290,6 +293,7 @@ namespace qfCode
                             break;
                     }
 
+                    sb.Append(v);
                 }
 
                 #endregion
@@ -301,11 +305,11 @@ namespace qfCode
                 lstObject.Add(new _对象_内容_
                 {
                     对象 = s,
-                    Value = v,
+                    Value = sb .ToString (),
                 });
 
                 #endregion
-
+                 
 
                 #region 到指定对象后退出 
 
@@ -316,6 +320,8 @@ namespace qfCode
                 }
 
                 #endregion
+
+                 
             }
 
             #region 正常时,修改源配方,目的是为了保存时,保存最新的配方信息

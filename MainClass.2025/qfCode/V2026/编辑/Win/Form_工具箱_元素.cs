@@ -37,7 +37,7 @@ namespace qfCode
 
             工具箱_初始化();
 
-  
+
             this.uiButton_No.Click += (s, e) =>
             {
                 this.Close();
@@ -49,38 +49,48 @@ namespace qfCode
                 bool isOk = false;
                 if (this.uiradioButton_文本.Checked && this.con_文本 != null)
                 {
-                    this.con_文本.GetCfg();
-                    this._json元素信息 = new Json序列化().转成String(this.con_文本._cfg);
-                    isOk = true;
+                    isOk = this.con_文本.GetCfg();
+                    if (isOk)
+                    {
+                        this._json元素信息 = new Json序列化().转成String(this.con_文本._cfg);
+                    }
+
                 }
                 else if (this.uiradioButton_序列号.Checked && this.con_序列号 != null)
                 {
-                    this.con_序列号.GetCfg();
-                    this._json元素信息 = new Json序列化().转成String(this.con_序列号._cfg);
-                    isOk = true;
+                    isOk = this.con_序列号.GetCfg();
+                    if (isOk)
+                    {
+                        this._json元素信息 = new Json序列化().转成String(this.con_序列号._cfg);
+                    }
                 }
                 else if (this.uiradioButton_日期.Checked && this.con_日期 != null)
                 {
-                    this.con_日期.GetCfg();
-                    this._json元素信息 = new Json序列化().转成String(this.con_日期._cfg);
-                    isOk = true;
+                    isOk = this.con_日期.GetCfg(); if (isOk)
+                    {
+                        this._json元素信息 = new Json序列化().转成String(this.con_日期._cfg);
+                    }
                 }
                 else if (this.uiradioButton_时间.Checked && this.con_时间 != null)
                 {
-                    this.con_时间.GetCfg();
-                    this._json元素信息 = new Json序列化().转成String(this.con_时间._cfg);
-                    isOk = true;
+                    isOk = this.con_时间.GetCfg();
+                    if (isOk)
+                    {
+                        this._json元素信息 = new Json序列化().转成String(this.con_时间._cfg);
+                    }
                 }
                 else if (this.uiradioButton_关联对象.Checked && this.con_关联对象 != null)
                 {
-                    this.con_关联对象.GetCfg();
-                    this._json元素信息 = new Json序列化().转成String(this.con_关联对象._cfg);
-                    isOk = true;
+                    isOk = this.con_关联对象.GetCfg();
+                    if (isOk)
+                    {
+                        this._json元素信息 = new Json序列化().转成String(this.con_关联对象._cfg);
+                    }
                 }
                 else if (this.uiradioButton_班次.Checked)
                 {
-                    this._json元素信息 = new Json序列化().转成String(this._cfg_班次); 
-                    isOk = true; 
+                    this._json元素信息 = new Json序列化().转成String(this._cfg_班次);
+                    isOk = true;
                 }
 
                 if (isOk)
@@ -119,7 +129,7 @@ namespace qfCode
                     this.con_序列号 = null;
                     this.con_序列号 = new Control_序列号(this._编辑类型, this._cfg_序列号);
                     this.panel_控件.Controls.Clear();
-                    this.panel_控件.Controls.Add(this.con_序列号); 
+                    this.panel_控件.Controls.Add(this.con_序列号);
                 }
             };
             #endregion
@@ -321,7 +331,7 @@ namespace qfCode
 
         }
 
-         
+
 
         #region 工具箱及参数
 

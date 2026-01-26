@@ -19,11 +19,11 @@ namespace qfCode
             InitializeComponent();
             this._type = type;
             this._cfg = cfg.Clone();
-            
+
             this.uiRadioButton_文本.ValueChanged += (s, e) => On_选中();
             this.uiRadioButton_换行.ValueChanged += (s, e) => On_选中();
             this.uiRadioButton_空格.ValueChanged += (s, e) => On_选中();
-             
+
 
             #region 文本
 
@@ -49,16 +49,18 @@ namespace qfCode
         /// <summary>
         /// 赋值
         /// </summary>
-        public void GetCfg()
+        public bool GetCfg()
         {
-            this._cfg.内容 = this.uiTextBox1.Text; 
+            this._cfg.内容 = this.uiTextBox1.Text;
+
+            return true;
         }
 
-      
+
 
 
         #region 本地方法
-         
+
 
         void On_选中()
         {
@@ -70,16 +72,16 @@ namespace qfCode
             }
             else if (this.uiRadioButton_空格.Checked)
             {
-                this._cfg.types  = _文本_._em_文本_.空格;
+                this._cfg.types = _文本_._em_文本_.空格;
                 this.uiTextBox1.Clear();
                 this.uiTextBox1.Enabled = false;
             }
             else
             {
-                this._cfg.types  = _文本_._em_文本_.文本; 
+                this._cfg.types = _文本_._em_文本_.文本;
                 this.uiTextBox1.Enabled = true;
                 this.uiTextBox1.Text = this._cfg.内容;
-               
+
             }
 
 

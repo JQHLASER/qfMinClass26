@@ -78,7 +78,7 @@ namespace qfCode
         /// <summary>
         /// 赋值
         /// </summary>
-        public void GetCfg()
+        public bool  GetCfg()
         {
             this._cfg.types = this.uiRadioButton_时24.Checked ? _日期时间_._em_时间_.时24 :
                               this.uiRadioButton_时12.Checked ? _日期时间_._em_时间_.时12 :
@@ -91,6 +91,8 @@ namespace qfCode
             {
                 this._cfg.配置 = this.uiComboBox_配置文件.Text;
             }
+
+            return true;
         }
 
          

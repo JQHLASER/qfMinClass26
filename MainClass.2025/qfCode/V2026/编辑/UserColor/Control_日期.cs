@@ -113,7 +113,7 @@ namespace qfCode
         /// <summary>
         /// 赋值
         /// </summary>
-        public void GetCfg()
+        public bool  GetCfg()
         {
             this._cfg.types =
                 this.uiRadioButton_年4位.Checked ? _日期时间_._em_日期_.年4位 :
@@ -135,7 +135,7 @@ namespace qfCode
             {
                 this._cfg.配置 = this.uiComboBox_配置文件.Text;
             }
-
+            return true;
         }
  
 

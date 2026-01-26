@@ -28,7 +28,10 @@ namespace qfLanguage
             new _language_Value_ ( keys, "对象","对象"),
             new _language_Value_ ( keys, "配方名不能为空","配方名不能为空"),
             new _language_Value_ ( keys, "未找到对象","未找到对象"),
-            
+            new _language_Value_ ( keys, "索引超出范围","索引超出范围"),
+            new _language_Value_ ( keys, "请输入分割符","请输入分割符"),
+            new _language_Value_ ( keys, "请输入首分割符","请输入首分割符"),
+            new _language_Value_ ( keys, "请输入尾分割符","请输入尾分割符"),
 
 
 
