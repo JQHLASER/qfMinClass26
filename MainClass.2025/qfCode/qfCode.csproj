@@ -66,112 +66,112 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="编码 Code\计算\编码_计算.cs" />
-    <Compile Include="编码 Code\计算\计算_关联对象.cs" />
-    <Compile Include="编码 Code\计算\计算_序列号.cs" />
-    <Compile Include="编码 Code\计算\计算_日期时间.cs" />
-    <Compile Include="编码 Code\计算\计算_班次.cs" />
-    <Compile Include="编辑\Form_主窗体.cs">
+    <Compile Include="V2026\编码 Code\计算\编码_计算.cs" />
+    <Compile Include="V2026\编码 Code\计算\计算_关联对象.cs" />
+    <Compile Include="V2026\编码 Code\计算\计算_序列号.cs" />
+    <Compile Include="V2026\编码 Code\计算\计算_日期时间.cs" />
+    <Compile Include="V2026\编码 Code\计算\计算_班次.cs" />
+    <Compile Include="V2026\编辑\Form_主窗体.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="编辑\Form_主窗体.Designer.cs">
+    <Compile Include="V2026\编辑\Form_主窗体.Designer.cs">
       <DependentUpon>Form_主窗体.cs</DependentUpon>
     </Compile>
-    <Compile Include="编辑\Win\Form_工具箱_元素.cs">
+    <Compile Include="V2026\编辑\Win\Form_工具箱_元素.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="编辑\Win\Form_工具箱_元素.Designer.cs">
+    <Compile Include="V2026\编辑\Win\Form_工具箱_元素.Designer.cs">
       <DependentUpon>Form_工具箱_元素.cs</DependentUpon>
     </Compile>
-    <Compile Include="编辑\type_编辑.cs" />
-    <Compile Include="编辑\UserColor\关联对象\Control_关联对象 _按字符.cs">
+    <Compile Include="V2026\编辑\type_编辑.cs" />
+    <Compile Include="V2026\编辑\UserColor\关联对象\Control_关联对象 _按字符.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="编辑\UserColor\关联对象\Control_关联对象 _按字符.Designer.cs">
+    <Compile Include="V2026\编辑\UserColor\关联对象\Control_关联对象 _按字符.Designer.cs">
       <DependentUpon>Control_关联对象 _按字符.cs</DependentUpon>
     </Compile>
-    <Compile Include="编辑\UserColor\关联对象\Control_关联对象 _按首尾字符.cs">
+    <Compile Include="V2026\编辑\UserColor\关联对象\Control_关联对象 _按首尾字符.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="编辑\UserColor\关联对象\Control_关联对象 _按首尾字符.Designer.cs">
+    <Compile Include="V2026\编辑\UserColor\关联对象\Control_关联对象 _按首尾字符.Designer.cs">
       <DependentUpon>Control_关联对象 _按首尾字符.cs</DependentUpon>
     </Compile>
-    <Compile Include="编辑\UserColor\关联对象\Control_关联对象 _按位.cs">
+    <Compile Include="V2026\编辑\UserColor\关联对象\Control_关联对象 _按位.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="编辑\UserColor\关联对象\Control_关联对象 _按位.Designer.cs">
+    <Compile Include="V2026\编辑\UserColor\关联对象\Control_关联对象 _按位.Designer.cs">
       <DependentUpon>Control_关联对象 _按位.cs</DependentUpon>
     </Compile>
-    <Compile Include="编辑\UserColor\Control_序列号.cs">
+    <Compile Include="V2026\编辑\UserColor\Control_序列号.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="编辑\UserColor\Control_序列号.Designer.cs">
+    <Compile Include="V2026\编辑\UserColor\Control_序列号.Designer.cs">
       <DependentUpon>Control_序列号.cs</DependentUpon>
     </Compile>
-    <Compile Include="编辑\UserColor\Control_关联对象.cs">
+    <Compile Include="V2026\编辑\UserColor\Control_关联对象.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="编辑\UserColor\Control_关联对象.Designer.cs">
+    <Compile Include="V2026\编辑\UserColor\Control_关联对象.Designer.cs">
       <DependentUpon>Control_关联对象.cs</DependentUpon>
     </Compile>
-    <Compile Include="编辑\UserColor\Control_时间.cs">
+    <Compile Include="V2026\编辑\UserColor\Control_时间.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="编辑\UserColor\Control_时间.Designer.cs">
+    <Compile Include="V2026\编辑\UserColor\Control_时间.Designer.cs">
       <DependentUpon>Control_时间.cs</DependentUpon>
     </Compile>
-    <Compile Include="编辑\UserColor\Control_日期.cs">
+    <Compile Include="V2026\编辑\UserColor\Control_日期.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="编辑\UserColor\Control_日期.Designer.cs">
+    <Compile Include="V2026\编辑\UserColor\Control_日期.Designer.cs">
       <DependentUpon>Control_日期.cs</DependentUpon>
     </Compile>
-    <Compile Include="编辑\UserColor\Control_文本.cs">
+    <Compile Include="V2026\编辑\UserColor\Control_文本.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="编辑\UserColor\Control_文本.Designer.cs">
+    <Compile Include="V2026\编辑\UserColor\Control_文本.Designer.cs">
       <DependentUpon>Control_文本.cs</DependentUpon>
     </Compile>
-    <Compile Include="编辑\Win\Form_对象.cs">
+    <Compile Include="V2026\编辑\Win\Form_对象.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="编辑\Win\Form_对象.Designer.cs">
+    <Compile Include="V2026\编辑\Win\Form_对象.Designer.cs">
       <DependentUpon>Form_对象.cs</DependentUpon>
     </Compile>
-    <Compile Include="编辑\上下移动.cs" />
-    <Compile Include="编辑\交互\子接口\Iworker_编辑交互.cs" />
-    <Compile Include="编辑\交互\编辑交互_统一接口.cs" />
-    <Compile Include="编辑\交互\子接口\编辑交互_本地.cs" />
-    <Compile Include="编辑\编辑_.cs" />
+    <Compile Include="V2026\编辑\上下移动.cs" />
+    <Compile Include="V2026\编辑\交互\子接口\Iworker_编辑交互.cs" />
+    <Compile Include="V2026\编辑\交互\编辑交互_统一接口.cs" />
+    <Compile Include="V2026\编辑\交互\子接口\编辑交互_本地.cs" />
+    <Compile Include="V2026\编辑\编辑_.cs" />
     <Compile Include="语言\Language_.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="编码 Code\Type.cs" />
-    <Compile Include="编码 Code\主程序\编码_.cs" />
-    <Compile Include="功能\_功能_.cs" />
-    <Compile Include="功能\_功能_结构_.cs" />
-    <Compile Include="编码 Code\数据结构\对象\_元素_.cs" />
-    <Compile Include="编码 Code\数据结构\元素\_关联对象_.cs" />
-    <Compile Include="编码 Code\数据结构\元素\_文本_.cs" />
-    <Compile Include="编码 Code\数据结构\对象\_对象_属性.cs" />
-    <Compile Include="编码 Code\数据结构\_工具箱_.cs" />
-    <Compile Include="编码 Code\数据结构\元素\_序列号_.cs" />
-    <Compile Include="编码 Code\数据结构\元素\_日期时间_.cs" />
-    <Compile Include="编码 Code\数据结构\元素\_班次_.cs" />
-    <Compile Include="编码 Code\数据结构\对象\_对象_.cs" />
-    <Compile Include="编码 Code\数据结构\_配方文件_属性_.cs" />
-    <Compile Include="编码 Code\主程序\_文件夹_.cs" />
-    <Compile Include="编码 Code\文件\读写\文件类\ini文件_.cs" />
-    <Compile Include="编码 Code\文件\读写\Iwork_配方文件.cs" />
-    <Compile Include="编码 Code\常量.cs" />
-    <Compile Include="编码 Code\文件\Json序列化.cs" />
-    <Compile Include="编码 Code\文件\读写\文件_统一接口.cs" />
-    <Compile Include="编码 Code\文件\读写\文件类\Sqlite文件_.cs" />
-    <Compile Include="编码 Code\文件\读写\文件类\SqlServer文件_.cs" />
-    <Compile Include="编码 Code\文件\读写\文件类\txt文件_.cs" />
-    <Compile Include="编码 Code\文件\读写\表.cs" />
-    <Compile Include="编码 Code\文件\文件类.cs" />
+    <Compile Include="V2026\编码 Code\Type.cs" />
+    <Compile Include="V2026\编码 Code\主程序\编码_.cs" />
+    <Compile Include="V2026\功能\_功能_.cs" />
+    <Compile Include="V2026\功能\_功能_结构_.cs" />
+    <Compile Include="V2026\编码 Code\数据结构\对象\_元素_.cs" />
+    <Compile Include="V2026\编码 Code\数据结构\元素\_关联对象_.cs" />
+    <Compile Include="V2026\编码 Code\数据结构\元素\_文本_.cs" />
+    <Compile Include="V2026\编码 Code\数据结构\对象\_对象_属性.cs" />
+    <Compile Include="V2026\编码 Code\数据结构\_工具箱_.cs" />
+    <Compile Include="V2026\编码 Code\数据结构\元素\_序列号_.cs" />
+    <Compile Include="V2026\编码 Code\数据结构\元素\_日期时间_.cs" />
+    <Compile Include="V2026\编码 Code\数据结构\元素\_班次_.cs" />
+    <Compile Include="V2026\编码 Code\数据结构\对象\_对象_.cs" />
+    <Compile Include="V2026\编码 Code\数据结构\_配方文件_属性_.cs" />
+    <Compile Include="V2026\编码 Code\主程序\_文件夹_.cs" />
+    <Compile Include="V2026\编码 Code\文件\读写\文件类\ini文件_.cs" />
+    <Compile Include="V2026\编码 Code\文件\读写\Iwork_配方文件.cs" />
+    <Compile Include="V2026\编码 Code\常量.cs" />
+    <Compile Include="V2026\编码 Code\文件\Json序列化.cs" />
+    <Compile Include="V2026\编码 Code\文件\读写\文件_统一接口.cs" />
+    <Compile Include="V2026\编码 Code\文件\读写\文件类\Sqlite文件_.cs" />
+    <Compile Include="V2026\编码 Code\文件\读写\文件类\SqlServer文件_.cs" />
+    <Compile Include="V2026\编码 Code\文件\读写\文件类\txt文件_.cs" />
+    <Compile Include="V2026\编码 Code\文件\读写\表.cs" />
+    <Compile Include="V2026\编码 Code\文件\文件类.cs" />
     <Compile Include="语言\LanguageList.cs" />
-    <Compile Include="通讯\Server\Iworker_通讯.cs" />
+    <Compile Include="V2026\通讯\Server\Iworker_通讯.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Language\qfLanguage.csproj">
@@ -191,42 +191,42 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="编辑\Form_主窗体.resx">
+    <EmbeddedResource Include="V2026\编辑\Form_主窗体.resx">
       <DependentUpon>Form_主窗体.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="编辑\Win\Form_工具箱_元素.resx">
+    <EmbeddedResource Include="V2026\编辑\Win\Form_工具箱_元素.resx">
       <DependentUpon>Form_工具箱_元素.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="编辑\UserColor\关联对象\Control_关联对象 _按字符.resx">
+    <EmbeddedResource Include="V2026\编辑\UserColor\关联对象\Control_关联对象 _按字符.resx">
       <DependentUpon>Control_关联对象 _按字符.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="编辑\UserColor\关联对象\Control_关联对象 _按首尾字符.resx">
+    <EmbeddedResource Include="V2026\编辑\UserColor\关联对象\Control_关联对象 _按首尾字符.resx">
       <DependentUpon>Control_关联对象 _按首尾字符.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="编辑\UserColor\关联对象\Control_关联对象 _按位.resx">
+    <EmbeddedResource Include="V2026\编辑\UserColor\关联对象\Control_关联对象 _按位.resx">
       <DependentUpon>Control_关联对象 _按位.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="编辑\UserColor\Control_序列号.resx">
+    <EmbeddedResource Include="V2026\编辑\UserColor\Control_序列号.resx">
       <DependentUpon>Control_序列号.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="编辑\UserColor\Control_关联对象.resx">
+    <EmbeddedResource Include="V2026\编辑\UserColor\Control_关联对象.resx">
       <DependentUpon>Control_关联对象.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="编辑\UserColor\Control_时间.resx">
+    <EmbeddedResource Include="V2026\编辑\UserColor\Control_时间.resx">
       <DependentUpon>Control_时间.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="编辑\UserColor\Control_日期.resx">
+    <EmbeddedResource Include="V2026\编辑\UserColor\Control_日期.resx">
       <DependentUpon>Control_日期.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="编辑\UserColor\Control_文本.resx">
+    <EmbeddedResource Include="V2026\编辑\UserColor\Control_文本.resx">
       <DependentUpon>Control_文本.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="编辑\Win\Form_对象.resx">
+    <EmbeddedResource Include="V2026\编辑\Win\Form_对象.resx">
       <DependentUpon>Form_对象.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="编码 Code\文件\配方\" />
+    <Folder Include="V2026\编码 Code\文件\配方\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
