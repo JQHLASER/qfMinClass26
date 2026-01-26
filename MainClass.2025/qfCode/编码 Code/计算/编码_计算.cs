@@ -380,14 +380,16 @@ namespace qfCode
 
         #region 计算
 
-        internal (bool s, string m, string v) 文本(string jsonStr)
+        internal (bool s, string m, string v, _元素_.文本 cfg) 文本(string jsonStr)
         {
             var rt = new Json序列化().转成Json<_元素_.文本>(jsonStr);
+            _元素_.文本 cfg = rt.cfg;
             if (!rt.s)
             {
-                return (rt.s, rt.m, "");
+                return (rt.s, rt.m, "", cfg);
             }
-            return new 编码_计算(this._sys).计算(rt.cfg);
+            var rtT = new 编码_计算(this._sys).计算(rt.cfg);
+            return (rtT.s, rtT.m, rtT.v, cfg);
         }
 
         internal (bool s, string m, string v) 序列号(ref string jsonStr, _序列号_._em_操作_ 操作, DateTime 时间, DateTime 最后一次加工时间, _班次_[] 班次结构)
@@ -398,7 +400,7 @@ namespace qfCode
                 return (rt.s, rt.m, "");
             }
             _元素_.序列号 cfg = rt.cfg;
-            var rtSn = new 编码_计算(this._sys).计算(ref cfg, 操作, 时间, 最后一次加工时间, 班次结构); 
+            var rtSn = new 编码_计算(this._sys).计算(ref cfg, 操作, 时间, 最后一次加工时间, 班次结构);
             jsonStr = new Json序列化().转成String<_元素_.序列号>(cfg);
             return rtSn;
         }
@@ -431,8 +433,8 @@ namespace qfCode
 
         internal (bool s, string m, string v) 关联对象(string jsonStr, List<_对象_内容_> lst)
         {
-            var rt = new Json序列化().转成Json<_元素_.关联对象>(jsonStr); 
-            if (!rt.s )
+            var rt = new Json序列化().转成Json<_元素_.关联对象>(jsonStr);
+            if (!rt.s)
             {
                 return (rt.s, rt.m, "");
             }
@@ -444,7 +446,7 @@ namespace qfCode
                     v = s.Value;
                     break;
                 }
-            } 
+            }
             return new 编码_计算(this._sys).计算(rt.cfg, v);
         }
 

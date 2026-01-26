@@ -13,7 +13,7 @@ namespace qfCode
         string[] Get配置文件_班次();
         string[] Get配方文件();
 
-        (bool s, string m, string v) 计算_对象(_文件_属性_ files, _对象_ objects);
+        (bool s, string m, string v) 计算编码_对象(_配方文件_属性_ files, DateTime dates, string   objects);
 
     }
 }

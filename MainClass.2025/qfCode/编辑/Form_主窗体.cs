@@ -16,7 +16,7 @@ namespace qfCode
     {
         internal 编辑_ _编辑;
         internal static Form_主窗体 forms;
-        internal _文件_属性_ _文件信息 = new _文件_属性_();
+        internal _配方文件_属性_ _文件信息 = new _配方文件_属性_();
         internal int _编辑对象索引 = -1;
 
         public Form_主窗体(编辑_ 编辑)

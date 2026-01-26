@@ -59,7 +59,7 @@ namespace qfCode
         /// <summary>
         /// Is计算完保存  =true:计算完成后保存,=false:不保存,在一次性计算多次时,就不需要马上保存
         /// </summary> 
-        public (bool s, string m, List<_对象_内容_> lstObject) 计算编码(string 配方文件名, _文件_属性_ 配方文件, DateTime dates, _em_计算类型_ 计算类型, bool Is计算完保存 = false)
+        public (bool s, string m, List<_对象_内容_> lstObject) 计算编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime dates, _em_计算类型_ 计算类型, bool Is计算完保存 = false)
         {
             return 计算_编码(配方文件名, 配方文件, dates, 计算类型, Is计算完保存, "");
         }
@@ -69,10 +69,23 @@ namespace qfCode
         /// <para>测试模式,只是计算,不保存配方</para>
         /// <para>对象名 : 不为空时,计算指定对象及之前的内容</para>
         /// </summary> 
-        public (bool s, string m, List<_对象_内容_> lstObject) 计算编码_对象(_文件_属性_ 配方文件, DateTime dates, string 对象名)
+        public (bool s, string m, List<_对象_内容_> lstObject) 计算编码_对象(_配方文件_属性_ 配方文件, DateTime dates, string 对象名)
         {
             return 计算_编码("", 配方文件, dates, _em_计算类型_.测试, false, 对象名);
         }
+
+
+        /// <summary>
+        /// Is修改完保存  =true:修改完成后保存,=false:不保存,在一次性修改多个对象时,就不需要马上保存
+        /// </summary> 
+        public (bool s, string m) 修改编码_对象(string 配方文件名, _配方文件_属性_ 配方文件, _对象_str_ cfg, bool Is修改完保存 = false)
+        {
+            return 修改_编码(配方文件名, 配方文件, cfg, Is修改完保存);
+        }
+
+
+
+
 
 
 
@@ -88,7 +101,7 @@ namespace qfCode
         /// 外部数据通道
         /// <para>参数(_em_计算类型_,_对象_,文本内容),返回 文本内容</para>
         /// </summary>
-        public event Func<_em_计算类型_, _对象_,string, string> Event_文本;
+        public event Func<_em_计算类型_, _对象_, string, string> Event_文本;
 
         /// <summary>
         /// 外部数据通道
@@ -112,14 +125,14 @@ namespace qfCode
         /// <para>Is计算完保存  =true:计算完成后保存,=false:不保存,在一次性计算多次时,就不需要马上保存</para>
         /// <para>对象名 : 不为空时,计算指定对象及之前的内容</para>
         /// </summary> 
-        private (bool s, string m, List<_对象_内容_> lstObject) 计算_编码(string 配方文件名, _文件_属性_ 配方文件, DateTime dates, _em_计算类型_ 计算类型, bool Is计算完保存, string 对象名)
+        private (bool s, string m, List<_对象_内容_> lstObject) 计算_编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime dates, _em_计算类型_ 计算类型, bool Is计算完保存, string 对象名)
         {
             List<_对象_内容_> lstObject = new List<_对象_内容_>();
             bool rt = true;
             string msg = string.Empty;
 
             //深拷贝出来一份,用来防止源文件被意外修改
-            _文件_属性_ 配方 = 配方文件.Clone();
+            _配方文件_属性_ 配方 = 配方文件.Clone();
 
             _班次_[] 班次规则 = this._文件类.Get_班次(配方.班次文件);
             DateTime.TryParse(配方.Datetimes, out DateTime 最后加工时间);
@@ -164,8 +177,8 @@ namespace qfCode
                             //                            计算类型 == _em_计算类型_.加工 ? _序列号_._em_操作_.计算递增 :
                             //                             _序列号_._em_操作_.判断复位;
                             #endregion
-                             
-                            dates = Event_日期时间 is null ? dates : Event_日期时间.Invoke(计算类型, s); 
+
+                            dates = Event_日期时间 is null ? dates : Event_日期时间.Invoke(计算类型, s);
                             string snStr = y;
                             //先判断复位,获取出来内容,
                             var rtSn = new 编码_计算(this).序列号(ref snStr, _序列号_._em_操作_.判断复位, dates, 最后加工时间, 班次规则);
@@ -179,8 +192,11 @@ namespace qfCode
                                 rtSn = new 编码_计算(this).序列号(ref snStr, _序列号_._em_操作_.加工数量递增, dates, 最后加工时间, 班次规则);
                                 rt = rtSn.s;
                                 msg = rtSn.m;
-                                //计算完成后将值反馈回去,保存时使用
-                                配方.对象[i].元素[j] = snStr;
+                                if (rt)
+                                {
+                                    //计算完成后将值反馈回去,保存时使用
+                                    配方.对象[i].元素[j] = snStr;
+                                }
                             }
 
                             #endregion
@@ -297,8 +313,92 @@ namespace qfCode
             return (rt, msg, lstObject);
         }
 
-        private (bool s, string m) 保存(_文件_属性_ 配方文件, string 配方名称, DateTime dates)
+
+        private (bool s, string m) 修改_编码(string 配方文件名, _配方文件_属性_ 配方文件, _对象_str_ cfg, bool Is计算完保存)
         {
+            List<_对象_内容_> lstObject = new List<_对象_内容_>();
+            bool rt = false;
+            string msg = Language_.Get语言("未找到对象");
+
+            //深拷贝出来一份,用来防止源文件被意外修改
+            _配方文件_属性_ 配方 = 配方文件.Clone();
+
+            _班次_[] 班次规则 = this._文件类.Get_班次(配方.班次文件);
+            DateTime.TryParse(配方.Datetimes, out DateTime 最后加工时间);
+
+            for (int i = 0; i < 配方.对象.Count; i++)
+            {
+                _对象_ s = 配方.对象[i].Clone();
+                string ObjectName = s.对象名;
+                if (cfg.Name != ObjectName)
+                {
+                    continue;
+                }
+                string v = "";
+                rt = true;
+                msg = "";
+
+
+
+                #region 元素修改
+
+                for (global::System.Int32 j = 0; j < s.元素.Count; j++)
+                {
+                    string y = s.元素[j];
+                    var rtType = new Json序列化().转成Json<_元素_.工具>(y);
+                    _元素_.工具 type = rtType.cfg;
+
+                    switch (type.Tool)
+                    {
+                        case _em_工具箱_.文本:
+
+                            #region 文本
+
+                            var rt文本 = new 编码_计算(this).文本(y);
+                            rt = rt文本.s;
+                            msg = rt文本.m;
+                            rt文本.v = cfg.Value;
+
+                            if (rt)
+                            {
+                                配方.对象[i].元素[j] = new Json序列化().转成String<_元素_.文本>(rt文本.cfg);
+                            }
+
+                            #endregion
+
+                            break;
+
+                    }
+
+                }
+
+                #endregion
+
+
+                break;
+
+
+            }
+
+            #region 正常时,修改源配方,目的是为了保存时,保存最新的配方信息
+
+            if (rt)
+            {
+                //正常时,修改源文件
+                配方文件 = 配方.Clone();
+            }
+
+            #endregion
+
+
+
+            return (rt, msg);
+        }
+
+
+        private (bool s, string m) 保存(_配方文件_属性_ 配方, string 配方名称, DateTime dates)
+        {
+            配方.Datetimes = dates.ToString("yyyy-MM-dd HH:mm:ss");
             return (true, "");
         }
 

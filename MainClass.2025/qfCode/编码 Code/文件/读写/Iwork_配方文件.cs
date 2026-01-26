@@ -12,11 +12,11 @@ namespace qfCode
         /// <summary>
         /// 读取
         /// </summary> 
-        (bool s, string m, _文件_属性_ cfg) Read(string FileName);
+        (bool s, string m, _配方文件_属性_ cfg) Read(string FileName);
         /// <summary>
         /// 保存
         /// </summary> 
-        (bool s, string m) Save(string FileName, _文件_属性_ cfg);
+        (bool s, string m) Save(string FileName, _配方文件_属性_ cfg);
         /// <summary>
         /// 删除
         /// </summary> 

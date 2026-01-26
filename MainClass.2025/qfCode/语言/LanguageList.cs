@@ -27,9 +27,10 @@ namespace qfLanguage
             new _language_Value_ (keys,"确认删除?","确认删除?"),
             new _language_Value_ ( keys, "对象","对象"),
             new _language_Value_ ( keys, "配方名不能为空","配方名不能为空"),
-
-
+            new _language_Value_ ( keys, "未找到对象","未找到对象"),
             
+
+
 
             new _language_Value_ ( keys, "文本","文本"),
             new _language_Value_ ( keys, "序列号","序列号"),

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace qfCode
 {
-    public class _文件_属性_
+    public class _配方文件_属性_
     {
         /// <summary>
         /// 最后一次加工时间
@@ -26,9 +26,9 @@ namespace qfCode
 
 
 
-        public _文件_属性_ Clone()
+        public _配方文件_属性_ Clone()
         {
-            return new _文件_属性_
+            return new _配方文件_属性_
             {
                 Datetimes = this.Datetimes,
                 备注 = this.备注,

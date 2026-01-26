@@ -45,14 +45,14 @@ namespace qfCode
                 bool rtState = s;
                 if (rtState)
                 {
-                    (bool s, string m, _文件_属性_ cfg) rt = Read("text^%&");
+                    (bool s, string m, _配方文件_属性_ cfg) rt = Read("text^%&");
                     rtState = rt.s;
                 }
                 this._CodeSys._初始化状态 = !rtState ? _初始化状态_.已初始化 : _初始化状态_.未初始化;
             };
         }
 
-        public (bool s, string m, _文件_属性_ cfg) Read(string FileName)
+        public (bool s, string m, _配方文件_属性_ cfg) Read(string FileName)
         {
             lock (_lock)
             {
@@ -68,7 +68,7 @@ namespace qfCode
                         }
                         else if (rt && lst.Count > 0)
                         {
-                            return new Json序列化().转成Json<_文件_属性_>(lst[0].CodeValue);
+                            return new Json序列化().转成Json<_配方文件_属性_>(lst[0].CodeValue);
                         }
                         else
                         {
@@ -80,7 +80,7 @@ namespace qfCode
 
         }
 
-        public (bool s, string m) Save(string FileName, _文件_属性_ cfg)
+        public (bool s, string m) Save(string FileName, _配方文件_属性_ cfg)
         {
             lock (_lock)
             {
@@ -135,7 +135,7 @@ namespace qfCode
             lock (_lock)
             {
                 (bool s, string m) rt = (true, "");
-                _文件_属性_ cfg = new _文件_属性_();
+                _配方文件_属性_ cfg = new _配方文件_属性_();
                 foreach (var s in work)
                 {
                     if (!rt.s)
@@ -144,7 +144,7 @@ namespace qfCode
                     }
                     else if (s == "查询")
                     {
-                        (bool s, string m, _文件_属性_ cfg) rtGet = Read(FileName);
+                        (bool s, string m, _配方文件_属性_ cfg) rtGet = Read(FileName);
                         rt.s = rtGet.s;
                         rt.m = rtGet.m;
                         cfg = rtGet.cfg;

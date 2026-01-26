@@ -34,6 +34,16 @@ namespace qfCode
         加工,
     }
 
-
+    public class _对象_str_
+    {
+        /// <summary>
+        /// 对象名
+        /// </summary>
+        public string Name { set; get; }
+        /// <summary>
+        /// 内容
+        /// </summary>
+        public string Value { set; get; }
+    }
 
 }

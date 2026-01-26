@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace qfCode 
+namespace qfCode
 {
     public class 编辑交互_本地 : Iworker_编辑交互
     {
@@ -27,11 +27,11 @@ namespace qfCode
             return this._编辑._编码._文件类.Get目录_配方();
         }
 
-        public (bool s, string m, string v) 计算_对象(_文件_属性_ files, string 对象名)
+        public (bool s, string m, string v) 计算编码_对象(_配方文件_属性_ 配方,DateTime dates, string  对象名)
         {
             (bool s, string m, string v) rt = (true, "", "");
 
-            this._编辑._编码.计算编码_对象();
+            this._编辑._编码.计算编码_对象(配方, dates,对象名);
 
 
             return rt;

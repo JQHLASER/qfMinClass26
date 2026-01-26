@@ -1,4 +1,5 @@
-﻿using qfmain;
+﻿using mainclassqf;
+using qfmain;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
@@ -65,7 +66,7 @@ namespace qfSqlSugar
         {
             this.Db = db_;
         }
-         
+
         public void Dispose()
         {
             if (this._scope != null)
@@ -244,7 +245,7 @@ namespace qfSqlSugar
 
 
         /// <summary>
-        /// 添加一条,添加一条不需要事务
+        /// 添加一条,添加一条不需要显式事务
         /// </summary> 
         public bool Insertable(T insertObj, out int 受影响行, out string msgErr)
         {
@@ -253,7 +254,9 @@ namespace qfSqlSugar
             受影响行 = 0;
             try
             {
+
                 受影响行 = this.Db.Insertable(insertObj).ExecuteCommand();
+
             }
             catch (Exception ex)
             {

@@ -158,7 +158,7 @@
     <Compile Include="编码 Code\数据结构\元素\_日期时间_.cs" />
     <Compile Include="编码 Code\数据结构\元素\_班次_.cs" />
     <Compile Include="编码 Code\数据结构\对象\_对象_.cs" />
-    <Compile Include="编码 Code\数据结构\_文件_属性_.cs" />
+    <Compile Include="编码 Code\数据结构\_配方文件_属性_.cs" />
     <Compile Include="编码 Code\主程序\_文件夹_.cs" />
     <Compile Include="编码 Code\文件\读写\文件类\ini文件_.cs" />
     <Compile Include="编码 Code\文件\读写\Iwork_配方文件.cs" />
