@@ -124,12 +124,12 @@ namespace qfCode
             }
         }
 
-        public (bool s, string m) 另存为(string FileName, string NewFileName)
+        public (bool s, string m) 复制(string FileName, string NewFileName)
         {
             string[] work = new string[]
             {
                 "查询",
-                "另存为"
+                "复制"
             };
 
             lock (_lock)
@@ -149,7 +149,7 @@ namespace qfCode
                         rt.m = rtGet.m;
                         cfg = rtGet.cfg;
                     }
-                    else if (s == "另存为")
+                    else if (s == "复制")
                     {
                         rt = Save(NewFileName, cfg);
                     }

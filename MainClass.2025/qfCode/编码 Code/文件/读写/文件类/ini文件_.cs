@@ -54,7 +54,7 @@ namespace qfCode
         }
 
 
-        public (bool s, string m) 另存为(string FileName, string NewFileName)
+        public (bool s, string m) 复制(string FileName, string NewFileName)
         {
             lock (_lock)
             {

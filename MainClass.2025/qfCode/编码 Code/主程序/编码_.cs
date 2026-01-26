@@ -1,4 +1,5 @@
-﻿using qfSqlSugar;
+﻿using Newtonsoft.Json;
+using qfSqlSugar;
 using Sunny.UI.Win32;
 using System;
 using System.Collections.Generic;
@@ -83,14 +84,38 @@ namespace qfCode
             return 修改_编码(配方文件名, 配方文件, cfg, Is修改完保存);
         }
 
+        private (bool s, string m) 配方_保存(_配方文件_属性_ 配方, string 配方名称, DateTime dates)
+        {
+            配方.Datetimes = dates.ToString("yyyy-MM-dd HH:mm:ss");
+            return new 文件_统一接口(this).Save(配方名称, 配方);
+        }
+
+        private (bool s, string m) 配方_复制(string 配方名称, string New配方名称)
+        {
+            return new 文件_统一接口(this).复制(配方名称, New配方名称);
+        }
+
+        private (bool s, string m) 配方_删除(string 配方名称)
+        {
+            return new 文件_统一接口(this).Delete(配方名称);
+        }
 
 
 
+        #endregion
 
 
+        #region json与结构之间转换
 
+        public string 转换_ToString<T>(T cfg)
+        {
+            return new Json序列化().转成String<T>(cfg);
+        }
 
-
+        public (bool s, string m, T cfg) 转换_ToJson<T>(string jsonStr)
+        {
+            return new Json序列化().转成Json<T>(jsonStr);
+        }
 
         #endregion
 
@@ -110,13 +135,7 @@ namespace qfCode
         public event Func<_em_计算类型_, _对象_, DateTime> Event_日期时间;
 
 
-
-
-
-
-
         #endregion
-
 
 
         #region 本地方法
@@ -298,7 +317,7 @@ namespace qfCode
             {
                 if (string.IsNullOrEmpty(配方文件名))
                 {
-                    var rtSave = 保存(配方, 配方文件名, dates);
+                    var rtSave = 配方_保存(配方, 配方文件名, dates);
                 }
                 else
                 {
@@ -396,12 +415,9 @@ namespace qfCode
         }
 
 
-        private (bool s, string m) 保存(_配方文件_属性_ 配方, string 配方名称, DateTime dates)
-        {
-            配方.Datetimes = dates.ToString("yyyy-MM-dd HH:mm:ss");
-            return (true, "");
-        }
+
 
         #endregion
+
     }
 }
