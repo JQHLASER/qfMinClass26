@@ -284,6 +284,10 @@ namespace qfSqlSugar
             return rt;
         }
 
+        #endregion
+
+
+        #region Storageable 添加
 
         /// <summary>
         /// 添加,自动去重的,已自带事务

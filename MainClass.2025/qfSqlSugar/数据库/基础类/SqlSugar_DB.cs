@@ -290,7 +290,7 @@ SqlServer 数据库....使用最新库
 
         #region  生成连接字符串
 
-        public virtual string 生成连接字符串(_cfg_SQLite_ SqlLitePath, _SQLite_连接类型_ 连接类型 = _SQLite_连接类型_.V3)
+        public virtual string 生成连接字符串(_cfg_SQLite_ SqlLitePath, _SQLite_连接类型_ 连接类型 = _SQLite_连接类型_.V2)
         {
             switch (连接类型)
             {
