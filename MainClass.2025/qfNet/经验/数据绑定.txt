@@ -1,0 +1,46 @@
+﻿  
+  
+  BindingList<string> lst = new BindingList<string>();
+            lst.Add("a");
+            lst.Add("b");
+            lst.Add("c");
+            BindingSource source = new BindingSource();
+            source .DataSource = lst;
+            this.comboBox1 .DataSource = source ;
+
+            this.button1.Click += (s, e) =>
+            {
+                lst[0] = "addsfsdf";
+                source.ResetBindings(false);
+            };
+
+ BindingList<string> lst = new BindingList<string>();
+            lst.Add("a");
+            lst.Add("b");
+            lst.Add("c");
+           
+            this.comboBox1 .DataSource = lst ;
+
+            this.button1.Click += (s, e) =>
+            {
+                lst[0] = "addsfsdf";      
+            };
+
+                  
+
+  //Sunny.uiCombobox好像不自动更新
+   BindingList<string> lst = new BindingList<string>();
+            lst.Add("a");
+            lst.Add("b");
+            lst.Add("c");
+            BindingSource source = new BindingSource();
+            source .DataSource = lst;
+            this.uiComboBox1.DataSource = source ;
+
+            this.button1.Click += (s, e) =>
+            {
+                lst[0] = "addsfsdf";
+                source.ResetBindings(false);
+                this.uiComboBox1.DataSource = null;
+                this.uiComboBox1.DataSource = source;
+            };
