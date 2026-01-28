@@ -45,8 +45,7 @@ namespace qfSqlSugar
             {
                 this._scope = Db_.Db.CopyNew();
                 this.Db = this._scope.GetConnection(id);
-            }
-
+            } 
         }
 
 
