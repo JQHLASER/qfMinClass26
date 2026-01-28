@@ -305,9 +305,9 @@ SqlServer 数据库....使用最新库
             switch (连接类型)
             {
                 case _SQLite_连接类型_.V2:
-                    return $"data source={SqlLitePath.Path};Cache=Shared;Mode=ReadWriteCreate；BusyTimeout=5000;";
+                    return $"data source={SqlLitePath.Path};Cache=Shared;Mode=ReadWriteCreate;";
                 case _SQLite_连接类型_.V3:
-                    return $"data source={SqlLitePath.Path};Version=3;Cache=Shared;Mode=ReadWriteCreate；BusyTimeout=5000;";
+                    return $"data source={SqlLitePath.Path};Version=3;Cache=Shared;Mode=ReadWriteCreate;";
                 default:
                     return "";
             }
@@ -381,12 +381,17 @@ SqlServer 数据库....使用最新库
             sb.Append($"User ID={_info_Mysql.用户名};");
             sb.Append($"Password={_info_Mysql.密码};");
             sb.Append($"Charset={_info_Mysql.编码};");
-            sb.Append($"Pooling=true;");
-            sb.Append($"MinimumPoolSize=5;");
-            sb.Append($"MaximumPoolSize=100;");
-            sb.Append($"ConnectionTimeout=30;");
-            sb.Append($"DefaultCommandTimeout=30;");
-            sb.Append($"Keepalive=60;");
+            sb.Append("Pooling=true;");
+            sb.Append("MinimumPoolSize=0;");          // 关键
+            sb.Append("MaximumPoolSize=500;");
+            sb.Append("ConnectionTimeout=3;");       // 关键
+            sb.Append("DefaultCommandTimeout=60;");
+            sb.Append("Keepalive=300;");
+
+            sb.Append("SslMode=None;");               // 避免SSL延迟
+            sb.Append("Allow User Variables=true;");
+            sb.Append("Allow Zero Datetime=true;");
+            sb.Append("Convert Zero Datetime=true;");
 
             return sb.ToString();
         }
@@ -430,5 +435,78 @@ SqlServer 数据库....使用最新库
         #endregion
 
 
+        #region 判断
+
+        /// <summary>
+        /// Db中是否存在指定id
+        /// </summary> 
+        public bool 是否存在id(string id)
+        {
+            return Db.IsAnyConnection(id);
+
+        }
+        public void 加入连接(ConnectionConfig cfg)
+        {
+            Db.RemoveConnection(cfg);//删除连接
+
+        }
+
+        /// <summary>
+        /// ID或 ConnectionConfig
+        /// <para>一般用ID</para>
+        /// </summary>
+        /// <param name="cfg"></param>
+        public void 删除(dynamic cfg)
+        {
+            Db.RemoveConnection(cfg);//删除连接
+
+        }
+
+        /// <summary>
+        /// ConnectionConfig 数据库是否可以连接上
+        /// </summary> 
+        public bool Is是否能连接(ConnectionConfig cfg)
+        {
+            try
+            {
+                using (var testDb = new SqlSugarClient(cfg))
+                {
+                    testDb.Ado.Open();  // 尝试打开连接 
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;  // 失败就跳过
+            }
+        }
+
+
+        /// <summary>
+        /// 删除id...判断id是否连接...能连就添加到Db中
+        /// <para>远程连SQLserver,MySql时用此方法</para>
+        /// <para>解决远程数据库连接池耗尽断开的问题</para>
+        /// </summary> 
+        public bool Is连接是否有效(string _id, ConnectionConfig cfg)
+        {
+            this.Db.RemoveConnection(_id);//删除id
+            try
+            {
+                using (var testDb = new SqlSugarClient(cfg))
+                {
+                    testDb.Ado.Open();  // 尝试打开连接 
+                    this.Db.AddConnection(cfg);//添加id
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;  // 失败就跳过
+            }
+
+        }
+
+
+        #endregion
     }
 }

@@ -32,9 +32,10 @@ namespace qfSqlSugar
                 Event_初始化结束?.Invoke(s, m, e);
             };
 
-            return await  _DB.初始化(超时时间);
+            return await _DB.初始化(超时时间);
         }
 
+          
 
         /// <summary>
         /// 初始化,连接数据库
