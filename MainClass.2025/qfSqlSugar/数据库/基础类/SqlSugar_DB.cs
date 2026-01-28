@@ -435,7 +435,7 @@ SqlServer 数据库....使用最新库
         #endregion
 
 
-        #region 判断
+        #region 连接的判断及处理
 
         /// <summary>
         /// Db中是否存在指定id
@@ -447,7 +447,7 @@ SqlServer 数据库....使用最新库
         }
         public void 加入连接(ConnectionConfig cfg)
         {
-            Db.RemoveConnection(cfg);//删除连接
+            Db.AddConnection (cfg);//删除连接
 
         }
 
