@@ -21,28 +21,27 @@ namespace qfCode
             this._cfg = cfg.Clone();
 
             this.panel_配置文件.Visible = Form_主窗体.forms._编辑._功能.日期时间.配置编码;
-            this.uiComboBox_配置文件.DataSource = new 编辑交互_本地(Form_主窗体.forms._编辑).Get配置文件_日期时间();
+            this.ui_Combobox2_配置._ComboBox.DataSource = new BindingList<string>(new 编辑交互_本地(Form_主窗体.forms._编辑).Get配置文件_日期时间());
 
 
             语言();
 
-            #region 初始值
-
-            this.uiRadioButton_时24.Checked = true;
-            this.uiComboBox_配置文件.SelectedIndex = this.uiComboBox_配置文件.Items.Count > 0 ? 0 : -1;
-
-            #endregion
+            this.Load += (s, e) =>
+            {
+                this.uiRadioButton_时24.Checked = true;
+                this.ui_Combobox2_配置._ComboBox.SelectedIndex = this.ui_Combobox2_配置._ComboBox.Items.Count > 0 ? 0 : -1;
+            };
 
             #region 配置文件
 
             if (Form_主窗体.forms._编辑._功能.日期时间.配置编码)
             {
-                int index = this.uiComboBox_配置文件.Items.IndexOf(this._cfg.配置);
-                this.uiComboBox_配置文件.SelectedIndex = index;
+                int index = this.ui_Combobox2_配置._ComboBox.Items.IndexOf(this._cfg.配置);
+                this.ui_Combobox2_配置._ComboBox.SelectedIndex = index;
             }
 
             #endregion
-             
+
             #region 时间
 
             switch (this._cfg.types)
@@ -62,7 +61,7 @@ namespace qfCode
 
             #endregion
 
-           
+
         }
 
         void 语言()
@@ -73,12 +72,12 @@ namespace qfCode
             this.uiRadioButton_秒.Text = Language_.Get语言("秒");
             this.uiRadioButton_毫秒.Text = Language_.Get语言("毫秒");
         }
-         
+
 
         /// <summary>
         /// 赋值
         /// </summary>
-        public bool  GetCfg()
+        public bool GetCfg()
         {
             this._cfg.types = this.uiRadioButton_时24.Checked ? _日期时间_._em_时间_.时24 :
                               this.uiRadioButton_时12.Checked ? _日期时间_._em_时间_.时12 :
@@ -89,13 +88,13 @@ namespace qfCode
 
             if (Form_主窗体.forms._编辑._功能.日期时间.配置编码)
             {
-                this._cfg.配置 = this.uiComboBox_配置文件.Text;
+                this._cfg.配置 = this.ui_Combobox2_配置._ComboBox.SelectedText;
             }
 
             return true;
         }
 
-         
+
 
 
     }

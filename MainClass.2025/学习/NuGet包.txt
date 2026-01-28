@@ -1,6 +1,14 @@
 ﻿
  System.Diagnostics.DiagnosticSource	 //必须装,在.net8
 
+统一在.net8中安装 
+数据库时一律安装: SqlSugarCore
+				  System.Data.SqlClient
+
+				  System.Diagnostics.DiagnosticSource
+				  System.Text.Encoding.CodePages
+
+
 
 曲线控件:
 	 Chart(自带) 安装 System.Windows.Forms.DataVisualization
@@ -13,6 +21,8 @@
 
 串口 SerialPort .... 
 	  下载System.IO.Ports 包
+
+
 
 Sqlite 数据库
 	1>	:	使用NuGet包下载  SqlSugar.dll

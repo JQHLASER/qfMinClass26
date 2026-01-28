@@ -27,8 +27,41 @@ namespace qfSqlSugar
         {
             this._scope = Db_.Db.CopyNew();
             this.Db = this._scope.GetConnection(id);
+            
         }
           
+
+        public void Open()
+        {
+            this.Db .Open();
+        }
+
+        public void Close()
+        {
+            this.Db.Close ();
+        }
+
+
+        /// <summary>
+        /// 连接是否有效,
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDbAlive()
+        {
+            try
+            {
+                // 执行一个简单的查询以检查数据库连接
+                var result = this.Db.Ado.GetScalar ("SELECT 1");
+                return true;
+            }
+            catch (Exception ex)
+            { 
+                return false;
+            }
+        }
+
+
+
         public void Dispose()
         {
             if (this._scope != null)

@@ -42,6 +42,7 @@ namespace qfCode
             Datagridview格式();
             this.uiListBox_对象列表.Items.Clear();
 
+          
 
             #region 按钮....对象
 
@@ -297,10 +298,7 @@ namespace qfCode
             grid.设置列宽(0, 200);
             grid.设置列宽(1, 500);
             grid.设置字体_整体(new Font("微软雅黑", 9f));
-           
-
-
-
+            
         }
 
 

@@ -35,8 +35,8 @@
             this.uiRadioButton_秒 = new Sunny.UI.UIRadioButton();
             this.uiRadioButton_毫秒 = new Sunny.UI.UIRadioButton();
             this.panel_配置文件 = new System.Windows.Forms.Panel();
-            this.uiComboBox_配置文件 = new Sunny.UI.UIComboBox();
             this.ui_Label_81 = new Sunny.ui_Label_8(this.components);
+            this.ui_Combobox2_配置 = new Sunny.ui_Combobox2();
             this.panel_配置文件.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -122,7 +122,7 @@
             // 
             // panel_配置文件
             // 
-            this.panel_配置文件.Controls.Add(this.uiComboBox_配置文件);
+            this.panel_配置文件.Controls.Add(this.ui_Combobox2_配置);
             this.panel_配置文件.Controls.Add(this.ui_Label_81);
             this.panel_配置文件.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel_配置文件.Location = new System.Drawing.Point(5, 323);
@@ -130,33 +130,30 @@
             this.panel_配置文件.Size = new System.Drawing.Size(580, 162);
             this.panel_配置文件.TabIndex = 20;
             // 
-            // uiComboBox_配置文件
-            // 
-            this.uiComboBox_配置文件.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
-            this.uiComboBox_配置文件.FillColor = System.Drawing.Color.White;
-            this.uiComboBox_配置文件.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiComboBox_配置文件.Location = new System.Drawing.Point(206, 5);
-            this.uiComboBox_配置文件.Margin = new System.Windows.Forms.Padding(0);
-            this.uiComboBox_配置文件.MaxDropDownItems = 15;
-            this.uiComboBox_配置文件.MinimumSize = new System.Drawing.Size(63, 0);
-            this.uiComboBox_配置文件.Name = "uiComboBox_配置文件";
-            this.uiComboBox_配置文件.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
-            this.uiComboBox_配置文件.Size = new System.Drawing.Size(246, 26);
-            this.uiComboBox_配置文件.Style = Sunny.UI.UIStyle.Custom;
-            this.uiComboBox_配置文件.TabIndex = 21;
-            this.uiComboBox_配置文件.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // ui_Label_81
             // 
             this.ui_Label_81.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.ui_Label_81.ForeColor = System.Drawing.Color.Gray;
-            this.ui_Label_81.Location = new System.Drawing.Point(42, 5);
+            this.ui_Label_81.Location = new System.Drawing.Point(23, 8);
             this.ui_Label_81.Name = "ui_Label_81";
-            this.ui_Label_81.Size = new System.Drawing.Size(160, 26);
+            this.ui_Label_81.Size = new System.Drawing.Size(160, 30);
             this.ui_Label_81.Style = Sunny.UI.UIStyle.Custom;
             this.ui_Label_81.TabIndex = 20;
             this.ui_Label_81.Text = "配置";
             this.ui_Label_81.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // ui_Combobox2_配置
+            // 
+            this.ui_Combobox2_配置.BackColor = System.Drawing.Color.Transparent;
+            this.ui_Combobox2_配置.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.ui_Combobox2_配置.Location = new System.Drawing.Point(186, 8);
+            this.ui_Combobox2_配置.Margin = new System.Windows.Forms.Padding(0);
+            this.ui_Combobox2_配置.MinimumSize = new System.Drawing.Size(1, 1);
+            this.ui_Combobox2_配置.Name = "ui_Combobox2_配置";
+            this.ui_Combobox2_配置.Padding = new System.Windows.Forms.Padding(1);
+            this.ui_Combobox2_配置.Radius = 0;
+            this.ui_Combobox2_配置.Size = new System.Drawing.Size(250, 30);
+            this.ui_Combobox2_配置.TabIndex = 21;
             // 
             // Control_时间
             // 
@@ -189,7 +186,7 @@
         private Sunny.UI.UIRadioButton uiRadioButton_秒;
         private Sunny.UI.UIRadioButton uiRadioButton_毫秒;
         private System.Windows.Forms.Panel panel_配置文件;
-        private Sunny.UI.UIComboBox uiComboBox_配置文件;
         private Sunny.ui_Label_8 ui_Label_81;
+        private Sunny.ui_Combobox2 ui_Combobox2_配置;
     }
 }

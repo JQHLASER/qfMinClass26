@@ -27,7 +27,7 @@ namespace qfCode
         /// </summary> 
         public string GetPath_班次(string FileName)
         {
-            return $"{this._codeSys._文件夹_属性.班次}\\{FileName}";
+            return $"{this._codeSys._文件夹_属性.班次}\\{FileName}.txt";
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace qfCode
         /// </summary> 
         public string GetPath_日期时间(string FileName)
         {
-            return $"{this._codeSys._文件夹_属性.日期时间}\\{FileName}";
+            return $"{this._codeSys._文件夹_属性.日期时间}\\{FileName}.txt";
         }
 
 
@@ -79,12 +79,7 @@ namespace qfCode
         internal _班次_[] Get_班次(string FileName)
         {
             string path = GetPath_班次(FileName);
-            _班次_[] Beff = new _班次_[0];
-            if (!new qfmain.文件_文件夹().文件_是否存在(path))
-            {
-                return Beff;
-            }
-
+            _班次_[] Beff = new _班次_[0]; 
             List<_班次_> lst = new List<_班次_>
             {
                 new _班次_

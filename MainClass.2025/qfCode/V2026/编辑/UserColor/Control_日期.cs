@@ -20,7 +20,7 @@ namespace qfCode
             this._type = type;
             this._cfg = cfg.Clone();
 
-            this.uiComboBox_配置文件.DataSource = new 编辑交互_本地(Form_主窗体.forms._编辑).Get配置文件_日期时间();
+            this.ui_Combobox2_配置._ComboBox.DataSource = new BindingList<string>(new 编辑交互_本地(Form_主窗体.forms._编辑).Get配置文件_日期时间());
             #region 偏移
 
             string[] py = Enum.GetNames(typeof(_日期时间_._em_偏移类型_));
@@ -37,17 +37,18 @@ namespace qfCode
             this.panel_配置文件.Visible = Form_主窗体.forms._编辑._功能.日期时间.配置编码;
 
 
-            语言(); 
+            语言();
 
-            #region 初始值
+            
 
-
-            this.uiRadioButton_年4位.Checked = true;
-            this.uiComboBox_偏移_类型.SelectedIndex = 0;
-            this.uiTextBox_偏移值.IntValue = 1;
-            this.uiComboBox_配置文件.SelectedIndex = this.uiComboBox_配置文件.Items.Count > 0 ? 0 : -1;
-
-            #endregion
+            this.Load += (s, e) =>
+            {
+                this.uiRadioButton_年4位.Checked = true;
+                this.uiComboBox_偏移_类型.SelectedIndex = 0;
+                this.uiTextBox_偏移值.IntValue = 1;
+                this.ui_Combobox2_配置._ComboBox.SelectedIndex = this.ui_Combobox2_配置._ComboBox.Items.Count > 0 ? 0 : -1;
+            };
+            
 
             #region 偏移值
 
@@ -63,8 +64,8 @@ namespace qfCode
 
             if (Form_主窗体.forms._编辑._功能.日期时间.配置编码)
             {
-                int index = this.uiComboBox_配置文件.Items.IndexOf(this._cfg.配置);
-                this.uiComboBox_配置文件.SelectedIndex = index;
+                int index = this.ui_Combobox2_配置._ComboBox.Items.IndexOf(this._cfg.配置);
+                this.ui_Combobox2_配置._ComboBox.SelectedIndex = index;
             }
 
             #endregion
@@ -89,7 +90,7 @@ namespace qfCode
                 case _日期时间_._em_日期_.星期:
                     this.uiRadioButton_星期.Checked = true; break;
             }
-             
+
             #endregion
 
 
@@ -108,12 +109,12 @@ namespace qfCode
             this.uiRadioButton_星期.Text = $"{Language_.Get语言("星期")} {new qfmain.日期时间_().Get_星期(now)}";
             this.uiRadioButton_天.Text = $"{Language_.Get语言("天")} {new qfmain.日期时间_().Get_days(now).ToString("000")}";
         }
-         
+
 
         /// <summary>
         /// 赋值
         /// </summary>
-        public bool  GetCfg()
+        public bool GetCfg()
         {
             this._cfg.types =
                 this.uiRadioButton_年4位.Checked ? _日期时间_._em_日期_.年4位 :
@@ -133,14 +134,14 @@ namespace qfCode
 
             if (Form_主窗体.forms._编辑._功能.日期时间.配置编码)
             {
-                this._cfg.配置 = this.uiComboBox_配置文件.Text;
+                this._cfg.配置 = this.ui_Combobox2_配置._ComboBox.SelectedText;
             }
             return true;
         }
- 
 
 
- 
+
+
 
     }
 }

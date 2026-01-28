@@ -165,11 +165,11 @@ namespace qfSqlSugar
     public enum _SQLite_连接类型_
     {
         /// <summary>
-        /// 不含  Version = 3;
+        /// net8支持,不含  Version = 3;
         /// </summary>
         V2,
         /// <summary>
-        /// 含Version = 3;
+        /// .net4.5时代支持的,含Version = 3;
         /// </summary>
         V3,
     }

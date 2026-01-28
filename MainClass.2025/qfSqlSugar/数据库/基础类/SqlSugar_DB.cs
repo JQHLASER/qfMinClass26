@@ -7,6 +7,7 @@ using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 
 
@@ -76,14 +77,14 @@ SqlServer 数据库....使用最新库
         /// <summary>
         /// 支持多库,非事件模式,直接传入ConnectionConfig
         /// </summary>   
-        public virtual bool 初始化(List<ConnectionConfig> lst, out string msgErr, int 超时时间 = 1000 * 10)
+        public virtual async Task<(bool s, string m)> 初始化(List<ConnectionConfig> lst, int 超时时间 = 1000 * 10)
         {
-            msgErr = string.Empty;
+            string msgErr = string.Empty;
             if (lst is null || lst.Count == 0)
             {
                 msgErr = "ConnectionConfig " + qfmain.Language_.Get语言("不能为空");
                 this.Db = null;
-                return false;
+                return (false, msgErr);
             }
             bool rt = true;
 
@@ -92,64 +93,73 @@ SqlServer 数据库....使用最新库
                 this.Db = new SqlSugarScope(lst);
                 this.Db.Ado.CommandTimeOut = 超时时间 > 0 ? (int)超时时间 : 1000 * 10;
 
+                var tasks = new List<Task>();
 
                 foreach (ConnectionConfig config in lst)
                 {
                     if (config.DbType == DbType.Sqlite)
                     {
                         #region Sqlite   
-
-                        using (var dbTemp = new SqlSugarScope(config))
+                        tasks.Add(Task.Run(() =>
                         {
-                            优化_Sqlite(dbTemp);
-                        }
+                            using (var dbTemp = new SqlSugarScope(config))
+                            {
+                                优化_Sqlite(dbTemp);
+                            }
+                        }));
 
                         #endregion
                     }
                     else if (config.DbType == DbType.SqlServer)
                     {
                         #region SqlServer
-
-                        using (var dbTemp = new SqlSugarScope(config))
+                        tasks.Add(Task.Run(() =>
                         {
-                            优化_SqlServer(dbTemp);
-                        }
-
+                            using (var dbTemp = new SqlSugarScope(config))
+                            {
+                                优化_SqlServer(dbTemp);
+                            }
+                        }));
                         #endregion 
                     }
                     else if (config.DbType == DbType.MySql)
                     {
                         #region MySql
-
-                        using (var dbTemp = new SqlSugarScope(config))
+                        tasks.Add(Task.Run(() =>
                         {
-                            优化_MySql(dbTemp);
-                        }
-
+                            using (var dbTemp = new SqlSugarScope(config))
+                            {
+                                优化_MySql(dbTemp);
+                            }
+                        }));
                         #endregion
                     }
 
                 }
+
+                // 等待所有数据库初始化完成
+                await Task.WhenAll(tasks);
             }
             catch (Exception ex)
             {
                 rt = false;
                 msgErr = ex.Message;
             }
+
+
             Event_初始化结束?.Invoke(rt, this);
-            Event_初始化结束1?.Invoke(rt,msgErr , this);
-            return rt;
+            Event_初始化结束1?.Invoke(rt, msgErr, this);
+            return (rt, msgErr);
         }
 
         /// <summary>
         /// 支持多库,事件模式
         /// </summary>       
-        public virtual bool 初始化(out string msgErr, int 超时时间 = 1000 * 10)
+        public virtual async Task<(bool s, string m)> 初始化(int 超时时间 = 1000 * 10)
         {
             List<ConnectionConfig> lst = new List<ConnectionConfig>();
             On_Event_ConnectionConfig(lst, this);
-            bool rt = 初始化(lst, out msgErr, 超时时间);
-            return rt;
+            return await 初始化(lst, 超时时间);
         }
 
         /// <summary>
@@ -295,9 +305,9 @@ SqlServer 数据库....使用最新库
             switch (连接类型)
             {
                 case _SQLite_连接类型_.V2:
-                    return $"data source={SqlLitePath.Path};";
+                    return $"data source={SqlLitePath.Path};Cache=Shared;Mode=ReadWriteCreate；BusyTimeout=5000;";
                 case _SQLite_连接类型_.V3:
-                    return $"data source={SqlLitePath.Path};Version=3;";
+                    return $"data source={SqlLitePath.Path};Version=3;Cache=Shared;Mode=ReadWriteCreate；BusyTimeout=5000;";
                 default:
                     return "";
             }
@@ -400,7 +410,7 @@ SqlServer 数据库....使用最新库
         /// 此时可以获取表结构和操作数据库了
         /// <para>参数 (状态,消息,DB)</para>
         /// </summary>
-        public event Action<bool, string,SqlSugar_DB> Event_初始化结束1;
+        public event Action<bool, string, SqlSugar_DB> Event_初始化结束1;
 
 
         private readonly object _lockDb = new object();

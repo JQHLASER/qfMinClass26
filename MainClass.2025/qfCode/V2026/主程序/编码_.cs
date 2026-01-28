@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace qfCode
 {
@@ -365,7 +366,7 @@ namespace qfCode
 
             //深拷贝出来一份,用来防止源文件被意外修改
             _配方文件_属性_ 配方 = 配方文件.Clone();
-            _班次_[] 班次规则 = this._文件类.Get_班次(配方.班次文件);
+            _班次_[] 班次规则 = this._文件类.Get_班次(配方.班次文件); 
             DateTime.TryParse(配方.Datetimes, out DateTime 最后加工时间);
 
             string v = "";
