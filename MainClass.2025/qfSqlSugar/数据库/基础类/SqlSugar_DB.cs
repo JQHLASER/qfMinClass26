@@ -447,7 +447,7 @@ SqlServer 数据库....使用最新库
         }
         public void 加入连接(ConnectionConfig cfg)
         {
-            Db.AddConnection (cfg);//删除连接
+            Db.AddConnection(cfg);//删除连接
 
         }
 
@@ -464,6 +464,7 @@ SqlServer 数据库....使用最新库
 
         /// <summary>
         /// ConnectionConfig 数据库是否可以连接上
+        /// <para>SqlSugarClient 方式</para>
         /// </summary> 
         public bool Is是否能连接(ConnectionConfig cfg)
         {
@@ -481,29 +482,175 @@ SqlServer 数据库....使用最新库
             }
         }
 
+        /// <summary>
+        /// 查询方式
+        /// </summary> 
+        public bool Is是否能连接(SqlSugarScope _db)
+        {
+            try
+            {
+                var result = _db.Ado.GetScalar("SELECT 1");
+                return (int)result == 1;
+            }
+            catch
+            {
+                return false;  // 连接无效
+            }
+        }
+
+        /// <summary>
+        /// 查询方式
+        /// </summary> 
+        public bool Is是否能连接(SqlSugarProvider _db)
+        {
+            try
+            {
+                var result = _db.Ado.GetScalar("SELECT 1");
+                return (int)result == 1;
+            }
+            catch
+            {
+                return false;  // 连接无效
+            }
+        }
+
+
 
         /// <summary>
         /// 删除id...判断id是否连接...能连就添加到Db中
         /// <para>远程连SQLserver,MySql时用此方法</para>
         /// <para>解决远程数据库连接池耗尽断开的问题</para>
         /// </summary> 
-        public bool Is连接是否有效(string _id, ConnectionConfig cfg)
+        private (bool s, string m) Is连接是否有效1(SqlSugar_DB db, string _id, ConnectionConfig cfg)
         {
-            this.Db.RemoveConnection(_id);//删除id
+            if (db is null)
+            {
+                return (false, "db is null");
+            }
+
+            if (Db.IsAnyConnection(_id))
+            {
+                this.Db.RemoveConnection(_id);//删除id
+            }
             try
             {
                 using (var testDb = new SqlSugarClient(cfg))
                 {
                     testDb.Ado.Open();  // 尝试打开连接 
                     this.Db.AddConnection(cfg);//添加id
-                    return true;
+                    return (true, "Connection ok");
                 }
             }
             catch
             {
-                return false;  // 失败就跳过
+                return (true, "Connection ng");   // 失败就跳过
             }
 
+        }
+
+        /// <summary>
+        /// 查询方式判断,比较推荐,
+        /// <para></para>
+        /// </summary> 
+        private (bool s, string m) Is连接是否有效2(SqlSugar_DB db, string _id, ConnectionConfig cfg)
+        {
+            if (db is null)
+            {
+                return (false, "db is null");
+            }
+
+            string[] work = new string[]
+            {
+                "判断id是否存在",
+                "数据库检测",
+            };
+
+            bool rtRun = true;//为false时退出
+            bool rt = false;
+            string msg = "";
+
+            //第一次失败时,删除连接后,重新初始化后再来一次,
+            for (global::System.Int32 i = 0; i < 2; i++)
+            {
+                if (!rtRun)
+                {
+                    break;
+                }
+                foreach (var item in work)
+                {
+                    if (item == "判断id是否存在")
+                    {
+                        #region MyRegion
+
+                        if (!this.Db.IsAnyConnection(_id))
+                        {
+                            this.Db.AddConnection(cfg);
+                        }
+
+                        #endregion
+                    }
+                    else if (item == "数据库检测")
+                    {
+                        #region MyRegion
+
+                        using (var a0 = this.Db.CopyNew())
+                        {
+                            using (var b0 = a0.GetConnection(_id))
+                            {
+                                rt = Is是否能连接(b0);
+                                if (!rt)
+                                {
+                                    //失败时删除连接
+                                    this.Db.RemoveConnection(_id);
+                                    msg = "Connection ng";
+                                }
+                                else
+                                {
+                                    msg = "Connection ok";
+                                    //成功时退出
+                                    rtRun = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    #endregion
+                }
+
+            } 
+
+            return (rt, msg);
+        }
+
+
+        /// <summary>
+        /// 两种检测方式可选
+        /// <para>远程连SQLserver,MySql时用此方法</para>
+        /// <para>解决远程数据库连接池耗尽断开的问题</para>
+        /// <para>模式 =0:查询方式检测,=1:SqlSugarClient方式重连检测</para>
+        /// </summary> 
+        public (bool s, string m) Is连接是否有效(SqlSugar_DB db, string _id, ConnectionConfig cfg, int 模式 = 0)
+        {
+
+            (bool s, string m) rt = (false, "");
+
+            #region 检测
+
+            if (模式 == 0)
+            {
+                rt = Is连接是否有效2(db, _id, cfg);
+
+            }
+            else
+            {
+                rt = Is连接是否有效1(db, _id, cfg);
+            }
+
+
+            #endregion
+
+            return rt;
         }
 
 

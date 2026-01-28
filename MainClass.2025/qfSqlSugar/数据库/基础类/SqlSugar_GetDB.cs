@@ -20,65 +20,51 @@ namespace qfSqlSugar
         public SqlSugarProvider Db { get; private set; } = null;
         private SqlSugarClient _scope;
         public bool _Is线程是否有效 = false;
-
+ 
 
         /// <summary>
         /// id:连接数据库的ID
         /// </summary> 
-        public SqlSugar_GetDB(SqlSugar_DB Db_, string id)
+        public SqlSugar_GetDB(SqlSugar_DB Db_, string id  )
         {
             this._scope = Db_.Db.CopyNew();
-            this.Db = this._scope.GetConnection(id);
+            this.Db = this._scope.GetConnection(id); 
         }
 
 
-
         /// <summary>
-        /// id:连接数据库的ID
-        /// <para>远程数据库用此方法,会自动重连,防止线程池耗尽断开</para>
-        /// <para>查询 _Is线程是否有效 =true:有效,=false:无效</para>
+        /// 两种检测方式可选,一般远程数据库时用
+        /// <para>从 _Is线程是否有效 判断是否可以连接</para>
+        /// <para>远程连SQLserver,MySql时用此方法</para>
+        /// <para>解决远程数据库连接池耗尽断开的问题</para>
+        /// <para>模式 =0:查询方式检测(默认),=1:SqlSugarClient方式重连检测</para>
         /// </summary> 
-        public SqlSugar_GetDB(SqlSugar_DB Db_, string id, ConnectionConfig cfg)
+        public SqlSugar_GetDB(SqlSugar_DB Db_, string id, ConnectionConfig cfg, int 模式 = 0)
         {
-            _Is线程是否有效 = Db_.Is连接是否有效(id, cfg);
+            var rt = Db_.Is连接是否有效(Db_, id, cfg, 模式);
+            _Is线程是否有效 = rt.s;
             if (_Is线程是否有效)
             {
                 this._scope = Db_.Db.CopyNew();
                 this.Db = this._scope.GetConnection(id);
-            } 
+            }
         }
 
-
+        /// <summary>
+        /// 打开,一般不用,远程数据库时可以用
+        /// </summary>
         public void Open()
         {
             this.Db.Open();
         }
 
+        /// <summary>
+        /// 关闭,一般不用,远程数据库时可以用
+        /// </summary>
         public void Close()
         {
             this.Db.Close();
         }
-
-
-        /// <summary>
-        /// 连接是否有效,
-        /// </summary>
-        /// <returns></returns>
-        public bool IsDbAlive()
-        {
-            try
-            {
-                // 执行一个简单的查询以检查数据库连接
-                var result = this.Db.Ado.GetScalar("SELECT 1");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
-
-
 
         public void Dispose()
         {
@@ -86,6 +72,11 @@ namespace qfSqlSugar
             {
                 this._scope.Dispose();
                 this._scope = null;
+            }
+
+            if (this.Db != null)
+            {
+                this.Db.Dispose();
                 this.Db = null;
             }
         }
