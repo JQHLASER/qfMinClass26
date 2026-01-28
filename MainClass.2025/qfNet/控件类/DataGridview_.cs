@@ -245,6 +245,31 @@ namespace qfNet
             this._datagridview.Rows[行号].Height = height;
             return this;
         }
+        public DataGridview_ 设置行高(  int height)
+        {
+            this._datagridview.RowTemplate.Height = height; // 所有新行的默认高度
+            return this;
+        }
+
+        /// <summary>
+        /// 遍历式
+        /// </summary> 
+        public DataGridview_ 设置所有行高(int height)
+        {
+            foreach (DataGridViewRow  s in this._datagridview.Rows )
+            {
+                s.Height = height;
+            } 
+            return this;
+        }
+        public DataGridview_ 设置自动适应内容高度(int height)
+        {
+            this._datagridview.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            return this;
+        }
+
+      
+
 
         public DataGridview_ 设置列数(int 列数)
         {

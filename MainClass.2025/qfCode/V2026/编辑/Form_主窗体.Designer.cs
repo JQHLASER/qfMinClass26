@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_主窗体));
             this.uiTitlePanel_元素列表 = new Sunny.UI.UITitlePanel();
-            this.uiListBox_元素列表 = new Sunny.UI.UIListBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.ui_Button_元素_下移 = new Sunny.ui_Button2();
             this.ui_Button_元素_上移 = new Sunny.ui_Button2();
@@ -59,17 +58,19 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uiTextBox1 = new Sunny.UI.UITextBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.uiTitlePanel_元素列表.SuspendLayout();
             this.panel2.SuspendLayout();
             this.uiTitlePanel_对象列表.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // uiTitlePanel_元素列表
             // 
-            this.uiTitlePanel_元素列表.Controls.Add(this.uiListBox_元素列表);
+            this.uiTitlePanel_元素列表.Controls.Add(this.dataGridView1);
             this.uiTitlePanel_元素列表.Controls.Add(this.panel2);
             this.uiTitlePanel_元素列表.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uiTitlePanel_元素列表.FillColor = System.Drawing.SystemColors.Control;
@@ -90,32 +91,6 @@
             this.uiTitlePanel_元素列表.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
             this.uiTitlePanel_元素列表.TitleHeight = 30;
             this.uiTitlePanel_元素列表.标题栏字体Font = new System.Drawing.Font("微软雅黑", 8.765218F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            // 
-            // uiListBox_元素列表
-            // 
-            this.uiListBox_元素列表.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uiListBox_元素列表.FillColor = System.Drawing.Color.White;
-            this.uiListBox_元素列表.Font = new System.Drawing.Font("新宋体", 10.01739F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiListBox_元素列表.HoverColor = System.Drawing.Color.Transparent;
-            this.uiListBox_元素列表.ItemHeight = 35;
-            this.uiListBox_元素列表.Items.AddRange(new object[] {
-            "元素1",
-            "元素2"});
-            this.uiListBox_元素列表.ItemSelectForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
-            this.uiListBox_元素列表.Location = new System.Drawing.Point(2, 35);
-            this.uiListBox_元素列表.Margin = new System.Windows.Forms.Padding(0);
-            this.uiListBox_元素列表.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiListBox_元素列表.Name = "uiListBox_元素列表";
-            this.uiListBox_元素列表.Padding = new System.Windows.Forms.Padding(2);
-            this.uiListBox_元素列表.RectColor = System.Drawing.Color.Transparent;
-            this.uiListBox_元素列表.RectSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.None;
-            this.uiListBox_元素列表.Size = new System.Drawing.Size(440, 413);
-            this.uiListBox_元素列表.Style = Sunny.UI.UIStyle.Custom;
-            this.uiListBox_元素列表.StyleCustomMode = true;
-            this.uiListBox_元素列表.TabIndex = 7;
-            this.uiListBox_元素列表.Text = "uiListBox1";
-            this.uiListBox_元素列表.文本颜色 = System.Drawing.Color.Gray;
-            this.uiListBox_元素列表.背景颜色 = System.Drawing.Color.White;
             // 
             // panel2
             // 
@@ -584,6 +559,16 @@
             this.uiTextBox1.Text = "uiTextBox1";
             this.uiTextBox1.填充颜色 = System.Drawing.Color.WhiteSmoke;
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(2, 35);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 49;
+            this.dataGridView1.Size = new System.Drawing.Size(440, 413);
+            this.dataGridView1.TabIndex = 7;
+            // 
             // Form_主窗体
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -602,6 +587,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -609,7 +595,6 @@
 
         #endregion
         private Sunny.UI.UITitlePanel uiTitlePanel_元素列表;
-        private Sunny.UI.UIListBox uiListBox_元素列表;
         private System.Windows.Forms.Panel panel2;
         private Sunny.UI.UITitlePanel uiTitlePanel_对象列表;
         private Sunny.UI.UIListBox uiListBox_对象列表;
@@ -638,5 +623,6 @@
         private Sunny.ui_Button2 ui_Button_对象_上移;
         private Sunny.ui_Button2 ui_Button_对象_删除;
         private Sunny.UI.UITextBox uiTextBox1;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

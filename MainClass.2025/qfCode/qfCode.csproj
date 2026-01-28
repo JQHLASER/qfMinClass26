@@ -139,7 +139,7 @@
     <Compile Include="V2026\编辑\Win\Form_对象.Designer.cs">
       <DependentUpon>Form_对象.cs</DependentUpon>
     </Compile>
-    <Compile Include="V2026\编辑\上下移动.cs" />
+    <Compile Include="V2026\编辑\对象_元素操作.cs" />
     <Compile Include="V2026\编辑\交互\子接口\Iworker_编辑交互.cs" />
     <Compile Include="V2026\编辑\交互\编辑交互_统一接口.cs" />
     <Compile Include="V2026\编辑\交互\子接口\编辑交互_本地.cs" />

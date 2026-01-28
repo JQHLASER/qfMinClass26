@@ -1,4 +1,6 @@
-﻿  
+﻿  BindingList<int> bindList = new BindingList<int>(list);
+ List<int> list = bindList.ToList();
+
   
   BindingList<string> lst = new BindingList<string>();
             lst.Add("a");

@@ -24,6 +24,7 @@ namespace qfLanguage
             new _language_Value_ ( keys, "添加","添加"),
             new _language_Value_ ( keys, "修改","修改"),
             new _language_Value_ (keys,"未选中要操作的对象","未选中要操作的对象"),
+            new _language_Value_ (keys,"未选中要操作的元素","未选中要操作的元素"),
             new _language_Value_ (keys,"确认删除?","确认删除?"),
             new _language_Value_ ( keys, "对象","对象"),
             new _language_Value_ ( keys, "配方名不能为空","配方名不能为空"),
@@ -32,8 +33,11 @@ namespace qfLanguage
             new _language_Value_ ( keys, "请输入分割符","请输入分割符"),
             new _language_Value_ ( keys, "请输入首分割符","请输入首分割符"),
             new _language_Value_ ( keys, "请输入尾分割符","请输入尾分割符"),
+            new _language_Value_ ( keys, "保存成功","保存成功"),
 
 
+
+            
 
             new _language_Value_ ( keys, "文本","文本"),
             new _language_Value_ ( keys, "序列号","序列号"),

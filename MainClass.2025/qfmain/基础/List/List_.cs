@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,7 +70,7 @@ namespace qfmain
             return lst.Count(s => s == value);
         }
 
-        
+
 
 
 
@@ -80,10 +81,33 @@ namespace qfmain
             int newIndex = Math.Max(0, index - moveCount);
             var item = list[index];
             list.RemoveAt(index);
-            list.Insert(newIndex, item); 
+            list.Insert(newIndex, item);
             index = newIndex;
         }
         public virtual void 下移<T>(List<T> list, ref int index, int moveCount)
+        {
+            if (list == null || moveCount <= 0 || index >= list.Count - 1) return;
+
+            int newIndex = Math.Min(list.Count - 1, index + moveCount);
+
+            var item = list[index];
+            list.RemoveAt(index);
+            list.Insert(newIndex, item);
+
+            index = newIndex;
+        }
+
+        public virtual void 上移<T>(BindingList <T> list, ref int index, int moveCount)
+        {
+            if (list == null || moveCount <= 0 || index <= 0) return;
+
+            int newIndex = Math.Max(0, index - moveCount);
+            var item = list[index];
+            list.RemoveAt(index);
+            list.Insert(newIndex, item);
+            index = newIndex;
+        }
+        public virtual void 下移<T>(BindingList<T> list, ref int index, int moveCount)
         {
             if (list == null || moveCount <= 0 || index >= list.Count - 1) return;
 
@@ -119,7 +143,32 @@ namespace qfmain
             list.Insert(newIndex, item);
 
             return newIndex;
-        } 
+        }
+
+        /// <summary>
+        /// index : 当前索引
+        ///<para>移动行数 : 小于0向上, 大于0向下</para>
+        /// </summary> 
+        public virtual int 移动<T>(BindingList<T> list, int index, int 移动行数)
+        {
+            if (list == null || index < 0 || index >= list.Count) return index;
+
+            int newIndex = index + 移动行数;
+            if (newIndex < 0) newIndex = 0;
+            if (newIndex > list.Count - 1) newIndex = list.Count - 1;
+
+            if (newIndex == index) return index;
+
+            var item = list[index];
+            list.RemoveAt(index);
+
+            if (newIndex > index)
+                newIndex--; // ⭐ 修正索引
+
+            list.Insert(newIndex, item);
+
+            return newIndex;
+        }
 
         /// <summary>
         /// index : 当前索引
@@ -144,12 +193,44 @@ namespace qfmain
 
             return newIndex;
         }
-          
+
+        /// <summary>
+        /// index : 当前索引
+        /// <para>性能高,不卡UI</para>
+        /// </summary> 
+        public virtual int 移动Swap<T>(BindingList<T> list, int index, int 移动行数)
+        {
+            if (list == null || index < 0 || index >= list.Count) return index;
+
+            int newIndex = index + 移动行数;
+            if (newIndex < 0) newIndex = 0;
+            if (newIndex > list.Count - 1) newIndex = list.Count - 1;
+
+            if (newIndex == index) return index;
+
+            if (newIndex > index)
+                for (int i = index; i < newIndex; i++)
+                    (list[i], list[i + 1]) = (list[i + 1], list[i]);
+            else
+                for (int i = index; i > newIndex; i--)
+                    (list[i], list[i - 1]) = (list[i - 1], list[i]);
+
+            return newIndex;
+        }
+
+
+
         public virtual void 在指定位置插入<T>(List<T> lst, T item, int index)
         {
-            lst.Insert(index, item); 
+            lst.Insert(index, item);
         }
-         
+
+        public virtual void 在指定位置插入<T>(BindingList<T> lst, T item, int index)
+        {
+            lst.Insert(index, item);
+        }
+
+
         public virtual void 查询重复的内容<T>(List<T> list, out List<T> lst重复的内容)
         {
             lst重复的内容 = new List<T>();

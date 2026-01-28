@@ -28,12 +28,31 @@ namespace qfCode
         public string Value { set; get; }
     }
 
+
+    /// <summary>
+    /// 元素及计算出的内容,编辑用
+    /// </summary>
+    public class _元素_Str_
+    {
+        public _em_工具箱_ 工具 { set; get; } = _em_工具箱_.文本;
+
+        /// <summary>
+        /// 元素内容
+        /// </summary>
+        public string Value { set; get; } = "";
+    }
+
+
     public enum _em_计算类型_
     {
         测试,
         加工,
     }
 
+
+    /// <summary>
+    /// 对象名称和计算的内容
+    /// </summary>
     public class _对象_str_
     {
         /// <summary>
