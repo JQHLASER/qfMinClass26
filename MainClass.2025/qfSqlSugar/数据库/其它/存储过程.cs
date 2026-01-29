@@ -26,7 +26,7 @@ namespace qfSqlSugar
         /// id:连接数据库的ID
         /// </summary> 
         public 存储过程(SqlSugarProvider Db_)
-        { 
+        {
             this.Db = Db_;
         }
 
@@ -139,7 +139,46 @@ namespace qfSqlSugar
         }
 
 
+        /// <summary>
+        /// 过程名,如 exec [dbo].[Scan_Finish]  
+        /// <para>传入参数,如new { param = "P26-001169-1" }</para>
+        /// </summary> 
+        public (bool s, string m, int count) Add(string 过程名, SugarParameter 传入参数)
+        {
+            try
+            {
+                var count = this.Db.Ado.UseStoredProcedure()
+                   .ExecuteCommand(
+                       过程名,
+                      传入参数
+                   );
+                return (true, "", count);
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message, -1);
+            }
+        }
 
-
+        /// <summary>
+        /// 过程名,如 exec [dbo].[Scan_Finish]  
+        /// <para>传入参数,如new { param = "P26-001169-1" }</para>
+        /// </summary> 
+        public (bool s, string m, int count) Add(string 过程名, SugarParameter[] 传入参数)
+        {
+            try
+            {
+                var count = this.Db.Ado.UseStoredProcedure()
+                   .ExecuteCommand(
+                       过程名,
+                      传入参数
+                   );
+                return (true, "", count);
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message, -1);
+            }
+        }
     }
 }
