@@ -142,6 +142,7 @@ namespace qfSqlSugar
         /// <summary>
         /// 过程名,如 exec [dbo].[Scan_Finish]  
         /// <para>传入参数,如new { param = "P26-001169-1" }</para>
+        /// <para>count : 一般为受影响行</para>
         /// </summary> 
         public (bool s, string m, int count) Add(string 过程名, SugarParameter 传入参数)
         {
@@ -163,6 +164,7 @@ namespace qfSqlSugar
         /// <summary>
         /// 过程名,如 exec [dbo].[Scan_Finish]  
         /// <para>传入参数,如new { param = "P26-001169-1" }</para>
+        /// <para>count : 一般为受影响行</para>
         /// </summary> 
         public (bool s, string m, int count) Add(string 过程名, SugarParameter[] 传入参数)
         {
