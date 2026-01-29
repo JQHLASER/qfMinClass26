@@ -91,6 +91,7 @@ namespace qfCode
                     偏移类型 = this.偏移类型,
                     偏移值 = this.偏移值,
                     配置 = this.配置,
+
                 };
 
             }

@@ -81,10 +81,18 @@ namespace qfCode
                 }
                 else if (this.uiradioButton_关联对象.Checked && this.con_关联对象 != null)
                 {
-                    isOk = this.con_关联对象.GetCfg();
-                    if (isOk)
+                    if (Form_主窗体.forms._编辑对象索引 == 0)
+                    { 
+                        isOk = false;
+                        MessageBox.Show(Language_.Get语言("首对象时无法添加"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
                     {
-                        this._json元素信息 = new Json序列化().转成String(this.con_关联对象._cfg);
+                        isOk = this.con_关联对象.GetCfg();
+                        if (isOk)
+                        {
+                            this._json元素信息 = new Json序列化().转成String(this.con_关联对象._cfg);
+                        }
                     }
                 }
                 else if (this.uiradioButton_班次.Checked)
@@ -134,7 +142,7 @@ namespace qfCode
             };
             #endregion
 
-            #region 选中...序列号
+            #region 选中...日期
             this.uiradioButton_日期.ValueChanged += (s, e) =>
             {
                 if (e)

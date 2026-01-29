@@ -17,7 +17,7 @@ namespace qfmain
     /// </summary>
     public class ini_sharpconfig
     {
-        private readonly string _filePath;
+        private  string _filePath;
         private static readonly object _lock = new object();
         private Configuration _config;
 

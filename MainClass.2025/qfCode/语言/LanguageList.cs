@@ -34,10 +34,11 @@ namespace qfLanguage
             new _language_Value_ ( keys, "请输入首分割符","请输入首分割符"),
             new _language_Value_ ( keys, "请输入尾分割符","请输入尾分割符"),
             new _language_Value_ ( keys, "保存成功","保存成功"),
+            new _language_Value_ ( keys, "首对象时无法添加","首对象时无法添加"),
+            new _language_Value_ ( keys, "请选择关联对象","请选择关联对象"),
+            new _language_Value_ ( keys, "请选择偏移类型","请选择偏移类型"),
+            new _language_Value_ ( keys, "请选择配置文件","请选择配置文件"),
 
-
-
-            
 
             new _language_Value_ ( keys, "文本","文本"),
             new _language_Value_ ( keys, "序列号","序列号"),

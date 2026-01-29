@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace qfCode
 {
@@ -50,19 +51,19 @@ namespace qfCode
 
         public string[] Get目录_班次()
         {
-            new qfmain.文件_文件夹().文件夹_获取所有文件_有后缀(this._codeSys._文件夹_属性.班次, out List<string> lst, "*.txt");
+            new qfmain.文件_文件夹().文件夹_获取所有文件_无后缀(this._codeSys._文件夹_属性.班次, out List<string> lst, "*.txt");
             return lst.ToArray();
         }
         public string[] Get目录_日期时间()
         {
-            new qfmain.文件_文件夹().文件夹_获取所有文件_有后缀(this._codeSys._文件夹_属性.日期时间, out List<string> lst, "*.txt");
+            new qfmain.文件_文件夹().文件夹_获取所有文件_无后缀(this._codeSys._文件夹_属性.日期时间, out List<string> lst, "*.txt");
             return lst.ToArray();
         }
 
 
         public string[] Get目录_配方()
         {
-            new qfmain.文件_文件夹().文件夹_获取所有文件_有后缀(this._codeSys._文件夹_属性.配方, out List<string> lst, $"*{this._codeSys._功能.后缀}");
+            new qfmain.文件_文件夹().文件夹_获取所有文件_无后缀(this._codeSys._文件夹_属性.配方, out List<string> lst, $"*{this._codeSys._功能.后缀}");
             return lst.ToArray();
         }
 
@@ -113,6 +114,7 @@ namespace qfCode
         internal string Get_日期时间(string FileName, string section, string keys)
         {
             string path = GetPath_日期时间(FileName);
+             
             qfmain.ini_sharpconfig ini_sys = new qfmain.ini_sharpconfig(path);
             if (!new qfmain.文件_文件夹().文件_是否存在(path))
             {

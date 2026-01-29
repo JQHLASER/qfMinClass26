@@ -26,6 +26,15 @@ namespace qfCode
         /// 对象内容
         /// </summary>
         public string Value { set; get; }
+
+        public _对象_内容_ Clone()
+        {
+            return new _对象_内容_
+            {
+                对象 = this.对象,
+                Value = this.Value,
+            };
+        }
     }
 
 
@@ -40,6 +49,18 @@ namespace qfCode
         /// 元素内容
         /// </summary>
         public string Value { set; get; } = "";
+
+
+
+        public _元素_Str_ Clone()
+        {
+            return new _元素_Str_
+            {
+                工具 = this.工具,
+                Value = this.Value,
+            };
+        }
+         
     }
 
 

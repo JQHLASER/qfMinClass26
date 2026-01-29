@@ -14,13 +14,21 @@ namespace qfCode
     {
         type_编辑._编辑类型_ _type;
         public _元素_.日期 _cfg;
+        BindingList<string> _lstBinding_配置 = new BindingList<string>();
+
+
         public Control_日期(type_编辑._编辑类型_ type, _元素_.日期 cfg)
         {
             InitializeComponent();
             this._type = type;
             this._cfg = cfg.Clone();
 
-            this.ui_Combobox2_配置._ComboBox.DataSource = new BindingList<string>(new 编辑交互_本地(Form_主窗体.forms._编辑).Get配置文件_日期时间());
+            this.panel_配置文件.Visible = Form_主窗体.forms._编辑._功能.日期时间.配置编码;
+            this.uiGroupBox_偏移.Visible = Form_主窗体.forms._编辑._功能.日期时间.偏移计算;
+
+
+            this._lstBinding_配置 = new BindingList<string>(new 编辑交互_本地(Form_主窗体.forms._编辑).Get配置文件_日期时间());
+            this.ui_Combobox2_配置._ComboBox.DataSource = this._lstBinding_配置;
             #region 偏移
 
             string[] py = Enum.GetNames(typeof(_日期时间_._em_偏移类型_));
@@ -33,65 +41,71 @@ namespace qfCode
 
             #endregion
 
-            this.uiGroupBox_偏移.Visible = Form_主窗体.forms._编辑._功能.日期时间.偏移计算;
-            this.panel_配置文件.Visible = Form_主窗体.forms._编辑._功能.日期时间.配置编码;
+
 
 
             语言();
 
-            
+
 
             this.Load += (s, e) =>
             {
+                #region 初始值
+
                 this.uiRadioButton_年4位.Checked = true;
                 this.uiComboBox_偏移_类型.SelectedIndex = 0;
                 this.uiTextBox_偏移值.IntValue = 1;
                 this.ui_Combobox2_配置._ComboBox.SelectedIndex = this.ui_Combobox2_配置._ComboBox.Items.Count > 0 ? 0 : -1;
-            };
-            
 
-            #region 偏移值
+                #endregion
 
-            if (Form_主窗体.forms._编辑._功能.日期时间.偏移计算)
-            {
+
+                //下面是实际值
+
+                #region 偏移值
+
                 this.uiComboBox_偏移_类型.SelectedIndex = (int)this._cfg.偏移类型;
                 this.uiTextBox_偏移值.IntValue = this._cfg.偏移值;
-            }
 
-            #endregion
 
-            #region 配置文件
+                #endregion
 
-            if (Form_主窗体.forms._编辑._功能.日期时间.配置编码)
-            {
+                #region 配置文件
+
                 int index = this.ui_Combobox2_配置._ComboBox.Items.IndexOf(this._cfg.配置);
                 this.ui_Combobox2_配置._ComboBox.SelectedIndex = index;
-            }
 
-            #endregion
+                #endregion
 
 
-            #region 日期
+                #region 日期
 
-            switch (this._cfg.types)
-            {
-                case _日期时间_._em_日期_.年4位:
-                    this.uiRadioButton_年4位.Checked = true; break;
-                case _日期时间_._em_日期_.年2位:
-                    this.uiRadioButton_年2位.Checked = true; break;
-                case _日期时间_._em_日期_.月:
-                    this.uiRadioButton_月.Checked = true; break;
-                case _日期时间_._em_日期_.日:
-                    this.uiRadioButton_日.Checked = true; break;
-                case _日期时间_._em_日期_.天:
-                    this.uiRadioButton_天.Checked = true; break;
-                case _日期时间_._em_日期_.周:
-                    this.uiRadioButton_周.Checked = true; break;
-                case _日期时间_._em_日期_.星期:
-                    this.uiRadioButton_星期.Checked = true; break;
-            }
+                switch (this._cfg.types)
+                {
+                    case _日期时间_._em_日期_.年4位:
+                        this.uiRadioButton_年4位.Checked = true; break;
+                    case _日期时间_._em_日期_.年2位:
+                        this.uiRadioButton_年2位.Checked = true; break;
+                    case _日期时间_._em_日期_.月:
+                        this.uiRadioButton_月.Checked = true; break;
+                    case _日期时间_._em_日期_.日:
+                        this.uiRadioButton_日.Checked = true; break;
+                    case _日期时间_._em_日期_.天:
+                        this.uiRadioButton_天.Checked = true; break;
+                    case _日期时间_._em_日期_.周:
+                        this.uiRadioButton_周.Checked = true; break;
+                    case _日期时间_._em_日期_.星期:
+                        this.uiRadioButton_星期.Checked = true; break;
+                }
 
-            #endregion
+                #endregion
+
+            };
+
+
+
+
+
 
 
 
@@ -116,6 +130,23 @@ namespace qfCode
         /// </summary>
         public bool GetCfg()
         {
+            if (Form_主窗体.forms._编辑._功能.日期时间.偏移计算)
+            {
+                if (this.uiComboBox_偏移_类型.SelectedIndex < 0)
+                {
+                    MessageBox.Show(Language_.Get语言("请选择偏移类型"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+            }
+            if (Form_主窗体.forms._编辑._功能.日期时间.配置编码)
+            {
+                if (this.ui_Combobox2_配置._ComboBox.SelectedIndex < 0)
+                {
+                    MessageBox.Show(Language_.Get语言("请选择配置文件"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+            }
+
             this._cfg.types =
                 this.uiRadioButton_年4位.Checked ? _日期时间_._em_日期_.年4位 :
                 this.uiRadioButton_年2位.Checked ? _日期时间_._em_日期_.年2位 :
@@ -126,16 +157,14 @@ namespace qfCode
                 this.uiRadioButton_星期.Checked ? _日期时间_._em_日期_.星期 :
                 _日期时间_._em_日期_.年4位;
 
-            if (Form_主窗体.forms._编辑._功能.日期时间.偏移计算)
-            {
-                this._cfg.偏移类型 = (_日期时间_._em_偏移类型_)this.uiComboBox_偏移_类型.SelectedIndex;
-                this._cfg.偏移值 = this.uiTextBox_偏移值.IntValue;
-            }
 
-            if (Form_主窗体.forms._编辑._功能.日期时间.配置编码)
-            {
-                this._cfg.配置 = this.ui_Combobox2_配置._ComboBox.SelectedText;
-            }
+            this._cfg.偏移类型 = (_日期时间_._em_偏移类型_)this.uiComboBox_偏移_类型.SelectedIndex;
+            this._cfg.偏移值 = this.uiTextBox_偏移值.IntValue;
+
+
+            this._cfg.配置 = this._lstBinding_配置[this.ui_Combobox2_配置._ComboBox.SelectedIndex];
+
+
             return true;
         }
 

@@ -17,6 +17,7 @@ namespace qfCode
     {
         type_编辑._编辑类型_ _type;
         public _元素_.关联对象 _cfg;
+        BindingList<string> _lstBinding_可关联对象 = new BindingList<string>();
         public Control_关联对象(type_编辑._编辑类型_ type, _元素_.关联对象 cfg)
         {
             InitializeComponent();
@@ -45,18 +46,19 @@ namespace qfCode
 
             #region 可关联对象
 
-            List<string> lstObject = new List<string>();
+
             var 当前对象 = Form_主窗体.forms._配方信息.对象[Form_主窗体.forms._编辑对象索引];
+            this._lstBinding_可关联对象.Clear();
             foreach (var s in Form_主窗体.forms._配方信息.对象)
             {
                 if (s.对象名 == 当前对象.对象名)
                     break;
                 else
                 {
-                    lstObject.Add(s.对象名);
+                    _lstBinding_可关联对象.Add(s.对象名);
                 }
             }
-            this.uiComboBox_对象.DataSource = lstObject;
+            this.uiComboBox_对象.DataSource = this._lstBinding_可关联对象;
 
             #endregion
 
@@ -97,8 +99,12 @@ namespace qfCode
         /// </summary>
         public bool GetCfg()
         {
-
-
+            if (this.uiComboBox_对象.SelectedIndex < 0)
+            {
+                MessageBox.Show(Language_.Get语言("请选择关联对象"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+             
             #region 参数...param
 
             string jsonStr = "{}";
@@ -140,7 +146,7 @@ namespace qfCode
                               this.uiRadioButton_字符分割.Checked ? _关联对象_._em_类型_.按字符 :
                               this.uiRadioButton_首尾字符分割.Checked ? _关联对象_._em_类型_.按首尾 :
                               _关联对象_._em_类型_.全部;
-            this._cfg.对象 = this.uiComboBox_对象.SelectedText;
+            this._cfg.对象 = this._lstBinding_可关联对象[this.uiComboBox_对象.SelectedIndex];
 
 
 

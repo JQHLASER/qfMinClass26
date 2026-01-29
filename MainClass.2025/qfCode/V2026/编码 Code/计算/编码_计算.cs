@@ -208,8 +208,12 @@ namespace qfCode
             _日期时间_._em_编码类型_ 编码类型 = _日期时间_._em_编码类型_.年4位;
             try
             {
+                DateTime nows = 时间;
+                if (this._sys._功能.日期时间.偏移计算)
+                {
+                    nows = new 计算_日期时间().偏移计算(this._sys, 时间, info);
+                }
 
-                DateTime nows = new 计算_日期时间().偏移计算(this._sys, 时间, info);
                 switch (info.types)
                 {
                     case _日期时间_._em_日期_.年4位:
@@ -242,7 +246,10 @@ namespace qfCode
                         break;
                 }
 
-                结果 = this._sys._文件类.Get_日期时间(info.配置, $"{编码类型}", 结果);
+                if (this._sys._功能.日期时间.配置编码)
+                {
+                    结果 = this._sys._文件类.Get_日期时间(info.配置, $"{编码类型}", 结果);
+                }
 
             }
             catch (Exception ex)
@@ -288,7 +295,7 @@ namespace qfCode
 
                 }
 
-                if (info.types != _日期时间_._em_时间_.毫秒)
+                if (this._sys._功能.日期时间.配置编码 && info.types != _日期时间_._em_时间_.毫秒)
                 {
                     结果 = this._sys._文件类.Get_日期时间(info.配置, $"{编码类型}", 结果);
                 }
