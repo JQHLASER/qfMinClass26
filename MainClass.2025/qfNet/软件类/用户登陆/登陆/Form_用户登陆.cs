@@ -41,6 +41,8 @@ namespace qfNet
 
             this._LoginShowType = LoginShowType_;//登陆/切换
 
+            this.uiTextBox_密码.ImeMode = ImeMode.Disable;
+
 
             this._DataContext.ShowTaskBar = (this._LoginShowType == _LoginShowType_.用户登陆) ? true : false;
 

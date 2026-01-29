@@ -102,7 +102,6 @@
             this.uiTextBox_密码.Style = Sunny.UI.UIStyle.深蓝底8;
             this.uiTextBox_密码.StyleCustomMode = true;
             this.uiTextBox_密码.TabIndex = 3;
-            this.uiTextBox_密码.textAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.uiTextBox_密码.填充颜色 = System.Drawing.Color.White;
             // 
             // uiButton_登陆
@@ -179,7 +178,6 @@
             this.uiTextBox_用户.Style = Sunny.UI.UIStyle.深蓝底8;
             this.uiTextBox_用户.StyleCustomMode = true;
             this.uiTextBox_用户.TabIndex = 7;
-            this.uiTextBox_用户.textAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.uiTextBox_用户.填充颜色 = System.Drawing.Color.White;
             // 
             // Form_用户登陆

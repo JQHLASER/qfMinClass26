@@ -416,21 +416,12 @@ SqlServer 数据库....使用最新库
         /// <para>参数 (状态,消息,DB)</para>
         /// </summary>
         public event Action<bool, string, SqlSugar_DB> Event_初始化结束1;
-
-
-        private readonly object _lockDb = new object();
-
+         
         private void On_Event_ConnectionConfig(List<ConnectionConfig> lst, SqlSugar_DB db)
-        {
-            lock (_lockDb)
-            {
-                Event_ConnectionConfig?.Invoke(lst, db);
-            }
+        { 
+            Event_ConnectionConfig?.Invoke(lst, db); 
         }
-
-
-
-
+         
 
         #endregion
 
@@ -618,7 +609,7 @@ SqlServer 数据库....使用最新库
                     #endregion
                 }
 
-            } 
+            }
 
             return (rt, msg);
         }

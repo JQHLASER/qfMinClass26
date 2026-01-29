@@ -2,8 +2,10 @@
 using Sunny.UI;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 namespace qfNet
 {
     public class DataGridview_
@@ -208,7 +210,14 @@ namespace qfNet
             this._datagridview.Columns[列号].ReadOnly = true;
             return this;
         }
-
+        public DataGridview_ 列为只读( )
+        {
+            foreach (DataGridViewColumn column in this._datagridview.Columns)
+            {
+                column.ReadOnly = true;
+            }
+            return this;
+        }
 
         public DataGridview_ 行为只读(int 行号)
         {
@@ -245,7 +254,9 @@ namespace qfNet
             this._datagridview.Rows[行号].Height = height;
             return this;
         }
-        public DataGridview_ 设置行高(  int height)
+
+        //设置所有新行的默认高度
+        public DataGridview_ 设置行高(int height)
         {
             this._datagridview.RowTemplate.Height = height; // 所有新行的默认高度
             return this;
@@ -256,10 +267,10 @@ namespace qfNet
         /// </summary> 
         public DataGridview_ 设置所有行高(int height)
         {
-            foreach (DataGridViewRow  s in this._datagridview.Rows )
+            foreach (DataGridViewRow s in this._datagridview.Rows)
             {
                 s.Height = height;
-            } 
+            }
             return this;
         }
         public DataGridview_ 设置自动适应内容高度(int height)
@@ -268,7 +279,7 @@ namespace qfNet
             return this;
         }
 
-      
+
 
 
         public DataGridview_ 设置列数(int 列数)
@@ -847,7 +858,7 @@ namespace qfNet
         {
             this._datagridview.MultiSelect = false;
             this._datagridview.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            return this;    
+            return this;
         }
         public DataGridview_ 选中行_取消默认第一行被选中()
         {
@@ -855,7 +866,7 @@ namespace qfNet
             return this;
         }
 
-        
+
 
         #endregion
 
@@ -873,18 +884,18 @@ namespace qfNet
             this.设置网格线颜色(Color.FromArgb(224, 224, 224));
             this.取总列数(out int countColumns);
             this.设置字体_整体(new Font("微软雅黑", 11f, FontStyle.Regular));
-            this.设置字体颜色_整体(Color.Black );
+            this.设置字体颜色_整体(Color.Black);
 
             列标题样式();
             for (int i = 0; i < countColumns; i++)
             {
-                this.设置文本颜色_列标题(i, Color.Black );
+                this.设置文本颜色_列标题(i, Color.Black);
                 this.列为只读(i);
                 this.列排序_禁用(i);
                 this.列标题对齐(i, DataGridViewContentAlignment.MiddleLeft);
             }
             选中行_设置只选择一行();
-          
+
             return this;
 
         }

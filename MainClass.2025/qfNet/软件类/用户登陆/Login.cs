@@ -24,6 +24,18 @@ namespace qfNet
             UserType = UserType_;
         }
 
+        public _loginInfo_ Clone()
+        {
+            return new _loginInfo_
+            {
+                UserName = this.UserName,
+                Passwrord = this.Passwrord,
+                UserType = this.UserType
+            };
+        }
+
+
+
         /// <summary>
         /// 用户名
         /// </summary>
@@ -36,6 +48,11 @@ namespace qfNet
         /// 用户权限
         /// </summary>
         public _LoginUserType_ UserType { set; get; }
+
+
+
+
+
     }
 
 
@@ -171,7 +188,7 @@ namespace qfNet
                     {
                         this._Config.loginInfo_Beff = 生成原始数据();
                     }
-                    _loginInfo_[] info = this._Config.loginInfo_Beff;
+                    _loginInfo_[] info = this._Config.loginInfo_Beff.Select(i => i.Clone()).ToArray();
                     new qfmain.文件_文件夹().WriteReadJson(path, model, ref info, out string msgErr, null, true);
                     this._Config.loginInfo_Beff = info;
 
@@ -218,7 +235,10 @@ namespace qfNet
         }
 
 
-
+        public string 语言_用户权限(_LoginUserType_ type)
+        {
+            return Language_.Get语言($"{type}");
+        }
 
         public void Win_用户管理()
         {

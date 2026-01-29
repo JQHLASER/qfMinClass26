@@ -13,10 +13,10 @@ namespace qfNet
 {
     internal partial class Form_Login_修改or添加 : Sunny.UI.UIForm
     {
-    //    protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }//双缓冲显示窗体所有子控件
+        //    protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }//双缓冲显示窗体所有子控件
         Form_Login_管理._操作方式_ _操作方式 = Form_Login_管理._操作方式_.添加;
         Form_Login_管理 _form管理;
-        _loginInfo_ _当前选中用户信息;
+        public _loginInfo_ _当前选中用户信息;
         _loginInfo_ _当前登陆用户信息;
 
 
@@ -34,14 +34,16 @@ namespace qfNet
             this._当前登陆用户信息 = this._form管理._Login_sys._Config.loginInfo;
             if (操作方式_ == Form_Login_管理._操作方式_.修改)
             {
-                this._修改_选中行索引 = this._form管理.listView_userInfo.SelectedIndices[0];
-                this._当前选中用户信息 = this._form管理.lstInfo[this._修改_选中行索引];
+                this._修改_选中行索引 = this._form管理.获取选中行数();
+                this._当前选中用户信息 = this._form管理._lstInfo[this._修改_选中行索引].Clone();
             }
 
 
             this.uiLabel_用户.Text = Language_.Get语言("用户");
             this.uiLabel_密码.Text = Language_.Get语言("密码");
             this.uiLabel_权限.Text = Language_.Get语言("权限");
+
+            this.uiTextBox_密码.ImeMode = ImeMode.Disable;
 
 
             #region 用户权限
@@ -184,7 +186,7 @@ namespace qfNet
 
                     #region 添加
 
-                    foreach (var s in this._form管理.lstInfo)
+                    foreach (var s in this._form管理._lstInfo)
                     {
                         if (s.UserName == userName)
                         {
@@ -194,13 +196,8 @@ namespace qfNet
 
                     }
 
-                    _loginInfo_ loginInfo = new _loginInfo_(userName, password, userType);
-                    this._form管理.lstInfo.Add(loginInfo);
-
-                    ListViewItem items = new ListViewItem(loginInfo.UserName);
-                    items.SubItems.Add(Language_.Get语言($"{loginInfo.UserType}"));
-                    this._form管理.listView_userInfo.Items.Add(items);
-
+                    this._当前选中用户信息   = new _loginInfo_(userName, password, userType);
+                  
 
                     #endregion
 
@@ -209,13 +206,7 @@ namespace qfNet
 
                     #region 修改
 
-                    _loginInfo_ loginInfo_update = new _loginInfo_(userName, password, userType);
-                    this._form管理.lstInfo[this._修改_选中行索引] = loginInfo_update;
-
-                    ListViewItem items_update = new ListViewItem(loginInfo_update.UserName);
-                    items_update.SubItems.Add(Language_.Get语言($"{loginInfo_update.UserType}"));
-                    this._form管理.listView_userInfo.Items[this._修改_选中行索引] = items_update;
-
+                    this._当前选中用户信息 = new _loginInfo_(userName, password, userType); 
 
                     #endregion
 

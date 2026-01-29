@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Login_管理));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
             this.工具栏1 = new Sunny.UI.myControls.工具栏();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton_添加 = new System.Windows.Forms.ToolStripButton();
@@ -40,10 +39,9 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton_保存 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.listView_userInfo = new System.Windows.Forms.ListView();
-            this.UserName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.UserType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.工具栏1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // 工具栏1
@@ -139,43 +137,23 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(94, 6);
             // 
-            // listView_userInfo
+            // dataGridView1
             // 
-            this.listView_userInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listView_userInfo.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.UserName,
-            this.UserType});
-            this.listView_userInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView_userInfo.Font = new System.Drawing.Font("微软雅黑", 10.01739F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.listView_userInfo.FullRowSelect = true;
-            this.listView_userInfo.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.listView_userInfo.HideSelection = false;
-            this.listView_userInfo.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
-            this.listView_userInfo.Location = new System.Drawing.Point(10, 50);
-            this.listView_userInfo.MultiSelect = false;
-            this.listView_userInfo.Name = "listView_userInfo";
-            this.listView_userInfo.Size = new System.Drawing.Size(675, 540);
-            this.listView_userInfo.TabIndex = 1;
-            this.listView_userInfo.UseCompatibleStateImageBehavior = false;
-            this.listView_userInfo.View = System.Windows.Forms.View.Details;
-            // 
-            // UserName
-            // 
-            this.UserName.Text = "UserName";
-            this.UserName.Width = 350;
-            // 
-            // UserType
-            // 
-            this.UserType.Text = "Type";
-            this.UserType.Width = 250;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(10, 50);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 49;
+            this.dataGridView1.RowTemplate.Height = 25;
+            this.dataGridView1.Size = new System.Drawing.Size(675, 540);
+            this.dataGridView1.TabIndex = 1;
             // 
             // Form_Login_管理
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(800, 600);
-            this.Controls.Add(this.listView_userInfo);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.工具栏1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -191,6 +169,7 @@
             this.Load += new System.EventHandler(this.Form_Login_管理_Load);
             this.工具栏1.ResumeLayout(false);
             this.工具栏1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -208,8 +187,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton toolStripButton_保存;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ColumnHeader UserName;
-        private System.Windows.Forms.ColumnHeader UserType;
-        internal System.Windows.Forms.ListView listView_userInfo;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
