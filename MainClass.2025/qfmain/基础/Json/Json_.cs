@@ -116,7 +116,7 @@ namespace qfmain
         public virtual bool 是否为json格式(string jsonStr, out string msgErr)
         {
             msgErr = string.Empty;
-            if (string.IsNullOrWhiteSpace(jsonStr))
+            if (string.IsNullOrEmpty (jsonStr))
             {
                 msgErr = Language_.Get语言("不能为空");
                 return false;
@@ -151,9 +151,9 @@ namespace qfmain
         public virtual (bool s, string m, T t) 是否为json格式<T>(string jsonStr)
         {
             T result = default;
-            if (string.IsNullOrWhiteSpace(jsonStr))
+            if (string.IsNullOrEmpty (jsonStr))
             {
-                return (false, "JSON string is null or empty", result);
+                return (false, Language_.Get语言("不能为空"), result);
             }
 
             try

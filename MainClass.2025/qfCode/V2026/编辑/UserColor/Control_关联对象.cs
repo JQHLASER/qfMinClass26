@@ -32,7 +32,7 @@ namespace qfCode
             {
                 string 对象名 = this.uiComboBox_对象.SelectedText;
                 DateTime dates = DateTime.Now;
-                var rt = new 编辑交互_统一接口(Form_主窗体.forms._编辑).计算编码_对象(Form_主窗体.forms._配方信息, dates, 对象名);
+                var rt = new 编辑交互_统一接口(Form_主窗体.forms._编辑)._Iworker.计算编码_对象(Form_主窗体.forms._配方信息, dates, 对象名);
                 if (!rt.s)
                 {
                     MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);

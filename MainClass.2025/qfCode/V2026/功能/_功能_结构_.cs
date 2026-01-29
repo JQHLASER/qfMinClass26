@@ -10,7 +10,7 @@ namespace qfCode
     public class _功能_结构_
     {
         public class _工具箱_
-        { 
+        {
             public bool 关联对象 { set; get; } = false;
             public bool 班次 { set; get; } = false;
             public bool 特殊码 { set; get; } = false;
@@ -26,7 +26,7 @@ namespace qfCode
             /// <summary>
             /// 每个加工数量
             /// </summary>
-            public bool 加工  { set; get; } = false;
+            public bool 加工 { set; get; } = false;
 
             /// <summary>
             /// 十六进制序列号
@@ -36,9 +36,14 @@ namespace qfCode
 
 
         public class _日期时间_
-        { 
+        {
             public bool 偏移计算 { set; get; } = false;
             public bool 配置编码 { set; get; } = false;
+
+            /// <summary>
+            /// 更新日期的时间,比如每天8:00后为新的一天日期
+            /// </summary>
+            public bool 更新日期 { set; get; } = false;
         }
 
 

@@ -28,11 +28,13 @@ namespace qfCode
         }
 
 
-
-        public void Win_主窗体(bool Is父窗体 = false)
+        /// <summary>
+        /// 配方名称 : 进入窗体时要打开的配方,否则为空白的
+        /// </summary> >
+        public void Win_主窗体( string 配方名称,bool Is父窗体 = false)
         {
 
-            using (Form_主窗体 forms = new Form_主窗体(this))
+            using (Form_主窗体 forms = new Form_主窗体(配方名称,this))
             {
                 forms.MaximizeBox = false;
                 if (!Is父窗体)

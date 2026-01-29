@@ -226,9 +226,7 @@
       <DependentUpon>Form_对象.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="V2026\编码 Code\文件\配方\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rd /s /q "$(ProjectDir)obj"</PostBuildEvent>

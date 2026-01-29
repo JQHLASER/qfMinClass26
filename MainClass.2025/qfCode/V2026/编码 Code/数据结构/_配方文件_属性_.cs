@@ -32,7 +32,7 @@ namespace qfCode
             {
                 Datetimes = this.Datetimes,
                 备注 = this.备注,
-                对象 = this.对象 is null ? null : this.对象.Select(obj => obj.Clone()).ToList(),
+                对象 = this.对象 is null ? new List<_对象_> () : this.对象.Select(obj => obj.Clone()).ToList(),
                 更新时间 = this.更新时间,
                 班次文件 = this.班次文件,
             };

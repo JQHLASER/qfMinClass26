@@ -1,4 +1,5 @@
-﻿using qfSqlSugar;
+﻿using Newtonsoft.Json;
+using qfSqlSugar;
 using Sunny.UI;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,9 @@ namespace qfCode
     {
         internal 编辑_ _编辑;
         internal static Form_主窗体 forms;
+        /// <summary>
+        /// 配方文件
+        /// </summary>
         internal _配方文件_属性_ _配方信息 = new _配方文件_属性_();
         internal int _编辑对象索引 = -1;
         internal string _配方名称 = "";
@@ -30,11 +34,14 @@ namespace qfCode
 
 
 
-        public Form_主窗体(编辑_ 编辑)
+        public Form_主窗体(string 配方名称, 编辑_ 编辑)
         {
             InitializeComponent();
             forms = this;
             this._编辑 = 编辑;
+            this._配方名称 = 配方名称;
+
+
             this.WindowState = FormWindowState.Maximized;
             this.Padding = new System.Windows.Forms.Padding(5, 35, 5, 5);
 
@@ -42,9 +49,9 @@ namespace qfCode
             Datagridview格式();
             this.uiListBox_对象列表.Items.Clear();
 
-          
 
-            #region 按钮....对象
+
+            #region  对象
 
             this.uiListBox_对象列表.ItemClick += (s, e) =>
             {
@@ -86,7 +93,7 @@ namespace qfCode
                 {
                     string objectName = this._配方信息.对象[index].对象名;
                     DateTime now = DateTime.Now;
-                    var rt = new 编辑交互_统一接口(this._编辑).计算编码_对象(this._配方信息, now, objectName);
+                    var rt = new 编辑交互_统一接口(this._编辑)._Iworker.计算编码_对象(this._配方信息, now, objectName);
                     if (!rt.s)
                     {
                         MessageBox.Show(rt.m, "Err", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -101,7 +108,7 @@ namespace qfCode
             #endregion
 
 
-            #region 按钮....元素
+            #region  元素
 
             this.dataGridView1.DoubleClick += (s, e) =>
             {
@@ -130,6 +137,13 @@ namespace qfCode
             #endregion
 
 
+            //如果配方名称不为空时,则加载配方信息
+            if (!string.IsNullOrEmpty(this._配方名称))
+            { 
+                var rt配方 = 打开(this._配方名称);
+                this._配方信息 = rt配方.cfg.Clone();
+                显示所有对象名(); 
+            }
         }
 
 
@@ -201,10 +215,7 @@ namespace qfCode
             }
         }
 
-        void 全部计算()
-        {
-
-        }
+      
 
         #endregion
 
@@ -240,7 +251,7 @@ namespace qfCode
                                 new 对象_元素操作().在指定处插入<_元素_Str_>(this._lstBind元素, rt.cfg, index0 + 1);
 
                             }
-                            
+
                         }
                     }
                     #endregion
@@ -283,22 +294,31 @@ namespace qfCode
             if (Err_未选中要编辑的对象(out string 编辑对象))
             {
                 DateTime now = DateTime.Now;
-                var rt = new 编辑交互_统一接口(this._编辑).计算元素(this._配方信息, this._lst对象内容, now, this._配方信息.对象[this._编辑对象索引 ], json元素);
-                return rt;
+
+                var rtJS = 计算_所有对象内容();
+                if (rtJS.s)
+                {
+                    var rt = new 编辑交互_统一接口(this._编辑)._Iworker.计算元素(this._配方信息, this._lst对象内容, now, this._配方信息.对象[this._编辑对象索引], json元素);
+                    return rt;
+                }
+                else
+                {
+                    return (rtJS.s, rtJS.m, default);
+                }
             }
             return (false, "", default);
         }
-         
+
         void Datagridview格式()
         {
             var grid = new qfNet.DataGridview_(this.dataGridView1).格式化();
-            grid.设置行高 (30);
+            grid.设置行高(30);
             grid.显示or隐藏标题(false);
-            grid.使能修改列宽(true  );
+            grid.使能修改列宽(true);
             grid.设置列宽(0, 200);
             grid.设置列宽(1, 500);
             grid.设置字体_整体(new Font("微软雅黑", 9f));
-            
+
         }
 
 
@@ -309,8 +329,14 @@ namespace qfCode
 
         void On_保存()
         {
-            DateTime now = DateTime.Now;
-            var rt = new 编辑交互_统一接口(this._编辑).配方_保存(this._配方信息, this._配方名称, now);
+            this._配方名称 = "abc";
+            if (string.IsNullOrEmpty(this._配方名称))
+            {
+
+                return;
+            }
+
+            var rt = 保存(this._配方名称);
             if (!rt.s)
             {
                 MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -318,11 +344,29 @@ namespace qfCode
             }
             else
             {
-                MessageBox.Show("保存成功");
+                MessageBox.Show(Language_.Get语言("保存成功"));
                 return;
             }
 
         }
+
+        void On_另存为()
+        {
+
+            var rt = 保存(this._配方名称);
+            if (!rt.s)
+            {
+                MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                MessageBox.Show(Language_.Get语言("保存成功"));
+                return;
+            }
+
+        }
+
 
 
         #endregion
@@ -449,7 +493,46 @@ namespace qfCode
 
         #endregion
 
+        #region 方法
 
+        (bool s, string m, List<_对象_内容_> lst) 计算_所有对象内容()
+        {
+            var rt = new 编辑交互_统一接口(this._编辑)._Iworker.计算编码(this._配方名称, this._配方信息, DateTime.Now, _em_计算类型_.测试, false);
+            this._lst对象内容 = rt.lstObject;
+            return rt;
+        }
+
+       
+
+        (bool s, string m) 保存(string 配方名称)
+        {
+            DateTime now = DateTime.Now;
+            this._配方信息.Datetimes = now.ToString("yyyy-MM-dd HH:mm:ss");
+            return new 编辑交互_统一接口(this._编辑)._Iworker.配方_保存(this._配方信息, 配方名称, now);
+        }
+
+        (bool s, string m, _配方文件_属性_ cfg) 打开(string 配方名称)
+        {
+            return new 编辑交互_统一接口(this._编辑)._Iworker.配方_打开(配方名称);
+        }
+
+
+        void 显示所有对象名()
+        {
+            this.uiListBox_对象列表.Items.Clear();
+            foreach (var s in this._配方信息.对象)
+            {
+                this.uiListBox_对象列表.Items.Add(s.对象名);
+            }
+
+
+
+        }
+
+         
+
+
+        #endregion
 
 
     }

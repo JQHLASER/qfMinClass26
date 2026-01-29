@@ -59,22 +59,22 @@ namespace qfCode
         public (bool s, string m) 配方_保存(_配方文件_属性_ 配方, string 配方名称, DateTime dates)
         {
             配方.Datetimes = dates.ToString("yyyy-MM-dd HH:mm:ss");
-            return new 文件_统一接口(this).Save(配方名称, 配方);
+            return new 文件_统一接口(this)._Iwork文件.Save(配方名称, 配方);
         }
 
         public (bool s, string m) 配方_复制(string 配方名称, string New配方名称)
         {
-            return new 文件_统一接口(this).复制(配方名称, New配方名称);
+            return new 文件_统一接口(this)._Iwork文件.复制(配方名称, New配方名称);
         }
 
         public (bool s, string m) 配方_删除(string 配方名称)
         {
-            return new 文件_统一接口(this).Delete(配方名称);
+            return new 文件_统一接口(this)._Iwork文件.Delete(配方名称);
         }
 
         public (bool s, string m, _配方文件_属性_ cfg) 配方_打开(string 配方名称)
         {
-            return new 文件_统一接口(this).Read(配方名称);
+            return new 文件_统一接口(this)._Iwork文件.Read(配方名称);
         }
 
         #endregion
@@ -84,6 +84,7 @@ namespace qfCode
 
         /// <summary>
         /// Is计算完保存  =true:计算完成后保存,=false:不保存,在一次性计算多次时,就不需要马上保存
+        /// <para>已对更新日期进行了计算</para>
         /// </summary> 
         public (bool s, string m, List<_对象_内容_> lstObject) 计算编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime dates, _em_计算类型_ 计算类型, bool Is计算完保存 = false)
         {
@@ -94,20 +95,35 @@ namespace qfCode
         /// <summary>
         /// <para>测试模式,只是计算,不保存配方</para>
         /// <para>对象名 : 不为空时,计算指定对象及之前的内容</para>
+        /// <para>已对更新日期进行了计算</para>
         /// </summary> 
         public (bool s, string m, List<_对象_内容_> lstObject) 计算编码_对象(_配方文件_属性_ 配方文件, DateTime dates, string 对象名)
         {
             return 计算_编码("", 配方文件, dates, _em_计算类型_.测试, false, 对象名);
         }
 
-     
+        /// <summary>
+        /// <para>已对更新日期进行了计算</para>
+        /// </summary> 
         public (bool s, string m, _元素_Str_ cfg) 计算元素(_配方文件_属性_ 配方文件, List<_对象_内容_> lst对象内容, DateTime dates, _对象_ 对象, string Json元素)
         {
             return 计算_元素(配方文件, lst对象内容, dates, 对象, Json元素);
         }
 
 
+        public (bool s, string m, DateTime dates) 更新日期(_配方文件_属性_ 配方文件, DateTime now)
+        {
+            return 更新日期_(配方文件, now);
+        }
+
+
+
+
+
         #endregion
+
+
+
 
 
         #region 修改
@@ -156,6 +172,9 @@ namespace qfCode
         public event Func<_em_计算类型_, _对象_, DateTime> Event_日期时间;
 
 
+
+
+
         #endregion
 
 
@@ -164,8 +183,9 @@ namespace qfCode
         /// <summary>
         /// <para>Is计算完保存  =true:计算完成后保存,=false:不保存,在一次性计算多次时,就不需要马上保存</para>
         /// <para>对象名 : 不为空时,计算指定对象及之前的内容</para>
+        /// <para>已对更新日期进行了计算</para>
         /// </summary> 
-        private (bool s, string m, List<_对象_内容_> lstObject) 计算_编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime dates, _em_计算类型_ 计算类型, bool Is计算完保存, string 对象名)
+        private (bool s, string m, List<_对象_内容_> lstObject) 计算_编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime date_, _em_计算类型_ 计算类型, bool Is计算完保存, string 对象名)
         {
             List<_对象_内容_> lstObject = new List<_对象_内容_>();
             bool rt = true;
@@ -176,7 +196,17 @@ namespace qfCode
             _配方文件_属性_ 配方 = 配方文件.Clone();
 
             _班次_[] 班次规则 = this._文件类.Get_班次(配方.班次文件);
+
             DateTime.TryParse(配方.Datetimes, out DateTime 最后加工时间);
+            var rtDatetime = 更新日期_(配方, date_);
+            if (!rtDatetime.s)
+            {
+                return (rtDatetime.s, rtDatetime.m, default);
+            }
+            DateTime dates = rtDatetime.dates;
+
+
+
 
             for (int i = 0; i < 配方.对象.Count; i++)
             {
@@ -359,15 +389,25 @@ namespace qfCode
             return (rt, msg, lstObject);
         }
 
-        internal (bool s, string m, _元素_Str_ cfg) 计算_元素(_配方文件_属性_ 配方文件, List<_对象_内容_> lst对象内容, DateTime dates, _对象_ 对象, string Json元素)
+        /// <summary>
+        /// 已对更新日期进行了计算
+        /// </summary> 
+        private (bool s, string m, _元素_Str_ cfg) 计算_元素(_配方文件_属性_ 配方文件, List<_对象_内容_> lst对象内容, DateTime date_, _对象_ 对象, string Json元素)
         {
             bool rt = true;
             string msg = string.Empty;
 
             //深拷贝出来一份,用来防止源文件被意外修改
             _配方文件_属性_ 配方 = 配方文件.Clone();
-            _班次_[] 班次规则 = this._文件类.Get_班次(配方.班次文件); 
+            _班次_[] 班次规则 = this._文件类.Get_班次(配方.班次文件);
             DateTime.TryParse(配方.Datetimes, out DateTime 最后加工时间);
+
+            var rtDatetime = 更新日期_(配方, date_);
+            if (!rtDatetime .s)
+            {
+                return (rtDatetime.s, rtDatetime.m, default);
+            }
+            DateTime dates = rtDatetime.dates;
 
             string v = "";
             var rtType = new Json序列化().转成Json<_元素_.工具>(Json元素);
@@ -553,6 +593,34 @@ namespace qfCode
 
             return (rt, msg);
         }
+
+
+        private (bool s, string m, DateTime dates) 更新日期_(_配方文件_属性_ 配方文件, DateTime now)
+        {
+            bool rt = true;
+            string msgErr = string.Empty;
+            DateTime nowNew = now;
+            try
+            {
+                if (this._功能.日期时间.更新日期)
+                {
+                    DateTime 当前时间 = DateTime.Parse(now.ToString("HH:mm:ss"));
+                    DateTime 更新时间 = DateTime.Parse(配方文件.更新时间);
+                    if (当前时间 <= 更新时间)
+                    {
+                        nowNew = new qfmain.日期时间_().增减时间(now, 2, -1);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                msgErr = ex.Message;
+                rt = false;
+            }
+
+            return (rt, msgErr, nowNew);
+        }
+
 
         #endregion
 

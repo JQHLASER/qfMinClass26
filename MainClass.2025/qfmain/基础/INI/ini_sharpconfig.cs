@@ -50,7 +50,7 @@ namespace qfmain
 
         public string Read(string sectionName, string settingName, string 默认值 = "")
         {
-            (bool rt, string value, string msgErr) rt = ReadStr(sectionName, settingName, 默认值);
+            (bool rt, string msgErr, string value) rt = ReadStr(sectionName, settingName, 默认值);
             return rt.value;
         }
         public (bool s, string m, string value) ReadStr(string sectionName, string settingName, string 默认值 = "")
@@ -65,19 +65,19 @@ namespace qfmain
                     var section = _config[sectionName];
                     if (section == null || !section.Contains(settingName))
                     {
-                        return (rt, value, msgErr);
+                        return (rt, msgErr, value );
                     }
 
                     value = section[settingName].RawValue;
                     //return section[settingName].GetValue<string>();
-                    return (rt, value, msgErr);
+                    return (rt, msgErr, value);
                 }
                 catch (Exception ex)
                 {
                     rt = false;
                     msgErr = ex.Message;
                     // 记录日志或处理类型转换失败的情况
-                    return (rt, value, msgErr);
+                    return (rt, msgErr, value);
                 }
             }
         }

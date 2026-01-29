@@ -8,6 +8,9 @@ namespace qfCode
 {
     public class _功能_
     {
+
+        
+
         /// <summary>
         /// 编码文件信息后缀
         /// </summary>

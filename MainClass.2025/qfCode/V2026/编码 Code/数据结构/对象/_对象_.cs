@@ -22,7 +22,7 @@ namespace qfCode
             {
                 对象名 = this.对象名,
                 属性 = this.属性.Clone(),
-                元素 = this.元素 is null ? null : new List<string>(this.元素),
+                元素 = this.元素 is null ? new List<string> () : new List<string>(this.元素),
               
             };
         }

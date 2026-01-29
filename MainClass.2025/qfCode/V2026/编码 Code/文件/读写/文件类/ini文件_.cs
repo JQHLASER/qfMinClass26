@@ -1,14 +1,17 @@
 ﻿using Newtonsoft.Json;
+using qfmain;
+using Sunny.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.SymbolStore;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace qfCode
 {
-    public class ini文件_ : Iwork_文件 
+    public class ini文件_ : Iwork_文件
     {
         编码_ _codeSys;
         private static readonly object _lock = new object();
@@ -34,12 +37,18 @@ namespace qfCode
             {
                 string Path = this._codeSys._文件类.GetPath_配方(FileName);
                 (bool s, string m, string json) rt = new qfmain.ini_sharpconfig(Path).ReadStr("data", "data", "");
-                (bool s, string m, _配方文件_属性_ cfg) rtCfg = new Json序列化().转成Json<_配方文件_属性_>(rt.json);
-                if (!rt.s || !rtCfg.s)
+                (bool s, string m, _配方文件_属性_ cfg) rtCfg = new Json序列化().转成Json<_配方文件_属性_>(rt.json); 
+               
+                if (!rt.s)
                 {
-                    return (rt.s, rt.m, rtCfg.cfg);
+                    return (rt.s, rt.m, default);
                 }
-                return (rt.s, rt.m, rtCfg.cfg);
+                else if (!rtCfg.s)
+                {
+                    return (rtCfg.s, rtCfg.m, default);
+                }
+                 
+                return (rtCfg.s, rtCfg.m, rtCfg.cfg);
             }
         }
 
