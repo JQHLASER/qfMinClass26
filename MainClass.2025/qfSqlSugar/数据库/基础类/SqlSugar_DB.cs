@@ -416,12 +416,12 @@ SqlServer 数据库....使用最新库
         /// <para>参数 (状态,消息,DB)</para>
         /// </summary>
         public event Action<bool, string, SqlSugar_DB> Event_初始化结束1;
-         
+
         private void On_Event_ConnectionConfig(List<ConnectionConfig> lst, SqlSugar_DB db)
-        { 
-            Event_ConnectionConfig?.Invoke(lst, db); 
+        {
+            Event_ConnectionConfig?.Invoke(lst, db);
         }
-         
+
 
         #endregion
 
@@ -512,46 +512,16 @@ SqlServer 数据库....使用最新库
         /// <para>远程连SQLserver,MySql时用此方法</para>
         /// <para>解决远程数据库连接池耗尽断开的问题</para>
         /// </summary> 
-        private (bool s, string m) Is连接是否有效1(SqlSugar_DB db, string _id, ConnectionConfig cfg)
+        private (bool s, string m) Is连接是否有效1(SqlSugar_DB db, string _id, ConnectionConfig cfg, bool Is先删后加_cfg = true)
         {
-            if (db is null)
+            if (!Err_Db为Ull(db, out string msgErr))
             {
-                return (false, "db is null");
-            }
-
-            if (Db.IsAnyConnection(_id))
-            {
-                this.Db.RemoveConnection(_id);//删除id
-            }
-            try
-            {
-                using (var testDb = new SqlSugarClient(cfg))
-                {
-                    testDb.Ado.Open();  // 尝试打开连接 
-                    this.Db.AddConnection(cfg);//添加id
-                    return (true, "Connection ok");
-                }
-            }
-            catch
-            {
-                return (true, "Connection ng");   // 失败就跳过
-            }
-
-        }
-
-        /// <summary>
-        /// 查询方式判断,比较推荐,
-        /// <para></para>
-        /// </summary> 
-        private (bool s, string m) Is连接是否有效2(SqlSugar_DB db, string _id, ConnectionConfig cfg)
-        {
-            if (db is null)
-            {
-                return (false, "db is null");
+                return (false, msgErr);
             }
 
             string[] work = new string[]
             {
+                "先删id",
                 "判断id是否存在",
                 "数据库检测",
             };
@@ -569,7 +539,101 @@ SqlServer 数据库....使用最新库
                 }
                 foreach (var item in work)
                 {
-                    if (item == "判断id是否存在")
+                    if (item == "先删id")
+                    {
+                        #region MyRegion
+
+                        if (Is先删后加_cfg)
+                        {
+                            this.Db.RemoveConnection(cfg);
+                        }
+
+                        #endregion
+                    }
+                    else if (item == "判断id是否存在")
+                    {
+                        #region MyRegion
+
+                        if (!this.Db.IsAnyConnection(_id))
+                        {
+                            this.Db.AddConnection(cfg);
+                        }
+
+                        #endregion
+                    }
+                    else if (item == "数据库检测")
+                    {
+                        #region MyRegion
+
+                        try
+                        {
+                            using (var testDb = new SqlSugarClient(cfg))
+                            {
+                                testDb.Ado.Open();  // 尝试打开连接 
+                                                    // this.Db.AddConnection(cfg);//添加id
+                                return (true, "Connection ok");
+                            }
+                        }
+                        catch
+                        {
+                            this.Db.RemoveConnection(_id);//删除id
+                            return (true, "Connection ng");   // 失败就跳过
+                        }
+                        #endregion
+                    }
+
+
+                }
+
+            }
+
+            return (rt, msg);
+        }
+
+
+        /// <summary>
+        /// 查询方式判断,比较推荐,
+        /// <para></para>
+        /// </summary> 
+        private (bool s, string m) Is连接是否有效2(SqlSugar_DB db, string _id, ConnectionConfig cfg, bool Is先删后加_cfg = true)
+        {
+            if (!Err_Db为Ull(db, out string msgErr))
+            {
+                return (false, msgErr);
+            }
+
+            string[] work = new string[]
+            {
+                "先删id",
+                "判断id是否存在",
+                "数据库检测",
+            };
+
+            bool rtRun = true;//为false时退出
+            bool rt = false;
+            string msg = "";
+
+            //第一次失败时,删除连接后,重新初始化后再来一次,
+            for (global::System.Int32 i = 0; i < 2; i++)
+            {
+                if (!rtRun)
+                {
+                    break;
+                }
+                foreach (var item in work)
+                {
+                    if (item == "先删id")
+                    {
+                        #region MyRegion
+
+                        if (Is先删后加_cfg)
+                        {
+                            this.Db.RemoveConnection(cfg);
+                        }
+
+                        #endregion
+                    }
+                    else if (item == "判断id是否存在")
                     {
                         #region MyRegion
 
@@ -604,9 +668,8 @@ SqlServer 数据库....使用最新库
                                 }
                             }
                         }
+                        #endregion
                     }
-
-                    #endregion
                 }
 
             }
@@ -615,27 +678,34 @@ SqlServer 数据库....使用最新库
         }
 
 
+
+
+
         /// <summary>
         /// 两种检测方式可选
         /// <para>远程连SQLserver,MySql时用此方法</para>
         /// <para>解决远程数据库连接池耗尽断开的问题</para>
         /// <para>模式 =0:查询方式检测,=1:SqlSugarClient方式重连检测</para>
         /// </summary> 
-        public (bool s, string m) Is连接是否有效(SqlSugar_DB db, string _id, ConnectionConfig cfg, int 模式 = 0)
+        public (bool s, string m) Is连接是否有效(SqlSugar_DB db, string _id, ConnectionConfig cfg, bool Is先删后加_cfg = true, int 模式 = 0)
         {
-
+            if (!Err_Db为Ull(db, out string msgErr))
+            {
+                return (false, msgErr);
+            }
+             
             (bool s, string m) rt = (false, "");
 
             #region 检测
 
             if (模式 == 0)
             {
-                rt = Is连接是否有效2(db, _id, cfg);
+                rt = Is连接是否有效2(db, _id, cfg, Is先删后加_cfg);
 
             }
             else
             {
-                rt = Is连接是否有效1(db, _id, cfg);
+                rt = Is连接是否有效1(db, _id, cfg, Is先删后加_cfg);
             }
 
 
@@ -643,6 +713,19 @@ SqlServer 数据库....使用最新库
 
             return rt;
         }
+
+
+        bool Err_Db为Ull(SqlSugar_DB db, out string msgErr)
+        {
+            msgErr = "";
+            if (db is null)
+            {
+                msgErr = "db is null";
+                return false;
+            }
+            return true;
+        }
+
 
 
         #endregion
