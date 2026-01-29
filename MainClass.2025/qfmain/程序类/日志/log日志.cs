@@ -123,9 +123,9 @@ namespace qfmain
         /// 日志信息
         /// </summary>
         public class _logValue_
-        {
-            public enum状态 状态 { set; get; }
+        { 
             public DateTime 时间 { set; get; }
+            public enum状态 状态 { set; get; }
             public string 内容 { set; get; }
 
             public _logValue_()

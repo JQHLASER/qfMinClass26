@@ -185,7 +185,7 @@ namespace qfCode
                     msg = rt按首尾.m;
                     if (rt)
                     {
-                        cfg_按首尾 = rt按首尾.cfg;
+                        cfg_按首尾 = rt按首尾.cfg.Clone ();
                     }
 
                     #endregion

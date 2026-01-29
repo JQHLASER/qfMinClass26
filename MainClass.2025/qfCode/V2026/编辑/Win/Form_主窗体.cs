@@ -45,7 +45,7 @@ namespace qfCode
             this.WindowState = FormWindowState.Maximized;
             this.Padding = new System.Windows.Forms.Padding(5, 35, 5, 5);
 
-            this.dataGridView1.DataSource = this._lstBind元素;
+            this.dataGridView_元素.DataSource = this._lstBind元素;
             Datagridview格式();
             this.uiListBox_对象列表.Items.Clear();
 
@@ -110,9 +110,9 @@ namespace qfCode
 
             #region  元素
 
-            this.dataGridView1.DoubleClick += (s, e) =>
+            this.dataGridView_元素.DoubleClick += (s, e) =>
             {
-                if (Err_未选中要操作的元素(this.dataGridView1, out int index))
+                if (Err_未选中要操作的元素(this.dataGridView_元素, out int index))
                 {
                     this.On_元素_添加修改(type_编辑._编辑类型_.修改);
                 }
@@ -123,13 +123,19 @@ namespace qfCode
 
             this.ui_Button_元素_上移.Event_Click += () =>
             {
-                new 对象_元素操作().上移一行(this._配方信息.对象[this._编辑对象索引].元素);
-                new 对象_元素操作().上移一行<_元素_Str_>(this._lstBind元素);
+                if (Err_未选中要操作的元素(this.dataGridView_元素, out int index, false))
+                {
+                    new 对象_元素操作().上移一行(this._配方信息.对象[this._编辑对象索引].元素);
+                    new 对象_元素操作().上移一行<_元素_Str_>(this._lstBind元素, index, dataGridView_元素);
+                }
             };
             this.ui_Button_元素_下移.Event_Click += () =>
             {
-                new 对象_元素操作().下移一行(this._配方信息.对象[this._编辑对象索引].元素);
-                new 对象_元素操作().下移一行<_元素_Str_>(this._lstBind元素);
+                if (Err_未选中要操作的元素(this.dataGridView_元素, out int index, false))
+                {
+                    new 对象_元素操作().下移一行(this._配方信息.对象[this._编辑对象索引].元素);
+                    new 对象_元素操作().下移一行<_元素_Str_>(this._lstBind元素, index, dataGridView_元素);
+                }
             };
 
 
@@ -139,10 +145,8 @@ namespace qfCode
 
             //如果配方名称不为空时,则加载配方信息
             if (!string.IsNullOrEmpty(this._配方名称))
-            { 
-                var rt配方 = 打开(this._配方名称);
-                this._配方信息 = rt配方.cfg.Clone();
-                显示所有对象名(); 
+            {
+                打开(this._配方名称);
             }
         }
 
@@ -156,7 +160,7 @@ namespace qfCode
                 case type_编辑._编辑类型_.添加:
                     #region 添加
 
-                    using (Form_对象 forms = new Form_对象(类型, ""))
+                    using (Form_对象 forms = new Form_对象(类型, "", new _对象_属性()))
                     {
                         if (forms.ShowDialog() == DialogResult.OK)
                         {
@@ -164,6 +168,7 @@ namespace qfCode
                             _对象_ objc = new _对象_
                             {
                                 对象名 = forms._对象名称,
+                                属性 = forms._cfg.Clone(),
                             };
                             if (index0 < 0)
                             {
@@ -184,11 +189,13 @@ namespace qfCode
                     if (Err_未选中要操作的对象(this.uiListBox_对象列表, out int index))
                     {
                         string txt = this._配方信息.对象[index].对象名;
-                        using (Form_对象 forms = new Form_对象(类型, txt))
+                        _对象_属性 cfgObject = this._配方信息.对象[index].属性.Clone();
+                        using (Form_对象 forms = new Form_对象(类型, txt, cfgObject))
                         {
                             if (forms.ShowDialog() == DialogResult.OK)
                             {
                                 this._配方信息.对象[index].对象名 = forms._对象名称;
+                                this._配方信息.对象[index].属性 = forms._cfg.Clone();
                                 this.uiListBox_对象列表.Items[index] = forms._对象名称;
                             }
                         }
@@ -215,7 +222,7 @@ namespace qfCode
             }
         }
 
-      
+
 
         #endregion
 
@@ -236,7 +243,7 @@ namespace qfCode
                     {
                         if (forms.ShowDialog() == DialogResult.OK)
                         {
-                            new qfNet.DataGridview_(this.dataGridView1).获取当前选中的行号(out int index0);
+                            new qfNet.DataGridview_(this.dataGridView_元素).获取当前选中的行号(out int index0);
                             if (index0 < 0)
                             {
                                 this._配方信息.对象[this._编辑对象索引].元素.Add(forms._json元素信息);
@@ -248,7 +255,7 @@ namespace qfCode
                                 new 对象_元素操作().在指定处插入(this._配方信息.对象[this._编辑对象索引].元素, forms._json元素信息, index0 + 1);
 
                                 var rt = 计算_元素(forms._json元素信息);
-                                new 对象_元素操作().在指定处插入<_元素_Str_>(this._lstBind元素, rt.cfg, index0 + 1);
+                                new 对象_元素操作().在指定处插入<_元素_Str_>(this._lstBind元素, rt.cfg, index0 + 1, dataGridView_元素);
 
                             }
 
@@ -258,7 +265,7 @@ namespace qfCode
                     break;
                 case type_编辑._编辑类型_.修改:
                     #region 修改
-                    if (Err_未选中要操作的元素(this.dataGridView1, out int index))
+                    if (Err_未选中要操作的元素(this.dataGridView_元素, out int index))
                     {
                         string txt = this._配方信息.对象[this._编辑对象索引].元素[index];
                         using (Form_工具箱_元素 forms = new Form_工具箱_元素(类型, txt))
@@ -281,7 +288,7 @@ namespace qfCode
         void On_元素_删除()
         {
             if (Err_未选中要操作的对象(this.uiListBox_对象列表, out int index)
-                && Err_未选中要操作的元素(this.dataGridView1, out index)
+                && Err_未选中要操作的元素(this.dataGridView_元素, out index)
                 && MessageBox.Show(Language_.Get语言("确认删除?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 this._配方信息.对象[this._编辑对象索引].元素.RemoveAt(index);
@@ -311,7 +318,7 @@ namespace qfCode
 
         void Datagridview格式()
         {
-            var grid = new qfNet.DataGridview_(this.dataGridView1).格式化();
+            var grid = new qfNet.DataGridview_(this.dataGridView_元素).格式化();
             grid.设置行高(30);
             grid.显示or隐藏标题(false);
             grid.使能修改列宽(true);
@@ -437,12 +444,15 @@ namespace qfCode
 
         #region Err
 
-        bool Err_未选中要操作的元素(DataGridView view, out int index)
+        bool Err_未选中要操作的元素(DataGridView view, out int index, bool is弹窗 = true)
         {
             new qfNet.DataGridview_(view).获取当前选中的行号(out index);
             if (index < 0)
             {
-                MessageBox.Show(Language_.Get语言("未选中要操作的元素"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (is弹窗)
+                {
+                    MessageBox.Show(Language_.Get语言("未选中要操作的元素"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 return false;
             }
             return true;
@@ -502,19 +512,42 @@ namespace qfCode
             return rt;
         }
 
-       
-
         (bool s, string m) 保存(string 配方名称)
         {
             DateTime now = DateTime.Now;
             this._配方信息.Datetimes = now.ToString("yyyy-MM-dd HH:mm:ss");
+            this._配方信息.备注 = this.textBox_备注.Text;
             return new 编辑交互_统一接口(this._编辑)._Iworker.配方_保存(this._配方信息, 配方名称, now);
         }
 
         (bool s, string m, _配方文件_属性_ cfg) 打开(string 配方名称)
         {
-            return new 编辑交互_统一接口(this._编辑)._Iworker.配方_打开(配方名称);
+            var rt = new 编辑交互_统一接口(this._编辑)._Iworker.配方_打开(配方名称);
+
+            this._配方信息 = rt.cfg.Clone();
+            显示所有对象名();
+            this.Text = this._配方名称;
+            显示配方信息(this._配方信息);
+            return rt;
         }
+
+        void 显示配方信息(_配方文件_属性_ cfg)
+        {
+            this.textBox_备注.Text = cfg.备注;
+            StringBuilder sb = new StringBuilder();
+            if (this._编辑._功能.工具箱.班次)
+            {
+                sb.AppendLine($"{Language_.Get语言("班次配置")}: {cfg.班次文件}");
+            }
+
+            if (this._编辑._功能.日期时间.更新日期)
+            {
+                sb.AppendLine($"{Language_.Get语言("更新日期")}: {cfg.更新时间}");
+            }
+
+            this.textBox_信息.Text = sb.ToString();
+        }
+
 
 
         void 显示所有对象名()
@@ -529,7 +562,7 @@ namespace qfCode
 
         }
 
-         
+
 
 
         #endregion

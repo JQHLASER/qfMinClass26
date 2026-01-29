@@ -139,6 +139,7 @@
       <DependentUpon>Form_语言.cs</DependentUpon>
     </Compile>
     <Compile Include="语言\Language_.cs" />
+    <Compile Include="软件类\Log\%24R77VTKM.cs" />
     <Compile Include="软件类\Win_委托线程.cs" />
     <Compile Include="软件类\显示文件信息\ui_ShowInfo.cs">
       <SubType>UserControl</SubType>
@@ -174,7 +175,6 @@
     <Compile Include="软件类\Log\ui_Log.Designer.cs">
       <DependentUpon>ui_Log.cs</DependentUpon>
     </Compile>
-    <Compile Include="软件类\Log\viewModel_Log.cs" />
     <Compile Include="软件类\查看信息\viewModel_查看信息.cs" />
     <Compile Include="软件类\查询\Form_查询.cs">
       <SubType>Form</SubType>

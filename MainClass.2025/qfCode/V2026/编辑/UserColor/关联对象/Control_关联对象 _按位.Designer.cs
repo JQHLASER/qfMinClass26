@@ -51,6 +51,7 @@
             this.uiTextBox_起始位.Name = "uiTextBox_起始位";
             this.uiTextBox_起始位.Padding = new System.Windows.Forms.Padding(5);
             this.uiTextBox_起始位.Size = new System.Drawing.Size(100, 26);
+            this.uiTextBox_起始位.Style = Sunny.UI.UIStyle.Custom;
             this.uiTextBox_起始位.TabIndex = 16;
             this.uiTextBox_起始位.Text = "1";
             this.uiTextBox_起始位.Type = Sunny.UI.UITextBox.UIEditType.Integer;
@@ -63,6 +64,7 @@
             this.ui_Label_85.Location = new System.Drawing.Point(36, 31);
             this.ui_Label_85.Name = "ui_Label_85";
             this.ui_Label_85.Size = new System.Drawing.Size(200, 26);
+            this.ui_Label_85.Style = Sunny.UI.UIStyle.Custom;
             this.ui_Label_85.TabIndex = 15;
             this.ui_Label_85.Text = "起始";
             this.ui_Label_85.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -83,6 +85,7 @@
             this.uiTextBox_数量.Name = "uiTextBox_数量";
             this.uiTextBox_数量.Padding = new System.Windows.Forms.Padding(5);
             this.uiTextBox_数量.Size = new System.Drawing.Size(100, 26);
+            this.uiTextBox_数量.Style = Sunny.UI.UIStyle.Custom;
             this.uiTextBox_数量.TabIndex = 18;
             this.uiTextBox_数量.Text = "1";
             this.uiTextBox_数量.Type = Sunny.UI.UITextBox.UIEditType.Integer;
@@ -95,6 +98,7 @@
             this.ui_Label_81.Location = new System.Drawing.Point(36, 62);
             this.ui_Label_81.Name = "ui_Label_81";
             this.ui_Label_81.Size = new System.Drawing.Size(200, 26);
+            this.ui_Label_81.Style = Sunny.UI.UIStyle.Custom;
             this.ui_Label_81.TabIndex = 17;
             this.ui_Label_81.Text = "数量";
             this.ui_Label_81.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -120,10 +124,9 @@
         }
 
         #endregion
-
-        private Sunny.UI.UITextBox uiTextBox_起始位;
         private Sunny.ui_Label_8 ui_Label_85;
-        private Sunny.UI.UITextBox uiTextBox_数量;
         private Sunny.ui_Label_8 ui_Label_81;
+        public Sunny.UI.UITextBox uiTextBox_起始位;
+        public Sunny.UI.UITextBox uiTextBox_数量;
     }
 }

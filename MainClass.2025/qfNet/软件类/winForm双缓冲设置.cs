@@ -1,45 +1,53 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection;
 
-namespace qfNet 
+
+namespace qfNet
 {
+
     /// <summary>
-    /// 控件双缓冲扩展工具类
+    /// 
     /// </summary>
     public static class winForm双缓冲设置
     {
-        // 双缓冲扩展样式常量（替代魔法数字，提高可读性）
-        private const int WS_EX_COMPOSITED = 0x02000000;
+
+
 
         /// <summary>
-        /// 为控件启用双缓冲（解决闪烁问题）
-        /// </summary>
-        /// <param name="control">需要启用双缓冲的控件（Form、Panel、UserControl等）</param>
-        /// <param name="enable">是否启用（true=启用，false=禁用）</param>
-        public static void SetDoubleBuffer(this Control control, bool enable = true)
+        /// 自动给窗体及其所有子控件开启双缓冲，减少闪烁
+        /// <para>1. 给窗体本身开启双缓冲</para>
+        /// <para>this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);</para>
+        /// <para>form.UpdateStyles();</para>
+        /// </summary> 
+        public static void EnableFormDoubleBuffer(Form form)
         {
-            if (control == null)
-                throw new ArgumentNullException(nameof(control), "控件不能为空");
+            if (form == null) return;
 
-            // 方式1：通过修改 CreateParams（原生高效，支持所有控件）
-            var field = typeof(Control).GetField("CreateParams",
-                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            //// 1. 给窗体本身开启双缓冲
+            //form.SetStyle(ControlStyles.AllPaintingInWmPaint |
+            //              ControlStyles.UserPaint |
+            //              ControlStyles.OptimizedDoubleBuffer, true);
+            //form.UpdateStyles();
 
-            if (field != null)
+            // 2. 给所有子控件开启双缓冲（通过反射设置非公开 DoubleBuffered 属性）
+            EnableControlDoubleBuffer(form);
+        }
+
+        private static void EnableControlDoubleBuffer(Control parent)
+        {
+            foreach (Control ctrl in parent.Controls)
             {
-                CreateParams cp = (CreateParams)field.GetValue(control);
-                if (enable)
-                    cp.ExStyle |= WS_EX_COMPOSITED; // 添加双缓冲样式
-                else
-                    cp.ExStyle &= ~WS_EX_COMPOSITED; // 移除双缓冲样式
-                field.SetValue(control, cp);
-            }
+                PropertyInfo pi = ctrl.GetType().GetProperty("DoubleBuffered",
+                    BindingFlags.Instance | BindingFlags.NonPublic);
+                if (pi != null) pi.SetValue(ctrl, true, null);
 
-          
+                // 递归处理容器控件
+                if (ctrl.HasChildren)
+                    EnableControlDoubleBuffer(ctrl);
+            }
         }
     }
+
+
 }

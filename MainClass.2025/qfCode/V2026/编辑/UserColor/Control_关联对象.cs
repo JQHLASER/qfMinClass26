@@ -43,6 +43,32 @@ namespace qfCode
 
             };
 
+            this.uiButton_测试.Click += (s, e) =>
+            {
+                #region 测试
+
+                GetCfg();
+
+
+                new qfNet.DataGridview_(Form_主窗体.forms.dataGridView_元素).获取当前选中的行号(out int index);
+                _配方文件_属性_ infos = Form_主窗体.forms._配方信息.Clone();
+                infos.对象[Form_主窗体.forms._编辑对象索引].元素[index] = new Json序列化().转成String<_元素_.关联对象>(this._cfg);
+
+                var rt = new 编辑交互_统一接口(Form_主窗体.forms._编辑)._Iworker.计算编码_对象(
+                          infos,
+                          DateTime.Now,
+                          Form_主窗体.forms._配方信息.对象[Form_主窗体.forms._编辑对象索引].对象名);
+                if (!rt.s)
+                {
+                    MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                MessageBox.Show(rt.v);
+
+                #endregion
+
+            };
+
 
             #region 可关联对象
 
@@ -104,7 +130,7 @@ namespace qfCode
                 MessageBox.Show(Language_.Get语言("请选择关联对象"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-             
+
             #region 参数...param
 
             string jsonStr = "{}";
@@ -114,6 +140,12 @@ namespace qfCode
                 {
                     con_按位.GetCfg();
                 }
+
+                this._cfg_按位 = new _关联对象_._按位_
+                {
+                    开始位 = (uint)this.con_按位.uiTextBox_起始位.IntValue,
+                    数量 = (uint)this.con_按位.uiTextBox_数量.IntValue,
+                };
                 jsonStr = new Json序列化().转成String<_关联对象_._按位_>(this._cfg_按位);
             }
             else if (this.uiRadioButton_字符分割.Checked)
@@ -122,6 +154,11 @@ namespace qfCode
                 {
                     con_按字符.GetCfg();
                 }
+                this._cfg_按字符 = new _关联对象_._按字符_
+                {
+                    分割符 = this.con_按字符.uiTextBox_分割符.Text,
+                    索引 = (uint)this.con_按字符.uiTextBox_索引.IntValue,
+                };
                 jsonStr = new Json序列化().转成String<_关联对象_._按字符_>(this._cfg_按字符);
             }
             else if (this.uiRadioButton_首尾字符分割.Checked)
@@ -130,6 +167,12 @@ namespace qfCode
                 {
                     con_按首尾字符.GetCfg();
                 }
+                this._cfg_按首尾 = new _关联对象_._按首尾_
+                {
+                    首 = this.con_按首尾字符.uiTextBox_分割符首.Text,
+                    尾 = this.con_按首尾字符.uiTextBox_分割符尾.Text,
+                    索引 = (uint)this.con_按首尾字符.uiTextBox_索引.IntValue,
+                };
                 jsonStr = new Json序列化().转成String<_关联对象_._按首尾_>(this._cfg_按首尾);
             }
             else if (this.uiRadioButton_全部.Checked)

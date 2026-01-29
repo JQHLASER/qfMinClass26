@@ -4,7 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
+ 
+using System.Windows.Forms;
 
 namespace qfCode
 {
@@ -20,7 +21,7 @@ namespace qfCode
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -33,7 +34,7 @@ namespace qfCode
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -45,7 +46,7 @@ namespace qfCode
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -57,7 +58,7 @@ namespace qfCode
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "", MessageBoxButton.OK, MessageBoxImage.Error); MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error); MessageBox.Show(ex.Message);
             }
         }
 
@@ -69,7 +70,7 @@ namespace qfCode
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -81,48 +82,51 @@ namespace qfCode
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
          
      
-        internal void 上移一行<T>(BindingList<T> lstBind)
+        internal void 上移一行<T>(BindingList<T> lstBind, int index,DataGridView datagrid)
         {
-            int index = 1;
+            int index1 =  index;
             try
             {
-                new qfmain.List_().上移(lstBind, ref index, 1);
+                new qfmain.List_().上移(lstBind, ref index1, 1);
+                new qfNet.DataGridview_(datagrid).选中指定行(0,index1);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        internal void 下移一行<T>(BindingList<T> lstBind)
+        internal void 下移一行<T>(BindingList<T> lstBind,int index, DataGridView datagrid)
         {
-            int index = 1;
+            int index1 =index ;
             try
             { 
-                new qfmain.List_().下移(lstBind, ref index, 1); 
+                new qfmain.List_().下移(lstBind, ref index1, 1);
+                new qfNet.DataGridview_(datagrid).选中指定行(0, index1);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        internal void 在指定处插入<T>(BindingList<T> lstBind, T item, int index)
+        internal void 在指定处插入<T>(BindingList<T> lstBind, T item, int index, DataGridView datagrid)
         {
             try
             {
                 
                 new qfmain.List_().在指定位置插入(lstBind, item, index);
-                
+                new qfNet.DataGridview_(datagrid).选中指定行(0, index);
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

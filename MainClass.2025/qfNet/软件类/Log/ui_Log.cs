@@ -40,7 +40,9 @@ namespace qfNet
 
 
         //双缓冲显示窗体所有子控件
-        protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }
+        //  protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }
+ 
+
         private List<qfmain.log日志._logValue_> _lstLogInfo = new List<qfmain.log日志._logValue_>();
 
         readonly viewModel_Log _DataContext = new viewModel_Log();
@@ -49,6 +51,15 @@ namespace qfNet
         public ui_Log()
         {
             InitializeComponent();
+
+            // 只针对整个窗体减少闪烁
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint |
+                          ControlStyles.UserPaint |
+                          ControlStyles.OptimizedDoubleBuffer, true);
+
+            this.UpdateStyles();
+
+
             this.DataContext = this._DataContext;
 
             this.listBox1.DataBindings.Clear();
@@ -81,9 +92,9 @@ namespace qfNet
 
 
         /// <summary>
-        ///  每 100ms 刷一次 UI,保证流畅
+        ///  每 50ms 刷一次 UI,保证流畅
         /// </summary>
-        public int _UI刷新时间 = 30;
+        public int _UI刷新时间 = 50;
         private readonly Queue<qfmain.log日志._logValue_> _Queue_buffer = new Queue<qfmain.log日志._logValue_>();
         private readonly object _lock = new object();
 
@@ -271,7 +282,7 @@ namespace qfNet
                 }
 
                 this._lstLogInfo.Add(item);
-                listBox1.Items.Add(""); // 自绘            
+                listBox1.Items.Add("12"); // 自绘            
             }
 
             if (!_IsDraw)

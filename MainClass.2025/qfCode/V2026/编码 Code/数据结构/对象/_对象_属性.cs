@@ -19,7 +19,7 @@ namespace qfCode
         /// =0;不使能,>0:使能
         /// <para>为功能时,大于表示使能</para>
         /// </summary>
-        public int 校验位数 { set; get; } = 0;
+        public uint 校验位数 { set; get; } = 0;
          
         public _对象_属性 Clone()
         {

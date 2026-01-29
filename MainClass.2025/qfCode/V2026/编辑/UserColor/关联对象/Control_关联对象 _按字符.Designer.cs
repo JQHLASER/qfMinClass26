@@ -51,6 +51,7 @@
             this.uiTextBox_索引.Name = "uiTextBox_索引";
             this.uiTextBox_索引.Padding = new System.Windows.Forms.Padding(5);
             this.uiTextBox_索引.Size = new System.Drawing.Size(100, 26);
+            this.uiTextBox_索引.Style = Sunny.UI.UIStyle.Custom;
             this.uiTextBox_索引.TabIndex = 22;
             this.uiTextBox_索引.Text = "1";
             this.uiTextBox_索引.Type = Sunny.UI.UITextBox.UIEditType.Integer;
@@ -63,6 +64,7 @@
             this.ui_Label_81.Location = new System.Drawing.Point(42, 63);
             this.ui_Label_81.Name = "ui_Label_81";
             this.ui_Label_81.Size = new System.Drawing.Size(200, 26);
+            this.ui_Label_81.Style = Sunny.UI.UIStyle.Custom;
             this.ui_Label_81.TabIndex = 21;
             this.ui_Label_81.Text = "索引";
             this.ui_Label_81.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -81,6 +83,7 @@
             this.uiTextBox_分割符.Name = "uiTextBox_分割符";
             this.uiTextBox_分割符.Padding = new System.Windows.Forms.Padding(5);
             this.uiTextBox_分割符.Size = new System.Drawing.Size(100, 26);
+            this.uiTextBox_分割符.Style = Sunny.UI.UIStyle.Custom;
             this.uiTextBox_分割符.TabIndex = 20;
             this.uiTextBox_分割符.填充颜色 = System.Drawing.Color.White;
             // 
@@ -91,6 +94,7 @@
             this.ui_Label_85.Location = new System.Drawing.Point(42, 32);
             this.ui_Label_85.Name = "ui_Label_85";
             this.ui_Label_85.Size = new System.Drawing.Size(200, 26);
+            this.ui_Label_85.Style = Sunny.UI.UIStyle.Custom;
             this.ui_Label_85.TabIndex = 19;
             this.ui_Label_85.Text = "分割符";
             this.ui_Label_85.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -116,10 +120,9 @@
         }
 
         #endregion
-
-        private Sunny.UI.UITextBox uiTextBox_索引;
         private Sunny.ui_Label_8 ui_Label_81;
-        private Sunny.UI.UITextBox uiTextBox_分割符;
         private Sunny.ui_Label_8 ui_Label_85;
+        public Sunny.UI.UITextBox uiTextBox_索引;
+        public Sunny.UI.UITextBox uiTextBox_分割符;
     }
 }

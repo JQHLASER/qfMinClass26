@@ -1,5 +1,12 @@
 ﻿实现MVVM架构   安装库  WinFormMVVM
 
+ // 1. 给窗体本身开启双缓冲
+      this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
+      this.UpdateStyles();
+//2.给所有控件开双缓冲
+    qfNet.winForm双缓冲设置.EnableFormDoubleBuffer(this);
+
+
   //双缓冲显示窗体所有子控件
   protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }
 

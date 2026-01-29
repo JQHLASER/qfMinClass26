@@ -1,4 +1,5 @@
-﻿using NPOI.SS.Formula.Functions;
+﻿using MathNet.Numerics.LinearAlgebra.Factorization;
+using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -52,7 +53,7 @@ namespace qfmain
         /// <param name="数量"></param>
         /// <returns></returns>
         public virtual string 获取(string 文本, int 位置, int 数量)
-        {
+        { 
             return 文本.Substring(位置, 数量);
         }
 
@@ -66,23 +67,23 @@ namespace qfmain
         /// <returns></returns>
         public virtual string[] 获取(string 文本, string 文本start, string 文本end)
         {
-            string[] a = 文本.Split(new string[] { 文本start }, StringSplitOptions.None);
-            List<string> lst = new List<string>();
-            for (int i = 1; i < a.Length - 1; i++)
-            {
-                string s = a[i];
-                string[] c = s.Split(new string[] { 文本end }, StringSplitOptions.None);
-                if (文本start != 文本end && c.Length > 1)
-                {
-                    lst.Add(c[0]);
-                }
-                else if (文本start == 文本end)
-                {
-                    lst.Add(c[0]);
-                }
-            }
-            return lst.ToArray();
+            List<string> list = new List<string>();
+            int index = 0;
 
+            while (true)
+            {
+                int s = 文本.IndexOf(文本start, index);
+                if (s == -1) break;
+                s += 文本start.Length;
+
+                int e = 文本.IndexOf(文本end, s);
+                if (e == -1) break;
+
+                list.Add(文本.Substring(s, e - s));
+                index = e + 文本end.Length;
+            }
+
+            return list.ToArray();
 
         }
 
@@ -94,19 +95,35 @@ namespace qfmain
         /// <param name="分割符"></param>
         /// <param name="索引"></param>
         /// <param name="Str"></param>
-        public virtual void 修改(string path, char 分割符, int 索引, string Str)
+        public void 修改(string path, char 分割符, int 索引, string str)
         {
-            using (StreamReader srlogin = new StreamReader(path))
+            if (!File.Exists(path)) return;
+
+            Encoding enc;
+            using (var reader = new StreamReader(path, true))
             {
-                string msgs = srlogin.ReadToEnd();
-                string msgHead = msgs.Substring(0, 6);
-                string msgContent = msgs.Substring(6);
-                string[] info = msgContent.Split(分割符);
-                msgs = msgs.Replace(info[索引], Str);
-                File.WriteAllText(path, msgs);
+                enc = reader.CurrentEncoding;
             }
 
+            string text = File.ReadAllText(path, enc);
+
+            if (string.IsNullOrEmpty(text) || text.Length < 6)
+                return;
+
+            string head = text.Substring(0, 6);
+            string content = text.Substring(6);
+
+            string[] arr = content.Split(分割符);
+
+            if (索引 < 0 || 索引 >= arr.Length)
+                return;
+
+            arr[索引] = str;
+
+            File.WriteAllText(path, head + string.Join(分割符.ToString(), arr), enc);
         }
+
+
 
 
 
