@@ -141,13 +141,13 @@
     <Compile Include="语言\Language_.cs" />
     <Compile Include="软件类\Log\%24R77VTKM.cs" />
     <Compile Include="软件类\Win_委托线程.cs" />
-    <Compile Include="软件类\文件\Form_文件_弹窗2.cs">
+    <Compile Include="软件类\文件\文件弹窗\Form_文件_弹窗2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="软件类\文件\Form_文件_弹窗2.Designer.cs">
+    <Compile Include="软件类\文件\文件弹窗\Form_文件_弹窗2.Designer.cs">
       <DependentUpon>Form_文件_弹窗2.cs</DependentUpon>
     </Compile>
-    <Compile Include="软件类\文件\文件_.cs" />
+    <Compile Include="软件类\文件\文件弹窗_文件\文件_.cs" />
     <Compile Include="软件类\显示文件信息\ui_ShowInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -162,10 +162,10 @@
     <Compile Include="软件类\密码输入框\Form_密码输入框.Designer.cs">
       <DependentUpon>Form_密码输入框.cs</DependentUpon>
     </Compile>
-    <Compile Include="软件类\文件\Form_文件_弹窗.cs">
+    <Compile Include="软件类\文件\文件弹窗_文件\Form_文件_弹窗.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="软件类\文件\Form_文件_弹窗.Designer.cs">
+    <Compile Include="软件类\文件\文件弹窗_文件\Form_文件_弹窗.Designer.cs">
       <DependentUpon>Form_文件_弹窗.cs</DependentUpon>
     </Compile>
     <Compile Include="软件类\显示.cs" />
@@ -290,7 +290,7 @@
     <EmbeddedResource Include="语言\Form_语言.resx">
       <DependentUpon>Form_语言.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="软件类\文件\Form_文件_弹窗2.resx">
+    <EmbeddedResource Include="软件类\文件\文件弹窗\Form_文件_弹窗2.resx">
       <DependentUpon>Form_文件_弹窗2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="软件类\显示文件信息\ui_ShowInfo.resx">
@@ -299,7 +299,7 @@
     <EmbeddedResource Include="软件类\密码输入框\Form_密码输入框.resx">
       <DependentUpon>Form_密码输入框.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="软件类\文件\Form_文件_弹窗.resx">
+    <EmbeddedResource Include="软件类\文件\文件弹窗_文件\Form_文件_弹窗.resx">
       <DependentUpon>Form_文件_弹窗.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="软件类\查看信息\Form_查看信息.resx">

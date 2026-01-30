@@ -47,7 +47,7 @@ namespace qfNet
             new qfmain.文本().Read_25(path, out string vxt, out string msgErr);
             sb.Append(vxt);
 
-            Win_显示信息(sb.ToString(),版本信息);
+            Win_显示信息(sb.ToString(), 版本信息);
 
         }
 
@@ -88,9 +88,25 @@ namespace qfNet
         }
 
 
+        /// <summary>
+        /// <para>文件目录 : 文件目录</para>
+        /// <para>文件类型 : 文件类型 | 前面的内容</para>
+        /// <para>FileName : 选中的文件路径</para>
+        /// <para>Event_删除文件 : 删除文件事件,参数(要删除的文件名),返回(状态,错误消息)</para>
+        /// </summary> 
+        public (DialogResult s, string 文件名) Win_文件类弹窗(string[] 文件目录, string 文件类型, string 后缀, _文件弹窗类型_ 类型 = _文件弹窗类型_.打开, Func<string, (bool s, string m)> Event_删除文件 = null)
+        {
+            using (Form_文件_弹窗2 forms = new Form_文件_弹窗2(文件目录, 文件类型, 后缀, 类型, Event_删除文件))
+            { 
+                DialogResult dlt = forms.ShowDialog();
+                string FileName = forms._selectedFileName;
+                return (dlt, FileName);
+            }
 
+        }
 
-
+        
+      
 
     }
 }

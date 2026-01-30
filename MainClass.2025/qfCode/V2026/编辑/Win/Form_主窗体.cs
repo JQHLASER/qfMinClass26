@@ -125,8 +125,12 @@ namespace qfCode
 
             this.打开ToolStripMenuItem.Click += (s, e) =>
             {
-                new qfNet .软件类().Win_文件类弹窗 ()
-
+                var rt = 弹窗(qfNet._文件弹窗类型_.打开);
+                if (rt.s == DialogResult.OK)
+                {
+                    打开(rt.Name);
+                    显示配方信息(this._配方信息);
+                }
             };
 
 
@@ -234,15 +238,17 @@ namespace qfCode
             if (!string.IsNullOrEmpty(this._配方名称))
             {
                 打开(this._配方名称);
-                var rt配方目录 = new 编辑交互_统一接口(this._编辑)._Iworker.Get目录_配方文件();
-                if (rt配方目录.Contains(this._配方名称))
-                {
-                    打开(this._配方名称);
-                }
-                else
-                {
-                    this._配方名称 = "";
-                }
+
+
+                //var 配方目录 = new 编辑交互_统一接口(this._编辑)._Iworker.Get目录_配方文件();
+                //if (配方目录.Contains(this._配方名称))
+                //{
+                //    打开(this._配方名称);
+                //}
+                //else
+                //{
+                //    this._配方名称 = "";
+                //}
             }
             显示配方信息(this._配方信息);
         }
@@ -497,7 +503,7 @@ namespace qfCode
 
         void On_删除()
         {
-            var rt = new 编辑交互_统一接口(this._编辑)._Iworker.配方_删除(this._配方名称);
+            var rt = 删除配方文件(this._配方名称);
             if (rt.s)
             {
                 On_清除所有();
@@ -711,6 +717,21 @@ namespace qfCode
 
         }
 
+        (bool s, string m) 删除配方文件(string 配方文件名)
+        {
+            return new 编辑交互_统一接口(this._编辑)._Iworker.配方_删除(配方文件名);
+        }
+
+        (DialogResult s, string Name) 弹窗(qfNet._文件弹窗类型_ 弹窗类型 = qfNet._文件弹窗类型_.打开)
+        {
+            var 配方目录 = new 编辑交互_统一接口(this._编辑)._Iworker.Get目录_配方文件();
+            return new qfNet.软件类().Win_文件类弹窗(配方目录, "", this._编辑._功能.后缀, 弹窗类型, 弹窗_删除文件);
+        }
+
+        (bool, string m) 弹窗_删除文件(string FileName)
+        {
+            return 删除配方文件(FileName);
+        }
 
 
 

@@ -19,43 +19,50 @@ namespace qfNet
 
         _文件弹窗类型_ _类型;
         string _后缀;
-        string[] _文件目录;
+        BindingList<string> _文件目录;
         /// <summary>
         /// 选中文件名称
         /// </summary>
         public string _selectedFileName = "";
-          
+        qfNet.DataGridview_ _datagridSys;
+        Func<string, (bool s, string m)> _Event_删除文件;
+
+
         /// <summary>
         /// <para>label_ : 用来效互的变量</para>
         /// <para>File : 文件夹路径 </para>
         /// </summary> 
-        public Form_文件_弹窗2(string[] 文件目录, string 文件类型, string 后缀, _文件弹窗类型_ 类型_ = _文件弹窗类型_.打开,bool Is删除=true )
+        public Form_文件_弹窗2(string[] 文件目录, string 文件类型, string 后缀, _文件弹窗类型_ 类型_ = _文件弹窗类型_.打开, Func<string, (bool s, string m)> Event_删除文件 = null)
         {
             InitializeComponent();
             this._类型 = 类型_;
             this._后缀 = 后缀;
-            this._文件目录 = 文件目录;
+            this._Event_删除文件 = Event_删除文件;
+            _datagridSys = new DataGridview_(this.uiDataGridView1).格式化()
+                .显示or隐藏标题(false);
+            this._文件目录 = new BindingList<string>(文件目录);
+            this.uiDataGridView1.DataSource = this._文件目录;
 
             this.uiLabel_后缀.Text = $"{文件类型}|*{this._后缀}";
 
             this.Text = (this._类型 == _文件弹窗类型_.打开) ? "Open"
                 : (this._类型 == _文件弹窗类型_.保存) ? "Save"
                 : "";
-            new qfNet.winForm窗体().Set设置_Padding(this, 5);
+            new qfNet.winForm窗体().Set设置_Padding(this, 10);
 
-            this.uiListBox1.ItemClick += (s, e) => On_ItemClick();
-            this.uiListBox1.ItemDoubleClick += (s, e) => On_Yes();
+            this.uiDataGridView1.Click += (s, e) => On_ItemClick();
+            this.uiDataGridView1.DoubleClick += (s, e) => On_Yes();
+            this.uiDataGridView1.Resize += (s, e) =>
+            {
+                this._datagridSys.设置列宽(0, this.uiDataGridView1.Width - 30);
+            };
+
+
             this.uiButton_No.Click += (s, e) => On_No();
             this.uiButton_Yes.Click += (s, e) => On_Yes();
             this.删除ToolStripMenuItem.Click += (s, e) => On_删除();
-            this.删除ToolStripMenuItem.Visible = Is删除;
+            this.删除ToolStripMenuItem.Visible = this._Event_删除文件 is null ? false : true;
 
-
-            this.uiListBox1.Items.Clear();
-            foreach (var s in this._文件目录)
-            {
-                this.uiListBox1.Items.Add(s);
-            }
 
         }
 
@@ -67,12 +74,12 @@ namespace qfNet
         //单击
         void On_ItemClick()
         {
-            int index = this.uiListBox1.SelectedIndex;
+            this._datagridSys.取总行数(out int index);
             if (index < 0)
             {
                 return;
             }
-            this.uiTextBox_FileName.Text = this.uiListBox1.Items[index].ToString();
+            this.uiTextBox_FileName.Text = this._文件目录[index].ToString();
         }
 
 
@@ -97,7 +104,7 @@ namespace qfNet
 
                     #region 打开
 
-                    if (this.uiListBox1.Items.IndexOf(str) < 0)
+                    if (!this._文件目录.Contains(str))
                     {
                         MessageBox.Show(Language_.Get语言("文件不存在"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
@@ -112,7 +119,7 @@ namespace qfNet
 
                     #region 保存
 
-                    if (this.uiListBox1.Items.IndexOf(str) > -1
+                    if (this._文件目录.Contains(str)
                         && MessageBox.Show(Language_.Get语言("文件已存在,是否替换?"), "", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                     {
                         return;
@@ -131,19 +138,19 @@ namespace qfNet
 
         void On_删除()
         {
-            int index = this.uiListBox1.SelectedIndex;
+            this._datagridSys.取总行数(out int index);
             if (index < 0)
             {
                 return;
             }
             else if (MessageBox.Show($"{Language_.Get语言("是否确认删除")}?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                if (Event_删除文件 is null)
+                if (this._Event_删除文件 is null)
                 {
                     return;
                 }
-                string Name = this.uiListBox1.Items[index].ToString();
-                var rt = Event_删除文件.Invoke(Name);
+                string Name = this._文件目录[index].ToString();
+                var rt = this._Event_删除文件.Invoke(Name);
                 if (rt.s)
                 {
                     MessageBox.Show(Language_.Get语言("删除成功"));
@@ -155,8 +162,7 @@ namespace qfNet
             }
 
         }
-         
-        public Func<string, (bool s, string m)> Event_删除文件;
+
 
 
 
