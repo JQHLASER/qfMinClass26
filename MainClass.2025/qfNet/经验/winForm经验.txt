@@ -1,6 +1,6 @@
 ﻿实现MVVM架构   安装库  WinFormMVVM
 
- // 1. 给窗体本身开启双缓冲
+// 1. 给窗体本身开启双缓冲
       this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
       this.UpdateStyles();
 //2.给所有控件开双缓冲

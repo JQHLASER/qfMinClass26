@@ -13,6 +13,7 @@ namespace qfCode
         internal _初始化状态_ _初始化状态 = _初始化状态_.未初始化;
         internal 编码_ _编码;
 
+
         /// <summary>
         /// 本地或通讯交互,
         /// <para>有的是计算在服务端的</para>
@@ -25,6 +26,8 @@ namespace qfCode
             this._功能 = 编码._功能;
             this._编码 = 编码;
             this._交互类型 = 交互类型;
+      
+
         }
 
 

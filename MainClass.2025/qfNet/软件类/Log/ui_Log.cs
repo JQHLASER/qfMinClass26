@@ -40,8 +40,8 @@ namespace qfNet
 
 
         //双缓冲显示窗体所有子控件
-        //  protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }
- 
+          protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }
+
 
         private List<qfmain.log日志._logValue_> _lstLogInfo = new List<qfmain.log日志._logValue_>();
 
@@ -243,7 +243,7 @@ namespace qfNet
 
 
         bool _IsDraw = false;
-      
+
 
 
         /// <summary>
@@ -253,56 +253,56 @@ namespace qfNet
         /// <param name="e"></param>
         private void Timer_Tick(object sender, EventArgs e)
         {
-            List<qfmain.log日志._logValue_> tmp;
+
             lock (_lock)
             {
                 if (this._Queue_buffer.Count == 0 || _IsDraw)
                 {
                     return;
                 }
+                List<qfmain.log日志._logValue_> tmp;
                 tmp = new List<qfmain.log日志._logValue_>(this._Queue_buffer);
-                this._Queue_buffer.Clear();
-            }
-
-            _IsDraw = tmp.Count > 0 ? true : false;
-            listBox1.BeginUpdate();
-            foreach (var item in tmp)
-            {
-                if (item.状态 == qfmain.log日志.enum状态.Clear)
+                this._Queue_buffer.Clear(); 
+                _IsDraw = tmp.Count > 0 ? true : false;
+                listBox1.BeginUpdate();
+                foreach (var item in tmp)
                 {
-                    this._lstLogInfo.Clear();
-                    this.listBox1.Items.Clear();
-                    this.listBox1.TopIndex = -1;
-                    continue;
+                    if (item.状态 == qfmain.log日志.enum状态.Clear)
+                    {
+                        this._lstLogInfo.Clear();
+                        this.listBox1.Items.Clear();
+                        this.listBox1.TopIndex = -1;
+                        continue;
+                    }
+                    else if (this._lstLogInfo.Count >= this._最大显示行数)
+                    {
+                        _lstLogInfo.RemoveAt(0);
+                        this.listBox1.Items.RemoveAt(0);
+                    }
+
+                    this._lstLogInfo.Add(item);
+                    listBox1.Items.Add("12"); // 自绘            
                 }
-                else if (this._lstLogInfo.Count >= this._最大显示行数)
+
+                if (!_IsDraw)
                 {
-                    _lstLogInfo.RemoveAt(0);
-                    this.listBox1.Items.RemoveAt(0);
+                    return;
                 }
 
-                this._lstLogInfo.Add(item);
-                listBox1.Items.Add("12"); // 自绘            
-            }
+                listBox1.EndUpdate();
 
-            if (!_IsDraw)
-            {
-                return;
-            }
-
-            listBox1.EndUpdate();
-
-            if (_IsDraw)
-            {
-                this.listBox1.BeginInvoke((Action)(() =>
+                if (_IsDraw)
                 {
-                    this.listBox1.TopIndex = this._lstLogInfo.Count <= 0 ? -1 : this._lstLogInfo.Count - 1;
-                    this.listBox1.SelectedIndex = this._lstLogInfo.Count <= 0 ? -1 : this._lstLogInfo.Count - 1;
-                }));
-                //this.listBox1.Refresh();  // 强制让 WinForms 消息立即处理
-            }
+                    this.listBox1.BeginInvoke((Action)(() =>
+                    {
+                        this.listBox1.TopIndex = this._lstLogInfo.Count <= 0 ? -1 : this._lstLogInfo.Count - 1;
+                        this.listBox1.SelectedIndex = this._lstLogInfo.Count <= 0 ? -1 : this._lstLogInfo.Count - 1;
+                    }));
+                    //this.listBox1.Refresh();  // 强制让 WinForms 消息立即处理
+                }
 
-            _IsDraw = false;
+                _IsDraw = false;
+            }
         }
 
 

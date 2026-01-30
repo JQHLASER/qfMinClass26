@@ -403,7 +403,7 @@ namespace qfCode
             DateTime.TryParse(配方.Datetimes, out DateTime 最后加工时间);
 
             var rtDatetime = 更新日期_(配方, date_);
-            if (!rtDatetime .s)
+            if (!rtDatetime.s)
             {
                 return (rtDatetime.s, rtDatetime.m, default);
             }
@@ -603,7 +603,7 @@ namespace qfCode
             try
             {
                 if (this._功能.日期时间.更新日期)
-                {
+                { 
                     DateTime 当前时间 = DateTime.Parse(now.ToString("HH:mm:ss"));
                     DateTime 更新时间 = DateTime.Parse(配方文件.更新时间);
                     if (当前时间 <= 更新时间)

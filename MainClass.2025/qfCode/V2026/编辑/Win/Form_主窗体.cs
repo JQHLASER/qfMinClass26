@@ -32,7 +32,7 @@ namespace qfCode
         /// </summary>
         internal BindingList<_元素_Str_> _lstBind元素 = new BindingList<_元素_Str_>();
 
-
+        internal 视图_ _视图;
 
         public Form_主窗体(string 配方名称, 编辑_ 编辑)
         {
@@ -40,6 +40,12 @@ namespace qfCode
             forms = this;
             this._编辑 = 编辑;
             this._配方名称 = 配方名称;
+
+            this._视图 = new 视图_(this._编辑);
+            this._视图.读写参数(1);
+
+            视图设置();
+
 
 
             this.WindowState = FormWindowState.Maximized;
@@ -49,7 +55,13 @@ namespace qfCode
             Datagridview格式();
             this.uiListBox_对象列表.Items.Clear();
 
-
+            this.视图ToolStripMenuItem.Click += (s, e) =>
+            {
+                using (Form_视图 forms=new Form_视图 ())
+                {
+                    forms.ShowDialog();
+                }
+            };
 
             #region  对象
 
@@ -504,6 +516,13 @@ namespace qfCode
         #endregion
 
         #region 方法
+
+        internal void 视图设置()
+        {
+            this.tableLayoutPanel_下边栏.Height = this._视图._cfg.下边栏;
+            this.tableLayoutPanel_配方.ColumnStyles[1].SizeType = SizeType.Absolute;
+            this.tableLayoutPanel_配方.ColumnStyles[0].Width = this._视图._cfg.左边栏;
+        }
 
         (bool s, string m, List<_对象_内容_> lst) 计算_所有对象内容()
         {

@@ -35,26 +35,21 @@ namespace qfCode
         }
 
 
-
-        public class _对象信息_
+        public class _视图_
         {
-            public string 对象名 { set; get; } = string.Empty;
-            /// <summary>
-            /// json格式的信息
-            /// </summary>
-            public List<string> lst元素信息 { set; get; }=new List<string> ();
+            public int 左边栏 { set; get; } = 250;
+            public int 下边栏 { set; get; } = 100;
 
-            public _对象信息_ Clone()
+            public _视图_ Clone()
             {
-                return new _对象信息_
+                return new _视图_
                 {
-                    对象名 = this.对象名,
-                    lst元素信息 = this.lst元素信息 is null ? null : new List<string>(this.lst元素信息),
+                    左边栏 =this.左边栏 ,
+                    下边栏 =this.下边栏 ,
                 };
             }
-
-
         }
+ 
 
 
     }
