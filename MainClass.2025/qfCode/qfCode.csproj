@@ -139,10 +139,16 @@
     <Compile Include="V2026\编辑\Win\Form_对象.Designer.cs">
       <DependentUpon>Form_对象.cs</DependentUpon>
     </Compile>
-    <Compile Include="V2026\编辑\视图\Form_视图.cs">
+    <Compile Include="V2026\编辑\Win\Form_配置.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="V2026\编辑\视图\Form_视图.Designer.cs">
+    <Compile Include="V2026\编辑\Win\Form_配置.Designer.cs">
+      <DependentUpon>Form_配置.cs</DependentUpon>
+    </Compile>
+    <Compile Include="V2026\编辑\Win\视图\Form_视图.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="V2026\编辑\Win\视图\Form_视图.Designer.cs">
       <DependentUpon>Form_视图.cs</DependentUpon>
     </Compile>
     <Compile Include="V2026\编辑\对象_元素操作.cs" />
@@ -150,7 +156,7 @@
     <Compile Include="V2026\编辑\交互\编辑交互_统一接口.cs" />
     <Compile Include="V2026\编辑\交互\子接口\编辑交互_本地.cs" />
     <Compile Include="V2026\主程序\编辑_.cs" />
-    <Compile Include="V2026\编辑\视图\视图_.cs" />
+    <Compile Include="V2026\编辑\Win\视图\视图_.cs" />
     <Compile Include="语言\Language_.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="V2026\编码 Code\数据结构\Type.cs" />
@@ -168,16 +174,16 @@
     <Compile Include="V2026\编码 Code\数据结构\对象\_对象_.cs" />
     <Compile Include="V2026\编码 Code\数据结构\_配方文件_属性_.cs" />
     <Compile Include="V2026\主程序\_文件夹_.cs" />
-    <Compile Include="V2026\编码 Code\文件\读写\文件类\ini文件_.cs" />
-    <Compile Include="V2026\编码 Code\文件\读写\Iwork_配方文件.cs" />
+    <Compile Include="V2026\编码 Code\配方文件\读写\文件类\ini文件_.cs" />
+    <Compile Include="V2026\编码 Code\配方文件\读写\Iwork_配方文件.cs" />
     <Compile Include="V2026\编码 Code\常量.cs" />
-    <Compile Include="V2026\编码 Code\文件\Json序列化.cs" />
-    <Compile Include="V2026\编码 Code\文件\读写\文件_统一接口.cs" />
-    <Compile Include="V2026\编码 Code\文件\读写\文件类\Sqlite文件_.cs" />
-    <Compile Include="V2026\编码 Code\文件\读写\文件类\SqlServer文件_.cs" />
-    <Compile Include="V2026\编码 Code\文件\读写\文件类\txt文件_.cs" />
-    <Compile Include="V2026\编码 Code\文件\读写\表.cs" />
-    <Compile Include="V2026\编码 Code\文件\文件类.cs" />
+    <Compile Include="V2026\编码 Code\配方文件\Json序列化.cs" />
+    <Compile Include="V2026\编码 Code\配方文件\读写\文件_统一接口.cs" />
+    <Compile Include="V2026\编码 Code\配方文件\读写\文件类\Sqlite文件_.cs" />
+    <Compile Include="V2026\编码 Code\配方文件\读写\文件类\SqlServer文件_.cs" />
+    <Compile Include="V2026\编码 Code\配方文件\读写\文件类\txt文件_.cs" />
+    <Compile Include="V2026\编码 Code\配方文件\读写\表.cs" />
+    <Compile Include="V2026\编码 Code\配方文件\文件类.cs" />
     <Compile Include="语言\LanguageList.cs" />
     <Compile Include="V2026\通讯\Server\Iworker_通讯.cs" />
   </ItemGroup>
@@ -232,7 +238,10 @@
     <EmbeddedResource Include="V2026\编辑\Win\Form_对象.resx">
       <DependentUpon>Form_对象.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="V2026\编辑\视图\Form_视图.resx">
+    <EmbeddedResource Include="V2026\编辑\Win\Form_配置.resx">
+      <DependentUpon>Form_配置.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="V2026\编辑\Win\视图\Form_视图.resx">
       <DependentUpon>Form_视图.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

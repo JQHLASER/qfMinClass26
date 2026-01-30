@@ -15,25 +15,25 @@ namespace qfCode
         {
             this._CodeSys = CodeSys;
 
-            switch (this._CodeSys._功能.文件类型)
+            switch (this._CodeSys._功能.配方文件类型)
             {
-                case _功能_结构_._em_文件类型_.ini:
+                case _功能_结构_._em_配方文件类型_.ini:
                     this._Iwork文件 = new ini文件_(this._CodeSys);
                     break;
-                case _功能_结构_._em_文件类型_.txt:
+                case _功能_结构_._em_配方文件类型_.txt:
                     this._Iwork文件 = new txt文件_(this._CodeSys);
                     break;
-                case _功能_结构_._em_文件类型_.Sqlite:
+                case _功能_结构_._em_配方文件类型_.Sqlite:
                     this._Iwork文件 = new Sqlite文件_(this._CodeSys);
                     break;
-                case _功能_结构_._em_文件类型_.SqlServer:
+                case _功能_结构_._em_配方文件类型_.SqlServer:
                     this._Iwork文件 = new SqlServer文件_(this._CodeSys);
                     break;
             }
 
         }
 
-      
+
 
 
     }

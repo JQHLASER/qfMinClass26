@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SqlSugar.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -615,7 +616,7 @@ namespace qfmain
 
                     // 在项目中添加“Windows Script Host Object Model”的引用
                     //在项目上单击右键，选择“添加引用”，在“添加引用”对话框中选择“COM”组件选项卡，然后单击选择“Windows Script Host Object Model”，最后确定。在项目中就会出现“IWshRuntimeLibrary”.
-             
+
                     IWshRuntimeLibrary.WshShell shell = new IWshRuntimeLibrary.WshShell();
                     IWshRuntimeLibrary.IWshShortcut 当前快捷方式文件IWshShortcut类 = (IWshRuntimeLibrary.IWshShortcut)shell.CreateShortcut(快捷方式文件的路径);
                     //快捷方式文件指向的路径.Text = 当前快捷方式文件IWshShortcut类.TargetPath;
@@ -958,21 +959,12 @@ namespace qfmain
 
         #region 文件的读写
 
+
         /// <summary>
         ///  Model: =0写,=1读
-        /// <para>读写文件,以json格式保存,system.IO.json.txt</para>
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
-        /// <param name="Model"></param>
-        /// <param name="cfg"></param>
-        /// <param name="msgErr"></param>
-        /// <param name="encoding_"></param>
-        /// <param name="加密"></param>
-        /// <param name="密码"></param>
-        /// <param name="bufferSize"></param>
-        /// <returns></returns>
-        public virtual bool WriteReadJsonText<T>(string path, ushort Model, ref T cfg, out string msgErr, Encoding encoding_ = null, bool 加密 = false, string 密码 = "QIFENG8888", int bufferSize = 65535)
+        /// <para>读写文件,以json格式保存,Newtonsoft.Json</para>
+        /// </summary> 
+        public virtual bool WriteReadJson<T>(string path, ushort Model, ref T cfg, out string msgErr, _em_json类型_ json类型 = _em_json类型_.NewtonsoftJson , Encoding encoding_ = null, bool 加密 = false, string 密码 = "QIFENG8888")
         {
             bool rt = true;
             msgErr = string.Empty;
@@ -1004,12 +996,26 @@ namespace qfmain
                         {
                             continue;
                         }
-                        rt = new Json_().JsonTo_T(cfg, out string vxt, out msgErr);
+
+                        string vxt = "";
+                        switch (json类型)
+                        {
+                            case _em_json类型_.NewtonsoftJson:
+                                vxt = JsonConvert.SerializeObject(cfg, Formatting.Indented);
+                                break;
+                            case _em_json类型_.SystemIOjsontext:
+                                var rtsys = new Json_SystemTextJson().序列化(cfg);
+                                vxt = rtsys.v;
+                                rt = rtsys.s;
+                                msgErr = rtsys.m;
+                                break;
+                        }
+
                         if (rt)
                         {
                             if (加密)
                             {
-                                vxt = new 加解密_AES().加密_1(vxt, 密码);
+                                vxt = new 加解密().AES加密2(vxt, 密码);
                             }
                             new 文本().Save_25(path, vxt, true, out msgErr, false, encoding_);
                         }
@@ -1018,89 +1024,6 @@ namespace qfmain
                     else if (s == "读")
                     {
                         rt = new 文本().Read_25(path, out string rxt, out msgErr, encoding_);
-                        if (rt && !string.IsNullOrEmpty(rxt))
-                        {
-                            if (加密)
-                            {
-                                rxt = new 加解密_AES().解密_1(rxt, 密码);
-                            }
-
-                            rt = new Json_().T_ToJson(ref cfg, rxt, out msgErr);
-                        }
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                rt = false;
-                msgErr = ex.Message;
-            }
-            return rt;
-        }
-
-
-
-
-        /// <summary>
-        ///  Model: =0写,=1读
-        /// <para>读写文件,以json格式保存,Newtonsoft.Json</para>
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
-        /// <param name="Model"></param>
-        /// <param name="cfg"></param>
-        /// <param name="msgErr"></param>
-        /// <param name="encoding_"></param>
-        /// <param name="加密"></param>
-        /// <param name="密码"></param>
-        /// <param name="bufferSize"></param>
-        /// <returns></returns>
-        public virtual bool WriteReadJson<T>(string path, ushort Model, ref T cfg, out string msgErr, Encoding encoding_ = null, bool 加密 = false, string 密码 = "QIFENG8888", int bufferSize = 65535)
-        {
-            bool rt = true;
-            msgErr = string.Empty;
-            try
-            {
-
-
-                List<string> lstWork = new List<string>();
-                lstWork.Add("是否强制写");
-                lstWork.Add("写");
-                lstWork.Add("读");
-
-                foreach (var s in lstWork)
-                {
-                    if (!rt)
-                    {
-                        break;
-                    }
-                    else if (s == "是否强制写")
-                    {
-                        if (Model != 0 && !new 文件_文件夹().文件_是否存在(path))
-                        {
-                            Model = 0;
-                        }
-                    }
-                    else if (s == "写")
-                    {
-                        if (Model != 0)
-                        {
-                            continue;
-                        }
-
-                        string vxt = JsonConvert.SerializeObject(cfg, Formatting.Indented);
-                        if (加密)
-                        {
-                            vxt = new 加解密().AES加密2(vxt, 密码);
-                        }
-                        new 文本().Save_25(path, vxt, true, out msgErr, false, encoding_);
-
-
-                    }
-                    else if (s == "读")
-                    {
-                        rt = new 文本().Read_25(path, out string rxt, out msgErr, encoding_);
 
                         if (rt && !string.IsNullOrEmpty(rxt))
                         {
@@ -1109,17 +1032,20 @@ namespace qfmain
                                 rxt = new 加解密_AES().解密_1(rxt, 密码);
                             }
 
-                            try
+                            switch (json类型)
                             {
-                                JToken jToken = JToken.Parse(rxt);
+                                case _em_json类型_.NewtonsoftJson:
+                                    JToken jToken = JToken.Parse(rxt);
+                                    cfg = JsonConvert.DeserializeObject<T>(rxt);
+                                    break;
+                                case _em_json类型_.SystemIOjsontext:
+                                    var rtsys = new Json_SystemTextJson().反序列化<T>(rxt);
+                                    cfg = rtsys.v;
+                                    rt = rtsys.s;
+                                    msgErr = rtsys.m;
+                                    break;
                             }
-                            catch (Exception ex)
-                            {
-                                rt = false;
-                                msgErr = ex.Message;
-                                break;
-                            }
-                            cfg = JsonConvert.DeserializeObject<T>(rxt);
+
 
                         }
                     }
@@ -1137,19 +1063,9 @@ namespace qfmain
 
         /// <summary>
         ///  Model: =0写,=1读
-        /// <para>读写文件,以json格式保存</para>
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
-        /// <param name="Model"></param>
-        /// <param name="cfg"></param>
-        /// <param name="msgErr"></param>
-        /// <param name="encoding_"></param>
-        /// <param name="加密"></param>
-        /// <param name="密码"></param>
-        /// <param name="bufferSize"></param>
-        /// <returns></returns>
-        public virtual bool WriteReadText(string path, ushort Model, ref string cfg, out string msgErr, Encoding encoding_ = null, bool 加密 = false, string 密码 = "QIFENG8888", int bufferSize = 65535)
+        /// <para>读写文件,以文本方式</para>
+        /// </summary> 
+        public virtual bool WriteReadText(string path, ushort Model, ref string cfg, out string msgErr, Encoding encoding_ = null, bool 加密 = false, string 密码 = "QIFENG8888")
         {
             bool rt = true;
             msgErr = string.Empty;
@@ -1219,18 +1135,22 @@ namespace qfmain
 
         /// <summary>
         ///  Model: =0写,=1读
-        /// <para>读写文件,以json格式保存</para>
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
-        /// <param name="Model"></param>
-        /// <param name="cfg"></param>
-        /// <param name="msgErr"></param>
-        /// <returns></returns>
-        public virtual bool WriteReadIni<T>(string path, ushort Model, ref T cfg, out string msgErr, string section = "信息", string key_ = "data")
+        /// <para>读写文件,以Json格式</para>
+        /// </summary> 
+        public virtual bool WriteReadIni<T>(string path, ushort Model, ref T cfg, out string msgErr, _em_json类型_ json类型 = _em_json类型_.NewtonsoftJson , string section = "信息", string key_ = "data")
         {
             bool rt = true;
             msgErr = string.Empty;
+            Type type = typeof(T);
+            if (type == typeof(string))
+            {
+                string v = $"{cfg}";
+                rt = WriteReadIniStr(path, Model, ref v, out msgErr, section, key_);
+                cfg = (T)(object)v;
+                return rt;
+            }
+             
+
             try
             {
 
@@ -1259,19 +1179,39 @@ namespace qfmain
                             continue;
                         }
 
-                        string vxt = JsonConvert.SerializeObject(cfg, Formatting.None);
+                        string vxt = "";
+                        switch (json类型)
+                        {
+                            case _em_json类型_.NewtonsoftJson:
+                                vxt = JsonConvert.SerializeObject(cfg, Formatting.Indented);
+                                break;
+                            case _em_json类型_.SystemIOjsontext:
+                                var rtsys = new Json_SystemTextJson().序列化(cfg);
+                                vxt = rtsys.v;
+                                rt = rtsys.s;
+                                msgErr = rtsys.m;
+                                break;
+                        }
                         new ini_sharpconfig(path).Write(section, key_, vxt, true);
 
                     }
                     else if (s == "读")
                     {
-
                         string rxt = new ini_sharpconfig(path).Read(section, key_, JsonConvert.SerializeObject(cfg));
-                        if (!string.IsNullOrEmpty(rxt))
+                        switch (json类型)
                         {
-                            cfg = JsonConvert.DeserializeObject<T>(rxt);
-                        }
+                            case _em_json类型_.NewtonsoftJson:
+                                JToken jToken = JToken.Parse(rxt);
+                                cfg = JsonConvert.DeserializeObject<T>(rxt);
+                                break;
+                            case _em_json类型_.SystemIOjsontext:
+                                var rtsys = new Json_SystemTextJson().反序列化<T>(rxt);
+                                cfg = rtsys.v;
+                                rt = rtsys.s;
+                                msgErr = rtsys.m;
 
+                                break;
+                        }
                     }
                 }
 
@@ -1281,6 +1221,7 @@ namespace qfmain
                 rt = false;
                 msgErr = ex.Message;
             }
+
             return rt;
         }
 
@@ -1295,7 +1236,7 @@ namespace qfmain
         /// <param name="cfg"></param>
         /// <param name="msgErr"></param>
         /// <returns></returns>
-        public virtual bool WriteReadIni(string path, ushort Model, ref string  cfg, out string msgErr, string section = "信息", string key_ = "data")
+        public virtual bool WriteReadIniStr(string path, ushort Model, ref string cfg, out string msgErr, string section = "信息", string key_ = "data")
         {
             bool rt = true;
             msgErr = string.Empty;
@@ -1326,13 +1267,13 @@ namespace qfmain
                         {
                             continue;
                         }
-                         
-                        new ini_sharpconfig(path).Write(section, key_, cfg , true);
+
+                        new ini_sharpconfig(path).Write(section, key_, cfg, true);
 
                     }
                     else if (s == "读")
                     {
-                      cfg= new ini_sharpconfig(path).Read(section, key_,"");                   
+                        cfg = new ini_sharpconfig(path).Read(section, key_, "");
                     }
                 }
 

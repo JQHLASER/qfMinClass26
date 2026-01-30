@@ -115,7 +115,7 @@ namespace qfmain
 
 
         #endregion
-
+        
 
         /// <summary>
         /// 读取配置值（带类型转换和默认值）

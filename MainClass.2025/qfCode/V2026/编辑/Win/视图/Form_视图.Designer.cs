@@ -36,6 +36,8 @@
             this.ui_Label_81 = new Sunny.ui_Label_8(this.components);
             this.uiButton_No = new Sunny.UI.UIButton();
             this.uiButton_Yes = new Sunny.UI.UIButton();
+            this.uiTextBox_信息 = new Sunny.UI.UITextBox();
+            this.ui_Label_82 = new Sunny.ui_Label_8(this.components);
             this.SuspendLayout();
             // 
             // uiTextBox_左边栏
@@ -46,7 +48,7 @@
             this.uiTextBox_左边栏.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.uiTextBox_左边栏.HasMinimum = true;
             this.uiTextBox_左边栏.IntValue = 1;
-            this.uiTextBox_左边栏.Location = new System.Drawing.Point(242, 82);
+            this.uiTextBox_左边栏.Location = new System.Drawing.Point(257, 81);
             this.uiTextBox_左边栏.Margin = new System.Windows.Forms.Padding(0);
             this.uiTextBox_左边栏.Maximum = 2147483647D;
             this.uiTextBox_左边栏.Minimum = 0D;
@@ -65,7 +67,7 @@
             // 
             this.ui_Label_85.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.ui_Label_85.ForeColor = System.Drawing.Color.Gray;
-            this.ui_Label_85.Location = new System.Drawing.Point(35, 82);
+            this.ui_Label_85.Location = new System.Drawing.Point(50, 81);
             this.ui_Label_85.Name = "ui_Label_85";
             this.ui_Label_85.Size = new System.Drawing.Size(200, 26);
             this.ui_Label_85.Style = Sunny.UI.UIStyle.深色;
@@ -81,7 +83,7 @@
             this.uiTextBox_下边栏.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.uiTextBox_下边栏.HasMinimum = true;
             this.uiTextBox_下边栏.IntValue = 1;
-            this.uiTextBox_下边栏.Location = new System.Drawing.Point(242, 118);
+            this.uiTextBox_下边栏.Location = new System.Drawing.Point(257, 114);
             this.uiTextBox_下边栏.Margin = new System.Windows.Forms.Padding(0);
             this.uiTextBox_下边栏.Maximum = 2147483647D;
             this.uiTextBox_下边栏.Minimum = 0D;
@@ -100,7 +102,7 @@
             // 
             this.ui_Label_81.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.ui_Label_81.ForeColor = System.Drawing.Color.Gray;
-            this.ui_Label_81.Location = new System.Drawing.Point(35, 118);
+            this.ui_Label_81.Location = new System.Drawing.Point(50, 114);
             this.ui_Label_81.Name = "ui_Label_81";
             this.ui_Label_81.Size = new System.Drawing.Size(200, 26);
             this.ui_Label_81.Style = Sunny.UI.UIStyle.深色;
@@ -150,11 +152,47 @@
             this.uiButton_Yes.TabIndex = 19;
             this.uiButton_Yes.Text = "确定";
             // 
+            // uiTextBox_信息
+            // 
+            this.uiTextBox_信息.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.uiTextBox_信息.DoubleValue = 1D;
+            this.uiTextBox_信息.FillColor = System.Drawing.Color.White;
+            this.uiTextBox_信息.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiTextBox_信息.HasMinimum = true;
+            this.uiTextBox_信息.IntValue = 1;
+            this.uiTextBox_信息.Location = new System.Drawing.Point(257, 147);
+            this.uiTextBox_信息.Margin = new System.Windows.Forms.Padding(0);
+            this.uiTextBox_信息.Maximum = 2147483647D;
+            this.uiTextBox_信息.Minimum = 0D;
+            this.uiTextBox_信息.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiTextBox_信息.Name = "uiTextBox_信息";
+            this.uiTextBox_信息.Padding = new System.Windows.Forms.Padding(5);
+            this.uiTextBox_信息.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
+            this.uiTextBox_信息.Size = new System.Drawing.Size(100, 26);
+            this.uiTextBox_信息.Style = Sunny.UI.UIStyle.深色;
+            this.uiTextBox_信息.TabIndex = 22;
+            this.uiTextBox_信息.Text = "1";
+            this.uiTextBox_信息.Type = Sunny.UI.UITextBox.UIEditType.Integer;
+            this.uiTextBox_信息.填充颜色 = System.Drawing.Color.White;
+            // 
+            // ui_Label_82
+            // 
+            this.ui_Label_82.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.ui_Label_82.ForeColor = System.Drawing.Color.Gray;
+            this.ui_Label_82.Location = new System.Drawing.Point(50, 147);
+            this.ui_Label_82.Name = "ui_Label_82";
+            this.ui_Label_82.Size = new System.Drawing.Size(200, 26);
+            this.ui_Label_82.Style = Sunny.UI.UIStyle.深色;
+            this.ui_Label_82.TabIndex = 21;
+            this.ui_Label_82.Text = "ShwoInfo";
+            this.ui_Label_82.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // Form_视图
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(519, 303);
+            this.Controls.Add(this.uiTextBox_信息);
+            this.Controls.Add(this.ui_Label_82);
             this.Controls.Add(this.uiButton_No);
             this.Controls.Add(this.uiButton_Yes);
             this.Controls.Add(this.uiTextBox_下边栏);
@@ -179,5 +217,7 @@
         private Sunny.ui_Label_8 ui_Label_81;
         private Sunny.UI.UIButton uiButton_No;
         private Sunny.UI.UIButton uiButton_Yes;
+        private Sunny.UI.UITextBox uiTextBox_信息;
+        private Sunny.ui_Label_8 ui_Label_82;
     }
 }

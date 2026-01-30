@@ -40,8 +40,8 @@ namespace qfPLC
 
         #region Read
 
-        (bool state, string msg, T v) Read<T>( _ReadType_ Read_Type, string address, ushort length=1, Encoding encoding=null );
-        Task<(bool state, string msg, T v)> ReadAsync<T>( _ReadTypeAsync_ Read_Type, string address, ushort length=1, Encoding encoding = null);
+        (bool state, string msg, T v) Read<T>( _ReadType_ Read_Type, string address, ushort length=1, Encoding encoding=null )  ;
+        Task<(bool state, string msg, T v)> ReadAsync<T>( _ReadTypeAsync_ Read_Type, string address, ushort length=1, Encoding encoding = null) ;
 
         #endregion
 

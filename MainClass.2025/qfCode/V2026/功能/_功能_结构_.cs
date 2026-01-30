@@ -71,7 +71,7 @@ namespace qfCode
 
         }
 
-        public enum _em_文件类型_
+        public enum _em_配方文件类型_
         {
             ini,
             txt,

@@ -189,7 +189,7 @@ namespace qfNet
                         this._Config.loginInfo_Beff = 生成原始数据();
                     }
                     _loginInfo_[] info = this._Config.loginInfo_Beff.Select(i => i.Clone()).ToArray();
-                    new qfmain.文件_文件夹().WriteReadJson(path, model, ref info, out string msgErr, null, true);
+                    new qfmain.文件_文件夹().WriteReadJson(path, model, ref info, out string msgErr, qfmain._em_json类型_.SystemIOjsontext ,null, true);
                     this._Config.loginInfo_Beff = info;
 
                     #endregion

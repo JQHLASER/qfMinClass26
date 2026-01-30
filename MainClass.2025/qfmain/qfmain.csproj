@@ -249,6 +249,8 @@
     <Compile Include="const常量.cs" />
     <Compile Include="基础\Csv\Csv_高效.cs" />
     <Compile Include="基础\INI\ini_sharpconfig.cs" />
+    <Compile Include="基础\Json\Json_SystemTextJson.cs" />
+    <Compile Include="基础\T_实例化泛型.cs" />
     <Compile Include="基础\文本\文本_持续写入.cs" />
     <Compile Include="延时\等待_ManualResetEvent.cs" />
     <Compile Include="延时\等待_Task.cs" />

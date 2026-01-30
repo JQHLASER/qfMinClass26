@@ -26,6 +26,8 @@ namespace qfCode
         internal int _编辑对象索引 = -1;
         internal string _配方名称 = "";
         internal List<_对象_内容_> _lst对象内容 = new List<_对象_内容_>();
+        bool _是否要保存 = false;
+
 
         /// <summary>
         /// 当前编辑中的对象元素
@@ -57,11 +59,73 @@ namespace qfCode
 
             this.视图ToolStripMenuItem.Click += (s, e) =>
             {
-                using (Form_视图 forms=new Form_视图 ())
+                using (Form_视图 forms = new Form_视图())
                 {
                     forms.ShowDialog();
                 }
             };
+
+            this.配置ToolStripMenuItem.Click += (s, e) =>
+            {
+                using (Form_配置 forms = new Form_配置(this._配方信息.Clone()))
+                {
+                    if (forms.ShowDialog() == DialogResult.OK)
+                    {
+                        this._配方信息.更新时间 = forms._cfg.更新时间;
+                        this._配方信息.班次文件 = forms._cfg.班次文件;
+                        显示配方信息(this._配方信息);
+                        _是否要保存 = true;
+                    }
+                }
+            };
+
+            this.FormClosing += (s, e) =>
+            {
+                if (this.textBox_备注.Text != this._配方信息.备注)
+                {
+                    this._是否要保存 = true;
+                }
+                if (!string.IsNullOrEmpty(this._配方名称)
+                    && this._是否要保存 && MessageBox.Show(Language_.Get语言("是否保存?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    On_保存();
+                }
+            };
+
+            #region 文件
+
+            this.关闭ToolStripMenuItem.Click += (s, e) =>
+            {
+                this.Close();
+            };
+
+            this.新建ToolStripMenuItem.Click += (s, e) =>
+            {
+                #region 新建
+
+                if (MessageBox.Show(Language_.Get语言("新建?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    On_清除所有();
+                }
+
+                #endregion
+            };
+
+            this.删除ToolStripMenuItem.Click += (s, e) =>
+            {
+                #region 删除
+
+                if (MessageBox.Show(Language_.Get语言("删除?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    On_删除();
+                }
+
+                #endregion
+            };
+
+
+            #endregion
+
 
             #region  对象
 
@@ -89,11 +153,13 @@ namespace qfCode
             {
                 new 对象_元素操作().上移一行(this._配方信息.对象);
                 new 对象_元素操作().上移一行(this.uiListBox_对象列表);
+                _是否要保存 = true;
             };
             this.ui_Button_对象_下移.Event_Click += () =>
             {
                 new 对象_元素操作().下移一行(this._配方信息.对象);
                 new 对象_元素操作().下移一行(this.uiListBox_对象列表);
+                _是否要保存 = true;
             };
 
             this.ui_Button_对象_保存.Event_Click += () => On_保存();
@@ -111,7 +177,7 @@ namespace qfCode
                         MessageBox.Show(rt.m, "Err", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    MessageBox.Show(rt.v);
+                    MessageBox.Show(rt.v, $"Lenght: {rt.v.Length}");
                 }
 
                 #endregion
@@ -139,6 +205,7 @@ namespace qfCode
                 {
                     new 对象_元素操作().上移一行(this._配方信息.对象[this._编辑对象索引].元素);
                     new 对象_元素操作().上移一行<_元素_Str_>(this._lstBind元素, index, dataGridView_元素);
+                    _是否要保存 = true;
                 }
             };
             this.ui_Button_元素_下移.Event_Click += () =>
@@ -147,6 +214,7 @@ namespace qfCode
                 {
                     new 对象_元素操作().下移一行(this._配方信息.对象[this._编辑对象索引].元素);
                     new 对象_元素操作().下移一行<_元素_Str_>(this._lstBind元素, index, dataGridView_元素);
+                    _是否要保存 = true;
                 }
             };
 
@@ -159,7 +227,17 @@ namespace qfCode
             if (!string.IsNullOrEmpty(this._配方名称))
             {
                 打开(this._配方名称);
+                var rt配方目录 = new 编辑交互_统一接口(this._编辑)._Iworker.Get目录_配方文件();
+                if (rt配方目录.Contains(this._配方名称))
+                {
+                    打开(this._配方名称);
+                }
+                else
+                {
+                    this._配方名称 = "";
+                }
             }
+            显示配方信息(this._配方信息);
         }
 
 
@@ -192,6 +270,8 @@ namespace qfCode
                                 new 对象_元素操作().在指定处插入(this._配方信息.对象, objc, index0 + 1);
                                 new 对象_元素操作().在指定处插入(this.uiListBox_对象列表, forms._对象名称, index0 + 1);
                             }
+                            显示编辑对象信息();
+                            _是否要保存 = true;
                         }
                     }
                     #endregion
@@ -209,6 +289,8 @@ namespace qfCode
                                 this._配方信息.对象[index].对象名 = forms._对象名称;
                                 this._配方信息.对象[index].属性 = forms._cfg.Clone();
                                 this.uiListBox_对象列表.Items[index] = forms._对象名称;
+                                显示编辑对象信息();
+                                _是否要保存 = true;
                             }
                         }
                     }
@@ -229,8 +311,8 @@ namespace qfCode
                 if (index == this._编辑对象索引)
                 {
                     清空显示的元素信息(-1);
-
                 }
+                _是否要保存 = true;
             }
         }
 
@@ -270,7 +352,7 @@ namespace qfCode
                                 new 对象_元素操作().在指定处插入<_元素_Str_>(this._lstBind元素, rt.cfg, index0 + 1, dataGridView_元素);
 
                             }
-
+                            _是否要保存 = true;
                         }
                     }
                     #endregion
@@ -287,6 +369,7 @@ namespace qfCode
                                 this._配方信息.对象[this._编辑对象索引].元素[index] = forms._json元素信息;
                                 var rt = 计算_元素(forms._json元素信息);
                                 this._lstBind元素[index] = rt.cfg;
+                                _是否要保存 = true;
                             }
                         }
                     }
@@ -305,6 +388,7 @@ namespace qfCode
             {
                 this._配方信息.对象[this._编辑对象索引].元素.RemoveAt(index);
                 this.uiListBox_对象列表.Items.RemoveAt(index);
+                _是否要保存 = true;
             }
         }
 
@@ -343,7 +427,7 @@ namespace qfCode
 
         #endregion
 
-        #region 保存/另存为
+        #region 操作
 
 
         void On_保存()
@@ -386,6 +470,39 @@ namespace qfCode
 
         }
 
+        /// <summary>
+        /// 新建
+        /// </summary>
+        void On_清除所有()
+        {
+            this._配方名称 = "";
+            this._配方信息 = new _配方文件_属性_();
+            this.Text = this._配方名称;
+
+            this._编辑对象索引 = -1;
+            this._lstBind元素.Clear();
+            this._lst对象内容.Clear();
+            this.uiListBox_对象列表.Items.Clear();
+
+            显示配方信息(this._配方信息);
+
+        }
+
+        void On_删除()
+        {
+            var rt = new 编辑交互_统一接口(this._编辑)._Iworker.配方_删除(this._配方名称);
+            if (rt.s)
+            {
+                On_清除所有();
+                MessageBox.Show(Language_.Get语言("删除成功"));
+            }
+            else
+            {
+                MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
 
 
         #endregion
@@ -416,15 +533,15 @@ namespace qfCode
             }
             if (this._编辑._功能.对象属性.校验模板 && objc.属性.校验模板)
             {
-                sb.Append($"<{Language_.Get语言("校验模板")}>");
+                sb.Append($"<{Language_.Get语言("模板")}>");
             }
             if (this._编辑._功能.对象属性.校验关键字 && objc.属性.校验关键字)
             {
-                sb.Append($"<{Language_.Get语言("校验关键字")}>");
+                sb.Append($"<{Language_.Get语言("关键字")}>");
             }
             if (this._编辑._功能.对象属性.校验位数 && objc.属性.校验位数 > 0)
             {
-                sb.Append($"<{Language_.Get语言("校验位数")} {objc.属性.校验位数}>");
+                sb.Append($"<{Language_.Get语言("位数")} {objc.属性.校验位数}>");
             }
             this.uiTitlePanel_元素列表.Text = sb.ToString();
 
@@ -520,8 +637,11 @@ namespace qfCode
         internal void 视图设置()
         {
             this.tableLayoutPanel_下边栏.Height = this._视图._cfg.下边栏;
+            this.tableLayoutPanel_下边栏.ColumnStyles[2].Width = this._视图._cfg.信息宽度;
+
             this.tableLayoutPanel_配方.ColumnStyles[1].SizeType = SizeType.Absolute;
             this.tableLayoutPanel_配方.ColumnStyles[0].Width = this._视图._cfg.左边栏;
+
         }
 
         (bool s, string m, List<_对象_内容_> lst) 计算_所有对象内容()
@@ -536,7 +656,12 @@ namespace qfCode
             DateTime now = DateTime.Now;
             this._配方信息.Datetimes = now.ToString("yyyy-MM-dd HH:mm:ss");
             this._配方信息.备注 = this.textBox_备注.Text;
-            return new 编辑交互_统一接口(this._编辑)._Iworker.配方_保存(this._配方信息, 配方名称, now);
+            var rt = new 编辑交互_统一接口(this._编辑)._Iworker.配方_保存(this._配方信息, 配方名称, now);
+            if (rt.s)
+            {
+                _是否要保存 = true;
+            }
+            return rt;
         }
 
         (bool s, string m, _配方文件_属性_ cfg) 打开(string 配方名称)
@@ -566,8 +691,6 @@ namespace qfCode
 
             this.textBox_信息.Text = sb.ToString();
         }
-
-
 
         void 显示所有对象名()
         {

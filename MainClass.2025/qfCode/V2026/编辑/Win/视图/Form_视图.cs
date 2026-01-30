@@ -18,6 +18,8 @@ namespace qfCode
 
             this.uiTextBox_左边栏.IntValue = Form_主窗体.forms._视图._cfg.左边栏;
             this.uiTextBox_下边栏.IntValue = Form_主窗体.forms._视图._cfg.下边栏;
+            this.uiTextBox_信息 .IntValue = Form_主窗体.forms._视图._cfg. 信息宽度 ; 
+
 
             this.uiButton_No.Click += (s, e) =>
             {
@@ -28,6 +30,8 @@ namespace qfCode
             {
                 Form_主窗体.forms._视图._cfg.左边栏=  this.uiTextBox_左边栏.IntValue ;
                 Form_主窗体.forms._视图._cfg.下边栏= this.uiTextBox_下边栏.IntValue ;
+                Form_主窗体.forms._视图._cfg.信息宽度=   this.uiTextBox_信息.IntValue ;
+
                 Form_主窗体.forms._视图.读写参数(0);
                 Form_主窗体.forms.视图设置();
             };

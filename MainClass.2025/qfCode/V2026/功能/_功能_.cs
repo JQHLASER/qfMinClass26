@@ -14,7 +14,7 @@ namespace qfCode
         /// <summary>
         /// 编码文件信息后缀
         /// </summary>
-        public _功能_结构_._em_文件类型_ 文件类型 { set; get; } = _功能_结构_._em_文件类型_.ini;
+        public _功能_结构_._em_配方文件类型_ 配方文件类型 { set; get; } = _功能_结构_._em_配方文件类型_.ini;
 
         /// <summary>
         /// 编码信息文件后缀,

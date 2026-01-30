@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 namespace qfmain
 {
 
+    public enum _em_json类型_
+    {
+        NewtonsoftJson,
+        SystemIOjsontext
+    }
+
+
+
 
     /// <summary>
     /// Socket参数,客户端与服务端共用参数

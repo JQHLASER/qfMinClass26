@@ -23,7 +23,7 @@ namespace qfCode
             this._cfg = cfg.Clone();
 
             this.panel_配置文件.Visible = Form_主窗体.forms._编辑._功能.日期时间.配置编码;
-            this._lstBinding配置 = new BindingList<string>(new 编辑交互_本地(Form_主窗体.forms._编辑).Get配置文件_日期时间());
+            this._lstBinding配置 = new BindingList<string>(new 编辑交互_本地(Form_主窗体.forms._编辑).Get目录_配置文件_日期时间());
             this.ui_Combobox2_配置._ComboBox.DataSource = this._lstBinding配置;
 
 

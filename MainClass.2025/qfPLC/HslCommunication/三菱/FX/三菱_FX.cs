@@ -178,12 +178,12 @@ namespace qfPLC
 
 
         #region Read
-        public virtual (bool state, string msg, T v) Read<T>(_ReadType_ Read_Type, string address, ushort length = 0, Encoding encoding = null)
+        public virtual (bool state, string msg, T v) Read<T>(_ReadType_ Read_Type, string address, ushort length = 0, Encoding encoding = null)  
         {
             return new ReadPlc().Read<T>(this._MelsecFxSerial , Read_Type, address, length, encoding);
         }
 
-        public virtual async Task<(bool state, string msg, T v)> ReadAsync<T>(_ReadTypeAsync_ Read_Type, string address, ushort length = 0, Encoding encoding = null)
+        public virtual async Task<(bool state, string msg, T v)> ReadAsync<T>(_ReadTypeAsync_ Read_Type, string address, ushort length = 0, Encoding encoding = null)  
         {
             return await new ReadPlc().ReadAsync<T>(this._MelsecFxSerial, Read_Type, address, length, encoding);
         }

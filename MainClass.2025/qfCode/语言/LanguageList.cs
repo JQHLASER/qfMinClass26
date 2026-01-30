@@ -23,10 +23,16 @@ namespace qfLanguage
             new _language_Value_ ( keys, "检测到已重复","检测到已重复"),
             new _language_Value_ ( keys, "添加","添加"),
             new _language_Value_ ( keys, "修改","修改"),
-            new _language_Value_ (keys,"未选中要操作的对象","未选中要操作的对象"),
-            new _language_Value_ (keys,"未选中要操作的元素","未选中要操作的元素"),
-            new _language_Value_ (keys,"确认删除?","确认删除?"),
+            new _language_Value_ ( keys,"未选中要操作的对象","未选中要操作的对象"),
+            new _language_Value_ ( keys,"未选中要操作的元素","未选中要操作的元素"),
+            new _language_Value_ ( keys,"确认删除?","确认删除?"),
             new _language_Value_ ( keys, "对象","对象"),
+            new _language_Value_ ( keys, "防重","防重"),
+            new _language_Value_ ( keys, "读码","读码"),
+            new _language_Value_ ( keys, "模板","模板"),
+            new _language_Value_ ( keys, "关键字","关键字"),
+            new _language_Value_ ( keys, "位数","位数"),
+
             new _language_Value_ ( keys, "配方名不能为空","配方名不能为空"),
             new _language_Value_ ( keys, "未找到对象","未找到对象"),
             new _language_Value_ ( keys, "索引超出范围","索引超出范围"),
@@ -56,17 +62,17 @@ namespace qfLanguage
             new _language_Value_ ( keys, "时","时"),
             new _language_Value_ ( keys, "分","分"),
 
+            new _language_Value_ ( keys, "新建?","新建?"),
+            new _language_Value_ ( keys, "删除?","删除?"),
+            new _language_Value_ ( keys, "删除成功","删除成功"),
 
 
-
-
-
-
+            
 
 
 
 
         };
-        
+
     }
 }

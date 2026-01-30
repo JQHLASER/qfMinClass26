@@ -9,9 +9,9 @@ namespace qfCode
     public  interface Iworker_编辑交互
     {
 
-        string[] Get配置文件_日期时间();
-        string[] Get配置文件_班次();
-        string[] Get配方文件();
+        string[] Get目录_配置文件_日期时间();
+        string[] Get目录_配置文件_班次();
+        string[] Get目录_配方文件();
           
         (bool s, string m) 配方_保存(_配方文件_属性_ 配方, string 配方名称, DateTime dates);
         (bool s, string m) 配方_复制(string 配方名称, string New配方名称);

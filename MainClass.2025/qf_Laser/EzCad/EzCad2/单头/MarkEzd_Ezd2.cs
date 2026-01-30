@@ -15,7 +15,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
- 
+
 
 namespace qf_Laser
 {
@@ -115,7 +115,7 @@ namespace qf_Laser
             读写参数(1);
             读写_最后一次ezdpath(1);
             读EzCadName();
-     
+
             if (使能线程)
             {
                 new Thread(() => { 线程(); }) { IsBackground = true }.Start();
@@ -178,7 +178,7 @@ namespace qf_Laser
                 else
                 {
                     msgErr = $"{qfmain.Language_.Get语言("未初始化")},{JczLmc.ErrMsg(nErr)}";
-                    On_Log(false , msgErr);
+                    On_Log(false, msgErr);
                     释放打标卡(false);
                 }
             }
@@ -497,9 +497,9 @@ namespace qf_Laser
             msgErr = rtM.m;
             if (rt)
             {
-                double xSol = rtM.width <= 0 
+                double xSol = rtM.width <= 0
                               ? 1 : width / rtM.width;
-                double ySol = rtM.height <= 0 
+                double ySol = rtM.height <= 0
                               ? 1 : height / rtM.height;
 
                 _Err_jczMarkEzd2_ nErr = 按比例缩放对象(对象名, xCenter, yCenter, xSol, ySol);
@@ -633,7 +633,7 @@ namespace qf_Laser
                                 this.is第一次初始化_EzCad = false;
                                 rtJcz = _Err_jczMarkEzd2_.未初始化;
                                 On_Log(false, $"{qfmain.Language_.Get语言("发现EzCad进程")}");
-                                On_初始化状态(_初始化状态_.未初始化 );
+                                On_初始化状态(_初始化状态_.未初始化);
                             }
                         }
                         catch (Exception ex)
@@ -722,7 +722,8 @@ namespace qf_Laser
         {
             string path = Environment.CurrentDirectory + "\\jczdf.crc";
             string pathEzd = this._Path_激光模板_最后一次;
-            new qfmain.文件_文件夹().WriteReadIni(path, model, ref pathEzd, out string msgErr);
+            var rt = new qfmain.文件_文件夹().WriteReadIni <string> (path, model, ref pathEzd, out string msgErr);
+       
             if (!string.IsNullOrEmpty(pathEzd) && new qfmain.文件_文件夹().文件_是否存在(path))
             {
                 this._Path_激光模板_最后一次 = pathEzd;
@@ -1757,13 +1758,13 @@ namespace qf_Laser
 
 
         bool is第一次初始化 = true;
-        private readonly object _lock初始化=new object();
+        private readonly object _lock初始化 = new object();
         async Task On_初始化状态(_初始化状态_ state)
         {
             lock (this._lock初始化)
             {
                 this._初始化状态 = state;
-                On_标题栏状态_初始化状态(_标题栏标题_初始化状态, state); 
+                On_标题栏状态_初始化状态(_标题栏标题_初始化状态, state);
                 Event_初始化状态?.Invoke(state);
             }
             await Task.Run(() =>

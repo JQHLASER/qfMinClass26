@@ -39,13 +39,14 @@ namespace qfCode
         {
             public int 左边栏 { set; get; } = 250;
             public int 下边栏 { set; get; } = 100;
-
+            public int 信息宽度 { set; get; } = 300;
             public _视图_ Clone()
             {
                 return new _视图_
                 {
-                    左边栏 =this.左边栏 ,
-                    下边栏 =this.下边栏 ,
+                    左边栏 = this.左边栏,
+                    下边栏 = this.下边栏,
+                    信息宽度 = this.信息宽度,
                 };
             }
         }

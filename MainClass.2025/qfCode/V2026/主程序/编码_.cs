@@ -149,7 +149,7 @@ namespace qfCode
             return new Json序列化().转成String<T>(cfg);
         }
 
-        public (bool s, string m, T cfg) 转换_ToJson<T>(string jsonStr)
+        public (bool s, string m, T cfg) 转换_ToJson<T>(string jsonStr)where T :new ()
         {
             return new Json序列化().转成Json<T>(jsonStr);
         }

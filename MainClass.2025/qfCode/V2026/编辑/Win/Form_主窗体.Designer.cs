@@ -569,6 +569,7 @@
             this.textBox_信息.BackColor = System.Drawing.Color.WhiteSmoke;
             this.textBox_信息.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox_信息.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox_信息.Font = new System.Drawing.Font("微软雅黑", 10.01739F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBox_信息.ForeColor = System.Drawing.Color.Teal;
             this.textBox_信息.Location = new System.Drawing.Point(503, 3);
             this.textBox_信息.Multiline = true;
@@ -583,6 +584,7 @@
             this.textBox_备注.BackColor = System.Drawing.Color.White;
             this.textBox_备注.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox_备注.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox_备注.Font = new System.Drawing.Font("微软雅黑", 10.01739F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBox_备注.ForeColor = System.Drawing.Color.Teal;
             this.textBox_备注.Location = new System.Drawing.Point(3, 3);
             this.textBox_备注.Multiline = true;

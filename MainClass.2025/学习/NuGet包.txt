@@ -7,7 +7,9 @@
 
 				  System.Diagnostics.DiagnosticSource
 				  System.Text.Encoding.CodePages
-
+				  System.Text.Json
+			      Serilog
+				  System.Diagnostics.DiagnosticSource
 
 
 曲线控件:
