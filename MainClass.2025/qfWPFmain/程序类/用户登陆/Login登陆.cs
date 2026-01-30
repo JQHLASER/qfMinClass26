@@ -106,7 +106,7 @@ namespace qfWPFmain
                         Config.loginInfo_Beff = 生成原始数据();
                     }
                     _loginInfo_[] info = Config.loginInfo_Beff;
-                    new 文件_文件夹().WriteReadJson(path, model, ref info, out string msgErr, null, true);
+                    new 文件_文件夹().WriteReadJson(path, model, ref info, out string msgErr,qfmain._em_json类型_.NewtonsoftJson, null, true);
                     Config.loginInfo_Beff = info;
 
                     #endregion
