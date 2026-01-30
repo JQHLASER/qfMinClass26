@@ -123,6 +123,13 @@ namespace qfCode
                 #endregion
             };
 
+            this.打开ToolStripMenuItem.Click += (s, e) =>
+            {
+                new qfNet .软件类().Win_文件类弹窗 ()
+
+            };
+
+
 
             #endregion
 

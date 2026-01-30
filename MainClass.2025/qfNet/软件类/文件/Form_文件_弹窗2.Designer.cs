@@ -1,6 +1,6 @@
 ﻿namespace qfNet
 {
-    partial class Form_文件_弹窗
+    partial class Form_文件_弹窗2
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_文件_弹窗));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_文件_弹窗2));
             this.uiListBox1 = new Sunny.UI.UIListBox();
             this.右键 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -194,7 +194,7 @@
             this.uiButton_No.TabIndex = 5;
             this.uiButton_No.Text = "No";
             // 
-            // Form_文件_弹窗
+            // Form_文件_弹窗2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -204,7 +204,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimizeBox = false;
-            this.Name = "Form_文件_弹窗";
+            this.Name = "Form_文件_弹窗2";
             this.Padding = new System.Windows.Forms.Padding(2, 35, 2, 2);
             this.ShowDragStretch = true;
             this.ShowInTaskbar = false;
