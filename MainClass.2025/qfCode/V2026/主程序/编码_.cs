@@ -149,7 +149,7 @@ namespace qfCode
             return new Json序列化().转成String<T>(cfg);
         }
 
-        public (bool s, string m, T cfg) 转换_ToJson<T>(string jsonStr)where T :new ()
+        public (bool s, string m, T cfg) 转换_ToJson<T>(string jsonStr) where T : new()
         {
             return new Json序列化().转成Json<T>(jsonStr);
         }
@@ -259,17 +259,18 @@ namespace qfCode
                             msg = rtSn.m;
                             v = rtSn.v;
 
+                            //将更新的结果赋值对源数据,计算时使用新结果去计算
+                            if (rt) 配方.对象[i].元素[j] = snStr; 
+
                             if (rt && 计算类型 == _em_计算类型_.加工)
                             {
                                 //加工时再递增计算下
                                 rtSn = new 编码_计算(this).序列号(ref snStr, _序列号_._em_操作_.加工数量递增, dates, 最后加工时间, 班次规则);
                                 rt = rtSn.s;
                                 msg = rtSn.m;
-                                if (rt)
-                                {
-                                    //计算完成后将值反馈回去,保存时使用
-                                    配方.对象[i].元素[j] = snStr;
-                                }
+
+                                //将更新的结果赋值对源数据,保存时使用
+                                if (rt) 配方.对象[i].元素[j] = snStr;
                             }
 
                             #endregion
@@ -603,7 +604,7 @@ namespace qfCode
             try
             {
                 if (this._功能.日期时间.更新日期)
-                { 
+                {
                     DateTime 当前时间 = DateTime.Parse(now.ToString("HH:mm:ss"));
                     DateTime 更新时间 = DateTime.Parse(配方文件.更新时间);
                     if (当前时间 <= 更新时间)
