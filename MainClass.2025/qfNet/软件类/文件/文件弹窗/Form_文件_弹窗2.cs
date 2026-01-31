@@ -19,13 +19,20 @@ namespace qfNet
 
         _文件弹窗类型_ _类型;
         string _后缀;
-        BindingList<string> _文件目录;
+
+        BindingList<_FileName_> _文件目录;
         /// <summary>
         /// 选中文件名称
         /// </summary>
         public string _selectedFileName = "";
         qfNet.DataGridview_ _datagridSys;
         Func<string, (bool s, string m)> _Event_删除文件;
+
+        public class _FileName_
+        {
+            public string Name { set; get; }
+        }
+
 
 
         /// <summary>
@@ -38,10 +45,15 @@ namespace qfNet
             this._类型 = 类型_;
             this._后缀 = 后缀;
             this._Event_删除文件 = Event_删除文件;
-            _datagridSys = new DataGridview_(this.uiDataGridView1).格式化()
-                .显示or隐藏标题(false);
-            this._文件目录 = new BindingList<string>(文件目录);
+
+            this.uiDataGridView1.RectColor = Color.Silver;
+
+            this._文件目录 = new BindingList<_FileName_>(文件目录.Select(s => new _FileName_ { Name = s }).ToList());
             this.uiDataGridView1.DataSource = this._文件目录;
+            _datagridSys = new DataGridview_(this.uiDataGridView1).格式化()
+             .显示or隐藏标题(false)
+             .设置行高(30);
+
 
             this.uiLabel_后缀.Text = $"{文件类型}|*{this._后缀}";
 
@@ -52,11 +64,15 @@ namespace qfNet
 
             this.uiDataGridView1.Click += (s, e) => On_ItemClick();
             this.uiDataGridView1.DoubleClick += (s, e) => On_Yes();
-            this.uiDataGridView1.Resize += (s, e) =>
+            this.Resize += (s, e) =>
             {
-                this._datagridSys.设置列宽(0, this.uiDataGridView1.Width - 30);
+                设置宽度();
             };
-
+            this.Shown += (s, e) =>
+            {
+                设置宽度();
+                this._datagridSys.选中行_取消当前选中选中();
+            };
 
             this.uiButton_No.Click += (s, e) => On_No();
             this.uiButton_Yes.Click += (s, e) => On_Yes();
@@ -74,12 +90,12 @@ namespace qfNet
         //单击
         void On_ItemClick()
         {
-            this._datagridSys.取总行数(out int index);
+            this._datagridSys.获取当前选中的行号(out int index);
             if (index < 0)
             {
                 return;
             }
-            this.uiTextBox_FileName.Text = this._文件目录[index].ToString();
+            this.uiTextBox_FileName.Text = this._文件目录[index].Name;
         }
 
 
@@ -92,10 +108,9 @@ namespace qfNet
         void On_Yes()
         {
             string str = this.uiTextBox_FileName.Text.Trim();
-
-
             if (string.IsNullOrEmpty(str))
             {
+                MessageBox.Show(Language_.Get语言("未选中文件"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             switch (this._类型)
@@ -104,7 +119,7 @@ namespace qfNet
 
                     #region 打开
 
-                    if (!this._文件目录.Contains(str))
+                    if (!this._文件目录.Any(x => x.Name == str))
                     {
                         MessageBox.Show(Language_.Get语言("文件不存在"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
@@ -119,7 +134,7 @@ namespace qfNet
 
                     #region 保存
 
-                    if (this._文件目录.Contains(str)
+                    if (this._文件目录.Any(x => x.Name == str)
                         && MessageBox.Show(Language_.Get语言("文件已存在,是否替换?"), "", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                     {
                         return;
@@ -138,7 +153,7 @@ namespace qfNet
 
         void On_删除()
         {
-            this._datagridSys.取总行数(out int index);
+            this._datagridSys.获取当前选中的行号(out int index);
             if (index < 0)
             {
                 return;
@@ -149,10 +164,12 @@ namespace qfNet
                 {
                     return;
                 }
-                string Name = this._文件目录[index].ToString();
+                string Name = this._文件目录[index].Name;
                 var rt = this._Event_删除文件.Invoke(Name);
                 if (rt.s)
                 {
+                    this._文件目录.RemoveAt(index);
+                    this.uiTextBox_FileName.Clear();
                     MessageBox.Show(Language_.Get语言("删除成功"));
                 }
                 else
@@ -163,8 +180,10 @@ namespace qfNet
 
         }
 
-
-
+        void 设置宽度()
+        {
+            this._datagridSys.设置列宽(0, this.uiDataGridView1.Width - 30);
+        }
 
 
 

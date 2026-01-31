@@ -81,8 +81,8 @@
             this.uiTextBox_FileName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uiTextBox_FileName.FillColor = System.Drawing.Color.White;
             this.uiTextBox_FileName.Font = new System.Drawing.Font("微软雅黑", 10.01739F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiTextBox_FileName.ForeColor = System.Drawing.Color.Gray;
-            this.uiTextBox_FileName.ForeDisableColor = System.Drawing.Color.Gray;
+            this.uiTextBox_FileName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.uiTextBox_FileName.ForeDisableColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.uiTextBox_FileName.Location = new System.Drawing.Point(5, 5);
             this.uiTextBox_FileName.Margin = new System.Windows.Forms.Padding(0);
             this.uiTextBox_FileName.Maximum = 2147483647D;
@@ -108,7 +108,7 @@
             this.uiLabel_后缀.Name = "uiLabel_后缀";
             this.uiLabel_后缀.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.uiLabel_后缀.Size = new System.Drawing.Size(150, 30);
-            this.uiLabel_后缀.Style = Sunny.UI.UIStyle.深色;
+            this.uiLabel_后缀.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel_后缀.TabIndex = 1;
             this.uiLabel_后缀.Text = "ezd(*.ezd)";
             this.uiLabel_后缀.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -172,12 +172,12 @@
             // 
             // uiDataGridView1
             // 
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
             this.uiDataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.uiDataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.uiDataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
             dataGridViewCellStyle2.Font = new System.Drawing.Font("微软雅黑", 9F);
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
@@ -185,6 +185,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.uiDataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.uiDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.uiDataGridView1.ContextMenuStrip = this.右键;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("微软雅黑", 9F);
@@ -197,10 +198,10 @@
             this.uiDataGridView1.EnableHeadersVisualStyles = false;
             this.uiDataGridView1.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.uiDataGridView1.Fonts = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiDataGridView1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
+            this.uiDataGridView1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
             this.uiDataGridView1.Location = new System.Drawing.Point(2, 35);
             this.uiDataGridView1.Name = "uiDataGridView1";
-            this.uiDataGridView1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
+            this.uiDataGridView1.RectColor = System.Drawing.Color.Silver;
             this.uiDataGridView1.RowHeadersWidth = 49;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
             this.uiDataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle4;
@@ -208,13 +209,13 @@
             this.uiDataGridView1.SelectedIndex = -1;
             this.uiDataGridView1.ShowGridLine = true;
             this.uiDataGridView1.Size = new System.Drawing.Size(796, 468);
-            this.uiDataGridView1.Style = Sunny.UI.UIStyle.深色;
+            this.uiDataGridView1.StripeOddColor = System.Drawing.Color.White;
+            this.uiDataGridView1.StyleCustomMode = true;
             this.uiDataGridView1.TabIndex = 4;
             // 
             // Form_文件_弹窗2
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(800, 600);
             this.Controls.Add(this.uiDataGridView1);
             this.Controls.Add(this.panel2);
@@ -225,6 +226,8 @@
             this.Padding = new System.Windows.Forms.Padding(2, 35, 2, 2);
             this.ShowDragStretch = true;
             this.ShowInTaskbar = false;
+            this.Style = Sunny.UI.UIStyle.Custom;
+            this.StyleCustomMode = true;
             this.Text = "";
             this.Load += new System.EventHandler(this.Form_文件_弹窗_Load);
             this.右键.ResumeLayout(false);

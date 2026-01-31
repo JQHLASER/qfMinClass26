@@ -91,6 +91,7 @@ namespace qfNet
 
             if (string.IsNullOrEmpty(str))
             {
+                MessageBox.Show(Language_.Get语言("未选中文件"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             switch (this._类型)
@@ -145,6 +146,7 @@ namespace qfNet
                 bool rt = new qfmain.文件_文件夹().文件_删除文件(path, out string msgErr);
                 if (rt)
                 {
+                    this.uiTextBox_FileName.Clear();
                     MessageBox.Show(Language_.Get语言("删除成功"));
                 }
                 else

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -26,6 +27,10 @@ namespace qfCode
         internal int _编辑对象索引 = -1;
         internal string _配方名称 = "";
         internal List<_对象_内容_> _lst对象内容 = new List<_对象_内容_>();
+
+        /// <summary>
+        /// true:需要保存,false:不需要保存
+        /// </summary>
         bool _是否要保存 = false;
 
 
@@ -47,8 +52,6 @@ namespace qfCode
             this._视图.读写参数(1);
 
             视图设置();
-
-
 
             this.WindowState = FormWindowState.Maximized;
             this.Padding = new System.Windows.Forms.Padding(5, 35, 5, 5);
@@ -73,7 +76,7 @@ namespace qfCode
                     {
                         this._配方信息.更新时间 = forms._cfg.更新时间;
                         this._配方信息.班次文件 = forms._cfg.班次文件;
-                        显示配方信息(this._配方信息);
+                        更新配方信息显示(this._配方信息);
                         _是否要保存 = true;
                     }
                 }
@@ -81,15 +84,7 @@ namespace qfCode
 
             this.FormClosing += (s, e) =>
             {
-                if (this.textBox_备注.Text != this._配方信息.备注)
-                {
-                    this._是否要保存 = true;
-                }
-                if (!string.IsNullOrEmpty(this._配方名称)
-                    && this._是否要保存 && MessageBox.Show(Language_.Get语言("是否保存?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    On_保存();
-                }
+                保存_弹窗确认(false);
             };
 
             #region 文件
@@ -105,6 +100,7 @@ namespace qfCode
 
                 if (MessageBox.Show(Language_.Get语言("新建?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
+                    保存_弹窗确认(false);
                     On_清除所有();
                 }
 
@@ -117,6 +113,7 @@ namespace qfCode
 
                 if (MessageBox.Show(Language_.Get语言("删除?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
+                    保存_弹窗确认(false);
                     On_删除();
                 }
 
@@ -125,14 +122,33 @@ namespace qfCode
 
             this.打开ToolStripMenuItem.Click += (s, e) =>
             {
+                保存_弹窗确认(false);
                 var rt = 弹窗(qfNet._文件弹窗类型_.打开);
                 if (rt.s == DialogResult.OK)
                 {
-                    打开(rt.Name);
-                    显示配方信息(this._配方信息);
+                    var rtFile = 打开(rt.Name);
+                    if (rtFile.s)
+                    {
+                        On_清除所有();
+                        显示配方信息(rtFile.cfg, rt.Name);
+
+                    }
+                    else
+                    {
+                        MessageBox.Show(rtFile.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             };
 
+            this.保存ToolStripMenuItem.Click += (s, e) =>
+            {
+                On_保存();
+            };
+
+            this.另存为ToolStripMenuItem.Click += (s, e) =>
+            {
+                On_另存为();
+            };
 
 
             #endregion
@@ -142,7 +158,7 @@ namespace qfCode
 
             this.uiListBox_对象列表.ItemClick += (s, e) =>
             {
-                if (Err_未选中要操作的对象(this.uiListBox_对象列表, out int index))
+                if (Err_未选中要操作的对象(this.uiListBox_对象列表, out int index, false))
                 {
                     this._编辑对象索引 = index;
                     显示编辑对象信息();
@@ -151,7 +167,7 @@ namespace qfCode
             };
             this.uiListBox_对象列表.ItemDoubleClick += (s, e) =>
             {
-                if (Err_未选中要操作的对象(this.uiListBox_对象列表, out int index))
+                if (Err_未选中要操作的对象(this.uiListBox_对象列表, out int index, false))
                 {
                     On_对象_添加修改(type_编辑._编辑类型_.修改);
                 }
@@ -201,7 +217,7 @@ namespace qfCode
 
             this.dataGridView_元素.DoubleClick += (s, e) =>
             {
-                if (Err_未选中要操作的元素(this.dataGridView_元素, out int index))
+                if (Err_未选中要操作的元素(this.dataGridView_元素, out int index, false))
                 {
                     this.On_元素_添加修改(type_编辑._编辑类型_.修改);
                 }
@@ -234,11 +250,13 @@ namespace qfCode
             #endregion
 
 
+            #region 进入时加载配方
+
+
             //如果配方名称不为空时,则加载配方信息
             if (!string.IsNullOrEmpty(this._配方名称))
             {
                 打开(this._配方名称);
-
 
                 //var 配方目录 = new 编辑交互_统一接口(this._编辑)._Iworker.Get目录_配方文件();
                 //if (配方目录.Contains(this._配方名称))
@@ -250,7 +268,10 @@ namespace qfCode
                 //    this._配方名称 = "";
                 //}
             }
-            显示配方信息(this._配方信息);
+            显示配方信息(this._配方信息, this._配方名称);
+
+
+            #endregion
         }
 
 
@@ -443,12 +464,11 @@ namespace qfCode
         #region 操作
 
 
-        void On_保存()
+        void On_保存(bool is成功弹窗 = true)
         {
-            this._配方名称 = "abc";
             if (string.IsNullOrEmpty(this._配方名称))
             {
-
+                On_另存为(is成功弹窗);
                 return;
             }
 
@@ -458,7 +478,7 @@ namespace qfCode
                 MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            else
+            else if (is成功弹窗)
             {
                 MessageBox.Show(Language_.Get语言("保存成功"));
                 return;
@@ -466,19 +486,27 @@ namespace qfCode
 
         }
 
-        void On_另存为()
+        void On_另存为(bool is成功弹窗 = true)
         {
-
-            var rt = 保存(this._配方名称);
-            if (!rt.s)
+            (DialogResult s, string Name) rtWin = 弹窗(qfNet._文件弹窗类型_.保存);
+            if (rtWin.s == DialogResult.OK)
             {
-                MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            else
-            {
-                MessageBox.Show(Language_.Get语言("保存成功"));
-                return;
+                var rt = 保存(rtWin.Name);
+                if (!rt.s)
+                {
+                    MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else
+                {
+                    this._配方名称 = rtWin.Name;
+                    this.Text = this._配方名称;
+                    if (is成功弹窗)
+                    {
+                        MessageBox.Show(Language_.Get语言("保存成功"));
+                    }
+                    return;
+                }
             }
 
         }
@@ -492,12 +520,12 @@ namespace qfCode
             this._配方信息 = new _配方文件_属性_();
             this.Text = this._配方名称;
 
+            清空显示的元素信息(this._编辑对象索引);
             this._编辑对象索引 = -1;
             this._lstBind元素.Clear();
             this._lst对象内容.Clear();
             this.uiListBox_对象列表.Items.Clear();
-
-            显示配方信息(this._配方信息);
+            更新配方信息显示(this._配方信息);
 
         }
 
@@ -600,12 +628,15 @@ namespace qfCode
             return true;
         }
 
-        bool Err_未选中要操作的对象(UIListBox listbox, out int index)
+        bool Err_未选中要操作的对象(UIListBox listbox, out int index, bool is弹窗 = true)
         {
             index = listbox.SelectedIndex;
             if (index < 0)
             {
-                MessageBox.Show(Language_.Get语言("未选中要操作的对象"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (is弹窗)
+                {
+                    MessageBox.Show(Language_.Get语言("未选中要操作的对象"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 return false;
             }
             return true;
@@ -672,7 +703,8 @@ namespace qfCode
             var rt = new 编辑交互_统一接口(this._编辑)._Iworker.配方_保存(this._配方信息, 配方名称, now);
             if (rt.s)
             {
-                _是否要保存 = true;
+                _是否要保存 = false;
+                更新配方信息显示(this._配方信息);
             }
             return rt;
         }
@@ -680,15 +712,37 @@ namespace qfCode
         (bool s, string m, _配方文件_属性_ cfg) 打开(string 配方名称)
         {
             var rt = new 编辑交互_统一接口(this._编辑)._Iworker.配方_打开(配方名称);
-
-            this._配方信息 = rt.cfg.Clone();
-            显示所有对象名();
-            this.Text = this._配方名称;
-            显示配方信息(this._配方信息);
+            if (rt.s)
+            {
+                显示配方信息(rt.cfg, 配方名称);
+            }
             return rt;
         }
 
-        void 显示配方信息(_配方文件_属性_ cfg)
+        /// <summary>
+        /// 显示元素及其它信息
+        /// </summary>
+        /// <param name="cfg"></param>
+        /// <param name="配方名称"></param>
+        void 显示配方信息(_配方文件_属性_ cfg, string 配方名称)
+        {
+            设置配方名称(配方名称);
+            this._配方信息 = cfg.Clone();
+            显示所有对象名();
+            更新配方信息显示(cfg);
+        }
+
+        void 设置配方名称(string 配方名称)
+        {
+            this._配方名称 = 配方名称;
+            this.Text = 配方名称;
+        }
+
+
+        /// <summary>
+        /// 如班次及更新日期等
+        /// </summary> 
+        void 更新配方信息显示(_配方文件_属性_ cfg)
         {
             this.textBox_备注.Text = cfg.备注;
             StringBuilder sb = new StringBuilder();
@@ -730,10 +784,27 @@ namespace qfCode
 
         (bool, string m) 弹窗_删除文件(string FileName)
         {
-            return 删除配方文件(FileName);
+            var rt = 删除配方文件(FileName);
+            if (FileName ==this._配方名称 )
+            {
+                On_清除所有();
+            } 
+            return rt;
         }
 
-
+        void 保存_弹窗确认(bool is成功弹窗 = true)
+        {
+            if (this.textBox_备注.Text != this._配方信息.备注)
+            {
+                this._是否要保存 = true;
+            }
+            if (!string.IsNullOrEmpty(this._配方名称)
+                    && this._是否要保存
+                    && MessageBox.Show(Language_.Get语言("是否保存?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                On_保存(is成功弹窗);
+            }
+        }
 
         #endregion
 

@@ -41,8 +41,8 @@ namespace qfLanguage
             new _language_Value_ ( keys, "权限过低","权限过低"),
             new _language_Value_ ( keys, "不能操作当前登陆用户","不能操作当前登陆用户"),
             new _language_Value_ ( keys, "用户管理","用户管理"),
-
-
+            new _language_Value_ ( keys, "未选中文件","未选中文件"),
+            
 
             new _language_Value_ ( keys,"启动","启动"),
             new _language_Value_ ( keys,"指定索引不能大于最大索引","指定索引不能大于最大索引"),
