@@ -26,7 +26,7 @@ namespace qfCode
         /// 另存为
         /// </summary> 
         (bool s,string m) 复制(string FileName,string NewFileName );
-
+        (bool s, string m, string[] v) Get目录();
 
     }
 }

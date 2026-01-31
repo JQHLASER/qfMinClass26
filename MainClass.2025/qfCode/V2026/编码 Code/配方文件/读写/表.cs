@@ -1,4 +1,5 @@
 ﻿using qfmain;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace qfCode
             /// <summary>
             /// 文件名称,唯一
             /// </summary>
+            [SugarColumn(IsPrimaryKey = true )]
             public string FileName { set; get; } = "";
             /// <summary>
             /// json内容

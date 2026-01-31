@@ -159,7 +159,24 @@ namespace qfCode
             }
         }
 
-
+        public (bool s, string m, string[] v) Get目录()
+        {
+            bool rt = true;
+            string msgErr = string.Empty;
+            string[] v = new string[0];
+            using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(qfSqlSugar.SqlSugar_DB_封装._DB, _ConfigID))
+            {
+                using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
+                {
+                    rt = _Table.GetList(out List<表.Code26> lst, out msgErr);
+                    if (rt)
+                    {
+                        v = lst.Select(i => i.FileName).ToArray();
+                    }
+                }
+            }
+            return (true, "", v);
+        }
 
     }
 }

@@ -74,5 +74,12 @@ namespace qfCode
             }
         }
 
+        public (bool s,string m,string[] v) Get目录()
+        {
+            new qfmain.文件_文件夹().文件夹_获取所有文件_无后缀(this._codeSys._文件夹_属性.配方, out List<string> lst, $"*{this._codeSys._功能.后缀}");
+            return (true,"", lst.ToArray());
+        }
+         
     }
+     
 }

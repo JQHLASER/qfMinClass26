@@ -41,6 +41,11 @@ namespace qfCode
 
         internal 视图_ _视图;
 
+
+
+
+
+
         public Form_主窗体(string 配方名称, 编辑_ 编辑)
         {
             InitializeComponent();
@@ -86,8 +91,17 @@ namespace qfCode
             {
                 保存_弹窗确认(false);
             };
+             
+
+
 
             #region 文件
+             
+            this.新建ToolStripMenuItem.Visible = this._编辑._功能.编辑.新建;
+            this.另存为ToolStripMenuItem.Visible = this._编辑._功能.编辑.另存为;
+            this.删除ToolStripMenuItem.Visible = this._编辑._功能.编辑.删除;
+            this.打开ToolStripMenuItem .Visible = this._编辑._功能.编辑.打开 ;
+
 
             this.关闭ToolStripMenuItem.Click += (s, e) =>
             {
@@ -778,17 +792,34 @@ namespace qfCode
 
         (DialogResult s, string Name) 弹窗(qfNet._文件弹窗类型_ 弹窗类型 = qfNet._文件弹窗类型_.打开)
         {
-            var 配方目录 = new 编辑交互_统一接口(this._编辑)._Iworker.Get目录_配方文件();
-            return new qfNet.软件类().Win_文件类弹窗(配方目录, "", this._编辑._功能.后缀, 弹窗类型, 弹窗_删除文件);
+            var rt = new 编辑交互_统一接口(this._编辑)._Iworker.Get目录_配方文件();
+            if (rt.s)
+            {
+                if (this._编辑._功能.编辑.删除)
+                {
+                    //使能删除
+                    return new qfNet.软件类().Win_文件类弹窗(rt.v, "", this._编辑._功能.后缀, 弹窗类型, 弹窗_删除文件);
+                }
+                else
+                {
+                    //不使能删除
+                    return new qfNet.软件类().Win_文件类弹窗(rt.v, "", this._编辑._功能.后缀, 弹窗类型, null );
+                }
+            }
+            else
+            {
+                MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return (DialogResult.None, "");
+            }
         }
 
         (bool, string m) 弹窗_删除文件(string FileName)
         {
             var rt = 删除配方文件(FileName);
-            if (FileName ==this._配方名称 )
+            if (FileName == this._配方名称)
             {
                 On_清除所有();
-            } 
+            }
             return rt;
         }
 

@@ -23,7 +23,7 @@ namespace qfCode
         {
             return this._编辑._编码._文件类.Get目录_班次();
         }
-        public string[] Get目录_配方文件()
+        public (bool s,string m,string[] v) Get目录_配方文件()
         {
             return this._编辑._编码._文件类.Get目录_配方();
         }

@@ -91,50 +91,12 @@ SqlServer 数据库....使用最新库
             try
             {
                 this.Db = new SqlSugarScope(lst);
-                this.Db.Ado.CommandTimeOut = 超时时间 > 0 ? (int)超时时间 : 1000 * 10;
+                if (超时时间 <= 0) this.Db.Ado.CommandTimeOut = 1000 * 10;
 
                 var tasks = new List<Task>();
-
                 foreach (ConnectionConfig config in lst)
                 {
-                    if (config.DbType == DbType.Sqlite)
-                    {
-                        #region Sqlite   
-                        tasks.Add(Task.Run(() =>
-                        {
-                            using (var dbTemp = new SqlSugarScope(config))
-                            {
-                                优化_Sqlite(dbTemp);
-                            }
-                        }));
-
-                        #endregion
-                    }
-                    else if (config.DbType == DbType.SqlServer)
-                    {
-                        #region SqlServer
-                        tasks.Add(Task.Run(() =>
-                        {
-                            using (var dbTemp = new SqlSugarScope(config))
-                            {
-                                优化_SqlServer(dbTemp);
-                            }
-                        }));
-                        #endregion 
-                    }
-                    else if (config.DbType == DbType.MySql)
-                    {
-                        #region MySql
-                        tasks.Add(Task.Run(() =>
-                        {
-                            using (var dbTemp = new SqlSugarScope(config))
-                            {
-                                优化_MySql(dbTemp);
-                            }
-                        }));
-                        #endregion
-                    }
-
+                    tasks.Add(Task.Run(() => { 优化(config); }));
                 }
 
                 // 等待所有数据库初始化完成
@@ -226,6 +188,33 @@ SqlServer 数据库....使用最新库
         }
 
         #region 优化
+
+        internal void 优化(ConnectionConfig config)
+        {
+            using (var dbTemp = new SqlSugarScope(config))
+            {
+                switch (config.DbType)
+                {
+                    case DbType.Sqlite:
+                        优化_Sqlite(dbTemp);
+                        break;
+
+                    case DbType.SqlServer:
+                        优化_SqlServer(dbTemp);
+                        break;
+
+                    case DbType.MySql:
+                        优化_MySql(dbTemp);
+                        break;
+
+                    default:
+                        throw new NotSupportedException($"not type,{config.DbType}");
+                }
+            }
+
+        }
+
+
 
         (bool s, string m) 优化_Sqlite(SqlSugarScope db_)
         {
@@ -526,10 +515,11 @@ SqlServer 数据库....使用最新库
                 "数据库检测",
             };
 
+
             bool rtRun = true;//为false时退出
             bool rt = false;
             string msg = "";
-
+            bool is优化 = false;
             //第一次失败时,删除连接后,重新初始化后再来一次,
             for (global::System.Int32 i = 0; i < 2; i++)
             {
@@ -557,6 +547,7 @@ SqlServer 数据库....使用最新库
                         if (!this.Db.IsAnyConnection(_id))
                         {
                             this.Db.AddConnection(cfg);
+                            is优化 = true;
                         }
 
                         #endregion
@@ -571,22 +562,26 @@ SqlServer 数据库....使用最新库
                             {
                                 testDb.Ado.Open();  // 尝试打开连接 
                                                     // this.Db.AddConnection(cfg);//添加id
-                                return (true, "Connection ok");
+                                msg = "Connection ok";
+                                rtRun = false;
+                                rt = true;
+                                break;
                             }
                         }
                         catch
                         {
                             this.Db.RemoveConnection(_id);//删除id
-                            return (true, "Connection ng");   // 失败就跳过
+                            msg = "Connection ng";
+                            rt = false;
+                            break;
                         }
                         #endregion
                     }
 
-
                 }
 
             }
-
+            if (rt && is优化) 优化(cfg);
             return (rt, msg);
         }
 
@@ -607,12 +602,13 @@ SqlServer 数据库....使用最新库
                 "先删id",
                 "判断id是否存在",
                 "数据库检测",
+
             };
 
             bool rtRun = true;//为false时退出
             bool rt = false;
             string msg = "";
-
+            bool is优化 = false;
             //第一次失败时,删除连接后,重新初始化后再来一次,
             for (global::System.Int32 i = 0; i < 2; i++)
             {
@@ -640,6 +636,7 @@ SqlServer 数据库....使用最新库
                         if (!this.Db.IsAnyConnection(_id))
                         {
                             this.Db.AddConnection(cfg);
+                            is优化 = true;
                         }
 
                         #endregion
@@ -658,6 +655,7 @@ SqlServer 数据库....使用最新库
                                     //失败时删除连接
                                     this.Db.RemoveConnection(_id);
                                     msg = "Connection ng";
+                                    break;
                                 }
                                 else
                                 {
@@ -670,10 +668,11 @@ SqlServer 数据库....使用最新库
                         }
                         #endregion
                     }
+
                 }
 
             }
-
+            if (rt && is优化) 优化(cfg);
             return (rt, msg);
         }
 
@@ -693,7 +692,7 @@ SqlServer 数据库....使用最新库
             {
                 return (false, msgErr);
             }
-             
+
             (bool s, string m) rt = (false, "");
 
             #region 检测
@@ -701,7 +700,6 @@ SqlServer 数据库....使用最新库
             if (模式 == 0)
             {
                 rt = Is连接是否有效2(db, _id, cfg, Is先删后加_cfg);
-
             }
             else
             {

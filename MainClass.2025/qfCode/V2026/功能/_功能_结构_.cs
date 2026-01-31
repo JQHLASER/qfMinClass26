@@ -54,7 +54,7 @@ namespace qfCode
             public bool 打开 { set; get; } = false;
             public bool 另存为 { set; get; } = false;
             public bool 删除 { set; get; } = false;
-            public bool 模板 { set; get; } = false;
+           
         }
 
         public class _对象属性_

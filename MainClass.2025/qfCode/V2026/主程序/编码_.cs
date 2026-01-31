@@ -24,9 +24,9 @@ namespace qfCode
         internal _初始化状态_ _初始化状态 = _初始化状态_.未初始化;
 
         /// <summary>
-        /// 编码文件
+        /// 编码文件和读写操作
         /// </summary>
-        internal 文件_统一接口 _文件;
+        internal 文件_统一接口 _配方文件操作;
 
 
         /// <summary>
@@ -41,16 +41,19 @@ namespace qfCode
 
             new _文件夹_(this);
             this._文件类 = new 文件类(this);
-            this._文件 = new 文件_统一接口(this);
+            this._配方文件操作 = new 文件_统一接口(this);
 
 
 
+        }
 
-
-
-
-
-
+        /// <summary>
+        /// 配方名称 : 当前打开的配方名称
+        /// <para>模板对象名 : 模板中设置的对象名称</para>
+        /// </summary> 
+        public void 编辑(string 配方名称, string[] 模板对象名, bool Is父窗体 = false)
+        {
+            new 编辑_(this, type_编辑._交互类型_.本地, 模板对象名).Win_主窗体(配方名称, Is父窗体);
         }
 
 
@@ -59,22 +62,22 @@ namespace qfCode
         public (bool s, string m) 配方_保存(_配方文件_属性_ 配方, string 配方名称, DateTime dates)
         {
             配方.Datetimes = dates.ToString("yyyy-MM-dd HH:mm:ss");
-            return new 文件_统一接口(this)._Iwork文件.Save(配方名称, 配方);
+            return this._配方文件操作._Iwork文件.Save(配方名称, 配方);
         }
 
         public (bool s, string m) 配方_复制(string 配方名称, string New配方名称)
         {
-            return new 文件_统一接口(this)._Iwork文件.复制(配方名称, New配方名称);
+            return this._配方文件操作._Iwork文件.复制(配方名称, New配方名称);
         }
 
         public (bool s, string m) 配方_删除(string 配方名称)
         {
-            return new 文件_统一接口(this)._Iwork文件.Delete(配方名称);
+            return this._配方文件操作._Iwork文件.Delete(配方名称);
         }
 
         public (bool s, string m, _配方文件_属性_ cfg) 配方_打开(string 配方名称)
         {
-            return new 文件_统一接口(this)._Iwork文件.Read(配方名称);
+            return this._配方文件操作._Iwork文件.Read(配方名称);
         }
 
         #endregion
@@ -121,9 +124,6 @@ namespace qfCode
 
 
         #endregion
-
-
-
 
 
         #region 修改
@@ -260,7 +260,7 @@ namespace qfCode
                             v = rtSn.v;
 
                             //将更新的结果赋值对源数据,计算时使用新结果去计算
-                            if (rt) 配方.对象[i].元素[j] = snStr; 
+                            if (rt) 配方.对象[i].元素[j] = snStr;
 
                             if (rt && 计算类型 == _em_计算类型_.加工)
                             {

@@ -34,6 +34,10 @@ namespace qfCode
             this.uiCheckBox_读码.Visible = Form_主窗体.forms._编辑._功能.对象属性.读码;
             this.uiCheckBox_防重.Visible = Form_主窗体.forms._编辑._功能.对象属性.防重;
 
+            this.uiButton_变量对象名.Visible = Form_主窗体.forms._编辑._变量对象名.Length > 0 ? true : false;
+
+
+
             if (!Form_主窗体.forms._编辑._功能.对象属性.校验位数
                 && !Form_主窗体.forms._编辑._功能.对象属性.校验关键字
                 && !Form_主窗体.forms._编辑._功能.对象属性.校验模板
@@ -42,7 +46,7 @@ namespace qfCode
             {
                 this.uiGroupBox1.Visible = false;
             }
-             
+
 
             switch (this._编辑类型)
             {
@@ -100,6 +104,19 @@ namespace qfCode
                 #endregion
 
             };
+
+            this.uiButton_变量对象名.Click += (s, e) =>
+            {
+                using (Form_对象_对象变量名 forms = new Form_对象_对象变量名())
+                {
+                    if (forms.ShowDialog() == DialogResult.OK)
+                    {
+                        this.uiTextBox_对象.Text = forms._对象名称;
+                    }
+                }
+            };
+
+
 
         }
     }

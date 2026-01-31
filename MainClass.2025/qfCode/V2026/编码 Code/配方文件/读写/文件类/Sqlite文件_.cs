@@ -1,4 +1,5 @@
 ﻿using qfmain;
+using Sunny.UI.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace qfCode
 {
@@ -27,15 +29,15 @@ namespace qfCode
                 #region 连接数据库
 
                 s.Add(e.生成连接信息(
-               e.生成连接字符串(new qfSqlSugar._cfg_SQLite_
-               {
-                   Path = this._path,
-               })
-               , this._ConfigID, SqlSugar.DbType.Sqlite));
+                      e.生成连接字符串(new qfSqlSugar._cfg_SQLite_
+                      {
+                          Path = this._path,
+                      })
+                      , this._ConfigID, SqlSugar.DbType.Sqlite));
 
                 #endregion
             };
-            qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += (s,m, e) =>
+            qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += (s, m, e) =>
              {
                  (bool s, string m, _配方文件_属性_ cfg) rt = Read("text^%&");
                  this._CodeSys._初始化状态 = !rt.s ? _初始化状态_.已初始化 : _初始化状态_.未初始化;
@@ -47,7 +49,7 @@ namespace qfCode
         {
             lock (_lock)
             {
-             
+
                 using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(qfSqlSugar.SqlSugar_DB_封装._DB, _ConfigID))
                 {
                     using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
@@ -75,7 +77,7 @@ namespace qfCode
         {
             lock (_lock)
             {
-            
+
                 表.Code26 cdoe = new 表.Code26
                 {
                     FileName = FileName,
@@ -108,7 +110,7 @@ namespace qfCode
                 {
                     using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
                     {
-                        bool rt = _Table.Delete(u => u.FileName == FileName, out int count, out string  msgErr);
+                        bool rt = _Table.Delete(u => u.FileName == FileName, out int count, out string msgErr);
                         return (rt, msgErr);
                     }
                 }
@@ -150,7 +152,24 @@ namespace qfCode
             }
         }
 
-     
+        public (bool s, string m, string[] v) Get目录()
+        {
+            bool rt = true;
+            string msgErr = string.Empty;
+            string[] v = new string[0];
+            using (var db_ = new qfSqlSugar.SqlSugar_GetDB(qfSqlSugar.SqlSugar_DB_封装._DB, _ConfigID))
+            {
+                using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db ))
+                {
+                    rt = _Table.GetList(out List<表.Code26> lst, out msgErr);
+                    if (rt)
+                    {
+                        v = lst.Select(i => i.FileName).ToArray();
+                    }
+                }
+            }
+            return (true, "", v);
+        }
 
 
 

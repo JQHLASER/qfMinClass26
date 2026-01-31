@@ -19,14 +19,20 @@ namespace qfCode
         /// <para>有的是计算在服务端的</para>
         /// </summary>
         internal type_编辑._交互类型_ _交互类型 = type_编辑._交互类型_.本地;
+        internal string[] _变量对象名 = new string[0];
+  
 
 
-        public 编辑_(编码_ 编码, _交互类型_ 交互类型)
+
+        /// <summary>
+        /// 变量对象名 : 如激光模板中的对象名称,方便设置
+        /// </summary> 
+        public 编辑_(编码_ 编码, _交互类型_ 交互类型, string[] 变量对象名)
         {
             this._功能 = 编码._功能;
             this._编码 = 编码;
             this._交互类型 = 交互类型;
-      
+            this._变量对象名 = 变量对象名;
 
         }
 
