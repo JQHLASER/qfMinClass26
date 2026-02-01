@@ -98,7 +98,11 @@ namespace qfmain
             #endregion
         }
 
-         
+        public string Get程序目录()
+        {
+            return AppDomain.CurrentDomain.BaseDirectory;
+        }
+
         public string 耗时(DateTime start, DateTime end)
         {
             TimeSpan time = end - start;
