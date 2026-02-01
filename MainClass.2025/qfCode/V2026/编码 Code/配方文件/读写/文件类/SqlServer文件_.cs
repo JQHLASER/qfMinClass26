@@ -32,7 +32,7 @@ namespace qfCode
                     用户 = "sa",
                     密码 = "QF8888",
                 };
-                e.读取参数<qfSqlSugar._cfg_SQLserver_>(1, ref cfgSqlserver, this._path, out string msgErr); 
+                e.读取参数<qfSqlSugar._cfg_SQLserver_>(1, ref cfgSqlserver, this._path, out string msgErr);
                 s.Add(e.生成连接信息(
                          e.生成连接字符串(cfgSqlserver)
                         , this._ConfigID, SqlSugar.DbType.SqlServer)
@@ -40,7 +40,7 @@ namespace qfCode
 
                 #endregion
             };
-            qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += (s,m, e) =>
+            qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += (s, m, e) =>
             {
                 bool rtState = s;
                 if (rtState)
@@ -48,7 +48,7 @@ namespace qfCode
                     (bool s, string m, _配方文件_属性_ cfg) rt = Read("text^%&");
                     rtState = rt.s;
                 }
-                this._CodeSys._初始化状态 = !rtState ? _初始化状态_.已初始化 : _初始化状态_.未初始化;
+                this._CodeSys._初始化状态 = !rtState ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
             };
         }
 

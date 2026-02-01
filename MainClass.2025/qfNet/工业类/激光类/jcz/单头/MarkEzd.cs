@@ -11,7 +11,7 @@ namespace qfNet
     public class MarkEzd : qfWork.MarkEzd
     {
 
-        public override void 初始化(bool 使能线程=true)
+        public override void 初始化(bool 使能线程 = true)
         {
             this._标题栏标题_初始化状态 = 标题栏状态_初始化状态();
             this._标题栏标题_加工状态 = 标题栏状态_加工状态();
@@ -68,7 +68,7 @@ namespace qfNet
         /// <param name="d"></param>
         public void 窗体_查看图像()
         {
-            if (this._初始化状态 != qfWork._初始化状态_.已初始化 ||
+            if (this._初始化状态 != qfmain._初始化状态_.已初始化 ||
                 this._激光加工状态 != qfWork._激光加工状态_.闲置)
             {
                 return;
@@ -114,9 +114,9 @@ namespace qfNet
             string 名称 = Language_.Get语言("打标卡");
             qfNet._cfg_标题栏状态_[] info = new qfNet._cfg_标题栏状态_[]
            {
-              new  qfNet ._cfg_标题栏状态_(Name,$"{名称}{Language_ .Get语言("已初始化")}"  ,(int)qfWork._初始化状态_  .已初始化  ),
-              new  qfNet ._cfg_标题栏状态_(Name,$"{名称}{Language_ .Get语言("初始化中")}"  ,(int)qfWork._初始化状态_.初始化中 ),
-              new  qfNet ._cfg_标题栏状态_(Name  ,$"{名称}{Language_ .Get语言("未初始化")}" ,(int)qfWork._初始化状态_.未初始化  ),
+              new  qfNet ._cfg_标题栏状态_(Name,$"{名称}{Language_ .Get语言("已初始化")}"  ,(int)qfmain ._初始化状态_  .已初始化  ),
+              new  qfNet ._cfg_标题栏状态_(Name,$"{名称}{Language_ .Get语言("初始化中")}"  ,(int)qfmain ._初始化状态_.初始化中 ),
+              new  qfNet ._cfg_标题栏状态_(Name  ,$"{名称}{Language_ .Get语言("未初始化")}" ,(int)qfmain ._初始化状态_.未初始化  ),
 
            };
             return info;
@@ -128,7 +128,7 @@ namespace qfNet
 
         #region 事件响应
 
-        private void On_初始化状态(qfWork._初始化状态_ state)
+        private void On_初始化状态(qfmain._初始化状态_ state)
         {
             Event_标题栏_初始化状态?.Invoke(this._标题栏标题_初始化状态, state);
         }
@@ -143,7 +143,7 @@ namespace qfNet
 
         #region 事件
 
-        public event Action<_cfg_标题栏状态_[], qfWork._初始化状态_> Event_标题栏_初始化状态;
+        public event Action<_cfg_标题栏状态_[], qfmain._初始化状态_> Event_标题栏_初始化状态;
         public event Action<_cfg_标题栏状态_[], qfWork._激光加工状态_> Event_标题栏_加工状态;
 
 

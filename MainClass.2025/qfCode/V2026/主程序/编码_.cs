@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using qfmain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -156,6 +157,21 @@ namespace qfCode
 
         #endregion
 
+
+
+        #region 初始化状态
+
+        public qfNet._cfg_标题栏状态_[] 初始化状态(qfNet.窗体_标题栏状态 con, string Name, string Title, qfmain._初始化状态_ state)
+        {
+
+         return    new qfNet.窗体_标题栏状态_方法().标题栏状态(con, Name, Title, state);
+        }
+            
+
+
+
+
+        #endregion
 
         #region 事件
 

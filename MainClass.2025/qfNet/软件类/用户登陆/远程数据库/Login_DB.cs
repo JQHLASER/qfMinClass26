@@ -37,13 +37,13 @@ namespace qfNet
 
         #endregion
 
-        public void 标题栏状态(qfNet.窗体_标题栏状态 标题栏状态, qfWork._初始化状态_ state)
+        public void 标题栏状态(qfNet.窗体_标题栏状态 标题栏状态, qfmain ._初始化状态_ state)
         {
             qfNet._cfg_标题栏状态_[] cfg = new qfNet._cfg_标题栏状态_[]
             {
-                new qfNet ._cfg_标题栏状态_("数据库","数据库未初始化",(int)qfWork ._初始化状态_ .未初始化 ),
-                new qfNet ._cfg_标题栏状态_("数据库","数据库初始化中",(int)qfWork ._初始化状态_ .初始化中 ),
-                new qfNet ._cfg_标题栏状态_("数据库","数据库已初始化",(int)qfWork ._初始化状态_ .已初始化 ),
+                new qfNet ._cfg_标题栏状态_("数据库","数据库未初始化",(int)qfmain  ._初始化状态_ .未初始化 ),
+                new qfNet ._cfg_标题栏状态_("数据库","数据库初始化中",(int)qfmain  ._初始化状态_ .初始化中 ),
+                new qfNet ._cfg_标题栏状态_("数据库","数据库已初始化",(int)qfmain  ._初始化状态_ .已初始化 ),
             };
 
             标题栏状态.Add(cfg, (int)state);

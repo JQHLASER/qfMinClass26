@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace qfCode
         /// <summary>
         /// 主文件夹
         /// </summary>
-        internal static string 主文件夹 { get; } = Environment.CurrentDirectory + "\\Code26";
+        internal static string 主文件夹 { get; } = Path .Combine (AppDomain .CurrentDomain .BaseDirectory ,"Code26");
         /// <summary>
         /// 存放参数的文件夹
         /// </summary>

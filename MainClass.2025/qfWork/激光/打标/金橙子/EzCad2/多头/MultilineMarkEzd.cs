@@ -356,14 +356,14 @@ namespace qfWork
         /// <returns></returns>
         public virtual int 初始化打标卡()
         {
-            On_初始化状态(_初始化状态_.初始化中);
-            _初始化状态_ rt = _初始化状态_.未初始化;
+            On_初始化状态( qfmain . _初始化状态_.初始化中);
+            qfmain._初始化状态_ rt = qfmain._初始化状态_.未初始化;
             _Err_jczMarkEzd2_ nErr = _Err_jczMarkEzd2_.未初始化;
             初始化数据();
             if (new MarkEzd().EzCad2软件是否打开())
             {
                 On_Log(false, $"{Get语言("发现EzCad进程")}");
-                On_初始化状态(_初始化状态_.未初始化);
+                On_初始化状态(qfmain._初始化状态_.未初始化);
 
                 return (int)rt;
             }
@@ -373,7 +373,7 @@ namespace qfWork
                 nErr = (_Err_jczMarkEzd2_)nrt;
                 if (nrt == 0)
                 {
-                    rt = _初始化状态_.已初始化;
+                    rt = qfmain._初始化状态_.已初始化;
                     this._CardSN_原始 = this.获取所有CardID();
                     this.读写参数_CardID索引码(1, out string msgErr);
                     this._打标卡数量 = 获取卡数量();
@@ -382,7 +382,7 @@ namespace qfWork
                 }
                 else
                 {
-                    rt = _初始化状态_.未初始化;
+                    rt = qfmain._初始化状态_.未初始化;
                     On_Log(false, $"{Get语言("未初始化")},{JczLmc.ErrMsg(nErr)}");
                     释放打标卡(false);
                 }
@@ -393,7 +393,7 @@ namespace qfWork
 
         public virtual int 释放打标卡(bool 产生日志 = true)
         {
-            On_初始化状态(_初始化状态_.未初始化);
+            On_初始化状态(qfmain._初始化状态_.未初始化);
             if (产生日志)
             {
                 On_Log(false, $"{Get语言("已释放")}");
@@ -405,10 +405,10 @@ namespace qfWork
                 rt = JczLmc_Multiline.Close();
             }
             catch (Exception ex)
-            { 
+            {
                 On_Log(false, $"{ex.Message}");
             }
-             
+
             return rt;
         }
 
@@ -497,7 +497,7 @@ namespace qfWork
         {
             lock (_lock)
             {
-                int id = 获取卡ID(Cardindex);   
+                int id = 获取卡ID(Cardindex);
                 IntPtr pBmp = JczLmc_Multiline.GetPrevBitmap2(id, 0, bmpwidth, bmpheight);
                 Bitmap bmp = null;
                 try
@@ -509,7 +509,7 @@ namespace qfWork
                     // 只要 Image.FromHbitmap 成功，就应该释放原句柄
                     DeleteObject(pBmp);
                 }
-                return bmp; 
+                return bmp;
             }
         }
 
@@ -1310,7 +1310,7 @@ namespace qfWork
 
         public virtual void 初始化(bool 使能线程 = true)
         {
-            On_初始化状态(_初始化状态_.未初始化);
+            On_初始化状态(qfmain._初始化状态_.未初始化);
             初始化数据();
             读写参数_参数(1, out string msgErr);
             读写参数_最后一次ezd文件(1, out msgErr);
@@ -1348,7 +1348,7 @@ namespace qfWork
                     break;
                 }
 
-                if (this._初始化状态 != _初始化状态_.已初始化)
+                if (this._初始化状态 != qfmain._初始化状态_.已初始化)
                 {
                     continue;
                 }
@@ -1556,7 +1556,7 @@ namespace qfWork
         /// <summary>
         /// 打标卡初始化状态
         /// </summary>
-        public _初始化状态_ _初始化状态 { set; get; } = _初始化状态_.未初始化;
+        public qfmain._初始化状态_ _初始化状态 { set; get; } = qfmain._初始化状态_.未初始化;
         public List<_cfg_参数_> _lst_参数 = new List<_cfg_参数_>();
         public int _打标卡数量 = 0;
         public string _EzCad软件名称 { set; get; } = "EzCad2";
@@ -1633,7 +1633,7 @@ namespace qfWork
                        }
 
                        EzCad2打开状态 = _EzCad2打开状态_.已处理;
-                       if (this._初始化状态 == _初始化状态_.已初始化)
+                       if (this._初始化状态 == qfmain._初始化状态_.已初始化)
                        {
                            this.释放打标卡(true);
                            Thread.Sleep(1000);
@@ -1725,7 +1725,7 @@ namespace qfWork
                     }
                     else if (item == "初始化状态")
                     {
-                        if (this._初始化状态 != _初始化状态_.未初始化 || EzCad2打开状态 == _EzCad2打开状态_.已处理)
+                        if (this._初始化状态 != qfmain._初始化状态_.未初始化 || EzCad2打开状态 == _EzCad2打开状态_.已处理)
                         {
                             rt = false;
                         }
@@ -1835,8 +1835,8 @@ namespace qfWork
             Event_Log?.Invoke(state, msg);
         }
 
-        public event Action<_初始化状态_> Event_初始化状态;
-        void On_初始化状态(_初始化状态_ state)
+        public event Action<qfmain._初始化状态_> Event_初始化状态;
+        void On_初始化状态(qfmain._初始化状态_ state)
         {
 
             this._初始化状态 = state;
@@ -1914,7 +1914,7 @@ namespace qfWork
         public virtual bool Err_未初始化(out string msgErr)
         {
             msgErr = "";
-            if (this._初始化状态 != _初始化状态_.已初始化)
+            if (this._初始化状态 != qfmain._初始化状态_.已初始化)
             {
                 msgErr = Get语言("未初始化");
                 On_Log(false, msgErr);

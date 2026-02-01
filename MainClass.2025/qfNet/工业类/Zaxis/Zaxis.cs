@@ -26,10 +26,10 @@ namespace qfNet
         {
             信息 = new qfNet._cfg_标题栏状态_[]
                 {
-                     new qfNet._cfg_标题栏状态_(名称,名称+Language_ .Get语言 ("未连接"),(int)qfWork ._连接状态_.未连接 ),
-                     new qfNet._cfg_标题栏状态_(名称,名称+Language_ .Get语言 ("连接中"),(int)qfWork ._连接状态_.连接中  ),
-                     new qfNet._cfg_标题栏状态_(名称,名称+Language_ .Get语言 ("已连接"),(int)qfWork ._连接状态_.已连接  ),
-                     new qfNet._cfg_标题栏状态_(名称,名称+Language_ .Get语言 ("硬件不匹配"),(int)qfWork ._连接状态_.功能码不匹配   ),
+                     new qfNet._cfg_标题栏状态_(名称,名称+Language_ .Get语言 ("未连接"),(int)qfmain  ._连接状态_.未连接 ),
+                     new qfNet._cfg_标题栏状态_(名称,名称+Language_ .Get语言 ("连接中"),(int)qfmain  ._连接状态_.连接中  ),
+                     new qfNet._cfg_标题栏状态_(名称,名称+Language_ .Get语言 ("已连接"),(int)qfmain  ._连接状态_.已连接  ),
+                     new qfNet._cfg_标题栏状态_(名称,名称+Language_ .Get语言 ("硬件不匹配"),(int)qfmain  ._连接状态_.功能码不匹配   ),
                 };
 
         }

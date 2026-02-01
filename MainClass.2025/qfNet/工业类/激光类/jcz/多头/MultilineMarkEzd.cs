@@ -99,9 +99,9 @@ namespace qfNet
             string 名称 = Language_.Get语言("打标卡");
             qfNet._cfg_标题栏状态_[] info = new qfNet._cfg_标题栏状态_[]
            {
-              new  qfNet ._cfg_标题栏状态_(Name,$"{名称}{Language_ .Get语言("已初始化")}"  ,(int)qfWork._初始化状态_  .已初始化  ),
-              new  qfNet ._cfg_标题栏状态_(Name,$"{名称}{Language_ .Get语言("初始化中")}"  ,(int)qfWork._初始化状态_.初始化中 ),
-              new  qfNet ._cfg_标题栏状态_(Name  ,$"{名称}{Language_ .Get语言("未初始化")}" ,(int)qfWork._初始化状态_.未初始化  ),
+              new  qfNet ._cfg_标题栏状态_(Name,$"{名称}{Language_ .Get语言("已初始化")}"  ,(int)qfmain ._初始化状态_  .已初始化  ),
+              new  qfNet ._cfg_标题栏状态_(Name,$"{名称}{Language_ .Get语言("初始化中")}"  ,(int)qfmain ._初始化状态_.初始化中 ),
+              new  qfNet ._cfg_标题栏状态_(Name  ,$"{名称}{Language_ .Get语言("未初始化")}" ,(int)qfmain ._初始化状态_.未初始化  ),
 
            };
             return info;
@@ -109,8 +109,8 @@ namespace qfNet
 
         _cfg_标题栏状态_[] _标题栏标题_初始化状态 = new _cfg_标题栏状态_[0];
 
-        public event Action<_cfg_标题栏状态_[], qfWork._初始化状态_> Event_标题栏_初始化状态;
-        private void On_初始化状态(qfWork._初始化状态_ state)
+        public event Action<_cfg_标题栏状态_[], qfmain  ._初始化状态_> Event_标题栏_初始化状态;
+        private void On_初始化状态(qfmain ._初始化状态_ state)
         {
             Event_标题栏_初始化状态?.Invoke(this._标题栏标题_初始化状态, state);
         }

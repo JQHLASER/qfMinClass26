@@ -88,7 +88,7 @@ namespace qfNet
         //  private readonly object _lock = new object();
         async void On_刷新图像(int cardindex, qfWork._激光_获取图像_ state)
         {
-            if (this._CardIndex != cardindex || this._markEzd._初始化状态 != _初始化状态_.已初始化)
+            if (this._CardIndex != cardindex || this._markEzd._初始化状态 != qfmain._初始化状态_.已初始化)
             {
                 return;
             }

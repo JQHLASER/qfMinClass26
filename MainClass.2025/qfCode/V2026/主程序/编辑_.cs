@@ -10,7 +10,11 @@ namespace qfCode
     public class 编辑_
     {
         internal _功能_ _功能;
-        internal _初始化状态_ _初始化状态 = _初始化状态_.未初始化;
+        internal qfmain._初始化状态_ _初始化状态 = qfmain._初始化状态_.未初始化;
+
+        /// <summary>
+        /// 在视图存储参数,本地方式计算时
+        /// </summary>
         internal 编码_ _编码;
 
 
@@ -20,12 +24,13 @@ namespace qfCode
         /// </summary>
         internal type_编辑._交互类型_ _交互类型 = type_编辑._交互类型_.本地;
         internal string[] _变量对象名 = new string[0];
-  
+
 
 
 
         /// <summary>
         /// 变量对象名 : 如激光模板中的对象名称,方便设置
+        /// <para>在视图存储参数,本地方式计算时</para>
         /// </summary> 
         public 编辑_(编码_ 编码, _交互类型_ 交互类型, string[] 变量对象名)
         {
@@ -40,10 +45,10 @@ namespace qfCode
         /// <summary>
         /// 配方名称 : 进入窗体时要打开的配方,否则为空白的
         /// </summary> >
-        public void Win_主窗体( string 配方名称,bool Is父窗体 = false)
+        public void Win_主窗体(string 配方名称, bool Is父窗体 = false)
         {
 
-            using (Form_主窗体 forms = new Form_主窗体(配方名称,this))
+            using (Form_主窗体 forms = new Form_主窗体(配方名称, this))
             {
                 forms.MaximizeBox = false;
                 if (!Is父窗体)

@@ -36,7 +36,7 @@ namespace qfNet
 
         async void On_获取图像(qfWork._激光_获取图像_ state)
         {
-            if (this._markEzd._初始化状态 != qfWork._初始化状态_.已初始化)
+            if (this._markEzd._初始化状态 != qfmain ._初始化状态_.已初始化)
             {
                 return;
             }
@@ -71,7 +71,7 @@ namespace qfNet
         void On_双击查看图像()
         {
 
-            if (this._markEzd._初始化状态 == qfWork._初始化状态_.已初始化)
+            if (this._markEzd._初始化状态 == qfmain ._初始化状态_.已初始化)
             {
                 using (Form_jcz单头_双击查看图像 forms = new Form_jcz单头_双击查看图像(this._markEzd))
                 {

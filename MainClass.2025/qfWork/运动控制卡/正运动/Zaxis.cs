@@ -61,7 +61,7 @@ namespace qfWork
         private string _Path_Cfg = _pathCfgDefault;
         private string _控制器名称 = "";
 
-        public _连接状态_ _连接状态 = _连接状态_.未连接;
+        public qfmain ._连接状态_ _连接状态 = qfmain ._连接状态_.未连接;
         /// <summary>
         /// 控制器句柄
         /// </summary>
@@ -133,16 +133,16 @@ namespace qfWork
             Event_Log?.Invoke(state, $"{_控制器名称},{Log}");
         }
 
-        public event Action<_连接状态_> Event_连接状态;
-        void On_Event_连接状态(_连接状态_ state)
+        public event Action<qfmain ._连接状态_> Event_连接状态;
+        void On_Event_连接状态(qfmain ._连接状态_ state)
         {
-            if (state == _连接状态_.已连接 && this._is匹配功能码)
+            if (state == qfmain ._连接状态_.已连接 && this._is匹配功能码)
             {
 
                 //处理功能码
                 if (!获取控制器信息(false))
                 {
-                    state = _连接状态_.功能码不匹配;
+                    state = qfmain ._连接状态_.功能码不匹配;
                 }
             }
 
@@ -151,13 +151,13 @@ namespace qfWork
             Event_连接状态?.Invoke(state);
             switch (state)
             {
-                case _连接状态_.已连接:
+                case qfmain ._连接状态_.已连接:
                     On_Event_连接控制器();
                     break;
-                case _连接状态_.未连接:
+                case qfmain ._连接状态_.未连接:
                     On_Event_关闭控制器();
                     break;
-                case _连接状态_.功能码不匹配:
+                case qfmain ._连接状态_.功能码不匹配:
                     On_Event_关闭控制器();
                     break;
             }
@@ -286,7 +286,7 @@ namespace qfWork
 
         public int 连接_网口(string ip)
         {
-            if (_连接状态 == _连接状态_.连接中 || _连接状态 == _连接状态_.已连接)
+            if (_连接状态 == qfmain ._连接状态_.连接中 || _连接状态 == qfmain ._连接状态_.已连接)
             {
                 关闭控制器链接(out string msgErr);
             }
@@ -295,7 +295,7 @@ namespace qfWork
             try
             {
                 IntPtr hwnd = IntPtr.Zero;
-                On_Event_连接状态(_连接状态_.连接中);
+                On_Event_连接状态(qfmain ._连接状态_.连接中);
                 //  Config.网口ip = ip;
                 rt = zmcaux.ZAux_OpenEth(ip, out hwnd);
 
@@ -304,13 +304,13 @@ namespace qfWork
                 {
 
                     _handle = hwnd;
-                    On_Event_连接状态(_连接状态_.已连接);
+                    On_Event_连接状态( qfmain ._连接状态_.已连接);
                 }
                 else
                 {
                     rt = -1;
                     zmcaux.ZAux_Close(_handle);
-                    On_Event_连接状态(_连接状态_.未连接);
+                    On_Event_连接状态(qfmain ._连接状态_.未连接);
                 }
             }
             catch (Exception ex)
@@ -320,14 +320,14 @@ namespace qfWork
                     _Is第一次 = false;
                     On_Event_Log(false, ex.Message);
                 }
-                On_Event_连接状态(_连接状态_.未连接);
+                On_Event_连接状态(qfmain ._连接状态_.未连接);
             }
             return rt;
         }
         bool _Is第一次 = true;
         public int 连接_串口(uint 串口号)
         {
-            if (_连接状态 == _连接状态_.连接中 || _连接状态 == _连接状态_.已连接)
+            if (_连接状态 == qfmain ._连接状态_.连接中 || _连接状态 == qfmain ._连接状态_.已连接)
             {
                 关闭控制器链接(out string msgErr);
             }
@@ -335,19 +335,19 @@ namespace qfWork
             try
             {
                 IntPtr hwnd = IntPtr.Zero;
-                On_Event_连接状态(_连接状态_.连接中);
+                On_Event_连接状态(qfmain ._连接状态_.连接中);
                 rt = zmcaux.ZAux_OpenCom(串口号, out hwnd);
                 if (rt == 0)
                 {
                     // this.Config.连接参数.Com = 串口号;
                     _handle = hwnd;
-                    On_Event_连接状态(_连接状态_.已连接);
+                    On_Event_连接状态(qfmain ._连接状态_.已连接);
                 }
                 else
                 {
                     rt = -1;
                     zmcaux.ZAux_Close(_handle);
-                    On_Event_连接状态(_连接状态_.未连接);
+                    On_Event_连接状态(qfmain ._连接状态_.未连接);
                 }
             }
             catch (Exception ex)
@@ -358,7 +358,7 @@ namespace qfWork
                     On_Event_Log(false, ex.Message);
                 }
                 rt = -1;
-                On_Event_连接状态(_连接状态_.未连接);
+                On_Event_连接状态(qfmain ._连接状态_.未连接);
 
             }
             return rt;
@@ -428,12 +428,12 @@ namespace qfWork
         /// <returns></returns>
         public bool 关闭控制器链接()
         {
-            if (_连接状态 == _连接状态_.未连接 || _连接状态 == _连接状态_.功能码不匹配)
+            if (_连接状态 == qfmain ._连接状态_.未连接 || _连接状态 == qfmain ._连接状态_.功能码不匹配)
             {
                 return true;
             }
 
-            On_Event_连接状态(_连接状态_.未连接);
+            On_Event_连接状态(qfmain ._连接状态_.未连接);
             try
             {
                 return 关闭控制器链接(out string msgErr);
@@ -594,7 +594,7 @@ namespace qfWork
         /// <returns>-9999:未连接</returns>
         public int IO_设置输出口状态(int 输出口, uint 输出口状态)
         {
-            if (_连接状态 != _连接状态_.已连接)
+            if (_连接状态 != qfmain ._连接状态_.已连接)
             {
                 return -9999;
             }
@@ -1035,7 +1035,7 @@ namespace qfWork
 
         public void 初始化()
         {
-            On_Event_连接状态(_连接状态_.未连接);
+            On_Event_连接状态(qfmain ._连接状态_.未连接);
             new Thread(() => { 线程(); }) { IsBackground = true }.Start();
             IsInistiall = true;
         }
@@ -1113,11 +1113,11 @@ namespace qfWork
 
                             #region 判断是否向下运行
 
-                            if (this._连接状态 == _连接状态_.连接中)
+                            if (this._连接状态 == qfmain ._连接状态_.连接中)
                             {
                                 rt = false;
                             }
-                            else if (this._连接状态 == _连接状态_.功能码不匹配)
+                            else if (this._连接状态 == qfmain ._连接状态_.功能码不匹配)
                             {
                                 rt = false;
                                 isRun = false;
@@ -1131,11 +1131,11 @@ namespace qfWork
 
                             #region 判断是否需要初始化
 
-                            if (this._连接状态 == _连接状态_.未连接)
+                            if (this._连接状态 == qfmain ._连接状态_.未连接)
                             {
                                 控制器连接();
                                 Thread.Sleep(200);
-                                if (this._连接状态 == _连接状态_.未连接)
+                                if (this._连接状态 == qfmain ._连接状态_.未连接)
                                 {
                                     rt = false;
                                     break;
@@ -1149,12 +1149,12 @@ namespace qfWork
                         {
                             #region 事件处理
 
-                            if (this._连接状态 == _连接状态_.已连接)
+                            if (this._连接状态 == qfmain ._连接状态_.已连接)
                             {
                                 uint I_0 = 0;
                                 if (IO_读取输出口状态_单个(0, ref I_0) != 0)
                                 {
-                                    On_Event_连接状态(_连接状态_.未连接);
+                                    On_Event_连接状态(qfmain ._连接状态_.未连接);
                                     关闭控制器链接(out string msgErr);
                                     rt = false;
                                     continue;
@@ -1174,7 +1174,7 @@ namespace qfWork
                 }
                 catch (Exception)
                 {
-                    On_Event_连接状态(_连接状态_.未连接);
+                    On_Event_连接状态(qfmain ._连接状态_.未连接);
                     关闭控制器链接(out string msgErr);
                 }
             }
@@ -1230,7 +1230,7 @@ namespace qfWork
             释放();
             if (产生事件)
             {
-                On_Event_连接状态(_连接状态_.功能码不匹配);
+                On_Event_连接状态(qfmain ._连接状态_.功能码不匹配);
             }
             return false;
         }
@@ -1304,7 +1304,7 @@ namespace qfWork
         {
             msgErr = string.Empty;
 
-            if (_连接状态 != _连接状态_.已连接)
+            if (_连接状态 != qfmain ._连接状态_.已连接)
             {
                 msgErr = $"{_控制器名称},{Language_.Get语言("未连接")}";
                 if (显示日志)

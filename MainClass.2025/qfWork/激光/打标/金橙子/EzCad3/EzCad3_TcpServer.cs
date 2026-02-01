@@ -57,7 +57,7 @@ namespace qfWork
 
         public qfmain.Socket_Server tcpServer_Sys;
         string _Path_tcpCfg = qfmain.软件类.Files_Cfg.Files_Config + "\\Ezd3tcp.txt";
-        public _连接状态_ _连接EzCa3状态 { set; get; } = _连接状态_.未连接;
+        public qfmain ._连接状态_ _连接EzCa3状态 { set; get; } = qfmain ._连接状态_.未连接;
 
         /// <summary>
         /// 加工中(红光或出激光标刻中) / 闲置
@@ -71,7 +71,7 @@ namespace qfWork
 
         public void 初始化()
         {
-            Event_连接状态?.Invoke(_连接状态_.未连接);
+            Event_连接状态?.Invoke(qfmain ._连接状态_.未连接);
             tcpServer_Sys = new qfmain.Socket_Server(this._Path_tcpCfg, new qfmain._解码_Cfg_(new byte[0], new byte[0], 200));
             tcpServer_Sys.Event_客户端上线 += 客户端上线;
             tcpServer_Sys.Event_客户端下线 += 客户端下线;
@@ -139,12 +139,12 @@ namespace qfWork
 
         void 客户端上线(Socket socket_)
         {
-            Event_连接状态?.Invoke(_连接状态_.已连接);
+            Event_连接状态?.Invoke(qfmain ._连接状态_.已连接);
         }
 
         void 客户端下线(Socket socket_)
         {
-            Event_连接状态?.Invoke(_连接状态_.未连接);
+            Event_连接状态?.Invoke(qfmain ._连接状态_.未连接);
         }
 
         void 侦听状态(qfmain._启动状态_ status)
@@ -163,7 +163,7 @@ namespace qfWork
 
         public event Action<qfmain._启动状态_> Event_Server启动状态;
 
-        public event Action<_连接状态_> Event_连接状态;
+        public event Action<qfmain ._连接状态_> Event_连接状态;
 
         /// <summary>
         /// 加工中(红光或出激光标刻中)

@@ -17,7 +17,7 @@ namespace qfNet
     {
         public qfWork._激光参数_ _激光参数;
         public string _激光模板Path = string.Empty;
-        public qfWork._初始化状态_ _初始化态 = qfWork._初始化状态_.未初始化;
+        public qfmain ._初始化状态_ _初始化态 = qfmain ._初始化状态_.未初始化;
         public qfWork._激光加工状态_ _激光加工状态 = qfWork._激光加工状态_.闲置;
         public _打标卡类型_ _打标卡类型 = _打标卡类型_.EzCad2;
         public string _打标软件名称 = "EzCad2.exe";
@@ -721,8 +721,8 @@ namespace qfNet
         }
 
 
-        public event Action<qfWork._初始化状态_> Event_初始化状态;
-        void On_初始化状态(qfWork._初始化状态_ state)
+        public event Action<qfmain ._初始化状态_> Event_初始化状态;
+        void On_初始化状态(qfmain ._初始化状态_ state)
         {
             this._初始化态 = state;
             Event_初始化状态?.Invoke(state);
@@ -758,8 +758,8 @@ namespace qfNet
             Event_获取图像?.Invoke(state);
         }
 
-        public event Action<_cfg_标题栏状态_[], qfWork._初始化状态_> Event_标题栏状态_初始化状态;
-        void On_标题栏状态_初始化状态(_cfg_标题栏状态_[] info, qfWork._初始化状态_ state)
+        public event Action<_cfg_标题栏状态_[], qfmain ._初始化状态_> Event_标题栏状态_初始化状态;
+        void On_标题栏状态_初始化状态(_cfg_标题栏状态_[] info, qfmain._初始化状态_ state)
         {
             Event_标题栏状态_初始化状态?.Invoke(info, state);
         }
