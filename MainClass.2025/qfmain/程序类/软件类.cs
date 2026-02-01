@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -17,17 +18,17 @@ namespace qfmain
             /// <summary>
             /// 日志文件夹
             /// </summary>
-            public static string Files_LogMyApp { set; get; } = Environment.CurrentDirectory + "\\LogMyApp";
+            public static string Files_LogMyApp { set; get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "LogMyApp");
             /// <summary>
             /// 主文件夹
             /// </summary>
-            public static string Files_ConfigMyApp { set; get; } = Environment.CurrentDirectory + "\\ConfigMyApp";
+            public static string Files_ConfigMyApp { set; get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ConfigMyApp");
 
 
             /// <summary>
             /// 模板文件夹
             /// </summary>
-            public static string Files_Template { set; get; } = Environment.CurrentDirectory + "\\Template";
+            public static string Files_Template { set; get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Template");
 
             /// <summary>
             /// 程序参数
@@ -98,6 +99,9 @@ namespace qfmain
             #endregion
         }
 
+        /// <summary>
+        /// AppDomain.CurrentDomain.BaseDirectory
+        /// </summary> 
         public string Get程序目录()
         {
             return AppDomain.CurrentDomain.BaseDirectory;

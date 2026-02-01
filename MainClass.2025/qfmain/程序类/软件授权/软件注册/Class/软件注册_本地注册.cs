@@ -2,6 +2,7 @@
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Finance.Implementations;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,7 +73,7 @@ namespace qfmain
         /// <param name="Id"></param>
         internal static void 客户Id(ushort model, ref string Id)
         {
-            string path = Environment.CurrentDirectory + "\\Guserf.dll";
+            string path = Path .Combine (AppDomain .CurrentDomain .BaseDirectory , "Guserf.dll");
             string sn = 软件注册_子程序.加密(Id);
             new 文件_文件夹().WriteReadText(path, model, ref sn, out string smgErr, null, true);
             Id = 软件注册_子程序.解密(sn);           
@@ -86,7 +87,7 @@ namespace qfmain
         /// <param name="Id"></param>
         internal static void 注册码读写(ushort model, ref string 注册码)
         {
-            string path = Environment.CurrentDirectory + "\\Gzcmf.dll";
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Gzcmf.dll");
             string sn = 软件注册_子程序.加密(注册码);
             new 文件_文件夹().WriteReadText(path, model, ref sn, out string smgErr, null, true);
             string vxt = 软件注册_子程序.解密(sn);

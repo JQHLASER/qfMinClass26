@@ -4,6 +4,7 @@ using OfficeOpenXml.FormulaParsing.Excel.Functions.Finance.Implementations;
 using Org.BouncyCastle.Tls.Crypto.Impl.BC;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -151,7 +152,7 @@ namespace qfmain
         /// <param name="Id"></param>
         public void 是否试用读写_从本地(ushort model, ref bool 是否试用)
         {
-            string path = Environment.CurrentDirectory + "\\Gsyf.dll";
+            string path =  Path .Combine (AppDomain .CurrentDomain .BaseDirectory , "Gsyf.dll");
             string sn = 软件注册_子程序.加密(是否试用.ToString());
             new 文件_文件夹().WriteReadText(path, model, ref sn, out string smgErr, null, true);
             string vxt = 软件注册_子程序.解密(sn);
