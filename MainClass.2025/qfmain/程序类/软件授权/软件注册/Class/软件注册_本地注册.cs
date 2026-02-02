@@ -22,7 +22,7 @@ namespace qfmain
         /// <returns></returns>
         static string Get_设备Sn()
         {
-            string Files = new 电脑().获取_系统所在盘符() + "\\windowsoft";
+            string Files = Path.Combine(new 电脑().获取_系统所在盘符(), "windowsoft");
             new 文件_文件夹().文件夹_新建(Files, out string msgErr);
             string path = Files + "\\System32f.dll";
 
@@ -73,10 +73,10 @@ namespace qfmain
         /// <param name="Id"></param>
         internal static void 客户Id(ushort model, ref string Id)
         {
-            string path = Path .Combine (AppDomain .CurrentDomain .BaseDirectory , "Guserf.dll");
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Guserf.dll");
             string sn = 软件注册_子程序.加密(Id);
             new 文件_文件夹().WriteReadText(path, model, ref sn, out string smgErr, null, true);
-            Id = 软件注册_子程序.解密(sn);           
+            Id = 软件注册_子程序.解密(sn);
         }
 
 

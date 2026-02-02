@@ -41,7 +41,7 @@ namespace qfCode
              {
                  (bool s, string m, _配方文件_属性_ cfg) rt = Read("text^%&");
                  this._CodeSys._初始化状态 = !rt.s ? _初始化状态_.已初始化 : _初始化状态_.未初始化;
-
+                 this._CodeSys . On_初始化状态(this._CodeSys._初始化状态);
              };
         }
 

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using static System.Windows.Forms.AxHost;
 
 namespace qfCode
 {
@@ -35,6 +36,23 @@ namespace qfCode
         /// </summary> 
         public 编码_(_文件夹_._属性_ typeFile, _功能_ 功能)
         {
+            初始化(typeFile, 功能);
+        }
+
+
+        public 编码_()
+        {
+
+        }
+
+
+
+        /// <summary>
+        /// <para>Db : 使用数据库在存储时必须要传入</para>
+        /// </summary> 
+        public void 初始化(_文件夹_._属性_ typeFile, _功能_ 功能)
+        {
+            On_初始化状态(qfmain._初始化状态_.初始化中);
             new Language_();
             this._功能 = 功能;
             this._文件夹_属性 = typeFile;
@@ -44,9 +62,15 @@ namespace qfCode
             this._文件类 = new 文件类(this);
             this._配方文件操作 = new 文件_统一接口(this);
 
-
+            if (this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.ini
+                 || this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.txt)
+            {
+                On_初始化状态(_初始化状态_.已初始化);
+            }
 
         }
+
+
 
         /// <summary>
         /// 配方名称 : 当前打开的配方名称
@@ -164,9 +188,9 @@ namespace qfCode
         public qfNet._cfg_标题栏状态_[] 初始化状态(qfNet.窗体_标题栏状态 con, string Name, string Title, qfmain._初始化状态_ state)
         {
 
-         return    new qfNet.窗体_标题栏状态_方法().标题栏状态(con, Name, Title, state);
+            return new qfNet.窗体_标题栏状态_方法().标题栏状态(con, Name, Title, state);
         }
-            
+
 
 
 
@@ -187,9 +211,11 @@ namespace qfCode
         /// </summary>
         public event Func<_em_计算类型_, _对象_, DateTime> Event_日期时间;
 
-
-
-
+        public event Action<qfmain._初始化状态_> Event_初始化状态;
+        internal void On_初始化状态(qfmain._初始化状态_ state)
+        {
+            Event_初始化状态?.Invoke(state);
+        }
 
         #endregion
 
@@ -638,6 +664,22 @@ namespace qfCode
             return (rt, msgErr, nowNew);
         }
 
+
+        #endregion
+
+
+        #region Err
+
+        public bool Err_未初始化(string Name, out string msgErr)
+        {
+            msgErr = "";
+            if (this._初始化状态 != _初始化状态_.已初始化)
+            {
+                msgErr = Name + Language_.Get语言("未初始化");
+                return false;
+            }
+            return true;
+        }
 
         #endregion
 

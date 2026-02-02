@@ -49,6 +49,7 @@ namespace qfCode
                     rtState = rt.s;
                 }
                 this._CodeSys._初始化状态 = !rtState ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
+                this._CodeSys.On_初始化状态(this._CodeSys._初始化状态);
             };
         }
 

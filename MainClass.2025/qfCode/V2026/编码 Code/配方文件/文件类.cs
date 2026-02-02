@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace qfCode
         /// </summary> 
         public string GetPath_班次(string FileName)
         {
-            return $"{this._codeSys._文件夹_属性.班次}\\{FileName}.txt";
+            return Path .Combine ( this._codeSys._文件夹_属性.班次,$"{FileName}.txt");
         }
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace qfCode
         /// </summary> 
         public string GetPath_日期时间(string FileName)
         {
-            return $"{this._codeSys._文件夹_属性.日期时间}\\{FileName}.txt";
+            return Path.Combine(this._codeSys._文件夹_属性.日期时间,$"{FileName}.txt");
         }
 
 
@@ -46,7 +47,7 @@ namespace qfCode
         /// </summary> 
         public string GetPath_配方(string FileName)
         {
-            return this._codeSys._文件夹_属性.配方 + $"\\{FileName}{this._codeSys._功能.后缀}";
+            return Path.Combine(this._codeSys._文件夹_属性.配方, $"{FileName}{this._codeSys._功能.后缀}");
         }
 
         public string[] Get目录_班次()

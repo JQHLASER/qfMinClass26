@@ -1,5 +1,4 @@
-﻿using NPOI.SS.Formula.Functions;
-using SharpConfig;
+﻿using SharpConfig;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,7 +16,9 @@ namespace qfmain
     /// </summary>
     public class ini_sharpconfig
     {
-        private  string _filePath;
+
+
+        private string _filePath;
         private static readonly object _lock = new object();
         private Configuration _config;
 
@@ -36,7 +37,8 @@ namespace qfmain
             {
                 if (File.Exists(_filePath))
                 {
-                    _config = Configuration.LoadFromFile(_filePath);
+                    _config = Configuration.LoadFromFile(_filePath); 
+                   
                 }
                 else
                 {
@@ -45,9 +47,13 @@ namespace qfmain
             }
         }
 
+
+
+
+
         #region 常用 
 
-
+        
         public string Read(string sectionName, string settingName, string 默认值 = "")
         {
             (bool rt, string msgErr, string value) rt = ReadStr(sectionName, settingName, 默认值);
@@ -65,7 +71,7 @@ namespace qfmain
                     var section = _config[sectionName];
                     if (section == null || !section.Contains(settingName))
                     {
-                        return (rt, msgErr, value );
+                        return (rt, msgErr, value);
                     }
 
                     value = section[settingName].RawValue;
@@ -115,7 +121,7 @@ namespace qfmain
 
 
         #endregion
-        
+
 
         /// <summary>
         /// 读取配置值（带类型转换和默认值）

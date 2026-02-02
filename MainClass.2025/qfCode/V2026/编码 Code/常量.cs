@@ -16,19 +16,19 @@ namespace qfCode
         /// <summary>
         /// 存放参数的文件夹
         /// </summary>
-        internal static string 参数 { get; } = 主文件夹 + "\\Cfg";
+        internal static string 参数 { get; } = Path.Combine(主文件夹 ,"Cfg");
         /// <summary>
         /// 班次文件夹
         /// </summary>
-        internal static string 班次 { get; } = 主文件夹 + "\\Class";
+        internal static string 班次 { get; } = Path.Combine(主文件夹 , "Class");
         /// <summary>
         /// 存放日期时间配置文件的文件夹
         /// </summary>
-        internal static string 日期时间 { get; } = 主文件夹 + "\\DateTime";
+        internal static string 日期时间 { get; } = Path.Combine(主文件夹 , "DateTime");
         /// <summary>
         /// 存放信息文件
         /// </summary>
-        internal static string 信息 { get; } = 主文件夹 + "\\Main";
+        internal static string 信息 { get; } = Path.Combine(主文件夹 , "Main");
 
         /// <summary>
         /// 编码信息文件后缀

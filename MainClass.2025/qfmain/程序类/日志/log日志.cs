@@ -387,16 +387,14 @@ namespace qfmain
                         new 文件_文件夹().文件_获取文件大小(path, out long B, out string msgErr);
                         if (B >= 1024 * 1024 * this.参数.日志文件大小)
                         {
-                            sb.Clear();
-                            sb.Append(this.参数.Files_Log);
-                            sb.Append("\\");
+                            sb.Clear(); 
                             sb.Append(fileName);
                             sb.Append(show);
                             sb.Append(this.文件标识分割符);
                             sb.Append(($"{i + 1}").PadLeft(3, '0'));
                             sb.Append(".log");
 
-                            path = sb.ToString();
+                            path =Path .Combine (this.参数.Files_Log, sb.ToString());
                             continue;
                         }
                         else
