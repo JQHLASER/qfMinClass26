@@ -32,7 +32,7 @@ namespace qfLanguage
             new _language_Value_ ( keys, "保存成功","保存成功"),
             new _language_Value_ ( keys, "删除成功","删除成功"),
             new _language_Value_ ( keys, "密码错误","密码错误"),
-           
+
             new _language_Value_ ( keys, "请输入用户名","请输入用户名"),
             new _language_Value_ ( keys, "未选择用户权限","未选择用户权限"),
             new _language_Value_ ( keys, "登陆","登陆"),
@@ -42,7 +42,7 @@ namespace qfLanguage
             new _language_Value_ ( keys, "不能操作当前登陆用户","不能操作当前登陆用户"),
             new _language_Value_ ( keys, "用户管理","用户管理"),
             new _language_Value_ ( keys, "未选中文件","未选中文件"),
-            
+
 
             new _language_Value_ ( keys,"启动","启动"),
             new _language_Value_ ( keys,"指定索引不能大于最大索引","指定索引不能大于最大索引"),
@@ -232,11 +232,16 @@ namespace qfLanguage
             new _language_Value_ ( keys, "HSL未激活","HSL未激活"),
             new _language_Value_ ( keys, "行","行"),
             new _language_Value_ ( keys, "页","页"),
-            new _language_Value_ ( keys, "当前页","当前页"),
             new _language_Value_ ( keys, "共","共"),
             new _language_Value_ ( keys, "不支持读取类型","不支持读取类型"),
             new _language_Value_ ( keys, "无此功能","无此功能"),
             new _language_Value_ ( keys, "写入异常","写入异常"),
+
+            new _language_Value_ (keys,"当前已在最后一页","当前已在最后一页"),
+            new _language_Value_ (keys,"当前已在第一页","当前已在第一页"),
+            new _language_Value_ (keys,"无数据","无数据"),
+            new _language_Value_ (keys,"页码超出范围","页码超出范围"),
+
         };
 
     }

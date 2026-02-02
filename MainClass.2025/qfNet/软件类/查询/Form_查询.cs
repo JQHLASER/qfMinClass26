@@ -91,7 +91,7 @@ namespace qfNet
         }
          
 
-        public string 生成显示信息(qfmain.List分页_._PageInfo_ 页信息)
+        public void   生成显示信息(qfmain.List分页_._PageInfo_ 页信息)
         {
             List<uint> lst = new List<uint>();
             for (uint i = 0; i < 页信息.总页数; i++)
@@ -104,10 +104,17 @@ namespace qfNet
             StringBuilder sb = new StringBuilder();
             sb.Append($"【{Language_.Get语言("共")}{页信息.总行数}{Language_.Get语言("行")}】");
             sb.Append($"【{Language_.Get语言("共")}{页信息.总页数}{Language_.Get语言("页")}】");
-            sb.Append($"【{页信息.每页行数}{Language_.Get语言("行")}/{Language_.Get语言("页")}】");
+             
+            string show= sb.ToString();
+            this.Invoke((Action)(() => {
+                this.Text = show;
+            }));
+
+            sb.Clear(); 
             uint a = 页信息.当前页 == 页信息.总页数 - 1 ? 页信息.最后一页行数 : 页信息.每页行数;
-            sb.Append($"【{a}{Language_.Get语言("行")}/{Language_.Get语言("当前页")}】");
-            return sb.ToString();
+            sb.Append($"{a}/{页信息.每页行数}");   
+            this.ui_分页1.设置显示信息(sb.ToString ());
+             
         }
 
        

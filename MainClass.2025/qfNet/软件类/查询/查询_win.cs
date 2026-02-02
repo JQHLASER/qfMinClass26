@@ -195,7 +195,10 @@ namespace qfNet
                 }
                 else
                 {
-                    MessageBox.Show($"导出成功\r\n共{this._lst所有数据.Count}行");
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine(Language_.Get语言("导出成功"));
+                    sb.Append($"{Language_.Get语言("共")}{this._lst所有数据.Count}{Language_.Get语言("行")}"); 
+                    MessageBox.Show(sb.ToString ());
                     return;
                 }
             }
@@ -225,22 +228,8 @@ namespace qfNet
 
         }
 
-        /// <summary>
-        /// 调用 生成显示信息 来显示信息
-        /// </summary>
-        /// <param name="value"></param>
-        void 设置信息(string value)
-        {
-            this._forms.设置显示信息(value);
-        }
 
-        /// <summary>
-        ///  生成后,调用设置信息显示
-        /// </summary> 
-        string 生成显示信息(qfmain.List分页_._PageInfo_ 页信息)
-        {
-            return this._forms.生成显示信息(页信息);
-        }
+
         /// <summary>
         /// 赋值并显示当前页数据
         /// </summary> 
@@ -274,8 +263,8 @@ namespace qfNet
 
                 显示当前页数据(rt.beff.ToList());
                 _页信息 = rt.页信息;
-                string show = forms.生成显示信息(_页信息);
-                forms.Text = show;
+                forms.生成显示信息(_页信息);
+
             }
 
 
@@ -292,7 +281,7 @@ namespace qfNet
             msgErr = "";
             if (_页信息.当前页 >= _页信息.总页数 - 1)
             {
-                msgErr = "当前已在最后一页";
+                msgErr = Language_.Get语言("当前已在最后一页");
                 return false;
             }
             return true;
@@ -303,7 +292,7 @@ namespace qfNet
             msgErr = "";
             if (_页信息.当前页 <= 0)
             {
-                msgErr = "当前已在第一页";
+                msgErr = Language_.Get语言("当前已在第一页");
                 return false;
             }
             return true;
@@ -314,7 +303,7 @@ namespace qfNet
             msgErr = string.Empty;
             if (this._lst所有数据.Count == 0)
             {
-                msgErr = "无数据";
+                msgErr = Language_.Get语言("无数据");
                 return false;
             }
             return true;
@@ -324,7 +313,7 @@ namespace qfNet
             msgErr = string.Empty;
             if (页码 > this._页信息.总页数 || 页码 < 0)
             {
-                msgErr = "页码超出范围";
+                msgErr = Language_.Get语言("页码超出范围");
                 return false;
             }
             return true;
