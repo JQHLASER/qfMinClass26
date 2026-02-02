@@ -197,7 +197,7 @@ namespace qfNet
                 {
                     StringBuilder sb = new StringBuilder();
                     sb.AppendLine(Language_.Get语言("导出成功"));
-                    sb.Append($"{Language_.Get语言("共")}{this._lst所有数据.Count}{Language_.Get语言("行")}"); 
+                    sb.AppendLine ($"{Language_.Get语言("共")}{this._lst所有数据.Count}{Language_.Get语言("行")}"); 
                     MessageBox.Show(sb.ToString ());
                     return;
                 }
