@@ -8,24 +8,30 @@ using System.Windows.Forms;
 
 namespace qfNet
 {
-    public enum _em文件_类型_
-    {
-        ini,
-        SQLite,
-    }
+  
 
     public class 文件_<T>
     {
 
         public Iwork_文件_<T> _Iwork;
-        public 文件_(string File, string 文件类型, string 后缀, _em文件_类型_ 类型 = _em文件_类型_.ini)
+
+        /// <summary>
+        /// 使用INI文件
+        /// </summary>
+        /// <param name="File"></param>
+        /// <param name="文件类型"></param>
+        /// <param name="后缀"></param>
+        public 文件_(string File, string 文件类型, string 后缀 )
         {
-            this._Iwork = new 文件_本地<T>(File, 文件类型, 后缀);
+            this._Iwork = new 文件_ini<T>(File, 文件类型, 后缀);
         }
 
-        public 文件_(string 文件类型, string 后缀, _em文件_类型_ 类型 = _em文件_类型_.SQLite)
+        /// <summary>
+        /// 使用SQLite
+        /// </summary> 
+        public 文件_(string File, string 文件类型 )
         {
-
+            this._Iwork = new 文件_SQLite<T>(File, 文件类型);
         }
 
 

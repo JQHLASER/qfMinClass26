@@ -12,7 +12,7 @@ namespace qfNet
     internal class 文件_SQLite<T> : Iwork_文件_<T>
     {
         string _File = Path.Combine(qfmain.软件类.Files_Cfg.Files_LogMyApp, "gj");
-        string _文件类型 = "fls";
+        string _文件类型 = "FLS";
 
         string _path = "";
         string _ConfigID = "_Code26_sqlite_";
@@ -20,13 +20,16 @@ namespace qfNet
 
         public qfmain._初始化状态_ _初始化状态 { set; get; } = qfmain._初始化状态_.未初始化;
 
-
-        public 文件_SQLite(string File, string 文件类型)
+        /// <summary>
+        /// File : 存放Code26.db的文件夹
+        /// </summary> 
+        public 文件_SQLite(string File, string 文件类型 = "FLS")
         {
             On_初始化状态(qfmain._初始化状态_.初始化中);
-            this._File = File;
+            if (!string.IsNullOrWhiteSpace(File)) this._File = File;
             this._文件类型 = 文件类型;
-            new qfmain.文件_文件夹().文件夹_新建(this._File, out string msgErr);
+            new qfmain.文件_文件夹().文件夹_新建(this._File, out string msgErr); 
+
             this._path = Path.Combine(this._File, "Code26.db");
 
             qfSqlSugar.SqlSugar_DB_封装.Event_ConnectionConfig += (s, e) =>
@@ -132,7 +135,7 @@ namespace qfNet
                     rt = true;
                     if (!string.IsNullOrEmpty(FileName))
                     {
-                        rt = 另存为(FileName, NewFileName,  out msgerr);
+                        rt = 另存为(FileName, NewFileName, out msgerr);
                     }
                     else
                     {

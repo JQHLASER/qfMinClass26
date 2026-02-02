@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace qfNet
 {
-    internal class 文件_本地<T> : Iwork_文件_<T>
+    internal class 文件_ini<T> : Iwork_文件_<T>
     {
 
         string _File = Path.Combine(qfmain.软件类.Files_Cfg.Files_LogMyApp, "gj");
@@ -21,7 +21,7 @@ namespace qfNet
         /// <para>文件类型 : 用于显示文件类型,如图片等 </para>
         /// <para>后缀名:文件的后缀</para>
         /// </summary> 
-        public 文件_本地(string File, string 文件类型, string 后缀名 = ".fls")
+        public 文件_ini(string File, string 文件类型, string 后缀名 = ".fls")
         {
             On_初始化状态(qfmain._初始化状态_.初始化中 );
 
