@@ -44,7 +44,7 @@ namespace qfNet
         /// 文件名不为空时直接保存
         /// <para>文件名为空时弹窗另存为</para>
         /// </summary> 
-        DialogResult 保存_弹窗(string FileName, T t, out string NewFileName, out string msgerr);
+        DialogResult 保存_弹窗(string FileName, T t, out string NewFileName, out string msgerr, Func<string, (bool s, string m)> Event_删除文件 = null);
         bool 打开(string FileName, ref T t, out string msgerr);
         bool 保存(string FileName, T t, out string msgerr);
         /// <summary>

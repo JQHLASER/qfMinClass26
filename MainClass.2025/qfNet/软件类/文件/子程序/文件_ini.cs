@@ -115,12 +115,12 @@ namespace qfNet
         /// 文件名不为空时直接保存
         /// <para>文件名为空时弹窗另存为</para>
         /// </summary> 
-        public DialogResult 保存_弹窗(string FileName, T t, out string NewFileName, out string msgerr)
+        public DialogResult 保存_弹窗(string FileName, T t, out string NewFileName, out string msgerr, Func<string, (bool s, string m)> Event_删除文件 = null)
         {
             DialogResult dr = DialogResult.None;
             if (string.IsNullOrEmpty(FileName))
             {
-                dr = 另存为_弹窗(FileName, t, out NewFileName, out msgerr);
+                dr = 另存为_弹窗(FileName, t, out NewFileName, out msgerr, Event_删除文件);
             }
             else
             {

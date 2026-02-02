@@ -1,0 +1,203 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace qfCode
+{
+    public class 配方_<T>
+    {
+        public enum _em_文件类型_
+        {
+            ini,
+            SQLite,
+        }
+        public qfNet.文件_<T> Gj_sys;
+
+        public 配方_(string 文件夹, string 后缀, _em_文件类型_ 类型 = _em_文件类型_.SQLite)
+        {
+            switch (类型)
+            {
+                case _em_文件类型_.ini:
+                    Gj_sys = new qfNet.文件_<T>(文件夹, "", 后缀); break;
+                case _em_文件类型_.SQLite:
+                    Gj_sys = new qfNet.文件_<T>(文件夹, ""); break;
+
+            }
+
+        }
+
+        public (bool s, string m) 保存(string FileName, T Cfg)
+        {
+            bool rt = Gj_sys._Iwork.保存(FileName, Cfg, out string msgErr);
+            return (rt, msgErr);
+        }
+
+        public (bool s, string m) 另存为(string FileName, string NewFileName)
+        {
+            bool rt = Gj_sys._Iwork.另存为(FileName, NewFileName, out string msgErr);
+            return (rt, msgErr);
+        }
+
+        public (bool s, string m) 删除(string FileName)
+        {
+            bool rt = Gj_sys._Iwork.删除(FileName, out string msgErr);
+            return (rt, msgErr);
+        }
+
+        public (bool s, string m, T cfg) 打开(string FileName)
+        {
+            T cfg = qfmain.T_实例化泛型.FastNew<T>.Create();
+            bool rt = Gj_sys._Iwork.打开(FileName, ref cfg, out string msgErr);
+            return (rt, msgErr, cfg);
+        }
+
+        public (DialogResult s, string m, string FileName, T cfg) 打开_弹窗()
+        {
+            T cfg = qfmain.T_实例化泛型.FastNew<T>.Create();
+            var rt = Gj_sys._Iwork.打开_弹窗(ref cfg, out string FileName, out string msgErr, On_弹窗时删除);
+            return (rt, msgErr, FileName, cfg);
+        }
+
+
+        /// <summary>
+        /// <para> 返回 DialogResult.Yes ,成功</para>
+        /// <para> 返回 DialogResult.No ,失败</para>
+        /// <para> 返回 其它,None</para>
+        /// 文件名不为空时直接保存
+        /// <para>文件名为空时弹窗另存为</para>
+        /// </summary> 
+        public (DialogResult s, string m, string FileName) 保存_弹窗(string FileName, T cfg)
+        {
+            var rt = Gj_sys._Iwork.保存_弹窗(FileName, cfg, out string NewFileName, out string msgErr, On_弹窗时删除);
+            return (rt, msgErr, NewFileName);
+        }
+
+
+        /// <summary>
+        /// 设置窗体中,操作后是否需要保存
+        /// <para>true:需要保存,false:不需要保存</para>
+        /// </summary>
+        public bool _Is_是否需要保存 = false;
+
+        /// <summary>
+        ///  配方名称 : 要打开的配方名称,空时为新建
+        ///  <para>con : 大小 650*550</para>
+        /// </summary> 
+        public DialogResult Win_设置(Control con, string 配方名称)
+        {
+            using (Form_配方 forms = new Form_配方(con))
+            {
+                forms.Event_进入时 += () =>
+                {
+                    Event_新建(forms);
+                    if (!string.IsNullOrEmpty(配方名称))
+                    {
+                        var rt = 打开(配方名称);
+                        if (rt.s)
+                        {
+                            On_显示信息(配方名称, rt.cfg, forms);
+                        }
+                        else
+                        {
+                            MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                };
+
+                forms.ui_工具栏_文件操作1.Event_新建 += () =>
+                {
+
+
+
+
+
+                };
+                forms.ui_工具栏_文件操作1.Event_打开 += () =>
+                {
+
+                };
+                forms.ui_工具栏_文件操作1.Event_保存 += () =>
+                {
+
+                };
+                forms.ui_工具栏_文件操作1.Event_另存为 += () =>
+                {
+
+                };
+                forms.ui_工具栏_文件操作1.Event_删除 += () =>
+                {
+
+                };
+                forms.ui_工具栏_文件操作1.Event_关闭 += () =>
+                {
+
+                };
+
+
+                DialogResult dlt = forms.ShowDialog();
+                return dlt;
+            }
+        }
+
+        #region 本地方法
+
+        void On_保存确认(Form_配方 forms, T cfg)
+        {
+            if (this._Is_是否需要保存 && MessageBox.Show(Language_.Get语言("是否保存?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                this._Is_是否需要保存 = false ;
+                var rt = 保存_弹窗(forms._配方文件名, cfg);
+                if (rt.s != DialogResult.Yes)
+                {
+                    MessageBox.Show(rt.m,"",MessageBoxButtons.OK ,MessageBoxIcon.Error  );
+                }
+            }
+        }
+
+
+
+
+        #endregion
+
+
+
+
+        #region 事件
+
+        /// <summary>
+        /// 清空全部
+        /// </summary>
+        public event Action<Form> Event_新建;
+        void On_新建(Form_配方 forms)
+        {
+            forms._配方文件名 = "";
+            forms.Text = "";
+            Event_新建?.Invoke(forms);
+        }
+
+
+
+
+        public event Action<T, Form> Event_显示信息;
+        void On_显示信息(string 配方名称, T cfg, Form_配方 forms)
+        {
+            forms._配方文件名 = 配方名称;
+            forms.Text = 配方名称;
+            Event_显示信息?.Invoke(cfg, forms);
+        }
+
+
+        (bool s, string m) On_弹窗时删除(string FIleName)
+        {
+            return 删除(FIleName);
+        }
+
+
+        #endregion
+
+    }
+}

@@ -234,13 +234,6 @@
     </Compile>
     <Compile Include="软件类\软件注册\viewModel_软件注册.cs" />
     <Compile Include="软件类\软件注册\软件注册.cs" />
-    <Compile Include="软件类\配方\Form_配方.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="软件类\配方\Form_配方.Designer.cs">
-      <DependentUpon>Form_配方.cs</DependentUpon>
-    </Compile>
-    <Compile Include="软件类\配方\配方_.cs" />
     <Compile Include="通讯\SerialPort\Form_SerialPort_Set.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -331,9 +324,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="软件类\软件注册\Form_软件注册.resx">
       <DependentUpon>Form_软件注册.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="软件类\配方\Form_配方.resx">
-      <DependentUpon>Form_配方.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="通讯\SerialPort\Form_SerialPort_Set.resx">
       <DependentUpon>Form_SerialPort_Set.cs</DependentUpon>

@@ -158,12 +158,8 @@ namespace qfNet
             {
                 return;
             }
-            else if (MessageBox.Show($"{Language_.Get语言("是否确认删除")}?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                if (this._Event_删除文件 is null)
-                {
-                    return;
-                }
+            else if (_Event_删除文件 != null && MessageBox.Show($"{Language_.Get语言("是否确认删除")}?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            { 
                 string Name = this._文件目录[index].Name;
                 var rt = this._Event_删除文件.Invoke(Name);
                 if (rt.s)

@@ -28,7 +28,7 @@ namespace qfNet
             On_初始化状态(qfmain._初始化状态_.初始化中);
             if (!string.IsNullOrWhiteSpace(File)) this._File = File;
             this._文件类型 = 文件类型;
-            new qfmain.文件_文件夹().文件夹_新建(this._File, out string msgErr); 
+            new qfmain.文件_文件夹().文件夹_新建(this._File, out string msgErr);
 
             this._path = Path.Combine(this._File, "Code26.db");
 
@@ -155,12 +155,12 @@ namespace qfNet
         /// 文件名不为空时直接保存
         /// <para>文件名为空时弹窗另存为</para>
         /// </summary> 
-        public DialogResult 保存_弹窗(string FileName, T t, out string NewFileName, out string msgerr)
+        public DialogResult 保存_弹窗(string FileName, T t, out string NewFileName, out string msgerr, Func<string, (bool s, string m)> Event_删除文件 = null)
         {
             DialogResult dr = DialogResult.None;
             if (string.IsNullOrEmpty(FileName))
             {
-                dr = 另存为_弹窗(FileName, t, out NewFileName, out msgerr);
+                dr = 另存为_弹窗(FileName, t, out NewFileName, out msgerr, Event_删除文件);
             }
             else
             {
@@ -376,5 +376,6 @@ namespace qfNet
 
         #endregion
 
+       
     }
 }

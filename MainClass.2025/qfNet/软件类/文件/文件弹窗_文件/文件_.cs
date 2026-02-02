@@ -34,7 +34,7 @@ namespace qfNet
             this._Iwork = new 文件_SQLite<T>(File, 文件类型);
         }
 
-
+         
         public bool 读写最后一次打开的文件(ushort model, ref string FileName, string path)
         {
             return new qfmain.文件_文件夹().WriteReadIni(path, model, ref FileName, out string msgErr);
