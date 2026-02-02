@@ -37,6 +37,13 @@
     <Reference Include="INIFileParser">
       <HintPath>..\qfmain\packages\ini-parser.2.5.2\lib\net20\INIFileParser.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\qfmain\bin\Release\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="qfSqlSugar">
+      <HintPath>..\qfSqlSugar\bin\Release\qfSqlSugar.dll</HintPath>
+    </Reference>
     <Reference Include="SqlSugar, Version=5.1.4.207, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\qfmain\packages\SqlSugar.5.1.4.207\lib\SqlSugar.dll</HintPath>
     </Reference>
@@ -141,11 +148,15 @@
     <Compile Include="语言\Language_.cs" />
     <Compile Include="软件类\Log\%24R77VTKM.cs" />
     <Compile Include="软件类\Win_委托线程.cs" />
-    <Compile Include="软件类\文件\文件弹窗\Form_文件_弹窗2.cs">
+    <Compile Include="软件类\文件\子程序\Iwork_文件_.cs" />
+    <Compile Include="软件类\文件\子程序\文件_SQLite.cs" />
+    <Compile Include="软件类\文件\子程序\文件_本地.cs" />
+    <Compile Include="软件类\文件\子程序\表.cs" />
+    <Compile Include="软件类\文件\文件弹窗_文件\Form_文件_弹窗.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="软件类\文件\文件弹窗\Form_文件_弹窗2.Designer.cs">
-      <DependentUpon>Form_文件_弹窗2.cs</DependentUpon>
+    <Compile Include="软件类\文件\文件弹窗_文件\Form_文件_弹窗.Designer.cs">
+      <DependentUpon>Form_文件_弹窗.cs</DependentUpon>
     </Compile>
     <Compile Include="软件类\文件\文件弹窗_文件\文件_.cs" />
     <Compile Include="软件类\显示文件信息\ui_ShowInfo.cs">
@@ -161,12 +172,6 @@
     </Compile>
     <Compile Include="软件类\密码输入框\Form_密码输入框.Designer.cs">
       <DependentUpon>Form_密码输入框.cs</DependentUpon>
-    </Compile>
-    <Compile Include="软件类\文件\文件弹窗_文件\Form_文件_弹窗.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="软件类\文件\文件弹窗_文件\Form_文件_弹窗.Designer.cs">
-      <DependentUpon>Form_文件_弹窗.cs</DependentUpon>
     </Compile>
     <Compile Include="软件类\显示.cs" />
     <Compile Include="软件类\查看信息\Form_查看信息.cs">
@@ -290,17 +295,14 @@
     <EmbeddedResource Include="语言\Form_语言.resx">
       <DependentUpon>Form_语言.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="软件类\文件\文件弹窗\Form_文件_弹窗2.resx">
-      <DependentUpon>Form_文件_弹窗2.cs</DependentUpon>
+    <EmbeddedResource Include="软件类\文件\文件弹窗_文件\Form_文件_弹窗.resx">
+      <DependentUpon>Form_文件_弹窗.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="软件类\显示文件信息\ui_ShowInfo.resx">
       <DependentUpon>ui_ShowInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="软件类\密码输入框\Form_密码输入框.resx">
       <DependentUpon>Form_密码输入框.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="软件类\文件\文件弹窗_文件\Form_文件_弹窗.resx">
-      <DependentUpon>Form_文件_弹窗.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="软件类\查看信息\Form_查看信息.resx">
       <DependentUpon>Form_查看信息.cs</DependentUpon>

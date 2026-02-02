@@ -75,16 +75,20 @@ namespace qfNet
         /// <para>文件类型 : 文件类型 | 前面的内容</para>
         /// <para>FileName : 选中的文件路径</para>
         /// </summary> 
-        public DialogResult Win_文件类弹窗(string File, string 文件类型, string 后缀, out string FileName, _文件弹窗类型_ 类型 = _文件弹窗类型_.打开)
+        public DialogResult Win_文件类弹窗(string File, string 文件类型, string 后缀, out string FileName, _文件弹窗类型_ 类型 = _文件弹窗类型_.打开, Func<string, (bool s, string m)> Event_删除文件 = null)
         {
-
-            using (Form_文件_弹窗 forms = new Form_文件_弹窗(File, 文件类型, 后缀, 类型))
+            DialogResult dlt = DialogResult.None;
+            FileName = string.Empty;
+            bool rt = new qfmain.文件_文件夹().文件_获取_文件夹下所有文件名(File, out string[] 目录, out string msgerr, 后缀);
+            if (rt)
             {
-                DialogResult dlt = forms.ShowDialog();
-                FileName = forms._selectedFileName;
-                return dlt;
+                using (Form_文件_弹窗 forms = new Form_文件_弹窗(目录, 文件类型, 后缀, 类型, Event_删除文件))
+                {
+                    dlt = forms.ShowDialog();
+                    FileName = forms._selectedFileName; 
+                }
             }
-
+            return dlt;
         }
 
 
@@ -96,8 +100,8 @@ namespace qfNet
         /// </summary> 
         public (DialogResult s, string 文件名) Win_文件类弹窗(string[] 文件目录, string 文件类型, string 后缀, _文件弹窗类型_ 类型 = _文件弹窗类型_.打开, Func<string, (bool s, string m)> Event_删除文件 = null)
         {
-            using (Form_文件_弹窗2 forms = new Form_文件_弹窗2(文件目录, 文件类型, 后缀, 类型, Event_删除文件))
-            { 
+            using (Form_文件_弹窗 forms = new Form_文件_弹窗(文件目录, 文件类型, 后缀, 类型, Event_删除文件))
+            {
                 DialogResult dlt = forms.ShowDialog();
                 string FileName = forms._selectedFileName;
                 return (dlt, FileName);
@@ -105,8 +109,8 @@ namespace qfNet
 
         }
 
-        
-      
+
+
 
     }
 }

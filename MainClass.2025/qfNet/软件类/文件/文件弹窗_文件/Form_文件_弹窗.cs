@@ -15,15 +15,23 @@ namespace qfNet
     public partial class Form_文件_弹窗 : Sunny.UI.UIForm
     {
         //双缓冲显示窗体所有子控件
-     //   protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }
+        //   protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }
 
-        _文件弹窗类型_ _类型; 
+        _文件弹窗类型_ _类型;
         string _后缀;
-        string _File;
+
+        BindingList<_FileName_> _文件目录;
         /// <summary>
         /// 选中文件名称
         /// </summary>
         public string _selectedFileName = "";
+        qfNet.DataGridview_ _datagridSys;
+        Func<string, (bool s, string m)> _Event_删除文件;
+
+        public class _FileName_
+        {
+            public string Name { set; get; }
+        }
 
 
 
@@ -31,33 +39,46 @@ namespace qfNet
         /// <para>label_ : 用来效互的变量</para>
         /// <para>File : 文件夹路径 </para>
         /// </summary> 
-        public Form_文件_弹窗( String File, string 文件类型, string 后缀, _文件弹窗类型_ 类型_ = _文件弹窗类型_.打开)
+        public Form_文件_弹窗(string[] 文件目录, string 文件类型, string 后缀, _文件弹窗类型_ 类型_ = _文件弹窗类型_.打开, Func<string, (bool s, string m)> Event_删除文件 = null)
         {
-            InitializeComponent();         
+            InitializeComponent();
             this._类型 = 类型_;
             this._后缀 = 后缀;
-            this._File = File;
+            this._Event_删除文件 = Event_删除文件;
+
+            this.uiDataGridView1.RectColor = Color.Silver;
+
+            this._文件目录 = new BindingList<_FileName_>(文件目录.Select(s => new _FileName_ { Name = s }).ToList());
+            this.uiDataGridView1.DataSource = this._文件目录;
+            _datagridSys = new DataGridview_(this.uiDataGridView1).格式化()
+             .显示or隐藏标题(false)
+             .设置行高(30);
+
 
             this.uiLabel_后缀.Text = $"{文件类型}|*{this._后缀}";
-      
+
             this.Text = (this._类型 == _文件弹窗类型_.打开) ? "Open"
                 : (this._类型 == _文件弹窗类型_.保存) ? "Save"
                 : "";
-            new qfNet.winForm窗体().Set设置_Padding(this, 5);
+            new qfNet.winForm窗体().Set设置_Padding(this, 10);
 
-            this.uiListBox1.ItemClick += (s, e) => On_ItemClick();
-            this.uiListBox1.ItemDoubleClick += (s, e) => On_Yes();
+            this.uiDataGridView1.Click += (s, e) => On_ItemClick();
+            this.uiDataGridView1.DoubleClick += (s, e) => On_Yes();
+            this.Resize += (s, e) =>
+            {
+                设置宽度();
+            };
+            this.Shown += (s, e) =>
+            {
+                设置宽度();
+                this._datagridSys.选中行_取消当前选中选中();
+            };
+
             this.uiButton_No.Click += (s, e) => On_No();
             this.uiButton_Yes.Click += (s, e) => On_Yes();
             this.删除ToolStripMenuItem.Click += (s, e) => On_删除();
+            this.删除ToolStripMenuItem.Visible = this._Event_删除文件 is null ? false : true;
 
-
-            new qfmain.文件_文件夹().文件夹_获取所有文件_无后缀(File, out List<string> lstName, $"*{this._后缀}");
-            this.uiListBox1.Items.Clear();
-            foreach (var s in lstName)
-            {
-                this.uiListBox1.Items.Add(s);
-            }
 
         }
 
@@ -69,12 +90,12 @@ namespace qfNet
         //单击
         void On_ItemClick()
         {
-            int index = this.uiListBox1.SelectedIndex;
+            this._datagridSys.获取当前选中的行号(out int index);
             if (index < 0)
             {
                 return;
             }
-            this.uiTextBox_FileName.Text = this.uiListBox1.Items[index].ToString();
+            this.uiTextBox_FileName.Text = this._文件目录[index].Name;
         }
 
 
@@ -87,8 +108,6 @@ namespace qfNet
         void On_Yes()
         {
             string str = this.uiTextBox_FileName.Text.Trim();
-
-
             if (string.IsNullOrEmpty(str))
             {
                 MessageBox.Show(Language_.Get语言("未选中文件"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -100,7 +119,7 @@ namespace qfNet
 
                     #region 打开
 
-                    if (this.uiListBox1.Items.IndexOf(str) < 0)
+                    if (!this._文件目录.Any(x => x.Name == str))
                     {
                         MessageBox.Show(Language_.Get语言("文件不存在"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
@@ -115,13 +134,13 @@ namespace qfNet
 
                     #region 保存
 
-                    if (this.uiListBox1.Items.IndexOf(str) > -1
+                    if (this._文件目录.Any(x => x.Name == str)
                         && MessageBox.Show(Language_.Get语言("文件已存在,是否替换?"), "", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                     {
                         return;
                     }
 
-                   this. _selectedFileName = str;               
+                    this._selectedFileName = str;
                     this.DialogResult = DialogResult.OK;
 
                     #endregion
@@ -134,27 +153,40 @@ namespace qfNet
 
         void On_删除()
         {
-            int index = this.uiListBox1.SelectedIndex;
+            this._datagridSys.获取当前选中的行号(out int index);
             if (index < 0)
             {
                 return;
             }
             else if (MessageBox.Show($"{Language_.Get语言("是否确认删除")}?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                string Name = this.uiListBox1.Items[index].ToString();
-                string path = $"{this._File}\\{Name}{this._后缀}";
-                bool rt = new qfmain.文件_文件夹().文件_删除文件(path, out string msgErr);
-                if (rt)
+                if (this._Event_删除文件 is null)
                 {
+                    return;
+                }
+                string Name = this._文件目录[index].Name;
+                var rt = this._Event_删除文件.Invoke(Name);
+                if (rt.s)
+                {
+                    this._文件目录.RemoveAt(index);
                     this.uiTextBox_FileName.Clear();
                     MessageBox.Show(Language_.Get语言("删除成功"));
                 }
                 else
                 {
-                    MessageBox.Show(msgErr, "", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    MessageBox.Show(rt.m, "", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 }
             }
 
         }
+
+        void 设置宽度()
+        {
+            this._datagridSys.设置列宽(0, this.uiDataGridView1.Width - 30);
+        }
+
+
+
+
     }
 }
