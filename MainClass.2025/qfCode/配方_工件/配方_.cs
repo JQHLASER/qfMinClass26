@@ -1,4 +1,6 @@
-﻿using System;
+﻿using qfNet;
+using Sunny.UI.Win32;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -55,6 +57,11 @@ namespace qfCode
             return (rt, msgErr, cfg);
         }
 
+        /// <summary>
+        /// <para> 返回 DialogResult.Yes ,成功</para>
+        /// <para> 返回 DialogResult.No ,失败</para>
+        /// <para> 返回 其它,None</para>
+        /// </summary> 
         public (DialogResult s, string m, string FileName, T cfg) 打开_弹窗()
         {
             T cfg = qfmain.T_实例化泛型.FastNew<T>.Create();
@@ -76,6 +83,20 @@ namespace qfCode
             return (rt, msgErr, NewFileName);
         }
 
+        /// <summary>
+        /// <para> 返回 DialogResult.Yes ,成功</para>
+        /// <para> 返回 DialogResult.No ,失败</para>
+        /// <para> 返回 其它,None</para>
+        /// <para>FileName:源文件名称,为空时为弹窗保存</para>
+        /// </summary> 
+        public (DialogResult s, string msgErr, string NewFileName) 另存为_弹窗(string FileName, T cfg)
+        {
+            var rt = Gj_sys._Iwork.保存_弹窗(FileName, cfg, out string NewFileName, out string msgErr, On_弹窗时删除);
+            return (rt, msgErr, NewFileName);
+        }
+
+
+
 
         /// <summary>
         /// 设置窗体中,操作后是否需要保存
@@ -89,52 +110,126 @@ namespace qfCode
         /// </summary> 
         public DialogResult Win_设置(Control con, string 配方名称)
         {
+            T _cfg = qfmain.T_实例化泛型.FastNew<T>.Create();
+
             using (Form_配方 forms = new Form_配方(con))
             {
                 forms.Event_进入时 += () =>
                 {
+                    #region  进入时
+
                     Event_新建(forms);
                     if (!string.IsNullOrEmpty(配方名称))
                     {
                         var rt = 打开(配方名称);
                         if (rt.s)
                         {
-                            On_显示信息(配方名称, rt.cfg, forms);
+                            _cfg = rt.cfg;
+                            On_显示信息(配方名称, _cfg, forms);
                         }
                         else
                         {
                             MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
+
+                    #endregion
                 };
 
                 forms.ui_工具栏_文件操作1.Event_新建 += () =>
                 {
+                    #region 新建
 
+                    if (MessageBox.Show(Language_.Get语言("新建?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        if (On_保存确认(forms, _cfg))
+                        {
+                            _cfg = qfmain.T_实例化泛型.FastNew<T>.Create();
+                            Event_新建(forms);
+                            On_显示信息("", _cfg, forms);
+                        }
+                    }
 
-
-
-
+                    #endregion
                 };
                 forms.ui_工具栏_文件操作1.Event_打开 += () =>
                 {
+                    #region 打开
 
+                    if (On_保存确认(forms, _cfg))
+                    {
+                        var rt = 打开_弹窗();
+                        if (rt.s != DialogResult.Yes)
+                        {
+                            MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        _cfg = rt.cfg;
+                        On_显示信息("", _cfg, forms);
+
+                    }
+
+                    #endregion
                 };
                 forms.ui_工具栏_文件操作1.Event_保存 += () =>
                 {
+                    #region 保存 
 
+                    保存(forms, _cfg);
+
+                    #endregion
                 };
                 forms.ui_工具栏_文件操作1.Event_另存为 += () =>
                 {
+                    #region 另存为
 
+                    var rt = 另存为_弹窗(forms._配方文件名, _cfg);
+                    if (rt.s != DialogResult.Yes)
+                    {
+                        MessageBox.Show(rt.msgErr, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    On_显示信息(forms._配方文件名, _cfg, forms);
+
+                    #endregion
                 };
                 forms.ui_工具栏_文件操作1.Event_删除 += () =>
                 {
+                    #region 删除 
 
+                    if (MessageBox.Show(Language_.Get语言("删除?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        if (On_保存确认(forms, _cfg))
+                        {
+                            var rt = 删除(forms._配方文件名);
+                            if (rt.s)
+                            {
+                                MessageBox.Show(Language_.Get语言("删除成功"));
+                                _cfg = qfmain.T_实例化泛型.FastNew<T>.Create();
+                                Event_新建(forms);
+                                return;
+                            }
+                            else
+                            {
+                                MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+                    }
+
+                    #endregion
                 };
                 forms.ui_工具栏_文件操作1.Event_关闭 += () =>
                 {
+                    #region 退出
 
+                    if (On_保存确认(forms, _cfg))
+                    {
+                        forms.Close();
+                        return;
+                    }
+
+                    #endregion
                 };
 
 
@@ -145,17 +240,29 @@ namespace qfCode
 
         #region 本地方法
 
-        void On_保存确认(Form_配方 forms, T cfg)
+        bool 保存(Form_配方 forms, T cfg)
+        {
+            this._Is_是否需要保存 = false;
+            var rt = 保存_弹窗(forms._配方文件名, cfg);
+            if (rt.s != DialogResult.Yes)
+            {
+                MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+
+        bool On_保存确认(Form_配方 forms, T cfg)
         {
             if (this._Is_是否需要保存 && MessageBox.Show(Language_.Get语言("是否保存?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                this._Is_是否需要保存 = false ;
-                var rt = 保存_弹窗(forms._配方文件名, cfg);
-                if (rt.s != DialogResult.Yes)
-                {
-                    MessageBox.Show(rt.m,"",MessageBoxButtons.OK ,MessageBoxIcon.Error  );
-                }
+                保存(forms, cfg);
             }
+            return true;
         }
 
 
@@ -168,10 +275,13 @@ namespace qfCode
 
         #region 事件
 
+
+
+
         /// <summary>
         /// 清空全部
         /// </summary>
-        public event Action<Form> Event_新建;
+        public event Action<Form_配方> Event_新建;
         void On_新建(Form_配方 forms)
         {
             forms._配方文件名 = "";
@@ -179,10 +289,7 @@ namespace qfCode
             Event_新建?.Invoke(forms);
         }
 
-
-
-
-        public event Action<T, Form> Event_显示信息;
+        public event Action<T, Form_配方> Event_显示信息;
         void On_显示信息(string 配方名称, T cfg, Form_配方 forms)
         {
             forms._配方文件名 = 配方名称;
@@ -191,6 +298,9 @@ namespace qfCode
         }
 
 
+        /// <summary>
+        /// 响应事件
+        /// </summary> 
         (bool s, string m) On_弹窗时删除(string FIleName)
         {
             return 删除(FIleName);

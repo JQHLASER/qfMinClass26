@@ -13,16 +13,27 @@ namespace qfNet
     internal partial class Form_读码器 : Sunny.UI.UIForm
     {
         qfNet.读码器 _readcode;
+
+
+
         internal Form_读码器(qfNet.读码器 readcode_)
         {
             InitializeComponent();
             this._readcode = readcode_;
+            this.ui_Button2_保存._Button.StyleCustomMode = true;
+            this.ui_Button2_保存._Button.Style = Sunny.UI.UIStyle.Blue;
+
+            this.ui_Button2_保存._Button.StyleCustomMode = true;
+            this.ui_Button2_保存._Button.Style = Sunny.UI.UIStyle.Red;
+
+
+
 
             语言();
             this.Text = this._readcode._读码器名称;
 
-            this.toolStripButton_关闭.Click += (s, e) => Close_();
-            this.toolStripButton_保存.Click += (s, e) => Save();
+            this.ui_Button2_退出.Event_Click += () => Close_();
+            this.ui_Button2_保存.Event_Click += () => Save();
             this.KeyDown += (s, e) => KeyDown_(e);
             this.FormClosing += (s, e) => FormClosing_();
             this.uiButton_网口.Click += (s, e) => 网口();

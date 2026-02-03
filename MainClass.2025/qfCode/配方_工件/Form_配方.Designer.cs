@@ -66,7 +66,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.Panel panel_设计区;
         public Sunny.ui_工具栏_文件操作 ui_工具栏_文件操作1;
+        public System.Windows.Forms.Panel panel_设计区;
     }
 }

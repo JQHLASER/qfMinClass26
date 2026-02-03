@@ -117,6 +117,36 @@
     <Compile Include="工业类\激光类\jcz\单头\Win\Form_jcz单头_调试.Designer.cs">
       <DependentUpon>Form_jcz单头_调试.cs</DependentUpon>
     </Compile>
+    <Compile Include="工业类\读码器\control\Control_前后缀.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="工业类\读码器\control\Control_前后缀.Designer.cs">
+      <DependentUpon>Control_前后缀.cs</DependentUpon>
+    </Compile>
+    <Compile Include="工业类\读码器\control\Control_评级.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="工业类\读码器\control\Control_评级.Designer.cs">
+      <DependentUpon>Control_评级.cs</DependentUpon>
+    </Compile>
+    <Compile Include="工业类\读码器\control\Control_检测.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="工业类\读码器\control\Control_检测.Designer.cs">
+      <DependentUpon>Control_检测.cs</DependentUpon>
+    </Compile>
+    <Compile Include="工业类\读码器\control\Control_读码器.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="工业类\读码器\control\Control_读码器.Designer.cs">
+      <DependentUpon>Control_读码器.cs</DependentUpon>
+    </Compile>
+    <Compile Include="工业类\读码器\control\Control_功能.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="工业类\读码器\control\Control_功能.Designer.cs">
+      <DependentUpon>Control_功能.cs</DependentUpon>
+    </Compile>
     <Compile Include="工业类\读码器\Form_读码器.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -285,6 +315,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="工业类\激光类\jcz\多头\Win\Form_jcz多头_卡ID设置.resx">
       <DependentUpon>Form_jcz多头_卡ID设置.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="工业类\读码器\control\Control_前后缀.resx">
+      <DependentUpon>Control_前后缀.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="工业类\读码器\control\Control_评级.resx">
+      <DependentUpon>Control_评级.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="工业类\读码器\control\Control_检测.resx">
+      <DependentUpon>Control_检测.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="工业类\读码器\control\Control_读码器.resx">
+      <DependentUpon>Control_读码器.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="工业类\读码器\control\Control_功能.resx">
+      <DependentUpon>Control_功能.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="工业类\读码器\Form_读码器.resx">
       <DependentUpon>Form_读码器.cs</DependentUpon>
