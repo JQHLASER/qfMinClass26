@@ -19,5 +19,9 @@ namespace qfmain
             cracker.Cracker(sleepSpan);
         }
 
+        public GC_()
+        {
+            new GC_Windows().Start();
+        }
     }
 }

@@ -258,6 +258,7 @@
     <Compile Include="数据库\SqlSugar\以前的\SqlSugar_DB_Context.cs" />
     <Compile Include="程序类\GC\GC_Windows.cs" />
     <Compile Include="程序类\GC\GC_.cs" />
+    <Compile Include="程序类\GC\GC_监控.cs" />
     <Compile Include="程序类\Queue_触发队列.cs" />
     <Compile Include="程序类\捕获异常\程序_捕获异常_Server.cs" />
     <Compile Include="程序类\捕获异常\程序捕获异常_helper.cs" />
