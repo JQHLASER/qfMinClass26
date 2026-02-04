@@ -221,6 +221,7 @@ namespace qfLanguage
             new _language_Value_ ( keys, "加工结束","加工结束"),
             new _language_Value_ ( keys, "耗时","耗时"),
             new _language_Value_ ( keys, "是否关闭?","是否关闭?"),
+             new _language_Value_ ( keys, "关闭前是否保存?","关闭前是否保存?"),
             new _language_Value_ ( keys, "文件已存在,是否替换?","文件已存在,是否替换?"),
             new _language_Value_ ( keys, "文件不存在","文件不存在"),
 

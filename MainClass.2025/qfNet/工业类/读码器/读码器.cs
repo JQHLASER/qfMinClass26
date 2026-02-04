@@ -18,7 +18,7 @@ namespace qfNet
 
         }
 
-        public override void 初始化()
+        public override async Task 初始化()
         {
             if (!this._功能.使能)
             {
@@ -28,7 +28,7 @@ namespace qfNet
             On_标题栏状态(this.标题栏状态信息_连接状态(), (int)qfmain._连接状态_.未连接);
             base.Event_读码器连接状态 += On_连接状态;
             base.Event_读码状态 += On_读码状态;
-            base.初始化();
+            await base.初始化();
 
             IsInistiall = true;
         }
@@ -64,7 +64,7 @@ namespace qfNet
 
 
         void On_连接状态(qfmain._连接状态_ state)
-        {          
+        {
             On_标题栏状态(标题栏状态信息_连接状态(), (int)state);
         }
 

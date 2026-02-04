@@ -42,7 +42,7 @@ namespace qfWPFmain
 
             Style dataGridStyle = new Style(typeof(DataGrid));
             dataGridStyle.Setters.Add(new Setter(ScrollViewer.VerticalScrollBarVisibilityProperty, this._VerticalScrollBarVisibility));//垂直滚动条自动显示
-            dataGridStyle.Setters.Add(new Setter(ScrollViewer.HorizontalScrollBarVisibilityProperty,this._HorizontalScrollBarVisibility));//水平滚动条自动显示
+            dataGridStyle.Setters.Add(new Setter(ScrollViewer.HorizontalScrollBarVisibilityProperty, this._HorizontalScrollBarVisibility));//水平滚动条自动显示
             Udatagrid_.Style = dataGridStyle;
 
 
@@ -51,7 +51,7 @@ namespace qfWPFmain
 
 
 
-        
+
         public Brush _Background = Brushes.White;
 
 
@@ -125,7 +125,7 @@ namespace qfWPFmain
         /// </summary>
         public bool _IsReadOnly = true;
 
-      
+
 
         /// <summary>
         ///  设置列标题样式,指定列
@@ -276,6 +276,11 @@ namespace qfWPFmain
         }
 
 
+        //public dataGrid_ DataGrid拟化()
+        //{
+        //    VirtualizingStackPanel.IsVirtualizing = "True";
+        //    VirtualizingStackPanel.VirtualizationMode = "Recycling";
+        //}
 
 
     }

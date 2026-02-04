@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -40,7 +41,20 @@ namespace qfWork
                 new _cfg_等级作假_("F","F"),
             };
 
-
+            public _cfg_主参数_ Clone()
+            {
+                return new _cfg_主参数_
+                {
+                    使能_读码器 = this.使能_读码器,
+                    使能_评级 = this.使能_评级,
+                    使能_检测 = this.使能_检测,
+                    通讯方式 = this.通讯方式,
+                    读码器 = this.读码器,
+                    检测 = this.检测,
+                    评级 = this.评级,
+                    自定义等级 = this.自定义等级,
+                };
+            }
 
         }
 
@@ -85,10 +99,29 @@ namespace qfWork
             public int 读码次数 { set; get; } = 1;
             public int 多次读码间隔 { set; get; } = 100;
 
-
             public bool 使能_停止指令 { set; get; } = true;
             public _cfg_数据前后缀_发送_ 前后缀_发送 { set; get; } = new _cfg_数据前后缀_发送_();
             public _cfg_数据前后缀_接收_ 前后缀_接收 { set; get; } = new _cfg_数据前后缀_接收_();
+
+            public _cfg_读码器参数_ Clone()
+            {
+                return new _cfg_读码器参数_
+                {
+                    指令_启动 = this.指令_启动,
+                    指令_停止 = this.指令_停止,
+                    错误标识 = this.错误标识,
+                    通讯超时 = this.通讯超时,
+                    读码超时 = this.读码超时,
+                    读码前延时 = this.读码前延时,
+                    读码次数 = this.读码次数,
+                    多次读码间隔 = this.多次读码间隔,
+                    使能_停止指令 = this.使能_停止指令,
+                    前后缀_发送 = this.前后缀_发送,
+                    前后缀_接收 = this.前后缀_接收,
+
+                };
+            }
+
 
         }
 
@@ -102,6 +135,18 @@ namespace qfWork
             /// </summary>
             public int 读码次数 { set; get; } = 1;
             public int 多次读码间隔 { set; get; } = 100;
+
+            public _cfg_检测_ Clone()
+            {
+                return new _cfg_检测_
+                {
+                    读码超时 = this.读码超时,
+                    读码前延时 = this.读码前延时,
+                    读码次数 = this.读码次数,
+                    多次读码间隔 = this.多次读码间隔,
+                };
+            }
+
         }
 
         public class _cfg_评级_
@@ -112,9 +157,16 @@ namespace qfWork
                 "A",
                 "B",
             };
+
+            public _cfg_评级_ Clone()
+            {
+                return new _cfg_评级_
+                {
+                    分割符 = this.分割符,
+                    合格等级 = this.合格等级,
+                };
+            }
         }
-
-
 
         public class _cfg_数据前后缀_接收_
         {
@@ -124,6 +176,14 @@ namespace qfWork
                 "{0D}",
                 "{0A}"
             };
+            public _cfg_数据前后缀_接收_ Clone()
+            {
+                return new _cfg_数据前后缀_接收_
+                {
+                    前缀 = this.前缀,
+                    后缀 = this.后缀,
+                };
+            }
         }
 
         public class _cfg_数据前后缀_发送_
@@ -134,6 +194,16 @@ namespace qfWork
                 "{0D}",
                 "{0A}"
             };
+
+            public _cfg_数据前后缀_发送_ Clone()
+            {
+                return new _cfg_数据前后缀_发送_
+                {
+                    前缀 = this.前缀,
+                    后缀 = this.后缀,
+                };
+
+            }
         }
 
 
@@ -161,6 +231,14 @@ namespace qfWork
             {
 
             }
+            public _cfg_等级作假_ Clone()
+            {
+                return new _cfg_等级作假_
+                {
+                    Name = this.Name,
+                    Value = this.Value
+                };
+            }
         }
 
         public class _cfg_读码内容_
@@ -168,6 +246,17 @@ namespace qfWork
             public string 原始内容 { set; get; } = "";
             public string 内容 { set; get; } = "";
             public string 等级 { set; get; } = "";
+
+            public _cfg_读码内容_ Clone()
+            {
+                return new _cfg_读码内容_
+                {
+                    原始内容 = this.原始内容,
+                    内容 = this.内容,
+                    等级 = this.等级,
+                };
+            }
+
         }
 
         public class _cfg_功能_
@@ -179,8 +268,19 @@ namespace qfWork
             public bool 评级 { set; get; } = false;
             public bool 检测 { set; get; } = false;
             public bool 通讯方式选择 { set; get; } = false;
-        }
 
+            public _cfg_功能_ Clone()
+            {
+                return new _cfg_功能_
+                {
+                    使能 = this.使能,
+                    评级 = this.评级,
+                    检测 = this.检测,
+                    通讯方式选择 = this.通讯方式选择,
+                };
+            }
+
+        }
 
 
         /// <summary>
@@ -238,10 +338,10 @@ namespace qfWork
         public 读码器(string 读码器名称 = "读码器", string 文件夹名 = "ReadCode")
         {
             this._读码器名称 = 读码器名称;
-            this._File = qfmain.软件类.Files_Cfg.Files_Config + $"\\{文件夹名}";
+            this._File = Path.Combine(qfmain.软件类.Files_Cfg.Files_Config, $"{文件夹名}");
             new qfmain.文件_文件夹().文件夹_新建(this._File, out string msgErr);
-
             读写参数(1);
+            读取前后缀文件();
         }
 
         public byte[] _前缀_接收 = new byte[] { };
@@ -250,7 +350,7 @@ namespace qfWork
         public byte[] _前缀_发送 = new byte[] { };
         public byte[] _后缀_发送 = new byte[] { 0x0D, 0x0A };
 
-        public virtual void 初始化()
+        public virtual async Task 初始化()
         {
             if (!this._功能.使能)
             {
@@ -260,15 +360,15 @@ namespace qfWork
 
             if (this._参数.通讯方式 == _通讯方式_.TcpClient)
             {
-                string path = this._File + $"\\Tcp.cfg";
+                string path = Path.Combine(this._File, $"Tcp.cfg");
                 this.TcpClient_sys = new qfmain.Socket_Client(path, new qfmain._解码_Cfg_(this._前缀_接收, this._后缀_接收, this._参数.读码器.通讯超时));
                 this.TcpClient_sys.Event_接收数据_jm += On_接收数据;
                 this.TcpClient_sys.Event_连接状态 += On_连接状态;
-                this.TcpClient_sys.Connect连接Async();
+                await this.TcpClient_sys.Connect连接Async();
             }
             else if (this._参数.通讯方式 == _通讯方式_.SerialPort)
             {
-                string path = this._File + $"\\Com.dll";
+                string path = Path.Combine(this._File, $"Com.dll");
                 this.Com_sys = new qfmain.SerialPort_(path, new qfmain._解码_Cfg_(this._前缀_接收, this._后缀_接收, this._参数.读码器.通讯超时));
                 this.Com_sys.Event_接收数据_jm += On_接收数据;
                 this.Com_sys.Event_isOpen += On_连接状态;
@@ -303,7 +403,7 @@ namespace qfWork
         public void 读写参数(ushort model)
         {
 
-            string path = this._File + $"\\ReadCode.dll";
+            string path = Path.Combine(this._File, $"ReadCode.dll");
             _cfg_主参数_ cfg = this._参数;
             new qfmain.文件_文件夹().WriteReadJson(path, model, ref cfg, out string msgErr);
             this._参数 = cfg;
@@ -337,6 +437,22 @@ namespace qfWork
 
         }
 
+        public string[] 读取前后缀文件()
+        {
+            string path = Path.Combine(this._File, $"AsciiSE.txt");
+            string[] se = new string[]
+                {
+                    "",
+                    "{0D},{0A}",
+                    "{0D}",
+                    "{0A}",
+                    "{02}",
+                    "{03}",
+                };//默认值
+            new qfmain.文件_文件夹().WriteReadJson<string[]>(path, 1, ref se, out string msgErr);
+            return se;
+        }
+
 
         #region 本地方法
 
@@ -365,7 +481,7 @@ namespace qfWork
 
             return lst.ToArray();
         }
-
+         
         #endregion
 
 
@@ -647,7 +763,7 @@ namespace qfWork
             return rt;
         }
 
-         
+
 
         public virtual bool 解析_检测(string 接收内容, out _cfg_读码内容_ 内容, out _err_ err, out string msgErr)
         {

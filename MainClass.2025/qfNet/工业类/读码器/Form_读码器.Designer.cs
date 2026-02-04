@@ -29,46 +29,47 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_读码器));
-            this.uiPanel1 = new Sunny.UI.UIPanel();
+            this.uiPanel_控件区 = new Sunny.UI.UIPanel();
             this.uiPanel2 = new Sunny.UI.UIPanel();
             this.ui_Button2_保存 = new Sunny.ui_Button2();
             this.ui_Button2_退出 = new Sunny.ui_Button2();
-            this.uiRadioButton5 = new Sunny.UI.UIRadioButton();
-            this.uiRadioButton4 = new Sunny.UI.UIRadioButton();
-            this.uiRadioButton3 = new Sunny.UI.UIRadioButton();
-            this.uiRadioButton2 = new Sunny.UI.UIRadioButton();
-            this.uiRadioButton1 = new Sunny.UI.UIRadioButton();
+            this.uiRadioButton_前后缀 = new Sunny.UI.UIRadioButton();
+            this.uiRadioButton_评级 = new Sunny.UI.UIRadioButton();
+            this.uiRadioButton_检测 = new Sunny.UI.UIRadioButton();
+            this.uiRadioButton_读码器 = new Sunny.UI.UIRadioButton();
+            this.uiRadioButton_功能 = new Sunny.UI.UIRadioButton();
             this.uiPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // uiPanel1
+            // uiPanel_控件区
             // 
-            this.uiPanel1.BackColor = System.Drawing.Color.Transparent;
-            this.uiPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uiPanel1.FillColor = System.Drawing.Color.Transparent;
-            this.uiPanel1.FillDisableColor = System.Drawing.Color.Transparent;
-            this.uiPanel1.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiPanel1.Location = new System.Drawing.Point(154, 38);
-            this.uiPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.uiPanel1.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiPanel1.Name = "uiPanel1";
-            this.uiPanel1.Padding = new System.Windows.Forms.Padding(5);
-            this.uiPanel1.RectColor = System.Drawing.Color.Silver;
-            this.uiPanel1.Size = new System.Drawing.Size(642, 557);
-            this.uiPanel1.Style = Sunny.UI.UIStyle.Custom;
-            this.uiPanel1.StyleCustomMode = true;
-            this.uiPanel1.TabIndex = 1;
-            this.uiPanel1.Text = null;
+            this.uiPanel_控件区.BackColor = System.Drawing.Color.Transparent;
+            this.uiPanel_控件区.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uiPanel_控件区.FillColor = System.Drawing.Color.Transparent;
+            this.uiPanel_控件区.FillDisableColor = System.Drawing.Color.Transparent;
+            this.uiPanel_控件区.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiPanel_控件区.Location = new System.Drawing.Point(154, 38);
+            this.uiPanel_控件区.Margin = new System.Windows.Forms.Padding(0);
+            this.uiPanel_控件区.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiPanel_控件区.Name = "uiPanel_控件区";
+            this.uiPanel_控件区.Padding = new System.Windows.Forms.Padding(5);
+            this.uiPanel_控件区.RectColor = System.Drawing.Color.Silver;
+            this.uiPanel_控件区.RectSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.None;
+            this.uiPanel_控件区.Size = new System.Drawing.Size(642, 557);
+            this.uiPanel_控件区.Style = Sunny.UI.UIStyle.Custom;
+            this.uiPanel_控件区.StyleCustomMode = true;
+            this.uiPanel_控件区.TabIndex = 1;
+            this.uiPanel_控件区.Text = null;
             // 
             // uiPanel2
             // 
             this.uiPanel2.Controls.Add(this.ui_Button2_保存);
             this.uiPanel2.Controls.Add(this.ui_Button2_退出);
-            this.uiPanel2.Controls.Add(this.uiRadioButton5);
-            this.uiPanel2.Controls.Add(this.uiRadioButton4);
-            this.uiPanel2.Controls.Add(this.uiRadioButton3);
-            this.uiPanel2.Controls.Add(this.uiRadioButton2);
-            this.uiPanel2.Controls.Add(this.uiRadioButton1);
+            this.uiPanel2.Controls.Add(this.uiRadioButton_前后缀);
+            this.uiPanel2.Controls.Add(this.uiRadioButton_评级);
+            this.uiPanel2.Controls.Add(this.uiRadioButton_检测);
+            this.uiPanel2.Controls.Add(this.uiRadioButton_读码器);
+            this.uiPanel2.Controls.Add(this.uiRadioButton_功能);
             this.uiPanel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.uiPanel2.FillColor = System.Drawing.SystemColors.Control;
             this.uiPanel2.Font = new System.Drawing.Font("微软雅黑", 9F);
@@ -77,9 +78,10 @@
             this.uiPanel2.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiPanel2.Name = "uiPanel2";
             this.uiPanel2.Padding = new System.Windows.Forms.Padding(5);
-            this.uiPanel2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
+            this.uiPanel2.RectColor = System.Drawing.Color.Silver;
             this.uiPanel2.Size = new System.Drawing.Size(150, 557);
-            this.uiPanel2.Style = Sunny.UI.UIStyle.深色;
+            this.uiPanel2.Style = Sunny.UI.UIStyle.Custom;
+            this.uiPanel2.StyleCustomMode = true;
             this.uiPanel2.TabIndex = 6;
             this.uiPanel2.Text = null;
             // 
@@ -128,86 +130,81 @@
             this.ui_Button2_退出.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
             this.ui_Button2_退出.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
             // 
-            // uiRadioButton5
+            // uiRadioButton_前后缀
             // 
-            this.uiRadioButton5.Cursor = System.Windows.Forms.Cursors.Default;
-            this.uiRadioButton5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.uiRadioButton5.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiRadioButton5.Location = new System.Drawing.Point(5, 125);
-            this.uiRadioButton5.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiRadioButton5.Name = "uiRadioButton5";
-            this.uiRadioButton5.Padding = new System.Windows.Forms.Padding(22, 0, 0, 0);
-            this.uiRadioButton5.RadioButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
-            this.uiRadioButton5.Size = new System.Drawing.Size(140, 30);
-            this.uiRadioButton5.Style = Sunny.UI.UIStyle.深色;
-            this.uiRadioButton5.TabIndex = 5;
-            this.uiRadioButton5.Text = "前后缀";
+            this.uiRadioButton_前后缀.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiRadioButton_前后缀.Dock = System.Windows.Forms.DockStyle.Top;
+            this.uiRadioButton_前后缀.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiRadioButton_前后缀.Location = new System.Drawing.Point(5, 125);
+            this.uiRadioButton_前后缀.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiRadioButton_前后缀.Name = "uiRadioButton_前后缀";
+            this.uiRadioButton_前后缀.Padding = new System.Windows.Forms.Padding(22, 0, 0, 0);
+            this.uiRadioButton_前后缀.Size = new System.Drawing.Size(140, 30);
+            this.uiRadioButton_前后缀.Style = Sunny.UI.UIStyle.Custom;
+            this.uiRadioButton_前后缀.TabIndex = 5;
+            this.uiRadioButton_前后缀.Text = "前后缀";
             // 
-            // uiRadioButton4
+            // uiRadioButton_评级
             // 
-            this.uiRadioButton4.Cursor = System.Windows.Forms.Cursors.Default;
-            this.uiRadioButton4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.uiRadioButton4.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiRadioButton4.Location = new System.Drawing.Point(5, 95);
-            this.uiRadioButton4.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiRadioButton4.Name = "uiRadioButton4";
-            this.uiRadioButton4.Padding = new System.Windows.Forms.Padding(22, 0, 0, 0);
-            this.uiRadioButton4.RadioButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
-            this.uiRadioButton4.Size = new System.Drawing.Size(140, 30);
-            this.uiRadioButton4.Style = Sunny.UI.UIStyle.深色;
-            this.uiRadioButton4.TabIndex = 4;
-            this.uiRadioButton4.Text = "评级";
+            this.uiRadioButton_评级.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiRadioButton_评级.Dock = System.Windows.Forms.DockStyle.Top;
+            this.uiRadioButton_评级.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiRadioButton_评级.Location = new System.Drawing.Point(5, 95);
+            this.uiRadioButton_评级.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiRadioButton_评级.Name = "uiRadioButton_评级";
+            this.uiRadioButton_评级.Padding = new System.Windows.Forms.Padding(22, 0, 0, 0);
+            this.uiRadioButton_评级.Size = new System.Drawing.Size(140, 30);
+            this.uiRadioButton_评级.Style = Sunny.UI.UIStyle.Custom;
+            this.uiRadioButton_评级.TabIndex = 4;
+            this.uiRadioButton_评级.Text = "评级";
             // 
-            // uiRadioButton3
+            // uiRadioButton_检测
             // 
-            this.uiRadioButton3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.uiRadioButton3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.uiRadioButton3.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiRadioButton3.Location = new System.Drawing.Point(5, 65);
-            this.uiRadioButton3.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiRadioButton3.Name = "uiRadioButton3";
-            this.uiRadioButton3.Padding = new System.Windows.Forms.Padding(22, 0, 0, 0);
-            this.uiRadioButton3.RadioButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
-            this.uiRadioButton3.Size = new System.Drawing.Size(140, 30);
-            this.uiRadioButton3.Style = Sunny.UI.UIStyle.深色;
-            this.uiRadioButton3.TabIndex = 3;
-            this.uiRadioButton3.Text = "检测";
+            this.uiRadioButton_检测.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiRadioButton_检测.Dock = System.Windows.Forms.DockStyle.Top;
+            this.uiRadioButton_检测.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiRadioButton_检测.Location = new System.Drawing.Point(5, 65);
+            this.uiRadioButton_检测.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiRadioButton_检测.Name = "uiRadioButton_检测";
+            this.uiRadioButton_检测.Padding = new System.Windows.Forms.Padding(22, 0, 0, 0);
+            this.uiRadioButton_检测.Size = new System.Drawing.Size(140, 30);
+            this.uiRadioButton_检测.Style = Sunny.UI.UIStyle.Custom;
+            this.uiRadioButton_检测.TabIndex = 3;
+            this.uiRadioButton_检测.Text = "检测";
             // 
-            // uiRadioButton2
+            // uiRadioButton_读码器
             // 
-            this.uiRadioButton2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.uiRadioButton2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.uiRadioButton2.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiRadioButton2.Location = new System.Drawing.Point(5, 35);
-            this.uiRadioButton2.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiRadioButton2.Name = "uiRadioButton2";
-            this.uiRadioButton2.Padding = new System.Windows.Forms.Padding(22, 0, 0, 0);
-            this.uiRadioButton2.RadioButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
-            this.uiRadioButton2.Size = new System.Drawing.Size(140, 30);
-            this.uiRadioButton2.Style = Sunny.UI.UIStyle.深色;
-            this.uiRadioButton2.TabIndex = 2;
-            this.uiRadioButton2.Text = "读码器";
+            this.uiRadioButton_读码器.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiRadioButton_读码器.Dock = System.Windows.Forms.DockStyle.Top;
+            this.uiRadioButton_读码器.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiRadioButton_读码器.Location = new System.Drawing.Point(5, 35);
+            this.uiRadioButton_读码器.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiRadioButton_读码器.Name = "uiRadioButton_读码器";
+            this.uiRadioButton_读码器.Padding = new System.Windows.Forms.Padding(22, 0, 0, 0);
+            this.uiRadioButton_读码器.Size = new System.Drawing.Size(140, 30);
+            this.uiRadioButton_读码器.Style = Sunny.UI.UIStyle.Custom;
+            this.uiRadioButton_读码器.TabIndex = 2;
+            this.uiRadioButton_读码器.Text = "读码器";
             // 
-            // uiRadioButton1
+            // uiRadioButton_功能
             // 
-            this.uiRadioButton1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.uiRadioButton1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.uiRadioButton1.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiRadioButton1.Location = new System.Drawing.Point(5, 5);
-            this.uiRadioButton1.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiRadioButton1.Name = "uiRadioButton1";
-            this.uiRadioButton1.Padding = new System.Windows.Forms.Padding(22, 0, 0, 0);
-            this.uiRadioButton1.RadioButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
-            this.uiRadioButton1.Size = new System.Drawing.Size(140, 30);
-            this.uiRadioButton1.Style = Sunny.UI.UIStyle.深色;
-            this.uiRadioButton1.TabIndex = 1;
-            this.uiRadioButton1.Text = "功能";
+            this.uiRadioButton_功能.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiRadioButton_功能.Dock = System.Windows.Forms.DockStyle.Top;
+            this.uiRadioButton_功能.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiRadioButton_功能.Location = new System.Drawing.Point(5, 5);
+            this.uiRadioButton_功能.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiRadioButton_功能.Name = "uiRadioButton_功能";
+            this.uiRadioButton_功能.Padding = new System.Windows.Forms.Padding(22, 0, 0, 0);
+            this.uiRadioButton_功能.Size = new System.Drawing.Size(140, 30);
+            this.uiRadioButton_功能.Style = Sunny.UI.UIStyle.Custom;
+            this.uiRadioButton_功能.TabIndex = 1;
+            this.uiRadioButton_功能.Text = "功能";
             // 
             // Form_读码器
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(800, 600);
-            this.Controls.Add(this.uiPanel1);
+            this.Controls.Add(this.uiPanel_控件区);
             this.Controls.Add(this.uiPanel2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -218,7 +215,6 @@
             this.Padding = new System.Windows.Forms.Padding(4, 38, 4, 5);
             this.ShowInTaskbar = false;
             this.Text = "读码器";
-            this.Load += new System.EventHandler(this.Form_读码器_Load);
             this.uiPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -226,13 +222,13 @@
 
         #endregion
 
-        private Sunny.UI.UIPanel uiPanel1;
+        private Sunny.UI.UIPanel uiPanel_控件区;
         private Sunny.UI.UIPanel uiPanel2;
-        private Sunny.UI.UIRadioButton uiRadioButton5;
-        private Sunny.UI.UIRadioButton uiRadioButton4;
-        private Sunny.UI.UIRadioButton uiRadioButton3;
-        private Sunny.UI.UIRadioButton uiRadioButton2;
-        private Sunny.UI.UIRadioButton uiRadioButton1;
+        private Sunny.UI.UIRadioButton uiRadioButton_前后缀;
+        private Sunny.UI.UIRadioButton uiRadioButton_评级;
+        private Sunny.UI.UIRadioButton uiRadioButton_检测;
+        private Sunny.UI.UIRadioButton uiRadioButton_读码器;
+        private Sunny.UI.UIRadioButton uiRadioButton_功能;
         private Sunny.ui_Button2 ui_Button2_保存;
         private Sunny.ui_Button2 ui_Button2_退出;
     }

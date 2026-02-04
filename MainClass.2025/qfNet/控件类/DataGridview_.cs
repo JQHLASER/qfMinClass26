@@ -210,7 +210,7 @@ namespace qfNet
             this._datagridview.Columns[列号].ReadOnly = true;
             return this;
         }
-        public DataGridview_ 列为只读( )
+        public DataGridview_ 列为只读()
         {
             foreach (DataGridViewColumn column in this._datagridview.Columns)
             {
@@ -866,7 +866,11 @@ namespace qfNet
             return this;
         }
 
-
+        public DataGridview_ DataGrid虚拟化(bool IsEnable = true)
+        {
+            this._datagridview.VirtualMode = IsEnable;//开启DataGrid虚拟化
+            return this;
+        }
 
         #endregion
 
@@ -875,6 +879,8 @@ namespace qfNet
 
         public virtual DataGridview_ 格式化()
         {
+
+            this.DataGrid虚拟化();
             this.清除左边空白列();
             this.清除底下空白行();
             this.使能修改列宽(false);
