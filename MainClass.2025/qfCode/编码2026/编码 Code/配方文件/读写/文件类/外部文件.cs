@@ -18,6 +18,7 @@ namespace qfCode
         public 外部文件(编码_ codeSys)
         {
             this._codeSys = codeSys;
+            this._codeSys.On_初始化状态(qfmain._初始化状态_.已初始化 , "");
         }
 
         /// <summary>
