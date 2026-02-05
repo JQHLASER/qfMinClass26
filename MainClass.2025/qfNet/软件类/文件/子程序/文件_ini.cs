@@ -23,14 +23,14 @@ namespace qfNet
         /// </summary> 
         public 文件_ini(string File, string 文件类型, string 后缀名 = ".fls")
         {
-            On_初始化状态(qfmain._初始化状态_.初始化中 );
+            On_初始化状态(qfmain._初始化状态_.初始化中,"" );
 
             this._File = File;
             this._后缀名 = 后缀名;
             this._文件类型 = 文件类型;
             new qfmain.文件_文件夹().文件夹_新建(this._File, out string msgErr);
 
-            On_初始化状态(qfmain._初始化状态_.已初始化);
+            On_初始化状态(qfmain._初始化状态_.已初始化,msgErr );
 
         }
 
@@ -171,10 +171,10 @@ namespace qfNet
 
         #region 事件
 
-        public event Action<qfmain._初始化状态_> Event_初始化状态;
-        private void On_初始化状态(qfmain._初始化状态_ state)
+        public event Action<qfmain._初始化状态_,string > Event_初始化状态;
+        private void On_初始化状态(qfmain._初始化状态_ state,string msgErr)
         {
-            Event_初始化状态?.Invoke(state);
+            Event_初始化状态?.Invoke(state, msgErr);
         }
 
         #endregion

@@ -65,10 +65,10 @@ namespace qfLanguage
             new _language_Value_ ( keys, "新建?","新建?"),
             new _language_Value_ ( keys, "删除?","删除?"),
             new _language_Value_ ( keys, "删除成功","删除成功"),
+            new _language_Value_ ( keys, "无查询条件","无查询条件"),
 
 
             
-
 
 
 

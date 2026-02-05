@@ -199,6 +199,10 @@
       <DependentUpon>Form_配方.cs</DependentUpon>
     </Compile>
     <Compile Include="配方_工件\配方_.cs" />
+    <Compile Include="防重\封装\表_防重_.cs" />
+    <Compile Include="防重\封装\防重_封装_.cs" />
+    <Compile Include="防重\防重_\_Type防重_.cs" />
+    <Compile Include="防重\防重_\防重_.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Language\qfLanguage.csproj">

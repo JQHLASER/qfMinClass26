@@ -25,7 +25,7 @@ namespace qfNet
         /// </summary> 
         public 文件_SQLite(string File, string 文件类型 = "FLS")
         {
-            On_初始化状态(qfmain._初始化状态_.初始化中);
+            On_初始化状态(qfmain._初始化状态_.初始化中,"");
             if (!string.IsNullOrWhiteSpace(File)) this._File = File;
             this._文件类型 = 文件类型;
             new qfmain.文件_文件夹().文件夹_新建(this._File, out string msgErr);
@@ -47,9 +47,16 @@ namespace qfNet
             };
             qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += (s, m, e) =>
             {
-                (bool s, string m, T cfg) rt = Read("text^%&");
-                this._初始化状态 = !rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
-                this.On_初始化状态(this._初始化状态);
+                if (s)
+                {
+                    (bool s, string m, T cfg) rt = Read("text^%&");
+                    this._初始化状态 = !rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
+                    this.On_初始化状态(this._初始化状态,rt.m);
+                }
+                else
+                {
+                    this.On_初始化状态(qfmain._初始化状态_.未初始化, m);
+                }
             };
         }
 
@@ -368,14 +375,14 @@ namespace qfNet
 
         #region 事件
 
-        public event Action<qfmain._初始化状态_> Event_初始化状态;
-        private void On_初始化状态(qfmain._初始化状态_ state)
+        public event Action<qfmain._初始化状态_, string> Event_初始化状态;
+        private void On_初始化状态(qfmain._初始化状态_ state, string msgErr)
         {
-            Event_初始化状态?.Invoke(state);
+            Event_初始化状态?.Invoke(state, msgErr);
         }
 
         #endregion
 
-       
+
     }
 }

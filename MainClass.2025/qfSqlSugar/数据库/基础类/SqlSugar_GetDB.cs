@@ -30,8 +30,6 @@ namespace qfSqlSugar
             this._scope = Db_.Db.CopyNew();
             this.Db = this._scope.GetConnection(id);
         }
-
-
         /// <summary>
         /// 两种检测方式可选,一般远程数据库时用
         /// <para>从 _Is线程是否有效 判断是否可以连接</para>
@@ -49,6 +47,42 @@ namespace qfSqlSugar
                 this.Db = this._scope.GetConnection(id);
             }
         }
+
+
+        /// <summary>
+        /// id:连接数据库的ID
+        /// <para>封装, SqlSugar_DB_封装._DB</para>
+        /// </summary> 
+        public SqlSugar_GetDB(string id)
+        {
+            this._scope = SqlSugar_DB_封装._DB.Db.CopyNew();
+            this.Db = this._scope.GetConnection(id);
+        }
+
+        /// <summary>
+        /// 两种检测方式可选,一般远程数据库时用
+        /// <para>封装, SqlSugar_DB_封装._DB</para>
+        /// <para>从 _Is线程是否有效 判断是否可以连接</para>
+        /// <para>远程连SQLserver,MySql时用此方法</para>
+        /// <para>解决远程数据库连接池耗尽断开的问题</para>
+        /// <para>模式 =0:查询方式检测(默认),=1:SqlSugarClient方式重连检测</para>
+        /// </summary> 
+        public SqlSugar_GetDB(  string id, ConnectionConfig cfg, bool Is先删后加_cfg = true, int 模式 = 0)
+        {
+            var Db_ = SqlSugar_DB_封装._DB;
+            var rt = Db_.Is连接是否有效(Db_, id, cfg, Is先删后加_cfg, 模式);
+            _Is线程是否有效 = rt.s;
+            if (_Is线程是否有效)
+            {
+                this._scope = Db_.Db.CopyNew();
+                this.Db = this._scope.GetConnection(id);
+            }
+        }
+
+
+
+
+
 
         /// <summary>
         /// 打开,一般不用,远程数据库时可以用

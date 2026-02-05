@@ -1,4 +1,8 @@
-﻿条件:  
+﻿
+  [SugarColumn(IsPrimaryKey = true,IsIdentity = true)]    //(主键,自增长)
+
+
+条件:  
     查询一个  GetList(u => u.Name == "张三", out lst, out msg); 
     查询多个  GetList(u => u.Age = 20 && u.Name.Contains("小"), out lst, out msg); 
     

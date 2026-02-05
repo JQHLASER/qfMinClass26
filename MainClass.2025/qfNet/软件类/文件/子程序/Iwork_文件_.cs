@@ -12,7 +12,7 @@ namespace qfNet
     {
         qfmain._初始化状态_ _初始化状态 { set; get; }
 
-        event Action<qfmain._初始化状态_> Event_初始化状态;
+        event Action<qfmain._初始化状态_, string> Event_初始化状态;
 
 
 
@@ -51,9 +51,9 @@ namespace qfNet
         /// <para>FileName:源文件名称</para>
         /// <para>NewFileName:新文件名称</para>
         /// </summary> 
-        bool 另存为(string FileName, string NewFileName,  out string msgErr);
+        bool 另存为(string FileName, string NewFileName, out string msgErr);
         bool 删除(string FileName, out string msgErr);
-       
-         
+
+
     }
 }

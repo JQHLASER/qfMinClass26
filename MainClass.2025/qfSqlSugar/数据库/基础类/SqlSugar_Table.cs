@@ -58,14 +58,24 @@ namespace qfSqlSugar
             this.Db = this._scope.GetConnection(id);
         }
 
-
-        /// <summary>
-        /// id:连接数据库的ID
-        /// </summary> 
         public SqlSugar_Table(SqlSugarProvider db_)
         {
             this.Db = db_;
         }
+
+
+        /// <summary>
+        /// id:连接数据库的ID
+        /// <para>封装, SqlSugar_DB_封装 ._DB </para>
+        /// </summary> 
+        public SqlSugar_Table(string id)
+        {
+            this._scope = SqlSugar_DB_封装._DB.Db.CopyNew();
+            this.Db = this._scope.GetConnection(id);
+        }
+
+      
+         
 
         public void Dispose()
         {
@@ -106,8 +116,8 @@ namespace qfSqlSugar
 
         /// <summary>
         /// 按条件查询 ,用法
-        /// <para>GetList(u => u.Name == "张三", out lst, out msg);</para>
-        /// <para>GetList(u => u.Age = 20 && u.Name.Contains("小"), out lst, out msg);</para>
+        /// <para> GetList(u =) u.Name == "张三", out lst, out msg);</para>
+        /// <para> GetList(u =) u.Age = 20 and u.Name.Contains("小"), out lst, out msg);</para>
         /// </summary> 
         public bool GetList(Expression<Func<T, bool>> exp, out List<T> lst, out string msgErr)
         {
@@ -130,7 +140,7 @@ namespace qfSqlSugar
         /// <summary>
         /// 根据主键，获取对象 
         /// </summary> 
-        public bool Get(int pkid, out T t_, out string msgErr)
+        public bool GetT(int pkid, out T t_, out string msgErr)
         {
             bool rt = true;
 
@@ -194,6 +204,30 @@ namespace qfSqlSugar
             return rt;
         }
 
+
+        /// <summary>
+        /// 自定义sql语句查询 
+        /// <para>var sb = new StringBuilder("select * from FC26 where 1=1 ");</para>
+        /// <para>var pars = new List(SugarParameter)();</para>
+        /// <para>sb.Append(" and 内容 = @内容");</para>
+        /// <para>pars.Add(new SugarParameter("@内容", cfg.内容));</para>
+        /// </summary> 
+        public bool GetList(string sqlstr, List<SugarParameter> pars ,out List<T> list, out string msgErr)
+        {
+            list = default;
+            msgErr = string.Empty;
+            bool rt = true;
+            try
+            {
+                list = this.Db.Ado .SqlQuery<T>(sqlstr, pars).ToList();
+            }
+            catch (Exception ex)
+            {
+                msgErr = ex.Message;
+                rt = false;
+            }
+            return rt;
+        }
 
         public bool GetList<B>(List<B> lst主键内容, string 表名, string 主键字段名, out List<T> list, out string msgErr)
         {
@@ -271,6 +305,12 @@ namespace qfSqlSugar
         /// </summary> 
         public bool Insertable(List<T> listObj, out int 受影响行, out string msgErr)
         {
+            //只有一行时,无需开事务
+            if (listObj .Count ==1)
+            {
+                return Insertable(listObj[0], out 受影响行, out msgErr);
+            } 
+
             bool rt = true;
             msgErr = string.Empty;
             int count = 0;
@@ -302,9 +342,8 @@ namespace qfSqlSugar
             msgErr = string.Empty;
             受影响行 = 0;
             try
-            {
-                受影响行 = this.Db.Storageable(lstObj).ExecuteCommand();
-
+            { 
+                受影响行 = this.Db.Storageable(lstObj).ExecuteCommand(); 
             }
             catch (Exception ex)
             {

@@ -52,7 +52,7 @@ namespace qfCode
         /// </summary> 
         public void 初始化(_文件夹_._属性_ typeFile, _功能_ 功能)
         {
-            On_初始化状态(qfmain._初始化状态_.初始化中);
+            On_初始化状态(qfmain._初始化状态_.初始化中,"");
             new Language_();
             this._功能 = 功能;
             this._文件夹_属性 = typeFile;
@@ -65,7 +65,7 @@ namespace qfCode
             if (this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.ini
                  || this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.txt)
             {
-                On_初始化状态(_初始化状态_.已初始化);
+                On_初始化状态(_初始化状态_.已初始化,"");
             }
 
         }
@@ -211,10 +211,10 @@ namespace qfCode
         /// </summary>
         public event Func<_em_计算类型_, _对象_, DateTime> Event_日期时间;
 
-        public event Action<qfmain._初始化状态_> Event_初始化状态;
-        internal void On_初始化状态(qfmain._初始化状态_ state)
+        public event Action<qfmain._初始化状态_, string> Event_初始化状态;
+        internal void On_初始化状态(qfmain._初始化状态_ state, string msgErr)
         {
-            Event_初始化状态?.Invoke(state);
+            Event_初始化状态?.Invoke(state, msgErr);
         }
 
         #endregion

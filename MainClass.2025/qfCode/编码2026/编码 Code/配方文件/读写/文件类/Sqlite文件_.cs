@@ -25,7 +25,7 @@ namespace qfCode
             this._CodeSys = CodeSys;
             this._path = Path.Combine(this._CodeSys._文件夹_属性.参数, "Code26.db");
 
-            this._CodeSys.On_初始化状态(qfmain._初始化状态_.初始化中);
+            this._CodeSys.On_初始化状态(qfmain._初始化状态_.初始化中, "");
             qfSqlSugar.SqlSugar_DB_封装.Event_ConnectionConfig += (s, e) =>
             {
                 #region 连接数据库
@@ -41,9 +41,16 @@ namespace qfCode
             };
             qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += (s, m, e) =>
              {
-                 (bool s, string m, _配方文件_属性_ cfg) rt = Read("text^%&");
-                 this._CodeSys._初始化状态 = !rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
-                 this._CodeSys.On_初始化状态(this._CodeSys._初始化状态);
+                 if (s)
+                 {
+                     (bool s, string m, _配方文件_属性_ cfg) rt = Read("text^%&");
+                     this._CodeSys._初始化状态 = !rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
+                     this._CodeSys.On_初始化状态(this._CodeSys._初始化状态,rt.m );
+                 }
+                 else
+                 {
+                     this._CodeSys.On_初始化状态(qfmain._初始化状态_.未初始化,m );
+                 }
              };
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlSugar.Extensions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,9 +21,9 @@ namespace qfCode
         public SqlServer文件_(编码_ CodeSys)
         {
             this._CodeSys = CodeSys;
-            this._path =Path.Combine ( this._CodeSys._文件夹_属性.参数 ,"SqlServer_Code26.txt");
+            this._path = Path.Combine(this._CodeSys._文件夹_属性.参数, "SqlServer_Code26.txt");
 
-            this._CodeSys.On_初始化状态(qfmain._初始化状态_.初始化中 );
+            this._CodeSys.On_初始化状态(qfmain._初始化状态_.初始化中, "");
 
             qfSqlSugar.SqlSugar_DB_封装.Event_ConnectionConfig += (s, e) =>
             {
@@ -45,14 +46,16 @@ namespace qfCode
             };
             qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += (s, m, e) =>
             {
-                bool rtState = s;
-                if (rtState)
-                {
+                if (s)
+                { 
                     (bool s, string m, _配方文件_属性_ cfg) rt = Read("text^%&");
-                    rtState = rt.s;
+                    this._CodeSys._初始化状态 = !rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
+                    this._CodeSys.On_初始化状态(this._CodeSys._初始化状态, rt.m);
                 }
-                this._CodeSys._初始化状态 = !rtState ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
-                this._CodeSys.On_初始化状态(this._CodeSys._初始化状态);
+                else
+                {
+                    this._CodeSys.On_初始化状态(qfmain._初始化状态_.未初始化, m);
+                }
             };
         }
 
