@@ -1183,7 +1183,7 @@ namespace qfmain
                         switch (json类型)
                         {
                             case _em_json类型_.NewtonsoftJson:
-                                vxt = JsonConvert.SerializeObject(cfg, Formatting.Indented);
+                                vxt = JsonConvert.SerializeObject(cfg, Formatting.None );
                                 break;
                             case _em_json类型_.SystemIOjsontext:
                                 var rtsys = new Json_SystemTextJson().序列化(cfg);

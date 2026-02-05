@@ -23,9 +23,9 @@ namespace qfNet
         /// <summary>
         /// File : 存放Code26.db的文件夹
         /// </summary> 
-        public void 初始化(string File, string 文件类型 = "FLS", string 后缀="")
-        { 
-         
+        public void 初始化(string File, string 文件类型 = "FLS", string 后缀 = "")
+        {
+
             if (!string.IsNullOrWhiteSpace(File)) this._File = File;
             this._文件类型 = 文件类型;
             new qfmain.文件_文件夹().文件夹_新建(this._File, out string msgErr);
@@ -45,8 +45,8 @@ namespace qfNet
 
                 #endregion
             };
-            qfSqlSugar.SqlSugar_DB_封装._DB.Event_初始化结束1 += (s, m, e) =>
-            { 
+            qfSqlSugar.SqlSugar_DB_封装._DB.Event_初始化结束1 += async (s, m, e) =>
+            {
                 if (s)
                 {
                     (bool s, string m, T cfg) rt = Read("text^%&");
@@ -379,7 +379,7 @@ namespace qfNet
 
         public event Action<qfmain._初始化状态_, string> Event_初始化状态;
         private void On_初始化状态(qfmain._初始化状态_ state, string msgErr)
-        { 
+        {
             Event_初始化状态?.Invoke(state, msgErr);
         }
 

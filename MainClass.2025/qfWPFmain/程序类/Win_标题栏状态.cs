@@ -30,14 +30,14 @@ namespace qfWPFmain
         }
 
 
-             public void 连接状态_qfWork(ui_window_Title ui标题栏, string Name, string 名称, qfWork ._连接状态_ 状态)
+             public void 连接状态_qfWork(ui_window_Title ui标题栏, string Name, string 名称, qfmain._连接状态_ 状态)
         {
             qfWPFmain._windowInfo_[] info = new _windowInfo_[]
            {
-              new qfWPFmain._windowInfo_(Name,(int)qfWork._连接状态_.已连接,$"{名称}{Language_ .Get语言("已连接")}"  ),
-              new qfWPFmain._windowInfo_(Name,(int)qfWork._连接状态_.连接中,$"{名称}{Language_ .Get语言("连接中")}"  ),
-              new qfWPFmain._windowInfo_(Name,(int)qfWork._连接状态_.未连接,$"{名称}{Language_ .Get语言("未连接")}"  ),
-              new qfWPFmain._windowInfo_(Name,(int)qfWork._连接状态_.功能码不匹配,$"{名称}{Language_ .Get语言("硬件不匹配")}"  ),
+              new qfWPFmain._windowInfo_(Name,(int)qfmain._连接状态_.已连接,$"{名称}{Language_ .Get语言("已连接")}"  ),
+              new qfWPFmain._windowInfo_(Name,(int)qfmain._连接状态_.连接中,$"{名称}{Language_ .Get语言("连接中")}"  ),
+              new qfWPFmain._windowInfo_(Name,(int)qfmain._连接状态_.未连接,$"{名称}{Language_ .Get语言("未连接")}"  ),
+              new qfWPFmain._windowInfo_(Name,(int)qfmain._连接状态_.功能码不匹配,$"{名称}{Language_ .Get语言("硬件不匹配")}"  ),
            };
             ui标题栏.Add(info, (int)状态);
         }

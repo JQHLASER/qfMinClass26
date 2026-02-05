@@ -30,12 +30,9 @@ namespace qfCode
             {
                 if (s)
                 {
-                    await Task.Run(() =>
-                     {
-                         var rt = 查询_防重("&^^123");
-                         qfmain._初始化状态_ state = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
-                         this.FCcode_sys.On_初始化状态(state, rt.m);
-                     });
+                    var rt = 查询_防重("&^^123");
+                    qfmain._初始化状态_ state = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
+                    this.FCcode_sys.On_初始化状态(state, rt.m);
                 }
                 else
                 {
@@ -140,7 +137,7 @@ namespace qfCode
                         sb.Append($" and  内容 Like @内容");
                         pars.Add(new SugarParameter("@内容", $"%{cfg.内容}%"));
                     }
-                     
+
                     if (cfg.Is模糊查询 || string.IsNullOrWhiteSpace(cfg.内容))
                     {
                         sb.Append($" and  时间>=@start");
