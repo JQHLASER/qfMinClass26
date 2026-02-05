@@ -1,4 +1,5 @@
 ﻿
+using SqlSugar.Extensions;
 using Sunny.UI.Win32;
 using System;
 using System.Collections.Generic;
@@ -43,18 +44,18 @@ namespace qfCode
              {
                  if (s)
                  {
-                     (bool s, string m, _配方文件_属性_ cfg) rt = Read("text^%&");
-                     this._CodeSys._初始化状态 = !rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
-                     this._CodeSys.On_初始化状态(this._CodeSys._初始化状态,rt.m );
+                     (bool s, string m, _配方文件_属性_ cfg) rt = Read("text^%&" );
+                     this._CodeSys._初始化状态 = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
+                     this._CodeSys.On_初始化状态(this._CodeSys._初始化状态, rt.m);
                  }
                  else
                  {
-                     this._CodeSys.On_初始化状态(qfmain._初始化状态_.未初始化,m );
+                     this._CodeSys.On_初始化状态(qfmain._初始化状态_.未初始化, m);
                  }
              };
         }
 
-        public (bool s, string m, _配方文件_属性_ cfg) Read(string FileName)
+        public (bool s, string m, _配方文件_属性_ cfg) Read(string FileName )
         {
             lock (_lock)
             {
@@ -64,9 +65,9 @@ namespace qfCode
                     using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
                     {
                         bool rt = _Table.GetList(u => u.FileName == FileName, out List<表.Code26> lst, out string msgErr);
-                        if (rt && lst.Count == 0)
+                       if (rt && lst.Count == 0)
                         {
-                            return (rt, Language_.Get语言("未找到文件"), default);
+                            return (rt , Language_.Get语言("未找到文件"), default);
                         }
                         else if (rt && lst.Count > 0)
                         {
@@ -81,7 +82,7 @@ namespace qfCode
             }
 
         }
-
+ 
         public (bool s, string m) Save(string FileName, _配方文件_属性_ cfg)
         {
             lock (_lock)

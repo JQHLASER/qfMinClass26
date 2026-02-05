@@ -7,6 +7,7 @@ using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 
@@ -82,14 +83,17 @@ SqlServer 数据库....使用最新库
             string msgErr = string.Empty;
             if (lst is null || lst.Count == 0)
             {
-                msgErr = "ConnectionConfig " + qfmain.Language_.Get语言("不能为空");
+                msgErr = "ConnectionConfig " + qfmain.Language_.Get语言("不能为空");               
+                //Event_初始化结束?.Invoke(false , this);
+                //Event_初始化结束1?.Invoke(false , msgErr, this);
                 this.Db = null;
+              
                 return (false, msgErr);
             }
             bool rt = true;
 
             try
-            {
+            { 
                 this.Db = new SqlSugarScope(lst);
                 if (超时时间 <= 0) this.Db.Ado.CommandTimeOut = 1000 * 10;
 
@@ -106,9 +110,7 @@ SqlServer 数据库....使用最新库
             {
                 rt = false;
                 msgErr = ex.Message;
-            }
-
-
+            } 
             Event_初始化结束?.Invoke(rt, this);
             Event_初始化结束1?.Invoke(rt, msgErr, this);
             return (rt, msgErr);

@@ -93,9 +93,9 @@ namespace qfNet
 
                     #region 上一页
 
-                    if (!Err_当前已在第一页(out string msgErr))
+                    if (!Err_无数据(out string msgErr) || !Err_当前已在第一页(out msgErr))
                     {
-                        MessageBox.Show(msgErr);
+                        MessageBox.Show(msgErr, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     uint a = _页信息.当前页 <= 0 ? 0 : _页信息.当前页 - 1;
@@ -111,9 +111,9 @@ namespace qfNet
 
                     #region 下一页
 
-                    if (!Err_当前已在最后一页(out string msgErr))
+                    if (!Err_无数据(out string msgErr) || !Err_当前已在最后一页(out msgErr))
                     {
-                        MessageBox.Show(msgErr);
+                        MessageBox.Show(msgErr, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     int a = _页信息.当前页 > this._页信息.总页数 ? (int)(this._页信息.总页数 - 1) : (int)(_页信息.当前页 + 1);
@@ -133,16 +133,15 @@ namespace qfNet
 
                     #region 到指定页
 
-                    if (s <= 0 && !Err_当前已在第一页(out string msgErr))
+                    if (!Err_无数据(out string msgErr)
+                        || (s <= 0 && !Err_当前已在第一页(out msgErr))
+                        || ((s >= this._页信息.总页数 - 1) && !Err_当前已在最后一页(out msgErr))
+                        )
                     {
-                        MessageBox.Show(msgErr);
+                        MessageBox.Show(msgErr, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    else if ((s >= this._页信息.总页数 - 1) && !Err_当前已在最后一页(out msgErr))
-                    {
-                        MessageBox.Show(msgErr);
-                        return;
-                    }
+
                     到指定页(f, s);
 
                     #endregion
@@ -197,8 +196,8 @@ namespace qfNet
                 {
                     StringBuilder sb = new StringBuilder();
                     sb.AppendLine(Language_.Get语言("导出成功"));
-                    sb.AppendLine ($"{Language_.Get语言("共")}{this._lst所有数据.Count}{Language_.Get语言("行")}"); 
-                    MessageBox.Show(sb.ToString ());
+                    sb.AppendLine($"{Language_.Get语言("共")}{this._lst所有数据.Count}{Language_.Get语言("行")}");
+                    MessageBox.Show(sb.ToString());
                     return;
                 }
             }

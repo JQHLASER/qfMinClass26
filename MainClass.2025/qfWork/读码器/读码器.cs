@@ -335,6 +335,7 @@ namespace qfWork
         string _File = qfmain.软件类.Files_Cfg.Files_Config + "\\ReadCode";
 
         public string _读码器名称 = "ReadCode";
+
         public 读码器(string 读码器名称 = "读码器", string 文件夹名 = "ReadCode")
         {
             this._读码器名称 = 读码器名称;

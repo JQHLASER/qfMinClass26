@@ -26,13 +26,24 @@ namespace qfCode
         internal string[] _变量对象名 = new string[0];
 
 
-
-
         /// <summary>
         /// 变量对象名 : 如激光模板中的对象名称,方便设置
         /// <para>在视图存储参数,本地方式计算时</para>
         /// </summary> 
         public 编辑_(编码_ 编码, _交互类型_ 交互类型, string[] 变量对象名)
+        {
+            初始化(编码, 交互类型, 变量对象名);
+        }
+        public 编辑_()
+        {
+
+        }
+
+        /// <summary>
+        /// 变量对象名 : 如激光模板中的对象名称,方便设置
+        /// <para>在视图存储参数,本地方式计算时</para>
+        /// </summary> 
+        public void 初始化(编码_ 编码, _交互类型_ 交互类型, string[] 变量对象名)
         {
             this._功能 = 编码._功能;
             this._编码 = 编码;
@@ -44,11 +55,11 @@ namespace qfCode
 
         /// <summary>
         /// 配方名称 : 进入窗体时要打开的配方,否则为空白的
+        /// <para> _配方文件_属性_ cfg  : 外部文件时使用,如将编码配方信息存放在工件配方内</para>
         /// </summary> >
-        public void Win_主窗体(string 配方名称, bool Is父窗体 = false)
+        public void Win_主窗体(string 配方名称, bool Is父窗体 = false, _配方文件_属性_ cfg = null)
         {
-
-            using (Form_主窗体 forms = new Form_主窗体(配方名称, this))
+            using (Form_主窗体 forms = new Form_主窗体(配方名称, this, cfg))
             {
                 forms.MaximizeBox = false;
                 if (!Is父窗体)
@@ -59,7 +70,6 @@ namespace qfCode
                 forms.ShowDialog();
             }
         }
-
 
 
 

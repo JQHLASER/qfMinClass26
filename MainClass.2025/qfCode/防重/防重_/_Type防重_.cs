@@ -19,10 +19,10 @@ namespace qfCode
 
         public class _查询信息_
         {
-            public DateTime start { set; get; }
-            public DateTime end { set; get; }
-
-            public string 内容 { set; get; }  
+            public DateTime start { set; get; } = DateTime.Now;
+            public DateTime end { set; get; } = DateTime.Now;
+            public bool Is模糊查询 { set; get; } = false;
+            public string 内容 { set; get; } = "";
         }
 
 

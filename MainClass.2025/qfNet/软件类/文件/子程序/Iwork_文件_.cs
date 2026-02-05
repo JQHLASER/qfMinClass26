@@ -16,6 +16,7 @@ namespace qfNet
 
 
 
+        void 初始化(string File, string 文件类型, string 后缀);
 
         string 获取文件路径(string FileName);
         bool 文件是否存在(string fileName);

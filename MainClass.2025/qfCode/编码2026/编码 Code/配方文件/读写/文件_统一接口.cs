@@ -30,6 +30,9 @@ namespace qfCode
                 case _功能_结构_._em_配方文件类型_.SqlServer:
                     this._Iwork文件 = new SqlServer文件_(CodeSys);
                     break;
+                case _功能_结构_._em_配方文件类型_.外部文件:
+                    this._Iwork文件 = new 外部文件(CodeSys);
+                    break;
             }
 
         }

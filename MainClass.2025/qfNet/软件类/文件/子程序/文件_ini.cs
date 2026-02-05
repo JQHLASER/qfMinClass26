@@ -21,18 +21,25 @@ namespace qfNet
         /// <para>文件类型 : 用于显示文件类型,如图片等 </para>
         /// <para>后缀名:文件的后缀</para>
         /// </summary> 
-        public 文件_ini(string File, string 文件类型, string 后缀名 = ".fls")
+        public 文件_ini()
         {
-            On_初始化状态(qfmain._初始化状态_.初始化中,"" );
+         
+
+        }
+
+        public void 初始化(string File, string 文件类型, string 后缀名 = ".fls")
+        {
+            On_初始化状态(qfmain._初始化状态_.初始化中, "");
 
             this._File = File;
             this._后缀名 = 后缀名;
             this._文件类型 = 文件类型;
             new qfmain.文件_文件夹().文件夹_新建(this._File, out string msgErr);
 
-            On_初始化状态(qfmain._初始化状态_.已初始化,msgErr );
-
+            On_初始化状态(qfmain._初始化状态_.已初始化, msgErr);
         }
+
+
 
 
         public string 获取文件路径(string FileName)

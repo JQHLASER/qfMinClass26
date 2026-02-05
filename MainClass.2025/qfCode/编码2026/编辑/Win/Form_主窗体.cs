@@ -45,8 +45,10 @@ namespace qfCode
 
 
 
-
-        public Form_主窗体(string 配方名称, 编辑_ 编辑)
+        /// <summary>
+        ///cfg : _配方文件_属性_,外部文件时有效,比如将信息与工件信息一起保存
+        /// </summary> 
+        public Form_主窗体(string 配方名称, 编辑_ 编辑, _配方文件_属性_ cfg = null)
         {
             InitializeComponent();
             forms = this;
@@ -91,16 +93,16 @@ namespace qfCode
             {
                 保存_弹窗确认(false);
             };
-             
+
 
 
 
             #region 文件
-             
+
             this.新建ToolStripMenuItem.Visible = this._编辑._功能.编辑.新建;
             this.另存为ToolStripMenuItem.Visible = this._编辑._功能.编辑.另存为;
             this.删除ToolStripMenuItem.Visible = this._编辑._功能.编辑.删除;
-            this.打开ToolStripMenuItem .Visible = this._编辑._功能.编辑.打开 ;
+            this.打开ToolStripMenuItem.Visible = this._编辑._功能.编辑.打开;
 
 
             this.关闭ToolStripMenuItem.Click += (s, e) =>
@@ -268,7 +270,13 @@ namespace qfCode
 
 
             //如果配方名称不为空时,则加载配方信息
-            if (!string.IsNullOrEmpty(this._配方名称))
+
+
+            if (this._编辑._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.外部文件)
+            {
+                this._配方信息 = cfg != null ? cfg.Clone() : new _配方文件_属性_();
+            }
+            else if (!string.IsNullOrEmpty(this._配方名称) && cfg == null)
             {
                 打开(this._配方名称);
 
@@ -282,12 +290,16 @@ namespace qfCode
                 //    this._配方名称 = "";
                 //}
             }
+
+
             显示配方信息(this._配方信息, this._配方名称);
 
 
             #endregion
-        }
 
+
+        }
+         
 
         #region 对象
 
@@ -803,7 +815,7 @@ namespace qfCode
                 else
                 {
                     //不使能删除
-                    return new qfNet.软件类().Win_文件类弹窗(rt.v, "", this._编辑._功能.后缀, 弹窗类型, null );
+                    return new qfNet.软件类().Win_文件类弹窗(rt.v, "", this._编辑._功能.后缀, 弹窗类型, null);
                 }
             }
             else

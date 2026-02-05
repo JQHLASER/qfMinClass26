@@ -1,4 +1,5 @@
-﻿using System;
+﻿ 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace qfCode
         /// 数据库id
         /// </summary>
         public string _id = "FC26";
-
+        public qfmain._初始化状态_ _初始化状态 = qfmain._初始化状态_.未初始化;
 
         public void 初始化(_Type防重_._em_数据库格式_ 数据库格式 = _Type防重_._em_数据库格式_.SQLite)
         {
@@ -72,6 +73,7 @@ namespace qfCode
         public event Action<qfmain._初始化状态_,string > Event_初始化状态;
         public void On_初始化状态(qfmain._初始化状态_ state,string msgErr)
         {
+            this._初始化状态 = state;
             Event_初始化状态?.Invoke(state,msgErr );
         }
 
@@ -80,7 +82,21 @@ namespace qfCode
         #endregion
 
 
+        #region Err
 
+        public bool Err_未初始化(string Name,out string msgErr)
+        {
+            msgErr = "";
+            if (this._初始化状态 !=qfmain._初始化状态_.已初始化 )
+            {
+                msgErr = $"{Name },{Language_.Get语言("未初始化")}";
+                return false;
+            }
+            return true;
+        }
+
+
+        #endregion
 
 
 

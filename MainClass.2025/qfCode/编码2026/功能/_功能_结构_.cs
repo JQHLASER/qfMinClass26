@@ -77,6 +77,7 @@ namespace qfCode
             txt,
             Sqlite,
             SqlServer,
+            外部文件,
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using qfNet;
-using Sunny.UI.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -10,27 +8,52 @@ using System.Windows.Forms;
 
 namespace qfCode
 {
-    public class 配方_<T>
+    public enum _em_配方_工件_文件类型_
     {
-        public enum _em_文件类型_
-        {
-            ini,
-            SQLite,
-        }
-        public qfNet.文件_<T> Gj_sys;
+        ini,
+        SQLite,
+    }
 
-        public 配方_(string 文件夹, string 后缀, _em_文件类型_ 类型 = _em_文件类型_.SQLite)
+    public class 配方_工件_<T>
+    {
+
+        public qfNet.文件_<T> Gj_sys;
+        public qfmain._初始化状态_ _初始化状态 = qfmain._初始化状态_.未初始化;
+
+
+        public 配方_工件_(string 文件夹, string 后缀, _em_配方_工件_文件类型_ 类型 = _em_配方_工件_文件类型_.SQLite)
         {
+            初始化(文件夹, 后缀, 类型);
+        }
+        public 配方_工件_()
+        {
+
+        }
+
+
+
+        public void 初始化(string 文件夹, string 后缀, _em_配方_工件_文件类型_ 类型 = _em_配方_工件_文件类型_.SQLite)
+        {
+            
+            Gj_sys = new qfNet.文件_<T>();
+            Gj_sys.Event_初始化状态 += (s, e) => this.On_初始化状态(s, e);
+
+
             switch (类型)
             {
-                case _em_文件类型_.ini:
-                    Gj_sys = new qfNet.文件_<T>(文件夹, "", 后缀); break;
-                case _em_文件类型_.SQLite:
-                    Gj_sys = new qfNet.文件_<T>(文件夹, ""); break;
-
+                case _em_配方_工件_文件类型_.ini:
+                    Gj_sys.初始化_ini(文件夹, "", 后缀);
+                    break;
+                case _em_配方_工件_文件类型_.SQLite:
+                    Gj_sys.初始化_SQLite(文件夹, "");
+                    break;
             }
-
+             
         }
+
+
+
+
 
         public (bool s, string m) 保存(string FileName, T Cfg)
         {
@@ -304,6 +327,33 @@ namespace qfCode
         (bool s, string m) On_弹窗时删除(string FIleName)
         {
             return 删除(FIleName);
+        }
+
+        public event Action<qfmain._初始化状态_, string> Event_初始化状态;
+        void On_初始化状态(qfmain._初始化状态_ state, string msgErr)
+        {
+            this._初始化状态 = state;
+            Event_初始化状态?.Invoke(state, msgErr);
+        }
+
+
+
+
+
+
+        #endregion
+
+        #region Err
+
+        public bool Err_未初始化(string Name, out string msgErr)
+        {
+            msgErr = "";
+            if (this._初始化状态 != qfmain._初始化状态_.已初始化)
+            {
+                msgErr = $"{Name},{Language_.Get语言("未初始化")}";
+                return false;
+            }
+            return true;
         }
 
 

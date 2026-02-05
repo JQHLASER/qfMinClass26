@@ -39,12 +39,10 @@ namespace qfCode
             初始化(typeFile, 功能);
         }
 
-
         public 编码_()
         {
 
         }
-
 
 
         /// <summary>
@@ -52,7 +50,7 @@ namespace qfCode
         /// </summary> 
         public void 初始化(_文件夹_._属性_ typeFile, _功能_ 功能)
         {
-            On_初始化状态(qfmain._初始化状态_.初始化中,"");
+            On_初始化状态(qfmain._初始化状态_.初始化中, "");
             new Language_();
             this._功能 = 功能;
             this._文件夹_属性 = typeFile;
@@ -65,7 +63,7 @@ namespace qfCode
             if (this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.ini
                  || this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.txt)
             {
-                On_初始化状态(_初始化状态_.已初始化,"");
+                On_初始化状态(_初始化状态_.已初始化, "");
             }
 
         }
@@ -80,6 +78,18 @@ namespace qfCode
         {
             new 编辑_(this, type_编辑._交互类型_.本地, 模板对象名).Win_主窗体(配方名称, Is父窗体);
         }
+
+
+        /// <summary>
+        /// 配方名称 : 当前打开的配方名称
+        /// <para>模板对象名 : 模板中设置的对象名称</para>
+        /// <para>_配方文件_属性_ cfg  : 外部文件时使用,如将编码配方信息存放在工件配方内</para>
+        /// </summary> 
+        public void 编辑(string 配方名称, string[] 模板对象名, _配方文件_属性_ cfg)
+        {
+            new 编辑_(this, type_编辑._交互类型_.本地, 模板对象名).Win_主窗体(配方名称, false, cfg);
+        }
+
 
 
         #region 配方
@@ -216,6 +226,16 @@ namespace qfCode
         {
             Event_初始化状态?.Invoke(state, msgErr);
         }
+
+        /// <summary>
+        /// 外部文件时使用
+        /// </summary>
+        public event Func<_配方文件_属性_, (bool s, string m)> Event_保存;
+        internal (bool s, string m) On_保存(_配方文件_属性_ cfg)
+        {
+            return Event_保存 is null ? (false, "") : Event_保存.Invoke(cfg);
+        }
+
 
         #endregion
 

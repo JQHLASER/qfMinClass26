@@ -11,11 +11,11 @@ namespace qfNet
 {
     internal class 文件_SQLite<T> : Iwork_文件_<T>
     {
-        string _File = Path.Combine(qfmain.软件类.Files_Cfg.Files_LogMyApp, "gj");
+        string _File = Path.Combine(qfmain.软件类.Files_Cfg.Files_LogMyApp, "GJS");
         string _文件类型 = "FLS";
 
         string _path = "";
-        string _ConfigID = "_Code26_sqlite_";
+        string _ConfigID = "_file26_sqlite_";
         private static readonly object _lock = new object();
 
         public qfmain._初始化状态_ _初始化状态 { set; get; } = qfmain._初始化状态_.未初始化;
@@ -23,35 +23,35 @@ namespace qfNet
         /// <summary>
         /// File : 存放Code26.db的文件夹
         /// </summary> 
-        public 文件_SQLite(string File, string 文件类型 = "FLS")
-        {
-            On_初始化状态(qfmain._初始化状态_.初始化中,"");
+        public void 初始化(string File, string 文件类型 = "FLS", string 后缀="")
+        { 
+         
             if (!string.IsNullOrWhiteSpace(File)) this._File = File;
             this._文件类型 = 文件类型;
             new qfmain.文件_文件夹().文件夹_新建(this._File, out string msgErr);
 
             this._path = Path.Combine(this._File, "Code26.db");
 
-            qfSqlSugar.SqlSugar_DB_封装.Event_ConnectionConfig += (s, e) =>
+            On_初始化状态(qfmain._初始化状态_.初始化中, "");
+            qfSqlSugar.SqlSugar_DB_封装._DB.Event_ConnectionConfig += (s, e) =>
             {
                 #region 连接数据库
-
-                s.Add(e.生成连接信息(
-                      e.生成连接字符串(new qfSqlSugar._cfg_SQLite_
-                      {
-                          Path = this._path,
-                      })
-                      , this._ConfigID, SqlSugar.DbType.Sqlite));
+                string conStr = e.生成连接字符串(new qfSqlSugar._cfg_SQLite_
+                {
+                    Path = this._path,
+                });
+                var connent = e.生成连接信息(conStr, this._ConfigID, SqlSugar.DbType.Sqlite);
+                s.Add(connent);
 
                 #endregion
             };
-            qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += (s, m, e) =>
-            {
+            qfSqlSugar.SqlSugar_DB_封装._DB.Event_初始化结束1 += (s, m, e) =>
+            { 
                 if (s)
                 {
                     (bool s, string m, T cfg) rt = Read("text^%&");
-                    this._初始化状态 = !rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
-                    this.On_初始化状态(this._初始化状态,rt.m);
+                    this._初始化状态 = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
+                    this.On_初始化状态(this._初始化状态, rt.m);
                 }
                 else
                 {
@@ -59,6 +59,8 @@ namespace qfNet
                 }
             };
         }
+
+
 
         public string 获取文件路径(string FileName)
         {
@@ -377,7 +379,7 @@ namespace qfNet
 
         public event Action<qfmain._初始化状态_, string> Event_初始化状态;
         private void On_初始化状态(qfmain._初始化状态_ state, string msgErr)
-        {
+        { 
             Event_初始化状态?.Invoke(state, msgErr);
         }
 

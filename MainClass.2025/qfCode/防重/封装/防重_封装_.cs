@@ -41,7 +41,7 @@ namespace qfCode
                 {
                     this.FCcode_sys.On_初始化状态(qfmain._初始化状态_.未初始化, m);
                 }
-            }; 
+            };
 
             FCcode_sys.初始化(数据库格式);
         }
@@ -129,12 +129,19 @@ namespace qfCode
                     StringBuilder sb = new StringBuilder($"select * from FC26 where 1=1 ");
                     var pars = new List<SugarParameter>();
 
-                    if (!string.IsNullOrWhiteSpace(cfg.内容))
+
+                    if (!cfg.Is模糊查询 && !string.IsNullOrWhiteSpace(cfg.内容))
                     {
                         sb.Append($" and  内容=@内容");
                         pars.Add(new SugarParameter("@内容", cfg.内容));
                     }
-                    else
+                    else if (cfg.Is模糊查询 && !string.IsNullOrWhiteSpace(cfg.内容))
+                    {
+                        sb.Append($" and  内容 Like @内容");
+                        pars.Add(new SugarParameter("@内容", $"%{cfg.内容}%"));
+                    }
+                     
+                    if (cfg.Is模糊查询 || string.IsNullOrWhiteSpace(cfg.内容))
                     {
                         sb.Append($" and  时间>=@start");
                         pars.Add(new SugarParameter("@start", start));
