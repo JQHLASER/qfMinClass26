@@ -14,7 +14,7 @@ namespace qfCode
         /// 向模板中传入是否成功
         /// </summary>
         public bool 校验模板 { set; get; } = false;
-        public bool 校验关键字 { set; get; } = false;
+        public string 校验关键字 { set; get; } = "";
         /// <summary>
         /// =0;不使能,>0:使能
         /// <para>为功能时,大于表示使能</para>

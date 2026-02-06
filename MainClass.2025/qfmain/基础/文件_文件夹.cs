@@ -964,7 +964,7 @@ namespace qfmain
         ///  Model: =0写,=1读
         /// <para>读写文件,以json格式保存,Newtonsoft.Json</para>
         /// </summary> 
-        public virtual bool WriteReadJson<T>(string path, ushort Model, ref T cfg, out string msgErr, _em_json类型_ json类型 = _em_json类型_.NewtonsoftJson , Encoding encoding_ = null, bool 加密 = false, string 密码 = "QIFENG8888")
+        public virtual bool WriteReadJson<T>(string path, ushort Model, ref T cfg, out string msgErr, _em_json类型_ json类型 = _em_json类型_.NewtonsoftJson, Encoding encoding_ = null, bool 加密 = false, string 密码 = "QIFENG8888")
         {
             bool rt = true;
             msgErr = string.Empty;
@@ -1137,7 +1137,7 @@ namespace qfmain
         ///  Model: =0写,=1读
         /// <para>读写文件,以Json格式</para>
         /// </summary> 
-        public virtual bool WriteReadIni<T>(string path, ushort Model, ref T cfg, out string msgErr, _em_json类型_ json类型 = _em_json类型_.NewtonsoftJson , string section = "信息", string key_ = "data")
+        public virtual bool WriteReadIni<T>(string path, ushort Model, ref T cfg, out string msgErr, _em_json类型_ json类型 = _em_json类型_.NewtonsoftJson, _em_ini类型_ ini类型 = _em_ini类型_.sharpconfig, string section = "信息", string key_ = "data")
         {
             bool rt = true;
             msgErr = string.Empty;
@@ -1145,11 +1145,11 @@ namespace qfmain
             if (type == typeof(string))
             {
                 string v = $"{cfg}";
-                rt = WriteReadIniStr(path, Model, ref v, out msgErr, section, key_);
+                rt = WriteReadIniStr(path, Model, ref v, out msgErr, ini类型, section, key_);
                 cfg = (T)(object)v;
                 return rt;
             }
-             
+
 
             try
             {
@@ -1183,7 +1183,7 @@ namespace qfmain
                         switch (json类型)
                         {
                             case _em_json类型_.NewtonsoftJson:
-                                vxt = JsonConvert.SerializeObject(cfg, Formatting.None );
+                                vxt = JsonConvert.SerializeObject(cfg, Formatting.None);
                                 break;
                             case _em_json类型_.SystemIOjsontext:
                                 var rtsys = new Json_SystemTextJson().序列化(cfg);
@@ -1192,12 +1192,36 @@ namespace qfmain
                                 msgErr = rtsys.m;
                                 break;
                         }
-                        new ini_sharpconfig(path).Write(section, key_, vxt, true);
+
+
+                        switch (ini类型)
+                        {
+                            case _em_ini类型_.Win:
+                                new ini_win().Write(section, key_, vxt, path);
+                                break;
+                            case _em_ini类型_.sharpconfig:
+                                new ini_sharpconfig(path).Write(section, key_, vxt, true);
+                                break;
+                        }
+
+
 
                     }
                     else if (s == "读")
                     {
-                        string rxt = new ini_sharpconfig(path).Read(section, key_, JsonConvert.SerializeObject(cfg));
+                        string rxt = JsonConvert.SerializeObject(cfg);
+
+                        switch (ini类型)
+                        {
+                            case _em_ini类型_.Win:
+                                rxt = new ini_win().Read(section, key_, rxt, path);
+                                break;
+                            case _em_ini类型_.sharpconfig:
+                                rxt = new ini_sharpconfig(path).Read(section, key_, rxt);
+                                break;
+                        }
+
+
                         switch (json类型)
                         {
                             case _em_json类型_.NewtonsoftJson:
@@ -1236,7 +1260,7 @@ namespace qfmain
         /// <param name="cfg"></param>
         /// <param name="msgErr"></param>
         /// <returns></returns>
-        public virtual bool WriteReadIniStr(string path, ushort Model, ref string cfg, out string msgErr, string section = "信息", string key_ = "data")
+        public virtual bool WriteReadIniStr(string path, ushort Model, ref string cfg, out string msgErr, _em_ini类型_ ini类型 = _em_ini类型_.sharpconfig, string section = "信息", string key_ = "data")
         {
             bool rt = true;
             msgErr = string.Empty;
@@ -1268,12 +1292,35 @@ namespace qfmain
                             continue;
                         }
 
-                        new ini_sharpconfig(path).Write(section, key_, cfg, true);
+
+
+                        switch (ini类型)
+                        {
+                            case _em_ini类型_.Win:
+                                new ini_win().Write(section, key_, cfg, path);
+                                break;
+                            case _em_ini类型_.sharpconfig:
+                                new ini_sharpconfig(path).Write(section, key_, cfg, true);
+                                break;
+                        }
+
 
                     }
                     else if (s == "读")
                     {
-                        cfg = new ini_sharpconfig(path).Read(section, key_, "");
+
+
+                        switch (ini类型)
+                        {
+                            case _em_ini类型_.Win:
+                                cfg = new ini_win().Read(section, key_, "", path);
+                                break;
+                            case _em_ini类型_.sharpconfig:
+                                cfg = new ini_sharpconfig(path).Read(section, key_, "");
+                                break;
+                        }
+
+
                     }
                 }
 

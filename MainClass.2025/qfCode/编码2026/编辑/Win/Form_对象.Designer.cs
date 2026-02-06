@@ -37,13 +37,16 @@
             this.uiTextBox_位数 = new Sunny.UI.UITextBox();
             this.ui_Label_86 = new Sunny.ui_Label_8(this.components);
             this.uiGroupBox1 = new Sunny.UI.UIGroupBox();
-            this.uiCheckBox_关键字 = new Sunny.UI.UICheckBox();
             this.uiCheckBox_模板变量 = new Sunny.UI.UICheckBox();
             this.uiCheckBox_读码 = new Sunny.UI.UICheckBox();
             this.uiCheckBox_防重 = new Sunny.UI.UICheckBox();
             this.uiButton_变量对象名 = new Sunny.UI.UIButton();
+            this.panel_校验关键字 = new System.Windows.Forms.Panel();
+            this.uiTextBox_关键字 = new Sunny.UI.UITextBox();
+            this.ui_Label_81 = new Sunny.ui_Label_8(this.components);
             this.panel_位数校验.SuspendLayout();
             this.uiGroupBox1.SuspendLayout();
+            this.panel_校验关键字.SuspendLayout();
             this.SuspendLayout();
             // 
             // uiTextBox_对象
@@ -111,9 +114,9 @@
             // 
             this.panel_位数校验.Controls.Add(this.uiTextBox_位数);
             this.panel_位数校验.Controls.Add(this.ui_Label_86);
-            this.panel_位数校验.Location = new System.Drawing.Point(8, 40);
+            this.panel_位数校验.Location = new System.Drawing.Point(16, 22);
             this.panel_位数校验.Name = "panel_位数校验";
-            this.panel_位数校验.Size = new System.Drawing.Size(385, 40);
+            this.panel_位数校验.Size = new System.Drawing.Size(649, 40);
             this.panel_位数校验.TabIndex = 3;
             // 
             // uiTextBox_位数
@@ -122,7 +125,7 @@
             this.uiTextBox_位数.FillColor = System.Drawing.Color.White;
             this.uiTextBox_位数.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.uiTextBox_位数.HasMinimum = true;
-            this.uiTextBox_位数.Location = new System.Drawing.Point(172, 8);
+            this.uiTextBox_位数.Location = new System.Drawing.Point(158, 8);
             this.uiTextBox_位数.Margin = new System.Windows.Forms.Padding(0);
             this.uiTextBox_位数.Maximum = 2147483647D;
             this.uiTextBox_位数.Minimum = 0D;
@@ -143,7 +146,7 @@
             this.ui_Label_86.ForeColor = System.Drawing.Color.Gray;
             this.ui_Label_86.Location = new System.Drawing.Point(8, 8);
             this.ui_Label_86.Name = "ui_Label_86";
-            this.ui_Label_86.Size = new System.Drawing.Size(160, 26);
+            this.ui_Label_86.Size = new System.Drawing.Size(150, 26);
             this.ui_Label_86.Style = Sunny.UI.UIStyle.深色;
             this.ui_Label_86.TabIndex = 19;
             this.ui_Label_86.Text = "位数";
@@ -151,7 +154,7 @@
             // 
             // uiGroupBox1
             // 
-            this.uiGroupBox1.Controls.Add(this.uiCheckBox_关键字);
+            this.uiGroupBox1.Controls.Add(this.panel_校验关键字);
             this.uiGroupBox1.Controls.Add(this.uiCheckBox_模板变量);
             this.uiGroupBox1.Controls.Add(this.uiCheckBox_读码);
             this.uiGroupBox1.Controls.Add(this.uiCheckBox_防重);
@@ -164,27 +167,10 @@
             this.uiGroupBox1.Name = "uiGroupBox1";
             this.uiGroupBox1.Padding = new System.Windows.Forms.Padding(5, 25, 5, 5);
             this.uiGroupBox1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
-            this.uiGroupBox1.Size = new System.Drawing.Size(420, 251);
+            this.uiGroupBox1.Size = new System.Drawing.Size(686, 251);
             this.uiGroupBox1.Style = Sunny.UI.UIStyle.深色;
             this.uiGroupBox1.TabIndex = 4;
             this.uiGroupBox1.Text = "校验";
-            // 
-            // uiCheckBox_关键字
-            // 
-            this.uiCheckBox_关键字.CheckBoxColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
-            this.uiCheckBox_关键字.Cursor = System.Windows.Forms.Cursors.Default;
-            this.uiCheckBox_关键字.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.uiCheckBox_关键字.ForeColor = System.Drawing.Color.Gray;
-            this.uiCheckBox_关键字.ImageSize = 18;
-            this.uiCheckBox_关键字.Location = new System.Drawing.Point(67, 194);
-            this.uiCheckBox_关键字.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiCheckBox_关键字.Name = "uiCheckBox_关键字";
-            this.uiCheckBox_关键字.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
-            this.uiCheckBox_关键字.Size = new System.Drawing.Size(315, 25);
-            this.uiCheckBox_关键字.Style = Sunny.UI.UIStyle.Custom;
-            this.uiCheckBox_关键字.StyleCustomMode = true;
-            this.uiCheckBox_关键字.TabIndex = 7;
-            this.uiCheckBox_关键字.Text = "关键字";
             // 
             // uiCheckBox_模板变量
             // 
@@ -193,7 +179,7 @@
             this.uiCheckBox_模板变量.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.uiCheckBox_模板变量.ForeColor = System.Drawing.Color.Gray;
             this.uiCheckBox_模板变量.ImageSize = 18;
-            this.uiCheckBox_模板变量.Location = new System.Drawing.Point(67, 163);
+            this.uiCheckBox_模板变量.Location = new System.Drawing.Point(67, 190);
             this.uiCheckBox_模板变量.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiCheckBox_模板变量.Name = "uiCheckBox_模板变量";
             this.uiCheckBox_模板变量.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
@@ -210,7 +196,7 @@
             this.uiCheckBox_读码.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.uiCheckBox_读码.ForeColor = System.Drawing.Color.Gray;
             this.uiCheckBox_读码.ImageSize = 18;
-            this.uiCheckBox_读码.Location = new System.Drawing.Point(67, 132);
+            this.uiCheckBox_读码.Location = new System.Drawing.Point(67, 159);
             this.uiCheckBox_读码.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiCheckBox_读码.Name = "uiCheckBox_读码";
             this.uiCheckBox_读码.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
@@ -227,7 +213,7 @@
             this.uiCheckBox_防重.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.uiCheckBox_防重.ForeColor = System.Drawing.Color.Gray;
             this.uiCheckBox_防重.ImageSize = 18;
-            this.uiCheckBox_防重.Location = new System.Drawing.Point(67, 103);
+            this.uiCheckBox_防重.Location = new System.Drawing.Point(67, 130);
             this.uiCheckBox_防重.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiCheckBox_防重.Name = "uiCheckBox_防重";
             this.uiCheckBox_防重.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
@@ -249,10 +235,50 @@
             this.uiButton_变量对象名.TabIndex = 5;
             this.uiButton_变量对象名.Text = "Obj";
             // 
+            // panel_校验关键字
+            // 
+            this.panel_校验关键字.Controls.Add(this.uiTextBox_关键字);
+            this.panel_校验关键字.Controls.Add(this.ui_Label_81);
+            this.panel_校验关键字.Location = new System.Drawing.Point(16, 68);
+            this.panel_校验关键字.Name = "panel_校验关键字";
+            this.panel_校验关键字.Size = new System.Drawing.Size(649, 40);
+            this.panel_校验关键字.TabIndex = 7;
+            // 
+            // uiTextBox_关键字
+            // 
+            this.uiTextBox_关键字.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.uiTextBox_关键字.FillColor = System.Drawing.Color.White;
+            this.uiTextBox_关键字.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiTextBox_关键字.HasMinimum = true;
+            this.uiTextBox_关键字.Location = new System.Drawing.Point(158, 8);
+            this.uiTextBox_关键字.Margin = new System.Windows.Forms.Padding(0);
+            this.uiTextBox_关键字.Maximum = 2147483647D;
+            this.uiTextBox_关键字.Minimum = 0D;
+            this.uiTextBox_关键字.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiTextBox_关键字.Name = "uiTextBox_关键字";
+            this.uiTextBox_关键字.Padding = new System.Windows.Forms.Padding(5);
+            this.uiTextBox_关键字.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
+            this.uiTextBox_关键字.Size = new System.Drawing.Size(471, 26);
+            this.uiTextBox_关键字.Style = Sunny.UI.UIStyle.深色;
+            this.uiTextBox_关键字.TabIndex = 20;
+            this.uiTextBox_关键字.填充颜色 = System.Drawing.Color.White;
+            // 
+            // ui_Label_81
+            // 
+            this.ui_Label_81.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.ui_Label_81.ForeColor = System.Drawing.Color.Gray;
+            this.ui_Label_81.Location = new System.Drawing.Point(8, 8);
+            this.ui_Label_81.Name = "ui_Label_81";
+            this.ui_Label_81.Size = new System.Drawing.Size(150, 26);
+            this.ui_Label_81.Style = Sunny.UI.UIStyle.深色;
+            this.ui_Label_81.TabIndex = 19;
+            this.ui_Label_81.Text = "关键字";
+            this.ui_Label_81.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // Form_对象
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(450, 500);
+            this.ClientSize = new System.Drawing.Size(800, 500);
             this.Controls.Add(this.uiButton_变量对象名);
             this.Controls.Add(this.uiGroupBox1);
             this.Controls.Add(this.uiButton_关闭);
@@ -266,6 +292,7 @@
             this.Text = "";
             this.panel_位数校验.ResumeLayout(false);
             this.uiGroupBox1.ResumeLayout(false);
+            this.panel_校验关键字.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -282,7 +309,9 @@
         private Sunny.UI.UICheckBox uiCheckBox_读码;
         private Sunny.UI.UICheckBox uiCheckBox_防重;
         private Sunny.UI.UICheckBox uiCheckBox_模板变量;
-        private Sunny.UI.UICheckBox uiCheckBox_关键字;
         private Sunny.UI.UIButton uiButton_变量对象名;
+        private System.Windows.Forms.Panel panel_校验关键字;
+        private Sunny.UI.UITextBox uiTextBox_关键字;
+        private Sunny.ui_Label_8 ui_Label_81;
     }
 }

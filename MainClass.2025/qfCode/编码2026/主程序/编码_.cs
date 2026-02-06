@@ -3,6 +3,7 @@ using qfmain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -62,7 +63,7 @@ namespace qfCode
 
             if (this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.ini
                  || this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.txt
-                 || this._功能 .配方文件类型 == _功能_结构_._em_配方文件类型_.外部文件 )
+                 || this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.外部文件)
             {
                 On_初始化状态(_初始化状态_.已初始化, "");
             }
@@ -130,7 +131,6 @@ namespace qfCode
             return 计算_编码(配方文件名, 配方文件, dates, 计算类型, Is计算完保存, "");
         }
 
-
         /// <summary>
         /// <para>测试模式,只是计算,不保存配方</para>
         /// <para>对象名 : 不为空时,计算指定对象及之前的内容</para>
@@ -138,7 +138,8 @@ namespace qfCode
         /// </summary> 
         public (bool s, string m, List<_对象_内容_> lstObject) 计算编码_对象(_配方文件_属性_ 配方文件, DateTime dates, string 对象名)
         {
-            return 计算_编码("", 配方文件, dates, _em_计算类型_.测试, false, 对象名);
+            var rt = 计算_编码("", 配方文件, dates, _em_计算类型_.测试, false, 对象名);
+            return rt;
         }
 
         /// <summary>
@@ -176,7 +177,29 @@ namespace qfCode
 
         #endregion
 
+        #region 校验
 
+        public (bool s ,int Count) 校验_位数(uint 设置位数, string 内容)
+        {
+            int count = Encoding.Default.GetByteCount(内容);
+            if (设置位数 != count)
+            {
+                return (false ,count );
+            }
+            return (true,count );
+        }
+
+        public bool 校验_关键字(string 关键字, string 内容)
+        {
+            if (关键字 != 内容)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+        #endregion
 
         #region json与结构之间转换
 
@@ -230,18 +253,19 @@ namespace qfCode
 
         /// <summary>
         /// 外部文件时使用
+        /// <para>参数: (文件名,配方信息)   反馈(boo s,string msgErr)</para>
         /// </summary>
-        public event Func<_配方文件_属性_, (bool s, string m)> Event_保存;
-        internal (bool s, string m) On_保存(_配方文件_属性_ cfg)
+        public event Func<string, _配方文件_属性_, (bool s, string m)> Event_保存;
+        internal (bool s, string m) On_保存(string FileName, _配方文件_属性_ cfg)
         {
-            return Event_保存 is null ? (false, "") : Event_保存.Invoke(cfg);
+            return Event_保存 is null ? (false, "") : Event_保存.Invoke(FileName, cfg);
         }
 
 
 
 
-      
- 
+
+
 
         #endregion
 
@@ -258,7 +282,8 @@ namespace qfCode
             List<_对象_内容_> lstObject = new List<_对象_内容_>();
             bool rt = true;
             string msg = string.Empty;
-
+            //List<qfCode._对象_内容_> lst防重 = new List<_对象_内容_>();
+            //List<qfCode._对象_内容_> lst读码 = new List<_对象_内容_>();
 
             //深拷贝出来一份,用来防止源文件被意外修改
             _配方文件_属性_ 配方 = 配方文件.Clone();
@@ -269,12 +294,9 @@ namespace qfCode
             var rtDatetime = 更新日期_(配方, date_);
             if (!rtDatetime.s)
             {
-                return (rtDatetime.s, rtDatetime.m, default);
+                return (rtDatetime.s, rtDatetime.m, new List<_对象_内容_>());
             }
             DateTime dates = rtDatetime.dates;
-
-
-
 
             for (int i = 0; i < 配方.对象.Count; i++)
             {
@@ -414,6 +436,38 @@ namespace qfCode
                 #endregion
 
 
+                #region 添加到防重类
+
+                //if (this._功能.对象属性.防重 && s.属性.防重)
+                //{
+                //    lst防重.Add(new _对象_内容_
+                //    {
+                //        对象 = s,
+                //        Value = sb.ToString(),
+                //    });
+
+
+                //}
+
+                #endregion
+
+
+                #region 添加到读码类
+
+                //if (this._功能.对象属性.读码 && s.属性.读码)
+                //{
+                //    lst读码.Add(new _对象_内容_
+                //    {
+                //        对象 = s,
+                //        Value = sb.ToString(),
+                //    });
+                //}
+
+                #endregion
+
+
+
+
                 #region 到指定对象后退出 
 
                 //当为指定对象时,计算完成后退出
@@ -423,6 +477,8 @@ namespace qfCode
                 }
 
                 #endregion
+
+
 
 
             }
@@ -455,6 +511,7 @@ namespace qfCode
             #endregion
 
 
+            //  return (rt, msg, lstObject, lst防重, lst读码);
             return (rt, msg, lstObject);
         }
 

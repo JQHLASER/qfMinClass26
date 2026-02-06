@@ -304,6 +304,15 @@ namespace qf_Laser
             }
             return (true, "");
         }
+
+        public (bool s, string m) 删除所有对象(bool Is清除最后一打打开的激光模 = true, bool Is清空图形=true )
+        {
+            var nErr = 删除所有对象_(Is清除最后一打打开的激光模,Is清空图形);
+            bool rt = ErrToMsg((int)nErr, out string msgErr); 
+            return (rt, msgErr);
+        }
+
+
         public (bool s, string m) 保存模板(string path, bool Is显示日志)
         {
             _Err_jczMarkEzd2_ nErr = 保存ezd文件(path);
@@ -722,8 +731,8 @@ namespace qf_Laser
         {
             string path = Environment.CurrentDirectory + "\\jczdf.crc";
             string pathEzd = this._Path_激光模板_最后一次;
-            var rt = new qfmain.文件_文件夹().WriteReadIni <string> (path, model, ref pathEzd, out string msgErr);
-       
+            var rt = new qfmain.文件_文件夹().WriteReadIni<string>(path, model, ref pathEzd, out string msgErr);
+
             if (!string.IsNullOrEmpty(pathEzd) && new qfmain.文件_文件夹().文件_是否存在(path))
             {
                 this._Path_激光模板_最后一次 = pathEzd;
@@ -809,9 +818,22 @@ namespace qf_Laser
         }
 
 
-        internal _Err_jczMarkEzd2_ 删除所有对象()
+        internal _Err_jczMarkEzd2_ 删除所有对象_(bool Is清除最后一打打开的激光模=true,bool Is清空图形 = true)
         {
             int nErr = JczLmc.删除所有对象();
+            if (nErr == 0)
+            {
+                this._Path_激光模板 = "";
+                if (Is清除最后一打打开的激光模)
+                {
+                    this._Path_激光模板_最后一次 = this._Path_激光模板;
+                    读写_最后一次ezdpath(0);
+                }
+                if (Is清空图形)
+                {                   
+                    刷新图形(_激光_获取图像_.清除);
+                }
+            } 
             return (_Err_jczMarkEzd2_)nErr;
         }
 

@@ -179,8 +179,7 @@ namespace qfCode
                     }
 
                     #endregion
-                };
-
+                }; 
                 forms.ui_工具栏_文件操作1.Event_关闭 += () =>
                 {
                     #region 退出

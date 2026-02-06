@@ -29,7 +29,7 @@ namespace qfCode
             this._cfg = cfg.Clone();
 
             this.panel_位数校验.Visible = Form_主窗体.forms._编辑._功能.对象属性.校验位数;
-            this.uiCheckBox_关键字.Visible = Form_主窗体.forms._编辑._功能.对象属性.校验关键字;
+            this.panel_校验关键字.Visible = Form_主窗体.forms._编辑._功能.对象属性.校验关键字;
             this.uiCheckBox_模板变量.Visible = Form_主窗体.forms._编辑._功能.对象属性.校验模板;
             this.uiCheckBox_读码.Visible = Form_主窗体.forms._编辑._功能.对象属性.读码;
             this.uiCheckBox_防重.Visible = Form_主窗体.forms._编辑._功能.对象属性.防重;
@@ -62,7 +62,7 @@ namespace qfCode
             }
 
             this.uiTextBox_位数.IntValue = (int)this._cfg.校验位数;
-            this.uiCheckBox_关键字.Checked = this._cfg.校验关键字;
+            this.uiTextBox_关键字.Text = this._cfg.校验关键字;
             this.uiCheckBox_模板变量.Checked = this._cfg.校验模板;
             this.uiCheckBox_读码.Checked = this._cfg.读码;
             this.uiCheckBox_防重.Checked = this._cfg.防重;
@@ -94,7 +94,7 @@ namespace qfCode
                 }
                 this._对象名称 = txt;
                 this._cfg.校验位数 = (uint)this.uiTextBox_位数.IntValue;
-                this._cfg.校验关键字 = this.uiCheckBox_关键字.Checked;
+                this._cfg.校验关键字 = this.uiTextBox_关键字.Text;
                 this._cfg.校验模板 = this.uiCheckBox_模板变量.Checked;
                 this._cfg.读码 = this.uiCheckBox_读码.Checked;
                 this._cfg.防重 = this.uiCheckBox_防重.Checked;

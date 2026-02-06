@@ -85,6 +85,7 @@ namespace qf_Laser
         void win_设置();
         void win_调试();
         (bool s, string m) 打开模板(string path, bool Is图像, bool Is显示日志);
+        (bool s, string m) 删除所有对象(bool Is清除最后一打打开的激光模 = true, bool Is清空图形 = true);
         (bool s, string m) 打开模板_openFileDialog(bool Is图像, bool Is显示日志);
         (bool s, string m) 保存模板(string path, bool Is显示日志);
         void ui_图像控件(UserControl control);

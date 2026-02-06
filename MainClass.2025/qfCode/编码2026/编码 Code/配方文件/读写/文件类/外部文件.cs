@@ -25,28 +25,28 @@ namespace qfCode
         /// </summary> 
         public (bool s, string m) Save(string FileName, _配方文件_属性_ cfg)
         {
-            return this._codeSys.On_保存(cfg);
+            return this._codeSys.On_保存(FileName,cfg);
         }
 
         public (bool s, string m, _配方文件_属性_ cfg) Read(string FileName)
         {
-            return (false, Language_.Get语言("无此功能"), new _配方文件_属性_());
+            return (true , Language_.Get语言("无此功能"), new _配方文件_属性_());
         }
 
         public (bool s, string m) Delete(string FileName)
         {
-            return (false, Language_.Get语言("无此功能") );
+            return (true , Language_.Get语言("无此功能") );
         }
 
 
         public (bool s, string m) 复制(string FileName, string NewFileName)
         {
-            return (false, Language_.Get语言("无此功能"));
+            return (true , Language_.Get语言("无此功能"));
         }
 
         public (bool s, string m, string[] v) Get目录()
         {
-            return (false, Language_.Get语言("无此功能"),new string[0]);
+            return (true , Language_.Get语言("无此功能"),new string[0]);
         }
 
     }

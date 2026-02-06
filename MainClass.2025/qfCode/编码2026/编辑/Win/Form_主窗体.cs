@@ -103,7 +103,8 @@ namespace qfCode
             this.另存为ToolStripMenuItem.Visible = this._编辑._功能.编辑.另存为;
             this.删除ToolStripMenuItem.Visible = this._编辑._功能.编辑.删除;
             this.打开ToolStripMenuItem.Visible = this._编辑._功能.编辑.打开;
-
+            this.保存ToolStripMenuItem.Visible = this._编辑._功能.编辑.保存;
+            this.ui_Button_对象_保存 .Visible = this._编辑._功能.编辑.保存;
 
             this.关闭ToolStripMenuItem.Click += (s, e) =>
             {
@@ -602,7 +603,7 @@ namespace qfCode
             {
                 sb.Append($"<{Language_.Get语言("模板")}>");
             }
-            if (this._编辑._功能.对象属性.校验关键字 && objc.属性.校验关键字)
+            if (this._编辑._功能.对象属性.校验关键字 &&!string.IsNullOrWhiteSpace (objc.属性.校验关键字))
             {
                 sb.Append($"<{Language_.Get语言("关键字")}>");
             }
@@ -841,7 +842,8 @@ namespace qfCode
             {
                 this._是否要保存 = true;
             }
-            if (this._编辑._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.外部文件)
+
+            if (this._是否要保存 && this._编辑._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.外部文件)
             {
                 On_保存(is成功弹窗);
                 return;

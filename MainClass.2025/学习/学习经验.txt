@@ -1,4 +1,9 @@
 ﻿
+HashSet //哈希值,主动去重 ,针对大量数据时友好
+var set = new HashSet<string>(lst读码校验.Select(u => u.Value));
+
+
+
 
 
 获取结构体元素的名称

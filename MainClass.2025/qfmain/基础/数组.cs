@@ -6,239 +6,124 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace qfmain 
+namespace qfmain
 {
-    public  class 数组
+    public class 数组
     {
 
-        /// <summary>
-        /// 重载
-        /// </summary>
-        /// <param name="原数组"></param>
-        /// <param name="要添加的数组"></param>
-        /// <returns></returns>
-        public virtual  byte[] 拼接(byte[] 原数组, byte[] 要添加的数组)
+        // 通用拼接方法
+        public virtual T[] 拼接Concat<T>(params T[][] arrays)
         {
-            return 原数组.Concat(要添加的数组).ToArray();
-        }
-
-        /// <summary>
-        /// 重载
-        /// </summary>
-        /// <param name="原数组"></param>
-        /// <param name="要添加的数组"></param>
-        /// <returns></returns>
-        public virtual string[] 拼接(string[] 原数组, string[] 要添加的数组)
-        {
-            return 原数组.Concat(要添加的数组).ToArray();
-        }
-
-        /// <summary>
-        /// 重载
-        /// </summary>
-        /// <param name="原数组"></param>
-        /// <param name="要添加的数组"></param>
-        /// <returns></returns>
-        public virtual int[] 拼接(int[] 原数组, int[] 要添加的数组)
-        {
-            return 原数组.Concat(要添加的数组).ToArray();
-        }
-
-
-        /// <summary>
-        /// 重载
-        /// </summary>
-        /// <param name="原数组"></param>
-        /// <param name="新数组"></param>
-        /// <returns></returns>
-        public virtual double[] 拼接(double[] 原数组, double[] 要添加的数组)
-        {
-            return 原数组.Concat(要添加的数组).ToArray();
-        }
-
-        /// <summary>
-        /// 重载
-        /// </summary>
-        /// <param name="原数组"></param>
-        /// <param name="要添加的数组"></param>
-        /// <returns></returns>
-        public virtual float[] 拼接(float[] 原数组, float[] 要添加的数组)
-        {
-            return 原数组.Concat(要添加的数组).ToArray();
-        }
-
-        /// <summary>
-        /// 重载
-        /// </summary>
-        /// <param name="原数组"></param>
-        /// <param name="要添加的数组"></param>
-        /// <returns></returns>
-        public virtual long[] 拼接(long[] 原数组, long[] 要添加的数组)
-        {
-            return 原数组.Concat(要添加的数组).ToArray();
-        }
-
-        /// <summary>
-        /// 重载
-        /// </summary>
-        /// <param name="原数组"></param>
-        /// <param name="要添加的数组"></param>
-        /// <returns></returns>
-        public virtual bool[] 拼接(bool[] 原数组, bool[] 要添加的数组)
-        {
-            return 原数组.Concat(要添加的数组).ToArray();
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-        public virtual byte[] 数组_byte压缩(byte[] data)
-        {
-            MemoryStream ms = new MemoryStream();
-            Stream zipStream = null;
-            zipStream = new GZipStream(ms, CompressionMode.Compress, true);
-            zipStream.Write(data, 0, data.Length);
-            zipStream.Close();
-            ms.Position = 0;
-            byte[] compressed_data = new byte[ms.Length];
-            ms.Read(compressed_data, 0, int.Parse(ms.Length.ToString()));
-            return compressed_data;
-        }
-
-        public virtual byte[] 数组_byte解压(byte[] data)
-        {
-            try
+            // 计算总长度
+            int totalLength = 0;
+            foreach (var arr in arrays)
             {
-                MemoryStream ms = new MemoryStream(data);
-                Stream zipStream = null;
-                zipStream = new GZipStream(ms, CompressionMode.Decompress);
-                byte[] dc_data = null;
-                dc_data = EtractBytesFormStream(zipStream, data.Length);
-                return dc_data;
+                if (arr != null)
+                    totalLength += arr.Length;
             }
-            catch
+
+            // 创建结果数组
+            T[] result = new T[totalLength];
+
+            // 拷贝所有数组
+            int offset = 0;
+            foreach (var arr in arrays)
             {
-                return null;
-            }
-        }
-        private   byte[] EtractBytesFormStream(Stream zipStream, int dataBlock)
-        {
-            try
-            {
-                byte[] data = null;
-                int totalBytesRead = 0;
-                while (true)
+                if (arr != null)
                 {
-                    Array.Resize(ref data, totalBytesRead + dataBlock + 1);
-                    int bytesRead = zipStream.Read(data, totalBytesRead, dataBlock);
-                    if (bytesRead == 0)
-                    {
-                        break;
-                    }
-                    totalBytesRead += bytesRead;
+                    Array.Copy(arr, 0, result, offset, arr.Length);
+                    offset += arr.Length;
                 }
-                Array.Resize(ref data, totalBytesRead);
-                return data;
             }
-            catch
+
+            return result;
+        }
+
+
+
+
+        #region 稀疏压缩（Sparse Compression）
+        // 压缩：只保存非默认值
+        public static List<(int index, T value)> SparseCompress<T>(T[] arr, T defaultValue = default)
+        {
+            var compressed = new List<(int, T)>();
+            for (int i = 0; i < arr.Length; i++)
             {
-                return null;
+                if (!EqualityComparer<T>.Default.Equals(arr[i], defaultValue))
+                    compressed.Add((i, arr[i]));
             }
-        }
-        /// <summary>
-        /// 压缩数据
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public virtual byte[] 数组_byte压缩_1(byte[] data)
-        {
-            byte[] bData;
-            MemoryStream ms = new MemoryStream();
-            GZipStream stream = new GZipStream(ms, CompressionMode.Compress, true);
-            stream.Write(data, 0, data.Length);
-            stream.Close();
-            stream.Dispose();
-            //必须把stream流关闭才能返回ms流数据,不然数据会不完整
-            //并且解压缩方法stream.Read(buffer, 0, buffer.Length)时会返回0
-            bData = ms.ToArray();
-            ms.Close();
-            ms.Dispose();
-            return bData;
+            return compressed;
         }
 
-        /// <summary>
-        /// 解压数据
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        /// 
-        public virtual byte[] 数组_byte解压_1(byte[] data)
+        // 解压：还原数组
+        public static T[] SparseDecompress<T>(List<(int index, T value)> compressed, int length, T defaultValue = default)
         {
-            byte[] bData;
-            MemoryStream ms = new MemoryStream();
-            ms.Write(data, 0, data.Length);
-            ms.Position = 0;
-            GZipStream stream = new GZipStream(ms, CompressionMode.Decompress, true);
-            byte[] buffer = new byte[1024];
-            MemoryStream temp = new MemoryStream();
-            int read = stream.Read(buffer, 0, buffer.Length);
-            while (read > 0)
+            T[] arr = Enumerable.Repeat(defaultValue, length).ToArray();
+            foreach (var item in compressed)
+                arr[item.index] = item.value;
+            return arr;
+        }
+        #endregion
+
+        #region RLE 压缩（Run-Length Encoding）
+        public static List<(T value, int count)> RLECompress<T>(T[] arr)
+        {
+            var compressed = new List<(T, int)>();
+            if (arr.Length == 0) return compressed;
+
+            T last = arr[0];
+            int count = 1;
+
+            for (int i = 1; i < arr.Length; i++)
             {
-                temp.Write(buffer, 0, read);
-                read = stream.Read(buffer, 0, buffer.Length);
+                if (EqualityComparer<T>.Default.Equals(arr[i], last))
+                    count++;
+                else
+                {
+                    compressed.Add((last, count));
+                    last = arr[i];
+                    count = 1;
+                }
             }
-            //必须把stream流关闭才能返回ms流数据,不然数据会不完整
-            stream.Close();
-            stream.Dispose();
-            ms.Close();
-            ms.Dispose();
-            bData = temp.ToArray();
-            temp.Close();
-            temp.Dispose();
-            return bData;
+            compressed.Add((last, count));
+            return compressed;
         }
 
-
-        public virtual byte[] 数组_byte压缩_2(byte[] bytes)
+        public static T[] RLEDecompress<T>(List<(T value, int count)> compressed)
         {
-            // byte[] bytes = socks.sys.文件转成byte数组(@"D:\1.txt");
-            //// byte[]  et = socks.sys.压缩byte数组 (x);        
-            //return x.Length ;
-
-
-            // 压缩            
-            MemoryStream oStream = new MemoryStream();
-            DeflateStream zipStream = new DeflateStream(oStream, CompressionMode.Compress);
-            zipStream.Write(bytes, 0, bytes.Length);
-            zipStream.Flush();
-            zipStream.Close();
-            return oStream.ToArray();
+            var list = new List<T>();
+            foreach (var item in compressed)
+                list.AddRange(Enumerable.Repeat(item.value, item.count));
+            return list.ToArray();
         }
+        #endregion
 
-        public virtual byte[] 数组_byte解压_2(byte[] bytes)
+        #region 布尔数组位压缩
+        // 压缩 bool 数组为 byte[]
+        public static byte[] BoolCompress(bool[] arr)
         {
-            // 初始化流，设置读取位置
-            MemoryStream mStream = new System.IO.MemoryStream(bytes);
-            mStream.Seek(0, SeekOrigin.Begin);
-            // 解压缩
-            //DeflateStream unZipStream = new DeflateStream(mStream, CompressionMode.Decompress, true);
-            //// 反序列化得到数据集
+            int byteCount = (arr.Length + 7) / 8;
+            byte[] compressed = new byte[byteCount];
 
-            //DataSet dsResult = new DataSet();
-            //dsResult.RemotingFormat = SerializationFormat.Binary;
-            //BinaryFormatter bFormatter = new BinaryFormatter();
-            //dsResult = (DataSet)bFormatter.Deserialize(unZipStream);
-            return mStream.ToArray();
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i])
+                    compressed[i / 8] |= (byte)(1 << (i % 8));
+            }
+            return compressed;
         }
 
+        // 解压 byte[] 为 bool[]
+        public static bool[] BoolDecompress(byte[] compressed, int length)
+        {
+            bool[] arr = new bool[length];
+            for (int i = 0; i < length; i++)
+            {
+                arr[i] = (compressed[i / 8] & (1 << (i % 8))) != 0;
+            }
+            return arr;
+        }
+        #endregion
 
     }
 }

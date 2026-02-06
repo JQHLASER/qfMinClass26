@@ -15,6 +15,11 @@ namespace qfmain
         SystemIOjsontext
     }
 
+    public enum _em_ini类型_
+    {
+        Win,
+        sharpconfig,
+    }
 
 
 
