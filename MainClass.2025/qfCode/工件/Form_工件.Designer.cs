@@ -1,6 +1,6 @@
 ﻿namespace qfCode
 {
-    partial class Form_配方
+    partial class Form_工件
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_配方));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_工件));
             this.ui_工具栏_文件操作1 = new Sunny.ui_工具栏_文件操作();
             this.panel_设计区 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
@@ -49,16 +49,17 @@
             this.panel_设计区.Size = new System.Drawing.Size(674, 565);
             this.panel_设计区.TabIndex = 2;
             // 
-            // Form_配方
+            // Form_工件
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(800, 600);
+            this.ControlBox = false;
             this.Controls.Add(this.panel_设计区);
             this.Controls.Add(this.ui_工具栏_文件操作1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form_配方";
+            this.Name = "Form_工件";
             this.ShowInTaskbar = false;
             this.Text = "";
             this.ResumeLayout(false);

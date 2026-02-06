@@ -10,12 +10,12 @@ using System.Windows.Forms;
 
 namespace qfCode
 {
-    public partial class Form_配方 : Sunny.UI.UIForm
+    public partial class Form_工件 : Sunny.UI.UIForm
     { 
         /// <summary>
         /// con :  控件
         /// </summary> 
-        public Form_配方(Control con)
+        public Form_工件(Control con)
         {
             InitializeComponent();
 

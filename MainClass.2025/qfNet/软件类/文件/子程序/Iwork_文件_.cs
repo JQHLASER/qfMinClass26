@@ -36,16 +36,9 @@ namespace qfNet
         /// <para> 返回 其它,None</para>
         /// <para>FileName:源文件名称,为空时为弹窗保存</para>
         /// </summary> 
-        DialogResult 另存为_弹窗(string FileName, T t, out string NewFileName, out string msgerr, Func<string, (bool s, string m)> Event_删除文件 = null);
+        DialogResult 另存为_弹窗(T t, out string NewFileName, out string msgerr, Func<string, (bool s, string m)> Event_删除文件 = null);
 
-        /// <summary>
-        /// <para> 返回 DialogResult.Yes ,成功</para>
-        /// <para> 返回 DialogResult.No ,失败</para>
-        /// <para> 返回 其它,None</para>
-        /// 文件名不为空时直接保存
-        /// <para>文件名为空时弹窗另存为</para>
-        /// </summary> 
-        DialogResult 保存_弹窗(string FileName, T t, out string NewFileName, out string msgerr, Func<string, (bool s, string m)> Event_删除文件 = null);
+  
         bool 打开(string FileName, ref T t, out string msgerr);
         bool 保存(string FileName, T t, out string msgerr);
         /// <summary>

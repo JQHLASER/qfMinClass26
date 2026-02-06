@@ -193,13 +193,13 @@
     <Compile Include="编码2026\编码 Code\配方文件\文件类.cs" />
     <Compile Include="语言\LanguageList.cs" />
     <Compile Include="编码2026\通讯\Server\Iworker_通讯.cs" />
-    <Compile Include="配方_工件\Form_配方.cs">
+    <Compile Include="工件\Form_工件.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="配方_工件\Form_配方.Designer.cs">
-      <DependentUpon>Form_配方.cs</DependentUpon>
+    <Compile Include="工件\Form_工件.Designer.cs">
+      <DependentUpon>Form_工件.cs</DependentUpon>
     </Compile>
-    <Compile Include="配方_工件\配方_工件_.cs" />
+    <Compile Include="工件\工件_.cs" />
     <Compile Include="防重\封装\表_防重_.cs" />
     <Compile Include="防重\封装\防重_封装_.cs" />
     <Compile Include="防重\防重_\_Type防重_.cs" />
@@ -265,8 +265,8 @@
     <EmbeddedResource Include="编码2026\编辑\Win\视图\Form_视图.resx">
       <DependentUpon>Form_视图.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="配方_工件\Form_配方.resx">
-      <DependentUpon>Form_配方.cs</DependentUpon>
+    <EmbeddedResource Include="工件\Form_工件.resx">
+      <DependentUpon>Form_工件.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

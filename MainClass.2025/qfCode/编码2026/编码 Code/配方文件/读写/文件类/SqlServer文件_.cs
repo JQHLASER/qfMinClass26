@@ -71,7 +71,7 @@ namespace qfCode
                         bool rt = _Table.GetList(u => u.FileName == FileName, out List<表.Code26> lst, out string msgErr);
                         if (rt && lst.Count == 0)
                         {
-                            return (rt, Language_.Get语言("未找到文件"), default);
+                            return (rt, Language_.Get语言("未找到文件"), new _配方文件_属性_ ());
                         }
                         else if (rt && lst.Count > 0)
                         {
@@ -79,7 +79,7 @@ namespace qfCode
                         }
                         else
                         {
-                            return (rt, msgErr, default);
+                            return (rt, msgErr, new _配方文件_属性_ ());
                         }
                     }
                 }

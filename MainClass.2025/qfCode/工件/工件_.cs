@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sunny.UI.Win32;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -14,18 +15,18 @@ namespace qfCode
         SQLite,
     }
 
-    public class 配方_工件_<T>
+    public class 工件_<T>
     {
 
         public qfNet.文件_<T> Gj_sys;
         public qfmain._初始化状态_ _初始化状态 = qfmain._初始化状态_.未初始化;
 
 
-        public 配方_工件_(string 文件夹, string 后缀, _em_配方_工件_文件类型_ 类型 = _em_配方_工件_文件类型_.SQLite)
+        public 工件_(string 文件夹, string 后缀, _em_配方_工件_文件类型_ 类型 = _em_配方_工件_文件类型_.SQLite)
         {
             初始化(文件夹, 后缀, 类型);
         }
-        public 配方_工件_()
+        public 工件_()
         {
 
         }
@@ -50,9 +51,6 @@ namespace qfCode
             }
 
         }
-
-
-
 
 
         public (bool s, string m) 保存(string FileName, T Cfg)
@@ -93,31 +91,11 @@ namespace qfCode
         }
 
 
-        /// <summary>
-        /// <para> 返回 DialogResult.Yes ,成功</para>
-        /// <para> 返回 DialogResult.No ,失败</para>
-        /// <para> 返回 其它,None</para>
-        /// 文件名不为空时直接保存
-        /// <para>文件名为空时弹窗另存为</para>
-        /// </summary> 
-        public (DialogResult s, string m, string FileName) 保存_弹窗(string FileName, T cfg)
+        public (DialogResult s, string m, string FileName) 另存为_弹窗(T t, Func<string, (bool s, string m)> Event_删除文件 = null)
         {
-            var rt = Gj_sys._Iwork.保存_弹窗(FileName, cfg, out string NewFileName, out string msgErr, On_弹窗时删除);
-            return (rt, msgErr, NewFileName);
+            DialogResult dlt = Gj_sys._Iwork.另存为_弹窗(t, out string NewFileName, out string msgErr, Event_删除文件);
+            return (dlt, msgErr, NewFileName);
         }
-
-        /// <summary>
-        /// <para> 返回 DialogResult.Yes ,成功</para>
-        /// <para> 返回 DialogResult.No ,失败</para>
-        /// <para> 返回 其它,None</para>
-        /// <para>FileName:源文件名称,为空时为弹窗保存</para>
-        /// </summary> 
-        public (DialogResult s, string msgErr, string NewFileName) 另存为_弹窗(string FileName, T cfg)
-        {
-            var rt = Gj_sys._Iwork.保存_弹窗(FileName, cfg, out string NewFileName, out string msgErr, On_弹窗时删除);
-            return (rt, msgErr, NewFileName);
-        }
-
 
 
 
@@ -132,7 +110,7 @@ namespace qfCode
         /// </summary> 
         public DialogResult Win_设置(Control con)
         {
-            using (Form_配方 forms = new Form_配方(con))
+            using (Form_工件 forms = new Form_工件(con))
             {
                 forms.Load += (s, e) =>
                 {
@@ -142,8 +120,11 @@ namespace qfCode
                 forms.ui_工具栏_文件操作1.Event_新建 += () =>
                 {
                     #region 新建
-
-                    if (MessageBox.Show(Language_.Get语言("新建?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (!Event_forms_是否需要保存(forms))
+                    {
+                        return;
+                    }
+                   else  if (MessageBox.Show(Language_.Get语言("新建?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         On_是否需要保存(forms);
                         Event_forms_新建?.Invoke(forms);
@@ -155,7 +136,10 @@ namespace qfCode
                 {
                     #region 打开
 
-                    On_是否需要保存(forms);
+                    if (!Event_forms_是否需要保存(forms))
+                    {
+                        return;
+                    }
                     var rt = 打开_弹窗();
                     if (rt.s == DialogResult.No)
                     {
@@ -164,7 +148,7 @@ namespace qfCode
                     }
                     else if (rt.s == DialogResult.Yes)
                     {
-                        Event_forms_打开?.Invoke(forms, rt.FileName);
+                        Event_forms_打开?.Invoke(forms, rt.FileName, rt.cfg);
                     }
                     #endregion
                 };
@@ -173,7 +157,7 @@ namespace qfCode
                     #region 保存 
 
                     if (string.IsNullOrWhiteSpace(forms.Text))
-                    { 
+                    {
                         另存为(forms);
                         return;
                     }
@@ -201,12 +185,14 @@ namespace qfCode
                 {
                     #region 退出
 
-                    if (On_是否需要保存(forms))
+                     if (Event_forms_Close != null)
                     {
-                        forms.Close();
-                        return;
+                        if (Event_forms_Close.Invoke(forms))
+                        {
+                            forms.Close();
+                            return;
+                        }
                     }
-
                     #endregion
                 };
 
@@ -218,20 +204,12 @@ namespace qfCode
 
         #region 窗体
 
-        void 另存为(Form_配方 forms)
+        void 另存为(Form_工件 forms)
         {
-            if (Event_forms_另存为 != null)
-            {
-                var rt = Gj_sys._Iwork.弹窗(out string NewFileName, out string msgErr, qfNet._文件弹窗类型_.保存, On_弹窗时删除);
-                if (rt == DialogResult.Yes)
-                {
-                    MessageBox.Show(forms.Text);
-                    Event_forms_另存为?.Invoke(forms, NewFileName);
-                }
-            }
+            Event_forms_另存为?.Invoke(forms);
         }
 
-        bool On_是否需要保存(Form_配方 forms)
+        bool On_是否需要保存(Form_工件 forms)
         {
 
             return Event_forms_是否需要保存 is null ? false : true;
@@ -245,29 +223,32 @@ namespace qfCode
 
         #region 事件
 
-        public event Action<Form_配方> Event_forms_Load;
+        public event Action<Form_工件> Event_forms_Load;
+
+        public event Func<Form_工件, bool> Event_forms_Close;
+
 
         /// <summary>
-        /// 在操作前确认是否需要保存
+        /// 在操作前,确认是否需要保存
         /// </summary>
-        public event Func<Form_配方, bool> Event_forms_是否需要保存;
-        public event Action<Form_配方> Event_forms_保存;
+        public event Func<Form_工件, bool> Event_forms_是否需要保存;
+        public event Action<Form_工件> Event_forms_保存;
 
 
 
-        public event Action<Form_配方> Event_forms_删除当前文件;
+        public event Action<Form_工件> Event_forms_删除当前文件;
 
         /// <summary>
-        /// 已弹出对话框了的
+        /// 未弹出对话框了的
         /// </summary>
-        public event Action<Form_配方, string> Event_forms_另存为;
-        public event Action<Form_配方> Event_forms_新建;
+        public event Action<Form_工件> Event_forms_另存为;
+        public event Action<Form_工件> Event_forms_新建;
 
         /// <summary>
-        /// 参数(Form_配方,文件名称)
-        /// <para>已弹出对话框了的</para>
+        /// 参数(Form_配方,文件名称,信息)
+        /// <para>已弹出对话框了的,已打开,不要重复打开</para>
         /// </summary>
-        public event Action<Form_配方, string> Event_forms_打开;
+        public event Action<Form_工件, string, T> Event_forms_打开;
 
 
 
