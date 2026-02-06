@@ -241,6 +241,33 @@ namespace qfNet
             return rt.s;
         }
 
+        /// <summary>
+        /// <para> 返回 DialogResult.Yes ,成功</para>
+        /// <para> 返回 DialogResult.No ,失败</para>
+        /// <para> 返回 其它,None</para>
+        /// </summary> 
+        public DialogResult 弹窗(out string NewFileName, out string msgerr, _文件弹窗类型_ 类型 = _文件弹窗类型_.打开, Func<string, (bool s, string m)> Event_删除文件 = null)
+        {
+            msgerr = string.Empty;
+            NewFileName = string.Empty;
+            DialogResult dlt = DialogResult.None;
+            var rts = Get目录();
+            msgerr = rts.m;
+            if (rts.s)
+            {
+                var rtDlt = new qfNet.软件类().Win_文件类弹窗(rts.v, this._文件类型, "", _文件弹窗类型_.保存, Event_删除文件);
+                dlt = rtDlt.s;
+
+                if (dlt == DialogResult.OK)
+                {
+                    NewFileName = rtDlt.文件名;
+                    dlt = dlt == DialogResult.OK ? DialogResult.Yes : DialogResult.None;
+                }
+            }
+            return dlt;
+        }
+
+
 
 
         #region 本地方法

@@ -85,12 +85,32 @@ namespace qfNet
                 using (Form_文件_弹窗 forms = new Form_文件_弹窗(目录, 文件类型, 后缀, 类型, Event_删除文件))
                 {
                     dlt = forms.ShowDialog();
-                    FileName = forms._selectedFileName; 
+                    FileName = forms._selectedFileName;
                 }
             }
             return dlt;
         }
 
+        /// <summary>
+        /// <para>File : 文件夹路径</para>
+        /// <para>文件类型 : 文件类型 | 前面的内容</para>
+        /// <para>FileName : 选中的文件路径</para>
+        /// </summary> 
+        public (DialogResult dlt, string m, string 文件名) Win_文件类弹窗(string File, string 文件类型, string 后缀, _文件弹窗类型_ 类型 = _文件弹窗类型_.打开, Func<string, (bool s, string m)> Event_删除文件 = null)
+        {
+            DialogResult dlt = DialogResult.None;
+            string FileName = string.Empty;
+            bool rt = new qfmain.文件_文件夹().文件_获取_文件夹下所有文件名(File, out string[] 目录, out string msgerr, 后缀);
+            if (rt)
+            {
+                using (Form_文件_弹窗 forms = new Form_文件_弹窗(目录, 文件类型, 后缀, 类型, Event_删除文件))
+                {
+                    dlt = forms.ShowDialog();
+                    FileName = forms._selectedFileName;
+                }
+            }
+            return (dlt, msgerr, FileName);
+        }
 
         /// <summary>
         /// <para>文件目录 : 文件目录</para>

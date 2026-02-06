@@ -55,6 +55,11 @@ namespace qfNet
         bool 另存为(string FileName, string NewFileName, out string msgErr);
         bool 删除(string FileName, out string msgErr);
 
-
+        /// <summary>
+        /// <para> 返回 DialogResult.Yes ,成功</para>
+        /// <para> 返回 DialogResult.No ,失败</para>
+        /// <para> 返回 其它,None</para>
+        /// </summary> 
+        DialogResult 弹窗(out string NewFileName, out string msgerr, _文件弹窗类型_ 类型 = _文件弹窗类型_.打开, Func<string, (bool s, string m)> Event_删除文件 = null);
     }
 }

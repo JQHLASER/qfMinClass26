@@ -127,15 +127,14 @@ namespace qfCode
         /// </summary>
         public bool _Is_是否需要保存 = false;
 
-        /// <summary>
-        ///  配方名称 : 要打开的配方名称,空时为新建
+        /// <summary>       
         ///  <para>con : 大小 650*550</para>
         /// </summary> 
-        public DialogResult Win_设置(Control con, string 配方名称)
+        public DialogResult Win_设置(Control con)
         {
             using (Form_配方 forms = new Form_配方(con))
             {
-                forms.Event_进入时 += () =>
+                forms.Load += (s, e) =>
                 {
                     Event_forms_Load?.Invoke(forms);
                 };
@@ -173,23 +172,18 @@ namespace qfCode
                 {
                     #region 保存 
 
+                    if (string.IsNullOrWhiteSpace(forms.Text))
+                    { 
+                        另存为(forms);
+                        return;
+                    }
                     Event_forms_保存?.Invoke(forms);
 
                     #endregion
                 };
                 forms.ui_工具栏_文件操作1.Event_另存为 += () =>
                 {
-                    #region 另存为
-
-                    var rt = Event_forms_另存为.Invoke(forms);
-                    if (rt.dlt == DialogResult.No)
-                    {
-                        MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-
-                    #endregion
+                    另存为(forms);
                 };
                 forms.ui_工具栏_文件操作1.Event_删除 += () =>
                 {
@@ -197,17 +191,7 @@ namespace qfCode
 
                     if (MessageBox.Show(Language_.Get语言("删除?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
-                        var rt = 删除(forms._配方文件名);
-                        if (rt.s)
-                        {
-                            MessageBox.Show(Language_.Get语言("删除成功"));
-                            return;
-                        }
-                        else
-                        {
-                            MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
+                        Event_forms_删除当前文件?.Invoke(forms);
                     }
 
                     #endregion
@@ -232,32 +216,24 @@ namespace qfCode
             }
         }
 
+        #region 窗体
 
-
-        #region 本地方法
-
-        bool 保存(Form_配方 forms, T cfg)
+        void 另存为(Form_配方 forms)
         {
-            this._Is_是否需要保存 = false;
-            var rt = 保存_弹窗(forms._配方文件名, cfg);
-            if (rt.s == DialogResult.No)
+            if (Event_forms_另存为 != null)
             {
-                MessageBox.Show(rt.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            else
-            {
-                return true;
+                var rt = Gj_sys._Iwork.弹窗(out string NewFileName, out string msgErr, qfNet._文件弹窗类型_.保存, On_弹窗时删除);
+                if (rt == DialogResult.Yes)
+                {
+                    MessageBox.Show(forms.Text);
+                    Event_forms_另存为?.Invoke(forms, NewFileName);
+                }
             }
         }
 
-
         bool On_是否需要保存(Form_配方 forms)
         {
-            //if (this._Is_是否需要保存 && MessageBox.Show(Language_.Get语言("是否保存?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            //{
-            //    Event_保存?.Invoke(forms);
-            //}
+
             return Event_forms_是否需要保存 is null ? false : true;
         }
 
@@ -265,8 +241,6 @@ namespace qfCode
 
 
         #endregion
-
-
 
 
         #region 事件
@@ -279,9 +253,20 @@ namespace qfCode
         public event Func<Form_配方, bool> Event_forms_是否需要保存;
         public event Action<Form_配方> Event_forms_保存;
 
-        public event Func<Form_配方, (DialogResult dlt, string m)> Event_forms_另存为;
+
+
+        public event Action<Form_配方> Event_forms_删除当前文件;
+
+        /// <summary>
+        /// 已弹出对话框了的
+        /// </summary>
+        public event Action<Form_配方, string> Event_forms_另存为;
         public event Action<Form_配方> Event_forms_新建;
 
+        /// <summary>
+        /// 参数(Form_配方,文件名称)
+        /// <para>已弹出对话框了的</para>
+        /// </summary>
         public event Action<Form_配方, string> Event_forms_打开;
 
 
@@ -308,6 +293,16 @@ namespace qfCode
 
 
         #endregion
+
+        #region 本地方法
+
+
+
+
+
+
+        #endregion
+
 
         #region Err
 

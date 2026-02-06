@@ -38,8 +38,7 @@ namespace qfLanguage
             new _language_Value_ ( keys, "索引超出范围","索引超出范围"),
             new _language_Value_ ( keys, "请输入分割符","请输入分割符"),
             new _language_Value_ ( keys, "请输入首分割符","请输入首分割符"),
-            new _language_Value_ ( keys, "请输入尾分割符","请输入尾分割符"),
-            new _language_Value_ ( keys, "保存成功","保存成功"),
+            new _language_Value_ ( keys, "请输入尾分割符","请输入尾分割符"),          
             new _language_Value_ ( keys, "首对象时无法添加","首对象时无法添加"),
             new _language_Value_ ( keys, "请选择关联对象","请选择关联对象"),
             new _language_Value_ ( keys, "请选择偏移类型","请选择偏移类型"),
@@ -63,12 +62,11 @@ namespace qfLanguage
             new _language_Value_ ( keys, "分","分"),
 
             new _language_Value_ ( keys, "新建?","新建?"),
-            new _language_Value_ ( keys, "删除?","删除?"),
-            new _language_Value_ ( keys, "删除成功","删除成功"),
+            new _language_Value_ ( keys, "删除?","删除?"),            
             new _language_Value_ ( keys, "无查询条件","无查询条件"),
             new _language_Value_ ( keys, "无此功能","无此功能"),
-
-
+            new _language_Value_ ( keys, "保存成功","保存成功"),
+            new _language_Value_ ( keys, "删除成功","删除成功"),
 
 
 

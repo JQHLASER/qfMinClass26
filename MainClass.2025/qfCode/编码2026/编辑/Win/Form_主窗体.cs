@@ -299,7 +299,7 @@ namespace qfCode
 
 
         }
-         
+
 
         #region 对象
 
@@ -841,9 +841,14 @@ namespace qfCode
             {
                 this._是否要保存 = true;
             }
-            if (!string.IsNullOrEmpty(this._配方名称)
-                    && this._是否要保存
-                    && MessageBox.Show(Language_.Get语言("是否保存?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (this._编辑._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.外部文件)
+            {
+                On_保存(is成功弹窗);
+                return;
+            }
+            else if (!string.IsNullOrEmpty(this._配方名称)
+                         && this._是否要保存
+                         && MessageBox.Show(Language_.Get语言("是否保存?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 On_保存(is成功弹窗);
             }
