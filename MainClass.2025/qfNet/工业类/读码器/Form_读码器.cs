@@ -243,7 +243,7 @@ namespace qfNet
             {
                 return;
             }
-            else if (MessageBox.Show(Language_.Get语言("关闭前是否保存?"), "", MessageBoxButtons.YesNo) == DialogResult.No)
+            else if (MessageBox.Show(Language_.Get语言("关闭前是否保存?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 Save(false);
                 this.DialogResult = DialogResult.OK;

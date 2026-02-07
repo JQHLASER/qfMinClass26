@@ -361,23 +361,40 @@ namespace qfWork
             }
             读写参数(1);
 
-            if (this._参数.通讯方式 == _通讯方式_.TcpClient)
-            {
-                string path = Path.Combine(this._File, $"Tcp.cfg");
-                this.TcpClient_sys = new qfmain.Socket_Client(path, new qfmain._解码_Cfg_(this._前缀_接收, this._后缀_接收, this._参数.读码器.通讯超时));
-                this.TcpClient_sys.Event_接收数据_jm += On_接收数据;
-                this.TcpClient_sys.Event_连接状态 += On_连接状态;
-                await this.TcpClient_sys.Connect连接Async();
-            }
-            else if (this._参数.通讯方式 == _通讯方式_.SerialPort)
-            {
-                string path = Path.Combine(this._File, $"Com.dll");
-                this.Com_sys = new qfmain.SerialPort_(path, new qfmain._解码_Cfg_(this._前缀_接收, this._后缀_接收, this._参数.读码器.通讯超时));
-                this.Com_sys.Event_接收数据_jm += On_接收数据;
-                this.Com_sys.Event_isOpen += On_连接状态;
-                this.Com_sys.初始化(true);
-            }
 
+            string path = Path.Combine(this._File, $"Tcp.cfg");
+            this.TcpClient_sys = new qfmain.Socket_Client(path, new qfmain._解码_Cfg_(this._前缀_接收, this._后缀_接收, this._参数.读码器.通讯超时));
+            this.TcpClient_sys.Event_接收数据_jm += On_接收数据;
+            this.TcpClient_sys.Event_连接状态 += On_连接状态;
+
+            string pathCom = Path.Combine(this._File, $"Com.dll");
+            this.Com_sys = new qfmain.SerialPort_(pathCom, new qfmain._解码_Cfg_(this._前缀_接收, this._后缀_接收, this._参数.读码器.通讯超时));
+            this.Com_sys.Event_接收数据_jm += On_接收数据;
+            this.Com_sys.Event_isOpen += On_连接状态;
+
+            await 连接读码器();
+
+            IsInistiall = true;
+        }
+
+        public virtual async Task 连接读码器()
+        {
+            if (!this._功能.使能)
+            {
+                return;
+            }
+            读写参数(1);
+            if (_参数.使能_读码器)
+            {
+                if (this._参数.通讯方式 == _通讯方式_.TcpClient)
+                {
+                    await this.TcpClient_sys.Connect连接Async();
+                }
+                else if (this._参数.通讯方式 == _通讯方式_.SerialPort)
+                {
+                    this.Com_sys.初始化(true);
+                }
+            }
             IsInistiall = true;
         }
 
@@ -402,6 +419,15 @@ namespace qfWork
             }
 
         }
+
+        public void 断开读码器()
+        {
+            this.TcpClient_sys.Stop关闭连接(out string msgErr);
+            this.Com_sys.Close(out string msgerr);
+        }
+
+
+
 
         private static readonly object _lock = new object();
         public void 读写参数(ushort model)
