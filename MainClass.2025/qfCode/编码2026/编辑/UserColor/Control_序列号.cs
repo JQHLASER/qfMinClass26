@@ -118,6 +118,17 @@ namespace qfCode
             #endregion
 
 
+            int legth开始序号 = this.uiTextBox_开始序号.Text.Length;
+            int legth最大序号 = this.uiTextBox_最大序号.Text.Length;
+            int legth当前序号 = this.uiTextBox_当前序号.Text.Length;
+
+            if (legth开始序号 != legth当前序号
+                && legth开始序号 != legth最大序号)
+            {
+                MessageBox.Show(Language_ .Get语言 ("位数不一致"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false ;
+            }
+
             var rt = new 计算_序列号().序列号_转换成可计算值(this._cfg, out 计算_序列号._fz_序列号_ cfgFz);
             if (!rt.s)
             {

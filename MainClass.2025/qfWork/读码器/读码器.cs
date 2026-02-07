@@ -482,7 +482,7 @@ namespace qfWork
 
             return lst.ToArray();
         }
-         
+
         #endregion
 
 
@@ -974,8 +974,31 @@ namespace qfWork
             return rt;
         }
 
+        public async Task<(bool s, string m, _cfg_读码内容_ cfg)> 检测()
+        {
+            bool rt = true;
+            string msgErr = "";
+            _cfg_读码内容_ cfg = new _cfg_读码内容_();
+            await Task.Run(() =>
+            {
+                rt = 检测(out cfg, out msgErr);
+            });
+            return (rt, msgErr, cfg);
+        }
 
-
+        public async Task<(bool s, string m, _cfg_读码内容_ cfg, _err_ _err)> 读码()
+        {
+            bool rt = true;
+            string msgErr = "";
+            _cfg_读码内容_ cfg = new _cfg_读码内容_();
+            _err_ _err = new _err_();
+            await Task.Run(() =>
+            {
+                rt = 读码(out cfg, out _err, out msgErr);
+            });
+            return (rt, msgErr, cfg, _err);
+        }
+         
 
         #endregion
 

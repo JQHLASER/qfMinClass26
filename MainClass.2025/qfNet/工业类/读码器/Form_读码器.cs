@@ -24,8 +24,8 @@ namespace qfNet
             this.ui_Button2_保存._Button.StyleCustomMode = true;
             this.ui_Button2_保存._Button.Style = Sunny.UI.UIStyle.Blue;
 
-            this.ui_Button2_退出._Button.StyleCustomMode = true;
-            this.ui_Button2_退出._Button.Style = Sunny.UI.UIStyle.Red;
+            this.ui_Button2_关闭._Button.StyleCustomMode = true;
+            this.ui_Button2_关闭._Button.Style = Sunny.UI.UIStyle.Red;
 
             this._lst前后缀 = this._readcode.读取前后缀文件().ToList();
             this.con_前后缀.ui_Combobox2_发送_前缀._ComboBox.DataSource = this._lst前后缀;
@@ -36,7 +36,7 @@ namespace qfNet
             语言();
             this.Text = this._readcode._读码器名称;
 
-            this.ui_Button2_退出.Event_Click += () => Close_();
+            this.ui_Button2_关闭.Event_Click += () => Close_();
             this.ui_Button2_保存.Event_Click += () => Save();
             this.KeyDown += (s, e) => KeyDown_(e);
             this.FormClosing += (s, e) => FormClosing_();
@@ -230,7 +230,11 @@ namespace qfNet
 
         void Close_()
         {
-            if (MessageBox.Show(Language_.Get语言("关闭前是否保存?"), "", MessageBoxButtons.YesNo) == DialogResult.No)
+            if (MessageBox.Show(Language_.Get语言("是否关闭?"), "", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                return;
+            }
+            else if (MessageBox.Show(Language_.Get语言("关闭前是否保存?"), "", MessageBoxButtons.YesNo) == DialogResult.No)
             {
                 Save(false);
                 this.DialogResult = DialogResult.OK;
@@ -245,9 +249,12 @@ namespace qfNet
         {
             if (e.KeyCode == Keys.F12)
             {
-                using (Form_读码器_自定义等级 forms = new Form_读码器_自定义等级(this._readcode))
+                if (new qfNet.软件类().Win_密码输入框(this._readcode._自定义等级密码) == DialogResult.Yes)
                 {
-                    forms.ShowDialog();
+                    using (Form_读码器_自定义等级 forms = new Form_读码器_自定义等级(this._readcode))
+                    {
+                        forms.ShowDialog();
+                    }
                 }
             }
         }

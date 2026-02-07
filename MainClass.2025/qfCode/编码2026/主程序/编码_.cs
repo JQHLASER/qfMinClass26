@@ -360,9 +360,10 @@ namespace qfCode
                                 msg = rtSn.m;
 
                                 //将更新的结果赋值对源数据,保存时使用
-                                if (rt) 配方.对象[i].元素[j] = snStr;
+                                if (rt) 配方文件.对象[i].元素[j] = snStr;
+                                 
                             }
-
+                           
                             #endregion
 
                             break;
@@ -686,7 +687,7 @@ namespace qfCode
 
                             if (rt)
                             {
-                                配方.对象[i].元素[j] = new Json序列化().转成String<_元素_.文本>(rt文本.cfg);
+                                配方文件.对象[i].元素[j] = new Json序列化().转成String<_元素_.文本>(rt文本.cfg);
                             }
 
                             #endregion

@@ -13,9 +13,11 @@ namespace qfNet
 {
     public class 读码器 : qfWork.读码器
     {
-        public 读码器(string 读码器名称 = "读码器", string 文件夹名 = "ReadCode") : base(读码器名称, 文件夹名)
-        {
 
+        internal string _自定义等级密码 = "QF8888";
+        public 读码器(string 读码器名称 = "读码器", string 文件夹名 = "ReadCode", string 自定义等级密码 = "QF8888") : base(读码器名称, 文件夹名)
+        {
+            this._自定义等级密码 = 自定义等级密码;
         }
 
         public override async Task 初始化()

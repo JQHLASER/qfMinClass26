@@ -119,10 +119,7 @@ namespace qfCode
             using (var getDb = new qfSqlSugar.SqlSugar_GetDB(this.FCcode_sys._id))
             {
                 using (var table = new qfSqlSugar.SqlSugar_Table<表_防重_.FC26>(getDb.Db))
-                {
-                    string start = cfg.start.ToString("yyyy-MM-dd HH:mm:ss");
-                    string end = cfg.end.AddDays(1).ToString("yyyy-MM-dd HH:mm:ss");
-
+                { 
                     StringBuilder sb = new StringBuilder($"select * from FC26 where 1=1 ");
                     var pars = new List<SugarParameter>();
 
@@ -140,21 +137,21 @@ namespace qfCode
 
                     if (cfg.Is模糊查询 || string.IsNullOrWhiteSpace(cfg.内容))
                     {
+                        DateTime start = cfg.start;
+                        DateTime end = cfg.end.AddDays(1);
+
                         sb.Append($" and  时间>=@start");
-                        pars.Add(new SugarParameter("@start", start));
+                        pars.Add(new SugarParameter("@start", start.Date));
 
                         sb.Append($" and  时间<=@end");
-                        pars.Add(new SugarParameter("@end", end));
+                        pars.Add(new SugarParameter("@end", end.Date));
 
                     }
                     bool rt = table.GetList(sb.ToString(), pars, out List<表_防重_.FC26> lst, out string msgErr);
                     return (rt, msgErr, lst);
                 }
             }
-
-
-
-
+             
         }
 
 

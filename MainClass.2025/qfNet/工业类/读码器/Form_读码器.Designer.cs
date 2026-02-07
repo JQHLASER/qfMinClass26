@@ -31,13 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_读码器));
             this.uiPanel_控件区 = new Sunny.UI.UIPanel();
             this.uiPanel2 = new Sunny.UI.UIPanel();
-            this.ui_Button2_保存 = new Sunny.ui_Button2();
-            this.ui_Button2_退出 = new Sunny.ui_Button2();
             this.uiRadioButton_前后缀 = new Sunny.UI.UIRadioButton();
             this.uiRadioButton_评级 = new Sunny.UI.UIRadioButton();
             this.uiRadioButton_检测 = new Sunny.UI.UIRadioButton();
             this.uiRadioButton_读码器 = new Sunny.UI.UIRadioButton();
             this.uiRadioButton_功能 = new Sunny.UI.UIRadioButton();
+            this.ui_Button2_关闭 = new Sunny.ui_Button2();
+            this.ui_Button2_保存 = new Sunny.ui_Button2();
             this.uiPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,7 +64,7 @@
             // uiPanel2
             // 
             this.uiPanel2.Controls.Add(this.ui_Button2_保存);
-            this.uiPanel2.Controls.Add(this.ui_Button2_退出);
+            this.uiPanel2.Controls.Add(this.ui_Button2_关闭);
             this.uiPanel2.Controls.Add(this.uiRadioButton_前后缀);
             this.uiPanel2.Controls.Add(this.uiRadioButton_评级);
             this.uiPanel2.Controls.Add(this.uiRadioButton_检测);
@@ -84,51 +84,6 @@
             this.uiPanel2.StyleCustomMode = true;
             this.uiPanel2.TabIndex = 6;
             this.uiPanel2.Text = null;
-            // 
-            // ui_Button2_保存
-            // 
-            this.ui_Button2_保存.BackColor = System.Drawing.Color.Transparent;
-            this.ui_Button2_保存.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ui_Button2_保存.Location = new System.Drawing.Point(5, 462);
-            this.ui_Button2_保存.Name = "ui_Button2_保存";
-            this.ui_Button2_保存.Padding = new System.Windows.Forms.Padding(1);
-            this.ui_Button2_保存.Radius_圆角 = 5;
-            this.ui_Button2_保存.Size = new System.Drawing.Size(140, 45);
-            this.ui_Button2_保存.TabIndex = 7;
-            this.ui_Button2_保存.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ui_Button2_保存.Text文本 = "保存";
-            this.ui_Button2_保存.文本颜色 = System.Drawing.Color.White;
-            this.ui_Button2_保存.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
-            this.ui_Button2_保存.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button2_保存.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
-            this.ui_Button2_保存.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
-            this.ui_Button2_保存.边框颜色 = System.Drawing.Color.Silver;
-            this.ui_Button2_保存.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
-            this.ui_Button2_保存.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
-            this.ui_Button2_保存.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
-            // 
-            // ui_Button2_退出
-            // 
-            this.ui_Button2_退出.BackColor = System.Drawing.Color.Transparent;
-            this.ui_Button2_退出.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ui_Button2_退出.Location = new System.Drawing.Point(5, 507);
-            this.ui_Button2_退出.Name = "ui_Button2_退出";
-            this.ui_Button2_退出.Padding = new System.Windows.Forms.Padding(1);
-            this.ui_Button2_退出.Radius_圆角 = 5;
-            this.ui_Button2_退出.Size = new System.Drawing.Size(140, 45);
-            this.ui_Button2_退出.TabIndex = 6;
-            this.ui_Button2_退出.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ui_Button2_退出.Text文本 = "退出";
-            this.ui_Button2_退出.UseWaitCursor = true;
-            this.ui_Button2_退出.文本颜色 = System.Drawing.Color.White;
-            this.ui_Button2_退出.背景颜色 = System.Drawing.Color.Red;
-            this.ui_Button2_退出.背景颜色_鼠标按下 = System.Drawing.Color.Red;
-            this.ui_Button2_退出.背景颜色_鼠标移上 = System.Drawing.Color.Red;
-            this.ui_Button2_退出.背景颜色_鼠标选中 = System.Drawing.Color.Red;
-            this.ui_Button2_退出.边框颜色 = System.Drawing.Color.Silver;
-            this.ui_Button2_退出.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
-            this.ui_Button2_退出.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
-            this.ui_Button2_退出.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
             // 
             // uiRadioButton_前后缀
             // 
@@ -200,6 +155,50 @@
             this.uiRadioButton_功能.TabIndex = 1;
             this.uiRadioButton_功能.Text = "功能";
             // 
+            // ui_Button2_关闭
+            // 
+            this.ui_Button2_关闭.BackColor = System.Drawing.Color.Transparent;
+            this.ui_Button2_关闭.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.ui_Button2_关闭.Location = new System.Drawing.Point(5, 507);
+            this.ui_Button2_关闭.Name = "ui_Button2_关闭";
+            this.ui_Button2_关闭.Padding = new System.Windows.Forms.Padding(1);
+            this.ui_Button2_关闭.Radius_圆角 = 5;
+            this.ui_Button2_关闭.Size = new System.Drawing.Size(140, 45);
+            this.ui_Button2_关闭.TabIndex = 8;
+            this.ui_Button2_关闭.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ui_Button2_关闭.Text文本 = "关闭";
+            this.ui_Button2_关闭.文本颜色 = System.Drawing.Color.White;
+            this.ui_Button2_关闭.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+            this.ui_Button2_关闭.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button2_关闭.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
+            this.ui_Button2_关闭.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button2_关闭.边框颜色 = System.Drawing.Color.Silver;
+            this.ui_Button2_关闭.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
+            this.ui_Button2_关闭.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
+            this.ui_Button2_关闭.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
+            // 
+            // ui_Button2_保存
+            // 
+            this.ui_Button2_保存.BackColor = System.Drawing.Color.Transparent;
+            this.ui_Button2_保存.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.ui_Button2_保存.Location = new System.Drawing.Point(5, 462);
+            this.ui_Button2_保存.Name = "ui_Button2_保存";
+            this.ui_Button2_保存.Padding = new System.Windows.Forms.Padding(1);
+            this.ui_Button2_保存.Radius_圆角 = 5;
+            this.ui_Button2_保存.Size = new System.Drawing.Size(140, 45);
+            this.ui_Button2_保存.TabIndex = 9;
+            this.ui_Button2_保存.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ui_Button2_保存.Text文本 = "保存";
+            this.ui_Button2_保存.文本颜色 = System.Drawing.Color.White;
+            this.ui_Button2_保存.背景颜色 = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+            this.ui_Button2_保存.背景颜色_鼠标按下 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button2_保存.背景颜色_鼠标移上 = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(168)))), ((int)(((byte)(255)))));
+            this.ui_Button2_保存.背景颜色_鼠标选中 = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(131)))), ((int)(((byte)(229)))));
+            this.ui_Button2_保存.边框颜色 = System.Drawing.Color.Silver;
+            this.ui_Button2_保存.边框颜色_鼠标按下 = System.Drawing.Color.Silver;
+            this.ui_Button2_保存.边框颜色_鼠标移上 = System.Drawing.Color.Silver;
+            this.ui_Button2_保存.边框颜色_鼠标选中 = System.Drawing.Color.Silver;
+            // 
             // Form_读码器
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -230,6 +229,6 @@
         private Sunny.UI.UIRadioButton uiRadioButton_读码器;
         private Sunny.UI.UIRadioButton uiRadioButton_功能;
         private Sunny.ui_Button2 ui_Button2_保存;
-        private Sunny.ui_Button2 ui_Button2_退出;
+        private Sunny.ui_Button2 ui_Button2_关闭;
     }
 }
