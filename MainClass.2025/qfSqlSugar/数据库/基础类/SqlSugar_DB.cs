@@ -2,6 +2,7 @@
 using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
@@ -75,36 +76,42 @@ SqlServer 数据库....使用最新库
 
         public SqlSugarScope Db;
         int _超时时间 = 10 * 1000;
+        List<ConnectionConfig> _lstConnentionConfig = new List<ConnectionConfig>();
+
+
+
         /// <summary>
         /// 支持多库,非事件模式,直接传入ConnectionConfig
+        /// <para>手动调用优化</para>      
         /// </summary>   
-        public virtual async Task<(bool s, string m)> 初始化(List<ConnectionConfig> lst, int 超时时间 = 1000 * 10)
+        public virtual (bool s, string m) 初始化(List<ConnectionConfig> lst, int 超时时间 = 1000 * 10)
         {
+            this._lstConnentionConfig = lst;
             this._超时时间 = 超时时间;
             string msgErr = string.Empty;
             if (lst is null || lst.Count == 0)
             {
-                this.Db = null;
-                //  msgErr = "ConnectionConfig " + qfmain.Language_.Get语言("不能为空");
+                #region 为空时初始化
+
+                string str = 生成连接字符串(new _cfg_SQLite_ { Path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "$%^mdb.db") });
+                var connet = 生成连接信息(str, "&&&^#@$%", DbType.Sqlite);
+                lst.Add(connet);
+                _lstConnentionConfig.Add(connet);
+                this.Db = new SqlSugarScope(lst);
+
                 Event_初始化结束?.Invoke(true, this);
                 Event_初始化结束1?.Invoke(true, msgErr, this);
                 return (true, msgErr);
-            }
-            bool rt = true;
 
+                #endregion
+            }
+
+            #region 正常初始化
+
+            bool rt = true;
             try
             {
                 this.Db = new SqlSugarScope(lst);
-                if (超时时间 <= 0) this.Db.Ado.CommandTimeOut = 1000 * 10;
-
-                var tasks = new List<Task>();
-                foreach (ConnectionConfig config in lst)
-                {
-                    tasks.Add(Task.Run(() => { 优化(config); }));
-                }
-
-                // 等待所有数据库初始化完成
-                await Task.WhenAll(tasks);
             }
             catch (Exception ex)
             {
@@ -114,21 +121,25 @@ SqlServer 数据库....使用最新库
             Event_初始化结束?.Invoke(rt, this);
             Event_初始化结束1?.Invoke(rt, msgErr, this);
             return (rt, msgErr);
+
+            #endregion
         }
 
         /// <summary>
-        /// 支持多库,事件模式
+        /// 支持多库,事件模式 
+        /// <para>手动调用优化</para>
         /// </summary>       
-        public virtual async Task<(bool s, string m)> 初始化(int 超时时间 = 1000 * 10)
+        public virtual (bool s, string m) 初始化(int 超时时间 = 1000 * 10)
         {
             List<ConnectionConfig> lst = new List<ConnectionConfig>();
             On_Event_ConnectionConfig(lst, this);
-            return await 初始化(lst, 超时时间);
+            return 初始化(lst, 超时时间);
         }
 
         /// <summary>
         /// 多库时使用
         /// <para>id 连接数据库的id</para>
+        /// <para>也可以不使用On_Event_ConnectionConfig事件,直接在初始化结束时添加</para>
         /// </summary>     
         public virtual ConnectionConfig 生成连接信息(string 连接字符串, string id, SqlSugar.DbType DbType)
         {
@@ -191,32 +202,43 @@ SqlServer 数据库....使用最新库
 
         #region 优化
 
-        internal void 优化(ConnectionConfig config)
+        public (bool s, string m) 优化数据库(ConnectionConfig config)
         {
+            if (config is null)
+            {
+                return (false, "config is null");
+            }
+
+            if (this._超时时间 <= 0) this.Db.Ado.CommandTimeOut = 1000 * 10;
             using (var dbTemp = new SqlSugarScope(config))
             {
+                if (this._超时时间 <= 0) this.Db.Ado.CommandTimeOut = 1000 * 10;
                 switch (config.DbType)
                 {
                     case DbType.Sqlite:
-                        优化_Sqlite(dbTemp);
-                        break;
-
+                        return 优化_Sqlite(dbTemp);
                     case DbType.SqlServer:
-                        优化_SqlServer(dbTemp);
-                        break;
-
+                        return 优化_SqlServer(dbTemp);
                     case DbType.MySql:
-                        优化_MySql(dbTemp);
-                        break;
-
+                        return 优化_MySql(dbTemp);
                     default:
-                        throw new NotSupportedException($"not type,{config.DbType}");
+                        return (false, $"not type,{config.DbType}");
                 }
             }
-
         }
-
-
+        public (bool s, string m) 优化数据库(string id)
+        {
+            var dict = this._lstConnentionConfig
+                    .ToDictionary(c => c.ConfigId.ToString(), c => c, StringComparer.OrdinalIgnoreCase);
+            if (dict.TryGetValue(id, out var cfg))
+            {
+              return   优化数据库(cfg);
+            }
+            else
+            {
+                return (false, "id is null");
+            }
+        }
 
         (bool s, string m) 优化_Sqlite(SqlSugarScope db_)
         {
@@ -422,29 +444,48 @@ SqlServer 数据库....使用最新库
         /// <summary>
         /// Db中是否存在指定id
         /// </summary> 
-        public bool 是否存在id(string id)
+        public bool id是否存在(string id)
         {
             return Db.IsAnyConnection(id);
 
         }
 
+
+        private static readonly object _lockAdd = new object();
         /// <summary>
         /// /加入ConnectionConfig
         /// </summary>
         /// <param name="cfg"></param>
         public void Add加入(ConnectionConfig cfg)
         {
-            if (this.Db is null)
+            lock (_lockAdd)
             {
-                this.Db = new SqlSugarScope(cfg);
-                if (this._超时时间 <= 0) this.Db.Ado.CommandTimeOut = 1000 * 10;
+                if (this.Db is null)
+                {
+                    this.Db = new SqlSugarScope(cfg);
+                }
+                else
+                {
+                    var tenant = this.Db.AsTenant();
+                    if (tenant.IsAnyConnection(cfg.ConfigId))
+                    {
+                        tenant.RemoveConnection(cfg.ConfigId);
+                    }
+                    tenant.AddConnection(cfg);
+                }
             }
-            else
-            {
-                Db.AddConnection(cfg);
-            }
-            优化(cfg);
+            优化数据库(cfg);
         }
+
+        private static readonly object _lock = new object();
+
+
+
+
+
+
+
+
 
         /// <summary>
         /// ID或 ConnectionConfig
@@ -596,7 +637,7 @@ SqlServer 数据库....使用最新库
                 }
 
             }
-            if (rt && is优化) 优化(cfg);
+            if (rt && is优化) 优化数据库(cfg);
             return (rt, msg);
         }
 
@@ -687,7 +728,7 @@ SqlServer 数据库....使用最新库
                 }
 
             }
-            if (rt && is优化) 优化(cfg);
+            if (rt && is优化) 优化数据库(cfg);
             return (rt, msg);
         }
 

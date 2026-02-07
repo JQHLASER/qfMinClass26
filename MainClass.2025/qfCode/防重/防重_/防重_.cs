@@ -18,16 +18,24 @@ namespace qfCode
         public string _id = "FC26";
         public qfmain._初始化状态_ _初始化状态 = qfmain._初始化状态_.未初始化;
 
+        /// <summary>
+        /// 数据库连接参数
+        /// </summary>
+        public SqlSugar.ConnectionConfig config = null;
         public void 初始化(_Type防重_._em_数据库格式_ 数据库格式 = _Type防重_._em_数据库格式_.SQLite)
         {
             new qfmain.文件_文件夹().文件夹_新建(this._SQLiteFC, out string msgErr);
             On_初始化状态(qfmain._初始化状态_.初始化中, "");
-          
+            qfSqlSugar.SqlSugar_DB_封装._DB.Event_ConnectionConfig += (s, db) =>
+            {
+                config = 生成连接参数_ConnectionConfig(数据库格式);
+                s.Add(config);
+            };
         }
 
         public SqlSugar.ConnectionConfig 生成连接参数_ConnectionConfig(_Type防重_._em_数据库格式_ 数据库格式 = _Type防重_._em_数据库格式_.SQLite)
         {
-            SqlSugar.ConnectionConfig config=null;
+            SqlSugar.ConnectionConfig config = null;
             switch (数据库格式)
             {
                 case _Type防重_._em_数据库格式_.SQLite:
@@ -37,7 +45,7 @@ namespace qfCode
                     string path = Path.Combine(this._SQLiteFC, "FC26.db");
                     string conStr = qfSqlSugar.SqlSugar_DB_封装._DB.生成连接字符串(new qfSqlSugar._cfg_SQLite_ { Path = path });
                     config = qfSqlSugar.SqlSugar_DB_封装._DB.生成连接信息(conStr, this._id, SqlSugar.DbType.Sqlite);
-                    
+
                     #endregion
 
                     break;
@@ -50,7 +58,7 @@ namespace qfCode
                     qfSqlSugar.SqlSugar_DB_封装._DB.读取参数<qfSqlSugar._cfg_SQLserver_>(1, ref cfgServer, pathServer, out string msgErr1);
                     string conStrServer = qfSqlSugar.SqlSugar_DB_封装._DB.生成连接字符串(cfgServer);
                     config = qfSqlSugar.SqlSugar_DB_封装._DB.生成连接信息(conStrServer, this._id, SqlSugar.DbType.SqlServer);
-                   
+
                     #endregion
 
                     break;

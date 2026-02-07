@@ -184,13 +184,13 @@ namespace qfNet
                     #region 本地
 
 
-                    string path = Path.Combine(qfmain.软件类.Files_Cfg.Files_sysConfig, "\\login.dll");
+                    string path = Path.Combine(qfmain.软件类.Files_Cfg.Files_sysConfig, "login.dll");
                     if (!new qfmain.文件_文件夹().文件_是否存在(path))
                     {
                         this._Config.loginInfo_Beff = 生成原始数据();
                     }
                     _loginInfo_[] info = this._Config.loginInfo_Beff.Select(i => i.Clone()).ToArray();
-                    new qfmain.文件_文件夹().WriteReadJson(path, model, ref info, out string msgErr, qfmain._em_json类型_.SystemIOjsontext, null, true);
+                    new qfmain.文件_文件夹().WriteReadJson(path, model, ref info, out string msgErr, qfmain._em_json类型_.NewtonsoftJson , null, true);
                     this._Config.loginInfo_Beff = info;
 
                     #endregion

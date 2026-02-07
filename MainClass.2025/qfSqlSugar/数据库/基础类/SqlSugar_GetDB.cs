@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace qfSqlSugar
 {
@@ -26,7 +27,7 @@ namespace qfSqlSugar
         /// id:连接数据库的ID
         /// </summary> 
         public SqlSugar_GetDB(SqlSugar_DB Db_, string id)
-        {
+        { 
             this._scope = Db_.Db.CopyNew();
             this.Db = this._scope.GetConnection(id);
         }
@@ -42,7 +43,7 @@ namespace qfSqlSugar
             var rt = Db_.Is连接是否有效(Db_, id, cfg, Is先删后加_cfg, 模式);
             _Is线程是否有效 = rt.s;
             if (_Is线程是否有效)
-            {
+            { 
                 this._scope = Db_.Db.CopyNew();
                 this.Db = this._scope.GetConnection(id);
             }
@@ -79,10 +80,7 @@ namespace qfSqlSugar
             }
         }
 
-
-
-
-
+         
 
         /// <summary>
         /// 打开,一般不用,远程数据库时可以用

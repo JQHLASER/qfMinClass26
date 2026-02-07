@@ -24,25 +24,27 @@ namespace qfCode
             this._path = Path.Combine(this._CodeSys._文件夹_属性.参数, "SqlServer_Code26.txt");
 
             this._CodeSys.On_初始化状态(qfmain._初始化状态_.初始化中, "");
-
-           
-            qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += (s, m, db) =>
+            SqlSugar.ConnectionConfig config = null;
+            qfSqlSugar.SqlSugar_DB_封装._DB .Event_ConnectionConfig += (s, db) =>
+            {
+                qfSqlSugar._cfg_SQLserver_ cfgSqlserver = new qfSqlSugar._cfg_SQLserver_
+                {
+                    数据库地址 = "127.0.0.1",
+                    数据库名称 = "Code26",
+                    用户 = "sa",
+                    密码 = "QF8888",
+                };
+                db.读取参数<qfSqlSugar._cfg_SQLserver_>(1, ref cfgSqlserver, this._path, out string msgErr);
+                  config = db.生成连接信息(
+                            db.生成连接字符串(cfgSqlserver)
+                           , this._ConfigID, SqlSugar.DbType.SqlServer);
+                s.Add(config);
+            };
+            qfSqlSugar.SqlSugar_DB_封装._DB .Event_初始化结束1 += (s, m, db) =>
             {
                 if (s)
                 {
-                    qfSqlSugar._cfg_SQLserver_ cfgSqlserver = new qfSqlSugar._cfg_SQLserver_
-                    {
-                        数据库地址 = "127.0.0.1",
-                        数据库名称 = "Code26",
-                        用户 = "sa",
-                        密码 = "QF8888",
-                    };
-                    db.读取参数<qfSqlSugar._cfg_SQLserver_>(1, ref cfgSqlserver, this._path, out string msgErr);
-                    var str = db.生成连接信息(
-                                db.生成连接字符串(cfgSqlserver)
-                               , this._ConfigID, SqlSugar.DbType.SqlServer);
-                    db.Add加入(str);
-
+                    db.优化数据库(_ConfigID );
                     (bool s, string m, _配方文件_属性_ cfg) rt = Read("text^%&");
                     this._CodeSys._初始化状态 = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
                     this._CodeSys.On_初始化状态(this._CodeSys._初始化状态, rt.m);

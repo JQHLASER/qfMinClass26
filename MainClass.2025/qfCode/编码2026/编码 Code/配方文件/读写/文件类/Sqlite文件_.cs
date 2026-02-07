@@ -27,20 +27,22 @@ namespace qfCode
             this._path = Path.Combine(this._CodeSys._文件夹_属性.参数, "Code26.db");
 
             this._CodeSys.On_初始化状态(qfmain._初始化状态_.初始化中, "");
-
+            SqlSugar.ConnectionConfig config = null;
+            qfSqlSugar.SqlSugar_DB_封装.Event_ConnectionConfig += (s, db) =>
+            {
+                config = db.生成连接信息(
+                        db.生成连接字符串(new qfSqlSugar._cfg_SQLite_
+                        {
+                            Path = this._path,
+                        })
+                        , this._ConfigID, SqlSugar.DbType.Sqlite);
+                s.Add(config);
+            };
             qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += (s, m, db) =>
              {
                  if (s)
                  {
-
-                     var connet = db.生成连接信息(
-                          db.生成连接字符串(new qfSqlSugar._cfg_SQLite_
-                          {
-                              Path = this._path,
-                          })
-                          , this._ConfigID, SqlSugar.DbType.Sqlite);
-                     db.Add加入 (connet);
-
+                     db.优化数据库(_ConfigID );
                      (bool s, string m, _配方文件_属性_ cfg) rt = Read("text^%&");
                      this._CodeSys._初始化状态 = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
                      this._CodeSys.On_初始化状态(this._CodeSys._初始化状态, rt.m);

@@ -1011,13 +1011,23 @@ namespace qfmain
                                 break;
                         }
 
+
                         if (rt)
                         {
                             if (加密)
                             {
                                 vxt = new 加解密().AES加密2(vxt, 密码);
                             }
-                            new 文本().Save_25(path, vxt, true, out msgErr, false, encoding_);
+
+                            new qfmain.文件_文件夹().文件_获取文件名_含后缀(path, out string Name, out string msgErr1);
+                            string path_临时 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"_{Name}.bak");
+                            new 文本().Save_25(path_临时, vxt, true, out msgErr, false, encoding_);
+
+                            if (!new 文件_文件夹().文件_是否存在(path))
+                            {
+                                new 文件_文件夹().文件_新建(path); 
+                            } 
+                            File.Replace(path_临时, path, null);
                         }
 
                     }
@@ -1103,8 +1113,15 @@ namespace qfmain
                         {
                             vxt = new 加解密_AES().加密_1(vxt, 密码);
                         }
-                        new 文本().Save_25(path, vxt, true, out msgErr, false, encoding_);
 
+                        new qfmain.文件_文件夹().文件_获取文件名_含后缀(path, out string Name, out string msgErr1);
+                        string path_临时 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"_{Name}.bak");
+                        new 文本().Save_25(path_临时, vxt, true, out msgErr, false, encoding_);
+                        if (!new 文件_文件夹().文件_是否存在(path))
+                        {
+                            new 文件_文件夹().文件_新建(path);
+                        }
+                        File.Replace(path_临时, path, null);//将临时文件替换到要保存的文件
 
                     }
                     else if (s == "读")
@@ -1193,18 +1210,23 @@ namespace qfmain
                                 break;
                         }
 
+                        new qfmain.文件_文件夹().文件_获取文件名_含后缀(path, out string Name, out string msgErr1);
+                        string path_临时 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"_{Name}.bak");
 
                         switch (ini类型)
                         {
                             case _em_ini类型_.Win:
-                                new ini_win().Write(section, key_, vxt, path);
+                                new ini_win().Write(section, key_, vxt, path_临时);
                                 break;
                             case _em_ini类型_.sharpconfig:
-                                new ini_sharpconfig(path).Write(section, key_, vxt, true);
+                                new ini_sharpconfig(path_临时).Write(section, key_, vxt, true);
                                 break;
                         }
-
-
+                        if (!new 文件_文件夹().文件_是否存在(path))
+                        {
+                            new 文件_文件夹().文件_新建(path);
+                        }
+                        File.Replace(path_临时, path, null);
 
                     }
                     else if (s == "读")
@@ -1292,18 +1314,23 @@ namespace qfmain
                             continue;
                         }
 
-
+                        new qfmain.文件_文件夹().文件_获取文件名_含后缀(path, out string Name, out string msgErr1);
+                        string path_临时 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"_{Name}.bak");
 
                         switch (ini类型)
                         {
                             case _em_ini类型_.Win:
-                                new ini_win().Write(section, key_, cfg, path);
+                                new ini_win().Write(section, key_, cfg, path_临时);
                                 break;
                             case _em_ini类型_.sharpconfig:
-                                new ini_sharpconfig(path).Write(section, key_, cfg, true);
+                                new ini_sharpconfig(path_临时).Write(section, key_, cfg, true);
                                 break;
                         }
-
+                        if (!new 文件_文件夹().文件_是否存在(path))
+                        {
+                            new 文件_文件夹().文件_新建(path);
+                        }
+                        File.Replace(path_临时, path, null);
 
                     }
                     else if (s == "读")

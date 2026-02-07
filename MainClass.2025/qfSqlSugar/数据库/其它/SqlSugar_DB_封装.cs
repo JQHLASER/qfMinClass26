@@ -20,7 +20,7 @@ namespace qfSqlSugar
         /// <summary>
         /// 多数据库时,通过Event_ConnectionConfig事件配置完后,最后执行初始化
         /// </summary> 
-        public static async Task<(bool s, string m)> 初始化(int 超时时间 = 1000 * 10)
+        public static  (bool s, string m) 初始化(int 超时时间 = 1000 * 10)
         {
             _DB.Event_ConnectionConfig += (s, e) =>
             {
@@ -32,7 +32,7 @@ namespace qfSqlSugar
                 Event_初始化结束?.Invoke(s, m, e);
             };
 
-            return await _DB.初始化(超时时间);
+            return   _DB.初始化(超时时间);
         }
 
           

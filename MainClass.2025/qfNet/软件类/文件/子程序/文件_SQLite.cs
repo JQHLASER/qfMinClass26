@@ -32,27 +32,31 @@ namespace qfNet
 
             this._path = Path.Combine(this._File, "Code26.db");
 
-            On_初始化状态(qfmain._初始化状态_.初始化中, ""); 
-            qfSqlSugar.SqlSugar_DB_封装._DB.Event_初始化结束1 += async (s, m, db) =>
+            On_初始化状态(qfmain._初始化状态_.初始化中, "");
+            SqlSugar.ConnectionConfig config = null;
+            qfSqlSugar.SqlSugar_DB_封装._DB.Event_ConnectionConfig += async (s, db) =>
             {
-                if (s)
+                string conStr = db.生成连接字符串(new qfSqlSugar._cfg_SQLite_
                 {
-                    string conStr = db.生成连接字符串(new qfSqlSugar._cfg_SQLite_
-                    {
-                        Path = this._path,
-                    });
-                    var connent = db.生成连接信息(conStr, this._ConfigID, SqlSugar.DbType.Sqlite);
-                    db.Add加入(connent);
-
-                    (bool s, string m, T cfg) rt = Read("text^%&");
-                    this._初始化状态 = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
-                    this.On_初始化状态(this._初始化状态, rt.m);
-                }
-                else
-                {
-                    this.On_初始化状态(qfmain._初始化状态_.未初始化, m);
-                }
+                    Path = this._path,
+                });
+                config = db.生成连接信息(conStr, this._ConfigID, SqlSugar.DbType.Sqlite);
+                s.Add(config);
             };
+            qfSqlSugar.SqlSugar_DB_封装._DB.Event_初始化结束1 += async (s, m, db) =>
+        {
+            if (s)
+            {
+                db.优化数据库(_ConfigID );
+                (bool s, string m, T cfg) rt = Read("text^%&");
+                this._初始化状态 = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
+                this.On_初始化状态(this._初始化状态, rt.m);
+            }
+            else
+            {
+                this.On_初始化状态(qfmain._初始化状态_.未初始化, m);
+            }
+        };
         }
 
 
@@ -70,7 +74,7 @@ namespace qfNet
 
         public bool 文件是否存在(string FileName)
         {
-            using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(qfSqlSugar.SqlSugar_DB_封装._DB, _ConfigID))
+            using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(_ConfigID))
             {
                 using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
                 {
@@ -239,7 +243,7 @@ namespace qfNet
             lock (_lock)
             {
 
-                using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(qfSqlSugar.SqlSugar_DB_封装._DB, _ConfigID))
+                using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(_ConfigID))
                 {
                     using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
                     {
@@ -273,7 +277,7 @@ namespace qfNet
                     FileName = FileName,
                     CodeValue = new qfmain.Json_().序列化<T>(cfg).v,
                 };
-                using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(qfSqlSugar.SqlSugar_DB_封装._DB, _ConfigID))
+                using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(_ConfigID))
                 {
                     using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
                     {
@@ -296,7 +300,7 @@ namespace qfNet
         {
             lock (_lock)
             {
-                using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(qfSqlSugar.SqlSugar_DB_封装._DB, _ConfigID))
+                using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(_ConfigID))
                 {
                     using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
                     {
@@ -347,7 +351,7 @@ namespace qfNet
             bool rt = true;
             string msgErr = string.Empty;
             string[] v = new string[0];
-            using (var db_ = new qfSqlSugar.SqlSugar_GetDB(qfSqlSugar.SqlSugar_DB_封装._DB, _ConfigID))
+            using (var db_ = new qfSqlSugar.SqlSugar_GetDB(_ConfigID))
             {
                 using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
                 {
