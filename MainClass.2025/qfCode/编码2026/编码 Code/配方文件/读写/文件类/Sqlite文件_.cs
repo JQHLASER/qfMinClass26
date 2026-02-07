@@ -27,24 +27,21 @@ namespace qfCode
             this._path = Path.Combine(this._CodeSys._文件夹_属性.参数, "Code26.db");
 
             this._CodeSys.On_初始化状态(qfmain._初始化状态_.初始化中, "");
-            qfSqlSugar.SqlSugar_DB_封装.Event_ConnectionConfig += (s, e) =>
-            {
-                #region 连接数据库
 
-                s.Add(e.生成连接信息(
-                      e.生成连接字符串(new qfSqlSugar._cfg_SQLite_
-                      {
-                          Path = this._path,
-                      })
-                      , this._ConfigID, SqlSugar.DbType.Sqlite));
-
-                #endregion
-            };
-            qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += (s, m, e) =>
+            qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += (s, m, db) =>
              {
                  if (s)
                  {
-                     (bool s, string m, _配方文件_属性_ cfg) rt = Read("text^%&" );
+
+                     var connet = db.生成连接信息(
+                          db.生成连接字符串(new qfSqlSugar._cfg_SQLite_
+                          {
+                              Path = this._path,
+                          })
+                          , this._ConfigID, SqlSugar.DbType.Sqlite);
+                     db.Add加入 (connet);
+
+                     (bool s, string m, _配方文件_属性_ cfg) rt = Read("text^%&");
                      this._CodeSys._初始化状态 = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
                      this._CodeSys.On_初始化状态(this._CodeSys._初始化状态, rt.m);
                  }
@@ -55,7 +52,7 @@ namespace qfCode
              };
         }
 
-        public (bool s, string m, _配方文件_属性_ cfg) Read(string FileName )
+        public (bool s, string m, _配方文件_属性_ cfg) Read(string FileName)
         {
             lock (_lock)
             {
@@ -65,9 +62,9 @@ namespace qfCode
                     using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
                     {
                         bool rt = _Table.GetList(u => u.FileName == FileName, out List<表.Code26> lst, out string msgErr);
-                       if (rt && lst.Count == 0)
+                        if (rt && lst.Count == 0)
                         {
-                            return (rt , Language_.Get语言("未找到文件"), new _配方文件_属性_ ());
+                            return (rt, Language_.Get语言("未找到文件"), new _配方文件_属性_());
                         }
                         else if (rt && lst.Count > 0)
                         {
@@ -75,14 +72,14 @@ namespace qfCode
                         }
                         else
                         {
-                            return (rt, msgErr,new _配方文件_属性_ ());
+                            return (rt, msgErr, new _配方文件_属性_());
                         }
                     }
                 }
             }
 
         }
- 
+
         public (bool s, string m) Save(string FileName, _配方文件_属性_ cfg)
         {
             lock (_lock)

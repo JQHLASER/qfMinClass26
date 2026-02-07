@@ -243,7 +243,7 @@ namespace qfLanguage
             new _language_Value_ (keys,"无数据","无数据"),
             new _language_Value_ (keys,"页码超出范围","页码超出范围"),
             new _language_Value_ (keys,"未找到文件","未找到文件"),
-            
+            new _language_Value_ (keys,"未使能","未使能"),
             
 
 

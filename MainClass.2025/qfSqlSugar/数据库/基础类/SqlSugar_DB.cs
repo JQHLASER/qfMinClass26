@@ -74,26 +74,26 @@ SqlServer 数据库....使用最新库
         #endregion
 
         public SqlSugarScope Db;
-
+        int _超时时间 = 10 * 1000;
         /// <summary>
         /// 支持多库,非事件模式,直接传入ConnectionConfig
         /// </summary>   
         public virtual async Task<(bool s, string m)> 初始化(List<ConnectionConfig> lst, int 超时时间 = 1000 * 10)
         {
+            this._超时时间 = 超时时间;
             string msgErr = string.Empty;
             if (lst is null || lst.Count == 0)
             {
-                msgErr = "ConnectionConfig " + qfmain.Language_.Get语言("不能为空");               
-                //Event_初始化结束?.Invoke(false , this);
-                //Event_初始化结束1?.Invoke(false , msgErr, this);
                 this.Db = null;
-              
-                return (false, msgErr);
+                //  msgErr = "ConnectionConfig " + qfmain.Language_.Get语言("不能为空");
+                Event_初始化结束?.Invoke(true, this);
+                Event_初始化结束1?.Invoke(true, msgErr, this);
+                return (true, msgErr);
             }
             bool rt = true;
 
             try
-            { 
+            {
                 this.Db = new SqlSugarScope(lst);
                 if (超时时间 <= 0) this.Db.Ado.CommandTimeOut = 1000 * 10;
 
@@ -110,7 +110,7 @@ SqlServer 数据库....使用最新库
             {
                 rt = false;
                 msgErr = ex.Message;
-            } 
+            }
             Event_初始化结束?.Invoke(rt, this);
             Event_初始化结束1?.Invoke(rt, msgErr, this);
             return (rt, msgErr);
@@ -139,7 +139,7 @@ SqlServer 数据库....使用最新库
                 ConnectionString = 连接字符串,
                 DbType = DbType,//设置数据库类型
                 IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
-                InitKeyType = InitKeyType.Attribute,//从实体特性中读取主键自增列信息
+                InitKeyType = InitKeyType.Attribute,//从实体特性中读取主键自增列信息 
                 MoreSettings = new ConnMoreSettings
                 {
                     IsAutoRemoveDataCache = true
@@ -427,10 +427,23 @@ SqlServer 数据库....使用最新库
             return Db.IsAnyConnection(id);
 
         }
-        public void 加入连接(ConnectionConfig cfg)
-        {
-            Db.AddConnection(cfg);//删除连接
 
+        /// <summary>
+        /// /加入ConnectionConfig
+        /// </summary>
+        /// <param name="cfg"></param>
+        public void Add加入(ConnectionConfig cfg)
+        {
+            if (this.Db is null)
+            {
+                this.Db = new SqlSugarScope(cfg);
+                if (this._超时时间 <= 0) this.Db.Ado.CommandTimeOut = 1000 * 10;
+            }
+            else
+            {
+                Db.AddConnection(cfg);
+            }
+            优化(cfg);
         }
 
         /// <summary>
@@ -438,7 +451,7 @@ SqlServer 数据库....使用最新库
         /// <para>一般用ID</para>
         /// </summary>
         /// <param name="cfg"></param>
-        public void 删除(dynamic cfg)
+        public void Delete删除(dynamic cfg)
         {
             Db.RemoveConnection(cfg);//删除连接
 

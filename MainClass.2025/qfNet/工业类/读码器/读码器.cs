@@ -15,9 +15,10 @@ namespace qfNet
     {
 
         internal string _自定义等级密码 = "QF8888";
-        public 读码器(string 读码器名称 = "读码器", string 文件夹名 = "ReadCode", string 自定义等级密码 = "QF8888") : base(读码器名称, 文件夹名)
+        public 读码器(string 读码器名称 = "读码器", string 文件夹名 = "ReadCode", string 自定义等级密码 = "QF8888")
+            : base(读码器名称, 文件夹名)
         {
-            this._自定义等级密码 = 自定义等级密码;
+            this._自定义等级密码 = 自定义等级密码;             
         }
 
         public override async Task 初始化()
@@ -26,7 +27,7 @@ namespace qfNet
             {
                 return;
             }
-
+      
             On_标题栏状态(this.标题栏状态信息_连接状态(), (int)qfmain._连接状态_.未连接);
             base.Event_读码器连接状态 += On_连接状态;
             base.Event_读码状态 += On_读码状态;

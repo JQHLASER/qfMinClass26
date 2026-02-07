@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static qfWork.EzCad3_TcpServer;
 using static qfWork.读码器;
 
 namespace qfWork
@@ -303,6 +304,7 @@ namespace qfWork
             评级不合格,
             解析评级故障,
             读码中,
+            未使能,
             /// <summary>
             /// 检测时会出现
             /// </summary>
@@ -401,41 +403,43 @@ namespace qfWork
 
         }
 
+        private static readonly object _lock = new object();
         public void 读写参数(ushort model)
         {
-
-            string path = Path.Combine(this._File, $"ReadCode.dll");
-            _cfg_主参数_ cfg = this._参数;
-            new qfmain.文件_文件夹().WriteReadJson(path, model, ref cfg, out string msgErr);
-            this._参数 = cfg;
-
-
-            this._前缀_发送 = 解析前后缀(this._参数.读码器.前后缀_发送.前缀);
-            this._后缀_发送 = 解析前后缀(this._参数.读码器.前后缀_发送.后缀);
-
-            this._前缀_接收 = 解析前后缀(this._参数.读码器.前后缀_接收.前缀);
-            this._后缀_接收 = 解析前后缀(this._参数.读码器.前后缀_接收.后缀);
-
-
-            #region 功能....使能
-
-            if (!this._功能.使能)
+            lock (_lock)
             {
-                this._功能.检测 = false;
-                this._功能.评级 = false;
+                string path = Path.Combine(this._File, $"ReadCode.dll");
+                _cfg_主参数_ cfg = this._参数;
+                new qfmain.文件_文件夹().WriteReadJson(path, model, ref cfg, out string msgErr);
+                this._参数 = cfg;
 
-                this._参数.使能_读码器 = false;
-                this._参数.使能_检测 = false;
-                this._参数.使能_评级 = false;
+
+                this._前缀_发送 = 解析前后缀(this._参数.读码器.前后缀_发送.前缀);
+                this._后缀_发送 = 解析前后缀(this._参数.读码器.前后缀_发送.后缀);
+
+                this._前缀_接收 = 解析前后缀(this._参数.读码器.前后缀_接收.前缀);
+                this._后缀_接收 = 解析前后缀(this._参数.读码器.前后缀_接收.后缀);
+
+
+                #region 功能....使能
+
+                if (!this._功能.使能)
+                {
+                    this._功能.检测 = false;
+                    this._功能.评级 = false;
+
+                    this._参数.使能_读码器 = false;
+                    this._参数.使能_检测 = false;
+                    this._参数.使能_评级 = false;
+                }
+                else
+                {
+                    this._参数.使能_检测 = !this._功能.检测 ? false : this._参数.使能_检测;
+                    this._参数.使能_评级 = !this._功能.评级 ? false : this._参数.使能_评级;
+                }
+
+                #endregion
             }
-            else
-            {
-                this._参数.使能_检测 = !this._功能.检测 ? false : this._参数.使能_检测;
-                this._参数.使能_评级 = !this._功能.评级 ? false : this._参数.使能_评级;
-            }
-
-            #endregion
-
         }
 
         public string[] 读取前后缀文件()
@@ -933,7 +937,11 @@ namespace qfWork
                 rt = false;
                 return rt;
             }
-
+            else if (!Err_未使能(out msgErr))
+            {
+                rt = true;
+                return rt;
+            }
             rt = 发送(_操作_.检测, out _err_ err, out 内容, out msgErr);
             this._通讯辅助 = qfmain._通讯过程_.闲置;
 
@@ -963,6 +971,12 @@ namespace qfWork
             {
                 _err = _err_.读码中;
                 rt = false;
+                return rt;
+            }
+            else if (!Err_未使能(out msgErr))
+            {
+                _err = _err_.未使能;
+                rt = true;
                 return rt;
             }
 
@@ -998,7 +1012,7 @@ namespace qfWork
             });
             return (rt, msgErr, cfg, _err);
         }
-         
+
 
         #endregion
 
@@ -1027,6 +1041,16 @@ namespace qfWork
             return true;
         }
 
+        public bool Err_未使能(out string msgErr)
+        {
+            msgErr = "";
+            if (!_参数.使能_读码器)
+            {
+                msgErr = $"{this._读码器名称}{Language_.Get语言("未使能")}";
+                return false;
+            }
+            return true;
+        }
 
         #endregion
 

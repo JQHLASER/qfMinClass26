@@ -23,18 +23,14 @@ namespace qfCode
         /// </summary>
         internal _文件夹_._属性_ _文件夹_属性;
 
-        internal _功能_ _功能;
+        internal _功能_ _功能=new _功能_ ();
         internal _初始化状态_ _初始化状态 = _初始化状态_.未初始化;
 
         /// <summary>
         /// 编码文件和读写操作
         /// </summary>
         internal 文件_统一接口 _配方文件操作;
-
-
-        /// <summary>
-        /// <para>Db : 使用数据库在存储时必须要传入</para>
-        /// </summary> 
+         
         public 编码_(_文件夹_._属性_ typeFile, _功能_ 功能)
         {
             初始化(typeFile, 功能);
@@ -45,17 +41,15 @@ namespace qfCode
 
         }
 
-
         /// <summary>
-        /// <para>Db : 使用数据库在存储时必须要传入</para>
+        /// 功能 : 可以为null,为空后,需要另外对功能设置
         /// </summary> 
         public void 初始化(_文件夹_._属性_ typeFile, _功能_ 功能)
         {
             On_初始化状态(qfmain._初始化状态_.初始化中, "");
-            new Language_();
-            this._功能 = 功能;
+            new Language_(); 
             this._文件夹_属性 = typeFile;
-
+            if (功能 != null) this._功能 = 功能;
 
             new _文件夹_(this);
             this._文件类 = new 文件类(this);
@@ -69,8 +63,7 @@ namespace qfCode
             }
 
         }
-
-
+         
 
         /// <summary>
         /// 配方名称 : 当前打开的配方名称

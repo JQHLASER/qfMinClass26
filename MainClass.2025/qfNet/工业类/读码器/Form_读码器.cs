@@ -49,6 +49,9 @@ namespace qfNet
 
 
 
+
+
+
             #region 选择功能
 
             this.uiRadioButton_功能.ValueChanged += (s, e) =>
@@ -84,7 +87,7 @@ namespace qfNet
 
             #endregion
 
-            #region 功能 
+            #region 功能限制
 
             this.uiRadioButton_检测.Visible = this._readcode._功能.检测;
             this.uiRadioButton_评级.Visible = this._readcode._功能.评级;
@@ -102,6 +105,9 @@ namespace qfNet
             {
                 this.con_功能.uiButton_串口.Visible = true;
             }
+
+            this.con_功能.uiCheckBox_功能_检测.Visible = this._readcode._功能.检测;
+            this.con_功能.uiCheckBox_功能_评级.Visible = this._readcode._功能.评级;
 
             #endregion
 
@@ -221,6 +227,9 @@ namespace qfNet
 
             #endregion
 
+            this._readcode.读写参数(0);
+
+
             if (Is成功弹窗)
             {
                 MessageBox.Show($"OK");
@@ -281,6 +290,7 @@ namespace qfNet
 
         void Show()
         {
+
             #region 使能...功能
 
             this.con_功能.uiCheckBox_功能_使能.Checked = this._readcode._参数.使能_读码器;

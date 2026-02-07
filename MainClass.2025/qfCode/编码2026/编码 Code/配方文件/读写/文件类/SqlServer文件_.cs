@@ -25,29 +25,24 @@ namespace qfCode
 
             this._CodeSys.On_初始化状态(qfmain._初始化状态_.初始化中, "");
 
-            qfSqlSugar.SqlSugar_DB_封装.Event_ConnectionConfig += (s, e) =>
-            {
-                #region 连接数据库
-
-                qfSqlSugar._cfg_SQLserver_ cfgSqlserver = new qfSqlSugar._cfg_SQLserver_
-                {
-                    数据库地址 = "127.0.0.1",
-                    数据库名称 = "Code26",
-                    用户 = "sa",
-                    密码 = "QF8888",
-                };
-                e.读取参数<qfSqlSugar._cfg_SQLserver_>(1, ref cfgSqlserver, this._path, out string msgErr);
-                s.Add(e.生成连接信息(
-                         e.生成连接字符串(cfgSqlserver)
-                        , this._ConfigID, SqlSugar.DbType.SqlServer)
-                    );
-
-                #endregion
-            };
-            qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += (s, m, e) =>
+           
+            qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += (s, m, db) =>
             {
                 if (s)
-                { 
+                {
+                    qfSqlSugar._cfg_SQLserver_ cfgSqlserver = new qfSqlSugar._cfg_SQLserver_
+                    {
+                        数据库地址 = "127.0.0.1",
+                        数据库名称 = "Code26",
+                        用户 = "sa",
+                        密码 = "QF8888",
+                    };
+                    db.读取参数<qfSqlSugar._cfg_SQLserver_>(1, ref cfgSqlserver, this._path, out string msgErr);
+                    var str = db.生成连接信息(
+                                db.生成连接字符串(cfgSqlserver)
+                               , this._ConfigID, SqlSugar.DbType.SqlServer);
+                    db.Add加入(str);
+
                     (bool s, string m, _配方文件_属性_ cfg) rt = Read("text^%&");
                     this._CodeSys._初始化状态 = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
                     this._CodeSys.On_初始化状态(this._CodeSys._初始化状态, rt.m);
@@ -71,7 +66,7 @@ namespace qfCode
                         bool rt = _Table.GetList(u => u.FileName == FileName, out List<表.Code26> lst, out string msgErr);
                         if (rt && lst.Count == 0)
                         {
-                            return (rt, Language_.Get语言("未找到文件"), new _配方文件_属性_ ());
+                            return (rt, Language_.Get语言("未找到文件"), new _配方文件_属性_());
                         }
                         else if (rt && lst.Count > 0)
                         {
@@ -79,7 +74,7 @@ namespace qfCode
                         }
                         else
                         {
-                            return (rt, msgErr, new _配方文件_属性_ ());
+                            return (rt, msgErr, new _配方文件_属性_());
                         }
                     }
                 }

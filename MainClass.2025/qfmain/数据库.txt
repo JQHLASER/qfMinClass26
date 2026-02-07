@@ -1,5 +1,25 @@
-﻿
-  [SugarColumn(IsPrimaryKey = true,IsIdentity = true)]    //(主键,自增长)
+﻿查询...一种拼接方法,SQLite和SQLserver通用
+     StringBuilder sb = new StringBuilder($"select * from FC26 where 1=1 ");
+     var pars = new List<SugarParameter>();  
+     sb.Append($" and  内容=@内容");
+     pars.Add(new SugarParameter("@内容", cfg.内容));
+
+     sb.Append($" and  内容 Like @内容");
+     pars.Add(new SugarParameter("@内容", $"%{cfg.内容}%"));
+
+     DateTime start = cfg.start;
+     DateTime end = cfg.end.AddDays(1);
+
+     sb.Append($" and  时间>=@start");
+     pars.Add(new SugarParameter("@start", start.Date));
+
+     sb.Append($" and  时间<=@end");
+     pars.Add(new SugarParameter("@end", end.Date));
+      
+     bool rt = table.GetList(sb.ToString(), pars, out List<表_防重_.FC26> lst, out string msgErr);
+
+
+ [SugarColumn(IsPrimaryKey = true,IsIdentity = true)]    //(主键,自增长)
 
 
 条件:  

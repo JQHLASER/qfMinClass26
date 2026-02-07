@@ -32,23 +32,18 @@ namespace qfNet
 
             this._path = Path.Combine(this._File, "Code26.db");
 
-            On_初始化状态(qfmain._初始化状态_.初始化中, "");
-            qfSqlSugar.SqlSugar_DB_封装._DB.Event_ConnectionConfig += (s, e) =>
-            {
-                #region 连接数据库
-                string conStr = e.生成连接字符串(new qfSqlSugar._cfg_SQLite_
-                {
-                    Path = this._path,
-                });
-                var connent = e.生成连接信息(conStr, this._ConfigID, SqlSugar.DbType.Sqlite);
-                s.Add(connent);
-
-                #endregion
-            };
-            qfSqlSugar.SqlSugar_DB_封装._DB.Event_初始化结束1 += async (s, m, e) =>
+            On_初始化状态(qfmain._初始化状态_.初始化中, ""); 
+            qfSqlSugar.SqlSugar_DB_封装._DB.Event_初始化结束1 += async (s, m, db) =>
             {
                 if (s)
                 {
+                    string conStr = db.生成连接字符串(new qfSqlSugar._cfg_SQLite_
+                    {
+                        Path = this._path,
+                    });
+                    var connent = db.生成连接信息(conStr, this._ConfigID, SqlSugar.DbType.Sqlite);
+                    db.Add加入(connent);
+
                     (bool s, string m, T cfg) rt = Read("text^%&");
                     this._初始化状态 = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
                     this.On_初始化状态(this._初始化状态, rt.m);
@@ -140,7 +135,7 @@ namespace qfNet
                 dlt = 弹窗(out NewFileName, out msgerr, _文件弹窗类型_.保存, Event_删除文件);
                 if (dlt == DialogResult.Yes)
                 {
-                    bool  rt = 保存(NewFileName, t, out msgerr); 
+                    bool rt = 保存(NewFileName, t, out msgerr);
                     dlt = rt ? DialogResult.Yes : DialogResult.No;
                 }
             }
@@ -248,11 +243,11 @@ namespace qfNet
                 {
                     using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
                     {
-                        bool rt = _Table.GetList(u => u.FileName  == FileName, out List<表.Code26> lst, out string msgErr);
-                       
+                        bool rt = _Table.GetList(u => u.FileName == FileName, out List<表.Code26> lst, out string msgErr);
+
                         if (rt && lst.Count == 0)
                         {
-                            return (rt, Language_.Get语言("未找到文件"), qfmain .T_实例化泛型 .FastNew <T >.Create ());
+                            return (rt, Language_.Get语言("未找到文件"), qfmain.T_实例化泛型.FastNew<T>.Create());
                         }
                         else if (rt && lst.Count > 0)
                         {

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
+using static qfCode.表_防重_;
 using static System.Windows.Forms.AxHost;
 
 namespace qfCode
@@ -30,6 +31,8 @@ namespace qfCode
             {
                 if (s)
                 {
+                    var rtDb = FCcode_sys.生成连接参数_ConnectionConfig(数据库格式);
+                    db.Add加入(rtDb);
                     var rt = 查询_防重("&^^123");
                     qfmain._初始化状态_ state = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
                     this.FCcode_sys.On_初始化状态(state, rt.m);
@@ -64,19 +67,26 @@ namespace qfCode
             }
         }
 
-        public (bool s, string m, List<表_防重_.FC26> lst) 查询_防重(List<string> lst内容)
+        public (bool s, string m) 查询_防重(List<string> lst内容)
         {
             if (lst内容 is null || lst内容.Count == 0)
             {
-                return (false, Language_.Get语言("无查询条件"), new List<表_防重_.FC26>());
+                return (false, Language_.Get语言("无查询条件"));
             }
             using (var getDb = new qfSqlSugar.SqlSugar_GetDB(this.FCcode_sys._id))
             {
                 using (var table = new qfSqlSugar.SqlSugar_Table<表_防重_.FC26>(getDb.Db))
                 {
+                    lst内容 = lst内容
+                              .Where(s => !string.IsNullOrWhiteSpace(s))
+                              .Distinct()
+                              .ToList();
 
-                    bool rt = table.GetList(u => lst内容.Contains(u.内容), out List<表_防重_.FC26> lst, out string msgErr);
-                    return (rt, msgErr, lst);
+                    bool exist = table.Db.Queryable<FC26>()
+                     .In(u => u.内容, lst内容)
+                     .Any();
+                    string msg = !exist ? Language_.Get语言("检测到无重码") : Language_.Get语言("检测到有重码");
+                    return (!exist, msg);
                 }
             }
         }
@@ -119,7 +129,7 @@ namespace qfCode
             using (var getDb = new qfSqlSugar.SqlSugar_GetDB(this.FCcode_sys._id))
             {
                 using (var table = new qfSqlSugar.SqlSugar_Table<表_防重_.FC26>(getDb.Db))
-                { 
+                {
                     StringBuilder sb = new StringBuilder($"select * from FC26 where 1=1 ");
                     var pars = new List<SugarParameter>();
 
@@ -151,7 +161,7 @@ namespace qfCode
                     return (rt, msgErr, lst);
                 }
             }
-             
+
         }
 
 
