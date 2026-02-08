@@ -60,18 +60,19 @@ CREATE TABLE MarkMes
 SQLite风格
 CREATE TABLE MarkToMes (
     id                  INTEGER PRIMARY KEY AUTOINCREMENT,  -- SQLite中自增主键用INTEGER + AUTOINCREMENT
-    datetimeMark        TEXT(30) NULL,  -- SQLite的TEXT类型不需要指定长度（指定也无效）
-    lasertemplate       TEXT(255) NULL,
-    barcode             TEXT(255) NULL,
-    line                TEXT(255) NULL,
-    laserType           INTEGER NULL,  -- SQLite中int对应INTEGER类型
-    orderNum            TEXT(255) NULL,
+    datetimeMark        TEXT(30) DEFAULT NULL,  -- SQLite的TEXT类型不需要指定长度（指定也无效）
+    lasertemplate       TEXT(255) DEFAULT NULL,
+    barcode             TEXT(255) DEFAULT NULL,
+    line                TEXT(255) DEFAULT NULL,
+    laserType           INTEGER DEFAULT NULL,  -- SQLite中int对应INTEGER类型
+    orderNum            TEXT(255)DEFAULT NULL,
     markCount           INTEGER DEFAULT 0,  -- 去掉多余的INT
-    ToMesState          INTEGER NOT NULL,  -- 确保非空约束正确
-    datetimeMes         TEXT(30) NULL,  -- 最后一列不能有逗号
-    markinfo            TEXT NULL  -- 不指定Text长度
-
+    ToMesState          INTEGER DEFAULT NOT NULL,  -- 确保非空约束正确
+    datetimeMes         TEXT(30) DEFAULT NULL,  -- 最后一列不能有逗号
+    markinfo            TEXT DEFAULT NULL  -- 不指定Text长度
+         bool 值也是  INTEGER 表示的
 );
+    
 
 
 

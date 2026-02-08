@@ -74,8 +74,8 @@ namespace qfSqlSugar
             this.Db = this._scope.GetConnection(id);
         }
 
-      
-         
+
+
 
         public void Dispose()
         {
@@ -135,6 +135,36 @@ namespace qfSqlSugar
             }
 
             return rt;
+        }
+
+        /// <summary>
+        /// orderby : 排序方式, 顺序: "id asc" 倒序:"id desc",id是字段名
+        /// <para>orderby :  "兆信 asc,id desc"  多字段排序,兆信和id是字段名</para>
+        /// </summary> 
+        public bool GetList<T>(Expression<Func<T, bool>> exp, string orderby, out List<T> lst, out string msgErr)
+            where T : class, new()
+        {
+            lst = null;
+            msgErr = "";
+
+            try
+            {
+                var q = this.Db.Queryable<T>();
+
+                if (exp != null)
+                    q = q.Where(exp);
+
+                if (!string.IsNullOrEmpty(orderby))
+                    q = q.OrderBy(orderby);
+
+                lst = q.ToList();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                msgErr = ex.Message;
+                return false;
+            }
         }
 
         /// <summary>
@@ -212,14 +242,14 @@ namespace qfSqlSugar
         /// <para>sb.Append(" and 内容 = @内容");</para>
         /// <para>pars.Add(new SugarParameter("@内容", cfg.内容));</para>
         /// </summary> 
-        public bool GetList(string sqlstr, List<SugarParameter> pars ,out List<T> list, out string msgErr)
+        public bool GetList(string sqlstr, List<SugarParameter> pars, out List<T> list, out string msgErr)
         {
             list = default;
             msgErr = string.Empty;
             bool rt = true;
             try
             {
-                list = this.Db.Ado .SqlQuery<T>(sqlstr, pars).ToList();
+                list = this.Db.Ado.SqlQuery<T>(sqlstr, pars).ToList();
             }
             catch (Exception ex)
             {
@@ -306,10 +336,10 @@ namespace qfSqlSugar
         public bool Insertable(List<T> listObj, out int 受影响行, out string msgErr)
         {
             //只有一行时,无需开事务
-            if (listObj .Count ==1)
+            if (listObj.Count == 1)
             {
                 return Insertable(listObj[0], out 受影响行, out msgErr);
-            } 
+            }
 
             bool rt = true;
             msgErr = string.Empty;
@@ -342,8 +372,8 @@ namespace qfSqlSugar
             msgErr = string.Empty;
             受影响行 = 0;
             try
-            { 
-                受影响行 = this.Db.Storageable(lstObj).ExecuteCommand(); 
+            {
+                受影响行 = this.Db.Storageable(lstObj).ExecuteCommand();
             }
             catch (Exception ex)
             {
