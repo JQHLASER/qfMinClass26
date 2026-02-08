@@ -222,7 +222,7 @@ SqlServer 数据库....使用最新库
                     case DbType.MySql:
                         return 优化_MySql(dbTemp);
                     default:
-                        return (false, $"not type,{config.DbType}");
+                        return (true , $"not type,{config.DbType}");
                 }
             }
         }
