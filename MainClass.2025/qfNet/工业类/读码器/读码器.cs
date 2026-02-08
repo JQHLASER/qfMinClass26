@@ -64,8 +64,7 @@ namespace qfNet
                
                 if (!_参数.使能_读码器)
                 {
-                    断开读码器();
-                    On_标题栏状态(this.标题栏状态信息_连接状态(), (int)qfmain._连接状态_.已连接);
+                    断开读码器(); 
                 }
                 else
                 {
@@ -82,7 +81,14 @@ namespace qfNet
 
         public void On_连接状态(qfmain._连接状态_ state)
         {
-            On_标题栏状态(标题栏状态信息_连接状态(), (int)state);
+            if (!_参数.使能_读码器 && state == qfmain._连接状态_.未连接)
+            {
+                On_标题栏状态(标题栏状态信息_连接状态(), (int) qfmain ._连接状态_ .已连接 );
+            }
+            else
+            {
+                On_标题栏状态(标题栏状态信息_连接状态(), (int)state);
+            }
         }
 
         void On_读码状态(_读码状态_ state)
