@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace qfmain 
+namespace qfmain
 {
     /// <summary>
     /// 安装 System.Management
@@ -180,7 +180,7 @@ namespace qfmain
         #endregion
 
         //取得设备硬盘的卷标号
-        public virtual  string 获取_硬盘的卷标号()
+        public virtual string 获取_硬盘的卷标号()
         {
             ManagementClass mc = new ManagementClass("Win32_NetworkAdapterConfiguration");
             ManagementObject disk = new ManagementObject("win32_logicaldisk.deviceid=\"d:\"");
@@ -333,8 +333,9 @@ namespace qfmain
         public virtual string 获取_系统所在盘符()
         {
             //  return System.Environment.SystemDirectory;
+            return Path.GetPathRoot(Environment.SystemDirectory);
 
-            return System.Environment.GetEnvironmentVariable("SystemDrive");
+            // return System.Environment.GetEnvironmentVariable("SystemDrive");
 
         }
 
