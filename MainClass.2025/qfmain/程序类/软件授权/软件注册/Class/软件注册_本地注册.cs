@@ -24,7 +24,7 @@ namespace qfmain
         {
             string Files = Path.Combine(new 电脑().获取_系统所在盘符(), "windowsoft");
             new 文件_文件夹().文件夹_新建(Files, out string msgErr);
-            string path = Files + "\\System32f.dll";
+            string path = Path.Combine(Files, "System32f.dll");
 
             string sn = new 加解密_注册码算法("").加密($"{DateTime.Now.ToString("yyyyMMddHHmmss")}");
             sn = 软件注册_子程序.加密(sn);

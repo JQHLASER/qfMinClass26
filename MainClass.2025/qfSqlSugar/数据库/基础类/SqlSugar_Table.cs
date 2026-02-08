@@ -138,13 +138,14 @@ namespace qfSqlSugar
         }
 
         /// <summary>
+        /// <para>exp=null时查询全部</para>
         /// orderby : 排序方式, 顺序: "id asc" 倒序:"id desc",id是字段名
         /// <para>orderby :  "兆信 asc,id desc"  多字段排序,兆信和id是字段名</para>
         /// </summary> 
         public bool GetList<T>(Expression<Func<T, bool>> exp, string orderby, out List<T> lst, out string msgErr)
             where T : class, new()
         {
-            lst = null;
+            lst = new List<T> ();
             msgErr = "";
 
             try
@@ -166,6 +167,39 @@ namespace qfSqlSugar
                 return false;
             }
         }
+
+        /// <summary>
+        /// <para>exp=null  时查询全部</para>
+        /// <para>orderExp : 排序字段</para>
+        /// </summary> 
+        public bool GetList<T>(Expression<Func<T, bool>> exp, Expression<Func<T, object>> orderExp, OrderByType orderType, out List<T> lst, out string msgErr)
+        where T : class, new()
+        {
+            lst = null;
+            msgErr = "";
+
+            try
+            {
+                var q = this.Db.Queryable<T>();
+
+                if (exp != null)
+                    q = q.Where(exp);
+
+                if (orderExp != null)
+                    q = q.OrderBy(orderExp, orderType);
+
+                lst = q.ToList();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                msgErr = ex.Message;
+                return false;
+            }
+        }
+
+
+
 
         /// <summary>
         /// 根据主键，获取对象 

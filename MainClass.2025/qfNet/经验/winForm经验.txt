@@ -1,5 +1,12 @@
 ﻿实现MVVM架构   安装库  WinFormMVVM
 
+/// <summary>
+///  用这个方法绑定到表格,显示到DataGridview中的数据
+/// </summary>
+public BindingSource _BindingSource = new BindingSource();
+
+
+
 获取程序目录
   AppDomain.CurrentDomain.BaseDirectory
 

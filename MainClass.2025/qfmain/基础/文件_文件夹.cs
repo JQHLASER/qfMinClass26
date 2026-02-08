@@ -11,7 +11,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.XPath;
+
+
 
 namespace qfmain
 {
@@ -959,6 +960,25 @@ namespace qfmain
 
         #region 文件的读写
 
+        string 生成临时文件(string path)
+        {
+            new qfmain.文件_文件夹().文件_获取文件夹路径(path, out string Files, out string msgErr1);
+            new qfmain.文件_文件夹().文件_获取文件名_不含后缀(path, out string Name, out msgErr1);
+
+            return Path.Combine(Files, $"_{Name}.bak");
+
+        }
+        void 转正式文件(string path临时, string path)
+        {
+            if (!new 文件_文件夹().文件_是否存在(path))
+            {
+                new 文件_文件夹().文件_新建(path);
+            }
+            File.Replace(path临时, path, null);
+        }
+
+
+
 
         /// <summary>
         ///  Model: =0写,=1读
@@ -1018,16 +1038,10 @@ namespace qfmain
                             {
                                 vxt = new 加解密().AES加密2(vxt, 密码);
                             }
-
-                            new qfmain.文件_文件夹().文件_获取文件名_含后缀(path, out string Name, out string msgErr1);
-                            string path_临时 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"_{Name}.bak");
+                            
+                            string path_临时 = 生成临时文件(path);                           
                             new 文本().Save_25(path_临时, vxt, true, out msgErr, false, encoding_);
-
-                            if (!new 文件_文件夹().文件_是否存在(path))
-                            {
-                                new 文件_文件夹().文件_新建(path); 
-                            } 
-                            File.Replace(path_临时, path, null);
+                            转正式文件(path_临时, path);
                         }
 
                     }
@@ -1113,15 +1127,10 @@ namespace qfmain
                         {
                             vxt = new 加解密_AES().加密_1(vxt, 密码);
                         }
-
-                        new qfmain.文件_文件夹().文件_获取文件名_含后缀(path, out string Name, out string msgErr1);
-                        string path_临时 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"_{Name}.bak");
+                         
+                        string path_临时 = 生成临时文件(path);
                         new 文本().Save_25(path_临时, vxt, true, out msgErr, false, encoding_);
-                        if (!new 文件_文件夹().文件_是否存在(path))
-                        {
-                            new 文件_文件夹().文件_新建(path);
-                        }
-                        File.Replace(path_临时, path, null);//将临时文件替换到要保存的文件
+                        转正式文件(path_临时, path);
 
                     }
                     else if (s == "读")
@@ -1210,8 +1219,8 @@ namespace qfmain
                                 break;
                         }
 
-                        new qfmain.文件_文件夹().文件_获取文件名_含后缀(path, out string Name, out string msgErr1);
-                        string path_临时 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"_{Name}.bak");
+                       
+                        string path_临时 = 生成临时文件(path);
 
                         switch (ini类型)
                         {
@@ -1222,11 +1231,7 @@ namespace qfmain
                                 new ini_sharpconfig(path_临时).Write(section, key_, vxt, true);
                                 break;
                         }
-                        if (!new 文件_文件夹().文件_是否存在(path))
-                        {
-                            new 文件_文件夹().文件_新建(path);
-                        }
-                        File.Replace(path_临时, path, null);
+                        转正式文件(path_临时, path);
 
                     }
                     else if (s == "读")
@@ -1314,8 +1319,8 @@ namespace qfmain
                             continue;
                         }
 
-                        new qfmain.文件_文件夹().文件_获取文件名_含后缀(path, out string Name, out string msgErr1);
-                        string path_临时 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"_{Name}.bak");
+                       
+                        string path_临时 = 生成临时文件(path);
 
                         switch (ini类型)
                         {
@@ -1326,11 +1331,7 @@ namespace qfmain
                                 new ini_sharpconfig(path_临时).Write(section, key_, cfg, true);
                                 break;
                         }
-                        if (!new 文件_文件夹().文件_是否存在(path))
-                        {
-                            new 文件_文件夹().文件_新建(path);
-                        }
-                        File.Replace(path_临时, path, null);
+                        转正式文件(path_临时, path);
 
                     }
                     else if (s == "读")
