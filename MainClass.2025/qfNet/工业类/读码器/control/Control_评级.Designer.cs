@@ -28,55 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.uiLabel15 = new Sunny.UI.UILabel();
-            this.uiTextBox_评级_合格等级 = new Sunny.UI.UITextBox();
-            this.uiLabel14 = new Sunny.UI.UILabel();
             this.uiTextBox_评级_分割符 = new Sunny.UI.UITextBox();
             this.uiLabel13 = new Sunny.UI.UILabel();
+            this.uiGroupBox1 = new Sunny.UI.UIGroupBox();
+            this.uiCheckBox_合格等级_A = new Sunny.UI.UICheckBox();
+            this.uiCheckBox_合格等级_B = new Sunny.UI.UICheckBox();
+            this.uiCheckBox_合格等级_C = new Sunny.UI.UICheckBox();
+            this.uiCheckBox_合格等级_D = new Sunny.UI.UICheckBox();
+            this.uiCheckBox_合格等级_E = new Sunny.UI.UICheckBox();
+            this.uiCheckBox_合格等级_F = new Sunny.UI.UICheckBox();
+            this.uiGroupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // uiLabel15
-            // 
-            this.uiLabel15.Font = new System.Drawing.Font("微软雅黑", 8.765218F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel15.ForeColor = System.Drawing.Color.Gray;
-            this.uiLabel15.Location = new System.Drawing.Point(361, 198);
-            this.uiLabel15.Name = "uiLabel15";
-            this.uiLabel15.Size = new System.Drawing.Size(49, 240);
-            this.uiLabel15.Style = Sunny.UI.UIStyle.Custom;
-            this.uiLabel15.TabIndex = 11;
-            this.uiLabel15.Text = "A\r\nB\r\nC\r\nD\r\nE\r\nF";
-            // 
-            // uiTextBox_评级_合格等级
-            // 
-            this.uiTextBox_评级_合格等级.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.uiTextBox_评级_合格等级.FillColor = System.Drawing.Color.White;
-            this.uiTextBox_评级_合格等级.Font = new System.Drawing.Font("微软雅黑", 8.765218F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiTextBox_评级_合格等级.Location = new System.Drawing.Point(158, 198);
-            this.uiTextBox_评级_合格等级.Margin = new System.Windows.Forms.Padding(0);
-            this.uiTextBox_评级_合格等级.Maximum = 2147483647D;
-            this.uiTextBox_评级_合格等级.Minimum = -2147483648D;
-            this.uiTextBox_评级_合格等级.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiTextBox_评级_合格等级.Multiline = true;
-            this.uiTextBox_评级_合格等级.Name = "uiTextBox_评级_合格等级";
-            this.uiTextBox_评级_合格等级.Padding = new System.Windows.Forms.Padding(5);
-            this.uiTextBox_评级_合格等级.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
-            this.uiTextBox_评级_合格等级.Size = new System.Drawing.Size(200, 240);
-            this.uiTextBox_评级_合格等级.Style = Sunny.UI.UIStyle.深色;
-            this.uiTextBox_评级_合格等级.StyleCustomMode = true;
-            this.uiTextBox_评级_合格等级.TabIndex = 10;
-            this.uiTextBox_评级_合格等级.填充颜色 = System.Drawing.Color.White;
-            // 
-            // uiLabel14
-            // 
-            this.uiLabel14.Font = new System.Drawing.Font("微软雅黑", 8.765218F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel14.ForeColor = System.Drawing.Color.Gray;
-            this.uiLabel14.Location = new System.Drawing.Point(158, 165);
-            this.uiLabel14.Name = "uiLabel14";
-            this.uiLabel14.Size = new System.Drawing.Size(380, 29);
-            this.uiLabel14.Style = Sunny.UI.UIStyle.Custom;
-            this.uiLabel14.TabIndex = 9;
-            this.uiLabel14.Text = "合格等级";
-            this.uiLabel14.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // uiTextBox_评级_分割符
             // 
@@ -91,7 +53,7 @@
             this.uiTextBox_评级_分割符.Name = "uiTextBox_评级_分割符";
             this.uiTextBox_评级_分割符.Padding = new System.Windows.Forms.Padding(5);
             this.uiTextBox_评级_分割符.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
-            this.uiTextBox_评级_分割符.Size = new System.Drawing.Size(200, 26);
+            this.uiTextBox_评级_分割符.Size = new System.Drawing.Size(100, 26);
             this.uiTextBox_评级_分割符.Style = Sunny.UI.UIStyle.深色;
             this.uiTextBox_评级_分割符.StyleCustomMode = true;
             this.uiTextBox_评级_分割符.TabIndex = 8;
@@ -109,26 +71,144 @@
             this.uiLabel13.Text = "分割符";
             this.uiLabel13.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
+            // uiGroupBox1
+            // 
+            this.uiGroupBox1.Controls.Add(this.uiCheckBox_合格等级_F);
+            this.uiGroupBox1.Controls.Add(this.uiCheckBox_合格等级_E);
+            this.uiGroupBox1.Controls.Add(this.uiCheckBox_合格等级_D);
+            this.uiGroupBox1.Controls.Add(this.uiCheckBox_合格等级_C);
+            this.uiGroupBox1.Controls.Add(this.uiCheckBox_合格等级_B);
+            this.uiGroupBox1.Controls.Add(this.uiCheckBox_合格等级_A);
+            this.uiGroupBox1.FillColor = System.Drawing.SystemColors.Control;
+            this.uiGroupBox1.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.uiGroupBox1.Location = new System.Drawing.Point(158, 168);
+            this.uiGroupBox1.Margin = new System.Windows.Forms.Padding(0);
+            this.uiGroupBox1.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiGroupBox1.Name = "uiGroupBox1";
+            this.uiGroupBox1.Padding = new System.Windows.Forms.Padding(5, 25, 5, 5);
+            this.uiGroupBox1.Size = new System.Drawing.Size(197, 275);
+            this.uiGroupBox1.Style = Sunny.UI.UIStyle.Custom;
+            this.uiGroupBox1.TabIndex = 9;
+            this.uiGroupBox1.Text = "合格等级";
+            // 
+            // uiCheckBox_合格等级_A
+            // 
+            this.uiCheckBox_合格等级_A.CheckBoxColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
+            this.uiCheckBox_合格等级_A.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiCheckBox_合格等级_A.Font = new System.Drawing.Font("微软雅黑", 10.01739F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiCheckBox_合格等级_A.ImageSize = 18;
+            this.uiCheckBox_合格等级_A.Location = new System.Drawing.Point(37, 42);
+            this.uiCheckBox_合格等级_A.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiCheckBox_合格等级_A.Name = "uiCheckBox_合格等级_A";
+            this.uiCheckBox_合格等级_A.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
+            this.uiCheckBox_合格等级_A.Size = new System.Drawing.Size(91, 30);
+            this.uiCheckBox_合格等级_A.Style = Sunny.UI.UIStyle.深色;
+            this.uiCheckBox_合格等级_A.StyleCustomMode = true;
+            this.uiCheckBox_合格等级_A.TabIndex = 9;
+            this.uiCheckBox_合格等级_A.Text = "A";
+            // 
+            // uiCheckBox_合格等级_B
+            // 
+            this.uiCheckBox_合格等级_B.CheckBoxColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
+            this.uiCheckBox_合格等级_B.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiCheckBox_合格等级_B.Font = new System.Drawing.Font("微软雅黑", 10.01739F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiCheckBox_合格等级_B.ImageSize = 18;
+            this.uiCheckBox_合格等级_B.Location = new System.Drawing.Point(37, 73);
+            this.uiCheckBox_合格等级_B.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiCheckBox_合格等级_B.Name = "uiCheckBox_合格等级_B";
+            this.uiCheckBox_合格等级_B.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
+            this.uiCheckBox_合格等级_B.Size = new System.Drawing.Size(91, 30);
+            this.uiCheckBox_合格等级_B.Style = Sunny.UI.UIStyle.深色;
+            this.uiCheckBox_合格等级_B.StyleCustomMode = true;
+            this.uiCheckBox_合格等级_B.TabIndex = 10;
+            this.uiCheckBox_合格等级_B.Text = "B";
+            // 
+            // uiCheckBox_合格等级_C
+            // 
+            this.uiCheckBox_合格等级_C.CheckBoxColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
+            this.uiCheckBox_合格等级_C.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiCheckBox_合格等级_C.Font = new System.Drawing.Font("微软雅黑", 10.01739F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiCheckBox_合格等级_C.ImageSize = 18;
+            this.uiCheckBox_合格等级_C.Location = new System.Drawing.Point(37, 104);
+            this.uiCheckBox_合格等级_C.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiCheckBox_合格等级_C.Name = "uiCheckBox_合格等级_C";
+            this.uiCheckBox_合格等级_C.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
+            this.uiCheckBox_合格等级_C.Size = new System.Drawing.Size(91, 30);
+            this.uiCheckBox_合格等级_C.Style = Sunny.UI.UIStyle.深色;
+            this.uiCheckBox_合格等级_C.StyleCustomMode = true;
+            this.uiCheckBox_合格等级_C.TabIndex = 11;
+            this.uiCheckBox_合格等级_C.Text = "C";
+            // 
+            // uiCheckBox_合格等级_D
+            // 
+            this.uiCheckBox_合格等级_D.CheckBoxColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
+            this.uiCheckBox_合格等级_D.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiCheckBox_合格等级_D.Font = new System.Drawing.Font("微软雅黑", 10.01739F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiCheckBox_合格等级_D.ImageSize = 18;
+            this.uiCheckBox_合格等级_D.Location = new System.Drawing.Point(37, 135);
+            this.uiCheckBox_合格等级_D.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiCheckBox_合格等级_D.Name = "uiCheckBox_合格等级_D";
+            this.uiCheckBox_合格等级_D.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
+            this.uiCheckBox_合格等级_D.Size = new System.Drawing.Size(91, 30);
+            this.uiCheckBox_合格等级_D.Style = Sunny.UI.UIStyle.深色;
+            this.uiCheckBox_合格等级_D.StyleCustomMode = true;
+            this.uiCheckBox_合格等级_D.TabIndex = 12;
+            this.uiCheckBox_合格等级_D.Text = "D";
+            // 
+            // uiCheckBox_合格等级_E
+            // 
+            this.uiCheckBox_合格等级_E.CheckBoxColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
+            this.uiCheckBox_合格等级_E.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiCheckBox_合格等级_E.Font = new System.Drawing.Font("微软雅黑", 10.01739F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiCheckBox_合格等级_E.ImageSize = 18;
+            this.uiCheckBox_合格等级_E.Location = new System.Drawing.Point(37, 166);
+            this.uiCheckBox_合格等级_E.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiCheckBox_合格等级_E.Name = "uiCheckBox_合格等级_E";
+            this.uiCheckBox_合格等级_E.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
+            this.uiCheckBox_合格等级_E.Size = new System.Drawing.Size(91, 30);
+            this.uiCheckBox_合格等级_E.Style = Sunny.UI.UIStyle.深色;
+            this.uiCheckBox_合格等级_E.StyleCustomMode = true;
+            this.uiCheckBox_合格等级_E.TabIndex = 13;
+            this.uiCheckBox_合格等级_E.Text = "E";
+            // 
+            // uiCheckBox_合格等级_F
+            // 
+            this.uiCheckBox_合格等级_F.CheckBoxColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(83)))), ((int)(((byte)(124)))));
+            this.uiCheckBox_合格等级_F.Cursor = System.Windows.Forms.Cursors.Default;
+            this.uiCheckBox_合格等级_F.Font = new System.Drawing.Font("微软雅黑", 10.01739F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiCheckBox_合格等级_F.ImageSize = 18;
+            this.uiCheckBox_合格等级_F.Location = new System.Drawing.Point(37, 197);
+            this.uiCheckBox_合格等级_F.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiCheckBox_合格等级_F.Name = "uiCheckBox_合格等级_F";
+            this.uiCheckBox_合格等级_F.Padding = new System.Windows.Forms.Padding(24, 0, 0, 0);
+            this.uiCheckBox_合格等级_F.Size = new System.Drawing.Size(91, 30);
+            this.uiCheckBox_合格等级_F.Style = Sunny.UI.UIStyle.深色;
+            this.uiCheckBox_合格等级_F.StyleCustomMode = true;
+            this.uiCheckBox_合格等级_F.TabIndex = 14;
+            this.uiCheckBox_合格等级_F.Text = "F";
+            // 
             // Control_评级
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.Controls.Add(this.uiLabel15);
-            this.Controls.Add(this.uiTextBox_评级_合格等级);
-            this.Controls.Add(this.uiLabel14);
+            this.Controls.Add(this.uiGroupBox1);
             this.Controls.Add(this.uiTextBox_评级_分割符);
             this.Controls.Add(this.uiLabel13);
             this.Name = "Control_评级";
             this.Size = new System.Drawing.Size(620, 530);
+            this.uiGroupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private Sunny.UI.UILabel uiLabel15;
-        private Sunny.UI.UILabel uiLabel14;
         private Sunny.UI.UILabel uiLabel13;
-        internal Sunny.UI.UITextBox uiTextBox_评级_合格等级;
         internal Sunny.UI.UITextBox uiTextBox_评级_分割符;
+        private Sunny.UI.UIGroupBox uiGroupBox1;
+        internal Sunny.UI.UICheckBox uiCheckBox_合格等级_F;
+        internal Sunny.UI.UICheckBox uiCheckBox_合格等级_E;
+        internal Sunny.UI.UICheckBox uiCheckBox_合格等级_D;
+        internal Sunny.UI.UICheckBox uiCheckBox_合格等级_C;
+        internal Sunny.UI.UICheckBox uiCheckBox_合格等级_B;
+        internal Sunny.UI.UICheckBox uiCheckBox_合格等级_A;
     }
 }

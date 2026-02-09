@@ -52,7 +52,8 @@ namespace qfNet
             this.uiDataGridView1.DataSource = this._文件目录;
             _datagridSys = new DataGridview_(this.uiDataGridView1).格式化()
              .显示or隐藏标题(false)
-             .设置行高(30);
+             .设置行高(30)
+             .列为只读 ();
 
 
             this.uiLabel_后缀.Text = $"{文件类型}|*{this._后缀}";

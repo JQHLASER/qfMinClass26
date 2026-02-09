@@ -38,48 +38,88 @@ namespace qfNet
         void Show()
         {
             qfNet.读码器._cfg_等级作假_[] codeBeff = this._readcode._参数.自定义等级;
-            this.uiTextBox_等级.Clear();
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < codeBeff.Length; i++)
+
+            foreach (var S in codeBeff)
             {
-                qfNet.读码器._cfg_等级作假_ info = codeBeff[i];
-                if (i == 0)
+                switch (S.Name)
                 {
-                    sb.Append($"{info.Name}%{info.Value}");
+                    case "A":
+                        this.uiTextBox_A.Text = S.Value;
+                        break;
+                    case "B":
+                        this.uiTextBox_B.Text = S.Value;
+                        break;
+                    case "C":
+                        this.uiTextBox_C.Text = S.Value;
+                        break;
+                    case "D":
+                        this.uiTextBox_D.Text = S.Value;
+                        break;
+                    case "E":
+                        this.uiTextBox_E.Text = S.Value;
+                        break;
+                    case "F":
+                        this.uiTextBox_F.Text = S.Value;
+                        break;
                 }
-                else
-                {
-                    sb.Append($"\r\n");
-                    sb.Append($"{info.Name}%{info.Value}");
-                }
+
             }
-            this.uiTextBox_等级.Text = sb.ToString();
 
         }
 
         void Save()
         {
-            string[] beff = this.uiTextBox_等级.Text.Split(new string[] { "\r\n" }, StringSplitOptions.None);
-            List<qfNet.读码器._cfg_等级作假_> lst = new List<qfNet.读码器._cfg_等级作假_>();
-
-            foreach (var item in beff)
+            List<qfNet.读码器._cfg_等级作假_> lstCstr = new List<qfNet.读码器._cfg_等级作假_>();
+            if (!string.IsNullOrWhiteSpace(this.uiTextBox_A.Text.Trim()))
             {
-                if (string.IsNullOrEmpty(item))
+                lstCstr.Add(new qfWork.读码器._cfg_等级作假_
                 {
-                    continue;
-                }
-                try
+                    Name = "A",
+                    Value = this.uiTextBox_A.Text.Trim(),
+                });
+            }
+            if (!string.IsNullOrWhiteSpace(this.uiTextBox_B.Text.Trim()))
+            {
+                lstCstr.Add(new qfWork.读码器._cfg_等级作假_
                 {
-                    string[] sBeff = item.Trim().Split(new string[] { "%" }, StringSplitOptions.None);
-                    qfNet.读码器._cfg_等级作假_ info = new qfNet.读码器._cfg_等级作假_(sBeff[0], sBeff[1]);
-                    lst.Add(info);
-                }
-                catch (Exception)
+                    Name = "B",
+                    Value = this.uiTextBox_B.Text.Trim(),
+                });
+            }
+            if (!string.IsNullOrWhiteSpace(this.uiTextBox_C.Text.Trim()))
+            {
+                lstCstr.Add(new qfWork.读码器._cfg_等级作假_
                 {
-                }
+                    Name = "C",
+                    Value = this.uiTextBox_C.Text.Trim(),
+                });
+            }
+            if (!string.IsNullOrWhiteSpace(this.uiTextBox_D.Text.Trim()))
+            {
+                lstCstr.Add(new qfWork.读码器._cfg_等级作假_
+                {
+                    Name = "D",
+                    Value = this.uiTextBox_D.Text.Trim(),
+                });
+            }
+            if (!string.IsNullOrWhiteSpace(this.uiTextBox_E.Text.Trim()))
+            {
+                lstCstr.Add(new qfWork.读码器._cfg_等级作假_
+                {
+                    Name = "E",
+                    Value = this.uiTextBox_E.Text.Trim(),
+                });
+            }
+            if (!string.IsNullOrWhiteSpace(this.uiTextBox_F.Text.Trim()))
+            {
+                lstCstr.Add(new qfWork.读码器._cfg_等级作假_
+                {
+                    Name = "F",
+                    Value = this.uiTextBox_F.Text.Trim(),
+                });
             }
 
-            this._readcode._参数.自定义等级 = lst.ToArray();
+            this._readcode._参数.自定义等级 = lstCstr.ToArray();
 
             MessageBox.Show("OK");
             Show();

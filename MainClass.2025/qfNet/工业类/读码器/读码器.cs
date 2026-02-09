@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static System.Windows.Forms.AxHost;
 
 namespace qfNet
@@ -26,17 +27,11 @@ namespace qfNet
             if (!this._功能.使能)
             {
                 return;
-            }
-
+            } 
 
             base.Event_读码器连接状态 += On_连接状态;
             base.Event_读码状态 += On_读码状态;
-            await base.初始化();
-            if (_参数.使能_读码器)
-            {
-                On_标题栏状态(this.标题栏状态信息_连接状态(), (int)qfmain._连接状态_.连接中);
-            }
-
+            await base.初始化(); 
             IsInistiall = true;
         }
 
@@ -61,10 +56,10 @@ namespace qfNet
             using (Form_读码器 forms = new Form_读码器(this))
             {
                 forms.ShowDialog();
-               
+
                 if (!_参数.使能_读码器)
                 {
-                    断开读码器(); 
+                    断开读码器();
                 }
                 else
                 {
@@ -80,15 +75,8 @@ namespace qfNet
 
 
         public void On_连接状态(qfmain._连接状态_ state)
-        {
-            if (!_参数.使能_读码器 && state == qfmain._连接状态_.未连接)
-            {
-                On_标题栏状态(标题栏状态信息_连接状态(), (int) qfmain ._连接状态_ .已连接 );
-            }
-            else
-            {
-                On_标题栏状态(标题栏状态信息_连接状态(), (int)state);
-            }
+        {           
+            On_标题栏状态(标题栏状态信息_连接状态(), (int)state);
         }
 
         void On_读码状态(_读码状态_ state)

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using qfSqlSugar;
+using SqlSugar.SplitTableExtensions;
 using Sunny.UI;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,11 @@ namespace qfCode
 {
     public partial class Form_主窗体 : Sunny.UI.UIForm
     {
+        //双缓冲显示窗体所有子控件
+        protected override CreateParams CreateParams { get { CreateParams cp = base.CreateParams; cp.ExStyle |= 0x02000000; return cp; } }
+
+
+
         internal 编辑_ _编辑;
         internal static Form_主窗体 forms;
         /// <summary>
@@ -38,6 +44,8 @@ namespace qfCode
         /// 当前编辑中的对象元素
         /// </summary>
         internal BindingList<_元素_Str_> _lstBind元素 = new BindingList<_元素_Str_>();
+        internal BindingSource _bindsoure = new BindingSource();
+
 
         internal 视图_ _视图;
 
@@ -63,8 +71,10 @@ namespace qfCode
             this.WindowState = FormWindowState.Maximized;
             this.Padding = new System.Windows.Forms.Padding(5, 35, 5, 5);
 
-            this.dataGridView_元素.DataSource = this._lstBind元素;
+            _bindsoure.DataSource = this._lstBind元素;
+            this.dataGridView_元素.DataSource = _bindsoure; 
             Datagridview格式();
+
             this.uiListBox_对象列表.Items.Clear();
 
             this.视图ToolStripMenuItem.Click += (s, e) =>
@@ -104,7 +114,7 @@ namespace qfCode
             this.删除ToolStripMenuItem.Visible = this._编辑._功能.编辑.删除;
             this.打开ToolStripMenuItem.Visible = this._编辑._功能.编辑.打开;
             this.保存ToolStripMenuItem.Visible = this._编辑._功能.编辑.保存;
-            this.ui_Button_对象_保存 .Visible = this._编辑._功能.编辑.保存;
+            this.ui_Button_对象_保存.Visible = this._编辑._功能.编辑.保存;
 
             this.关闭ToolStripMenuItem.Click += (s, e) =>
             {
@@ -481,7 +491,8 @@ namespace qfCode
             grid.使能修改列宽(true);
             grid.设置列宽(0, 200);
             grid.设置列宽(1, 500);
-            grid.设置字体_整体(new Font("微软雅黑", 9f));
+            grid.设置字体_整体(new Font("微软雅黑", 9f))
+                .列为只读 ();
 
         }
 
@@ -603,7 +614,7 @@ namespace qfCode
             {
                 sb.Append($"<{Language_.Get语言("模板")}>");
             }
-            if (this._编辑._功能.对象属性.校验关键字 &&!string.IsNullOrWhiteSpace (objc.属性.校验关键字))
+            if (this._编辑._功能.对象属性.校验关键字 && !string.IsNullOrWhiteSpace(objc.属性.校验关键字))
             {
                 sb.Append($"<{Language_.Get语言("关键字")}>");
             }

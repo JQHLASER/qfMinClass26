@@ -1065,7 +1065,7 @@ namespace qfmain
                     else if (s == "读")
                     {
                         rt = new 文本().Read_25(path, out string rxt, out msgErr, encoding_);
-
+                     
                         if (rt && !string.IsNullOrEmpty(rxt))
                         {
                             if (加密)

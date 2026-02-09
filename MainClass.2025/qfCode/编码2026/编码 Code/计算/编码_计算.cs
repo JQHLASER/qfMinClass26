@@ -49,54 +49,71 @@ namespace qfCode
             }
             return (rt, msgErr, 结果);
         }
+
+
         internal (bool s, string m, string v) 计算(_班次_[] info, DateTime 时间)
         {
             bool rt = true;
             string 结果 = "";
             string msgErr = string.Empty;
+
             try
             {
+                if (info == null || info.Length == 0)
+                {
+                    return (false, "班次信息为空", "");
+                }
+
+                TimeSpan 当前时间 = 时间.TimeOfDay;
+
                 foreach (var s in info)
                 {
-                    _元素_.班次 info班次S = new _元素_.班次();
-                    string 代码 = s.代码;
-                    DateTime 上班时间 = DateTime.Parse(s.上班时间);
-                    DateTime 下班时间 = DateTime.Parse(s.下班时间);
+                    string 代码 = s.代码.Trim();
+                    TimeSpan 上班时间 = TimeSpan.Parse(s.上班时间.Trim());
+                    TimeSpan 下班时间 = TimeSpan.Parse(s.下班时间.Trim());
 
-                    //开始计算结果
-                    DateTime 当前时间 = DateTime.Parse(时间.ToString("HH:mm:ss"));
+                    // 调试输出
+                  //  MessageBox.Show($"当前:{当前时间} 上班:{上班时间} 下班:{下班时间}");
 
                     if (上班时间 <= 下班时间)
                     {
+                        // 正常班次
                         if (当前时间 >= 上班时间 && 当前时间 <= 下班时间)
                         {
                             结果 = 代码;
+                          //  MessageBox.Show(代码+结果);
+                            break;
                         }
                     }
                     else
                     {
-                        if (当前时间 <= 上班时间 && 当前时间 <= 下班时间)
+                        // 跨天班次
+                        if (当前时间 >= 上班时间 || 当前时间 <= 下班时间)
                         {
                             结果 = 代码;
-                        }
-                        else if (当前时间 >= 上班时间 && 当前时间 >= 下班时间)
-                        {
-                            结果 = 代码;
+                            break;
                         }
                     }
-
-
                 }
 
+                if (string.IsNullOrWhiteSpace(结果))
+                {
+                    rt = false;
+                    msgErr = "未计算出结果";
+                }
             }
             catch (Exception ex)
             {
-                msgErr = ex.Message;
                 rt = false;
+                msgErr = ex.Message;
             }
 
+           
             return (rt, msgErr, 结果);
         }
+
+
+
 
         /// <summary>
         /// 除了强制复位,其它都带判断复位了, 

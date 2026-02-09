@@ -67,9 +67,9 @@ namespace qfLanguage
             new _language_Value_ ( keys, "无此功能","无此功能"),
             new _language_Value_ ( keys, "保存成功","保存成功"),
             new _language_Value_ ( keys, "删除成功","删除成功"),
+            new _language_Value_ ( keys, "未计算出结果","未计算出结果"),
 
-
-
+            
         };
 
     }

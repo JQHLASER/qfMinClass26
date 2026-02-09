@@ -354,7 +354,7 @@ namespace qfmain
             msgErr = string.Empty;
             try
             {
-                encoding = encoding ?? Encoding.Default;
+                encoding = encoding ?? Encoding.UTF8 ;
                 FileMode filemodel = 是否覆盖 ? FileMode.Create : FileMode.Append;
 
 
@@ -393,7 +393,7 @@ namespace qfmain
             try
             {
                 FileMode filemodel = 是否覆盖 ? FileMode.Create : FileMode.Append;
-                encoding = encoding ?? Encoding.Default;
+                encoding = encoding ?? Encoding.UTF8;
                 using (var fs = new FileStream(path, filemodel, FileAccess.Write, FileShare.Read, buffSize))
                 using (var sw = new StreamWriter(fs, encoding))
                 {
@@ -428,7 +428,7 @@ namespace qfmain
             msgErr = string.Empty;
             try
             {
-                encoding = encoding ?? Encoding.Default;
+                encoding = encoding ?? Encoding.UTF8;
                 using (var sw = new StreamWriter(path, 是否覆盖, encoding, buffSize))
                 {
                     sw.WriteLine(text);
@@ -463,7 +463,7 @@ namespace qfmain
             Text = string.Empty;
             try
             {
-                encoding = encoding ?? Encoding.Default;
+                encoding = encoding ?? Encoding.UTF8;
                 Text = File.ReadAllText(path, encoding);
             }
             catch (Exception ex)
@@ -491,7 +491,7 @@ namespace qfmain
             lst = new List<string>();
             try
             {
-                encoding = encoding ?? Encoding.Default;
+                encoding = encoding ?? Encoding.UTF8;
                 foreach (var line in File.ReadLines(path, encoding))
                 {
                     lst.Add(line);
@@ -515,7 +515,7 @@ namespace qfmain
             lst = new List<string>();
             try
             {
-                encoding = encoding ?? Encoding.Default;
+                encoding = encoding ?? Encoding.UTF8;
                 using (var sr = new StreamReader(path, encoding))
                 {
                     string line = null;
@@ -544,7 +544,7 @@ namespace qfmain
             lst = new List<string>();
             try
             {
-                encoding = encoding ?? Encoding.Default;
+                encoding = encoding ?? Encoding.UTF8;
                 using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, buffSize))
                 using (var bs = new BufferedStream(fs))
                 using (var sr = new StreamReader(bs))
@@ -575,7 +575,7 @@ namespace qfmain
             text = string.Empty;
             try
             {
-                encoding = encoding ?? Encoding.Default;
+                encoding = encoding ?? Encoding.UTF8;
                 byte[] data = File.ReadAllBytes(path);
                 text = encoding.GetString(data);
             }

@@ -29,7 +29,7 @@ namespace qfCode
         /// </summary> 
         public string GetPath_班次(string FileName)
         {
-            return Path .Combine ( this._codeSys._文件夹_属性.班次,$"{FileName}.txt");
+            return Path.Combine(this._codeSys._文件夹_属性.班次, $"{FileName}.txt");
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace qfCode
         /// </summary> 
         public string GetPath_日期时间(string FileName)
         {
-            return Path.Combine(this._codeSys._文件夹_属性.日期时间,$"{FileName}.txt");
+            return Path.Combine(this._codeSys._文件夹_属性.日期时间, $"{FileName}.txt");
         }
 
 
@@ -62,9 +62,9 @@ namespace qfCode
         }
 
 
-        public (bool s,string m , string[] v) Get目录_配方()
+        public (bool s, string m, string[] v) Get目录_配方()
         {
-            return this._codeSys._配方文件操作._Iwork文件 .Get目录();
+            return this._codeSys._配方文件操作._Iwork文件.Get目录();
         }
 
 
@@ -80,7 +80,7 @@ namespace qfCode
         internal _班次_[] Get_班次(string FileName)
         {
             string path = GetPath_班次(FileName);
-            _班次_[] Beff = new _班次_[0]; 
+            _班次_[] Beff = new _班次_[0];
             List<_班次_> lst = new List<_班次_>
             {
                 new _班次_
@@ -102,7 +102,8 @@ namespace qfCode
                 },
             };
             Beff = lst.ToArray();
-            new qfmain.文件_文件夹().WriteReadJson(path, 1, ref Beff, out string msgErr);
+            bool rt = new qfmain.文件_文件夹().WriteReadJson(path, 1, ref Beff, out string msgErr);
+           
             return Beff;
         }
 
@@ -114,7 +115,7 @@ namespace qfCode
         internal string Get_日期时间(string FileName, string section, string keys)
         {
             string path = GetPath_日期时间(FileName);
-             
+
             qfmain.ini_sharpconfig ini_sys = new qfmain.ini_sharpconfig(path);
             if (!new qfmain.文件_文件夹().文件_是否存在(path))
             {

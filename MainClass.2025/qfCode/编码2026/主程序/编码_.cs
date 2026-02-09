@@ -388,8 +388,8 @@ namespace qfCode
                             break;
                         case _em_工具箱_.班次:
 
-                            #region 班次
-
+                            #region 班次 
+                            
                             var rtClasses = new 编码_计算(this).班次(y, 班次规则, dates);
                             rt = rtClasses.s;
                             msg = rtClasses.m;
@@ -724,8 +724,8 @@ namespace qfCode
             {
                 if (this._功能.日期时间.更新日期)
                 {
-                    DateTime 当前时间 = DateTime.Parse(now.ToString("HH:mm:ss"));
-                    DateTime 更新时间 = DateTime.Parse(配方文件.更新时间);
+                    TimeSpan  当前时间 = TimeSpan.Parse(now.ToString("HH:mm:ss"));
+                    TimeSpan 更新时间 = TimeSpan.Parse(配方文件.更新时间);
                     if (当前时间 <= 更新时间)
                     {
                         nowNew = new qfmain.日期时间_().增减时间(now, 2, -1);

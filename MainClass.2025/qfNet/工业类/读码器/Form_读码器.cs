@@ -144,7 +144,14 @@ namespace qfNet
             using (Form_TCP设置 forms = new Form_TCP设置($"{this._readcode._读码器名称}", this._readcode.TcpClient_sys, null))
             {
                 DialogResult result = forms.ShowDialog();
-                await this._readcode.TcpClient_sys.Connect连接Async();
+                if (this._readcode._参数.使能_读码器)
+                {
+                    await this._readcode.TcpClient_sys.Connect连接Async();
+                }
+                else
+                {
+                    this._readcode.TcpClient_sys.Stop关闭连接(out string msgErr);
+                }
             }
 
         }
@@ -198,7 +205,37 @@ namespace qfNet
             #region 评级
 
             this._readcode._参数.评级.分割符 = this.con_评级.uiTextBox_评级_分割符.Text;
-            this._readcode._参数.评级.合格等级 = strToStringBeff(this.con_评级.uiTextBox_评级_合格等级.Text.Trim());
+            #region 合格等级
+            List<string> lst评级=new List<string> ();
+            if (this.con_评级.uiCheckBox_合格等级_A.Checked)
+            {
+                lst评级.Add("A");
+            }
+            if (this.con_评级.uiCheckBox_合格等级_B.Checked)
+            {
+                lst评级.Add("B");
+            }
+            if (this.con_评级.uiCheckBox_合格等级_C.Checked)
+            {
+                lst评级.Add("C");
+            }
+            if (this.con_评级.uiCheckBox_合格等级_D.Checked)
+            {
+                lst评级.Add("D");
+            }
+            if (this.con_评级.uiCheckBox_合格等级_E.Checked)
+            {
+                lst评级.Add("E");
+            }
+            if (this.con_评级.uiCheckBox_合格等级_F.Checked)
+            {
+                lst评级.Add("F");
+            }
+
+            this._readcode._参数.评级.合格等级 = lst评级.ToArray();
+
+            #endregion
+
 
 
             #endregion
@@ -281,10 +318,14 @@ namespace qfNet
 
         string stringBeffToString(string[] beff)
         {
-            string xt = string.Join(",", beff.Select(s => s?.Trim())
+            string xt = string.Join("\r\n", beff.Select(s => s?.Trim())
         .Where(s => !string.IsNullOrEmpty(s)));
             return xt.Trim();
         }
+
+
+
+
 
 
 
@@ -326,7 +367,32 @@ namespace qfNet
             #region 评级
 
             this.con_评级.uiTextBox_评级_分割符.Text = this._readcode._参数.评级.分割符;
-            this.con_评级.uiTextBox_评级_合格等级.Text = stringBeffToString(this._readcode._参数.评级.合格等级);
+            #region 合格等级
+            foreach (var s in this._readcode._参数.评级.合格等级)
+            {
+                switch (s)
+                {
+                    case "A":
+                        this.con_评级.uiCheckBox_合格等级_A.Checked = true;
+                        break;
+                    case "B":
+                        this.con_评级.uiCheckBox_合格等级_B.Checked = true;
+                        break;
+                    case "C":
+                        this.con_评级.uiCheckBox_合格等级_C.Checked = true;
+                        break;
+                    case "D":
+                        this.con_评级.uiCheckBox_合格等级_D.Checked = true;
+                        break;
+                    case "E":
+                        this.con_评级.uiCheckBox_合格等级_E.Checked = true;
+                        break;
+                    case "F":
+                        this.con_评级.uiCheckBox_合格等级_F.Checked = true;
+                        break;
+                }
+            }
+            #endregion
 
 
             #endregion

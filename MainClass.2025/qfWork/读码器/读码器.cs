@@ -595,7 +595,14 @@ namespace qfWork
         public event Action<qfmain._连接状态_> Event_读码器连接状态;
         void On_读码器连接状态(qfmain._连接状态_ state)
         {
-            this._连接状态 = state;
+            if (!_参数.使能_读码器)
+            {
+                this._连接状态 = qfmain._连接状态_.已连接;
+            }
+            else
+            {
+                this._连接状态 = state;
+            }
             Event_读码器连接状态?.Invoke(state);
         }
 
