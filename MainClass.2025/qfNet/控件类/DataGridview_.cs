@@ -44,6 +44,22 @@ namespace qfNet
             return this;
         }
 
+        public DataGridview_ 设置文本颜色_列标题(  Color color_)
+        {
+            this._datagridview.EnableHeadersVisualStyles = false;//需要
+            this._datagridview.ColumnHeadersDefaultCellStyle.ForeColor = color_;
+            return this;
+       
+        }
+        public DataGridview_ 设置背景颜色_列标题(Color color_)
+        {
+            this._datagridview.EnableHeadersVisualStyles = false;//需要
+            this._datagridview.ColumnHeadersDefaultCellStyle.BackColor = color_;
+            return this;
+
+        }
+
+
         public DataGridview_ 设置字体_列标题(dynamic 列号, Font fonts)
         {
             this._datagridview.EnableHeadersVisualStyles = false;//需要
@@ -891,15 +907,17 @@ namespace qfNet
             this.取总列数(out int countColumns);
             this.设置字体_整体(new Font("微软雅黑", 11f, FontStyle.Regular));
             this.设置字体颜色_整体(Color.Black);
-
+            this.设置文本颜色_列标题(Color.Gray);          
             列标题样式();
-            for (int i = 0; i < countColumns; i++)
-            {
-                this.设置文本颜色_列标题(i, Color.Black);
-                this.列为只读(i);
-                this.列排序_禁用(i);
-                this.列标题对齐(i, DataGridViewContentAlignment.MiddleLeft);
-            }
+            
+
+            //for (int i = 0; i < countColumns; i++)
+            //{
+            //    this.设置文本颜色_列标题(i, Color.Black);
+            //    this.列为只读(i);
+            //    this.列排序_禁用(i);
+            //    this.列标题对齐(i, DataGridViewContentAlignment.MiddleLeft);
+            //}
             选中行_设置只选择一行();
 
             return this;
