@@ -241,18 +241,39 @@ namespace qfmain
 
         public virtual bool 文件_是否存在(string path)
         {
-            bool rt = File.Exists(path);
+            bool rt = !string.IsNullOrWhiteSpace(path) && File.Exists(path);
             return rt;
         }
 
-        public virtual void 文件_新建(string path)
+        /// <summary>
+        /// 存在时清空新建
+        /// <para>强制新建: =true,清除原来的并新建,=false,不存在时新建,存在就不新建</para>
+        /// </summary> >
+        public virtual void 文件_新建(string path, bool 强制新建 = true)
         {
-            FileStream f = File.Create(path);
-            f.Close();
-            f.Dispose();
+            if (强制新建)
+            {
+                using (File.Create(path)) { }
+            }
+            else
+            {
+                ////方法1
+                //if (!File.Exists(path))
+                //{
+                //    using (File.Create(path)) { }
+                //}
+
+                ////方法2:AI推荐,说是工业级
+                using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+                {
+                }
+            }
         }
 
-        public virtual void 文件_新建(string path, Encoding encoding_ = null)
+        /// <summary>
+        ///   File.WriteAllText()
+        /// </summary> 
+        public virtual void 文件_新建1(string path, Encoding encoding_ = null)
         {
             if (encoding_ is null)
             {
@@ -263,15 +284,12 @@ namespace qfmain
 
         /// <summary>
         /// 如"GB2312 ,UTF8等"
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="格式">如"GB2312 ,UTF8等"</param>
-        public virtual void 文件_新建_1(string path, Encoding encoding_ = null)
+        /// <para>StreamWriter sw = new StreamWriter</para>
+        /// </summary> 
+        public virtual void 文件_新建_2(string path, Encoding encoding_ = null)
         {
-            if (encoding_ is null)
-            {
-                encoding_ = Encoding.Default;
-            }
+            encoding_ = encoding_ ?? Encoding.Default;
+
             string fileName = path;
             using (StreamWriter sw = new StreamWriter(fileName, false, encoding_))
             {
@@ -960,15 +978,14 @@ namespace qfmain
 
         #region 文件的读写
 
-        string 生成临时文件(string path)
+        /// <summary>
+        /// 防止文件损坏
+        /// </summary> 
+        public string 防文件损坏_生成临时文件路径(string path)
         {
-            new qfmain.文件_文件夹().文件_获取文件夹路径(path, out string Files, out string msgErr1);
-            new qfmain.文件_文件夹().文件_获取文件名_不含后缀(path, out string Name, out msgErr1);
-
-            return Path.Combine(Files, $"_{Name}.bak");
-
+            return $"{path}.tempy";
         }
-        void 转正式文件(string path临时, string path)
+        public void 防文件损坏_转正式文件(string path临时, string path)
         {
             if (!new 文件_文件夹().文件_是否存在(path))
             {
@@ -1038,10 +1055,10 @@ namespace qfmain
                             {
                                 vxt = new 加解密().AES加密2(vxt, 密码);
                             }
-                            
-                            string path_临时 = 生成临时文件(path);                           
+
+                            string path_临时 = 防文件损坏_生成临时文件路径(path);
                             new 文本().Save_25(path_临时, vxt, true, out msgErr, false, encoding_);
-                            转正式文件(path_临时, path);
+                            防文件损坏_转正式文件(path_临时, path);
                         }
 
                     }
@@ -1127,10 +1144,10 @@ namespace qfmain
                         {
                             vxt = new 加解密_AES().加密_1(vxt, 密码);
                         }
-                         
-                        string path_临时 = 生成临时文件(path);
+
+                        string path_临时 = 防文件损坏_生成临时文件路径(path);
                         new 文本().Save_25(path_临时, vxt, true, out msgErr, false, encoding_);
-                        转正式文件(path_临时, path);
+                        防文件损坏_转正式文件(path_临时, path);
 
                     }
                     else if (s == "读")
@@ -1219,8 +1236,8 @@ namespace qfmain
                                 break;
                         }
 
-                       
-                        string path_临时 = 生成临时文件(path);
+
+                        string path_临时 = 防文件损坏_生成临时文件路径(path);
 
                         switch (ini类型)
                         {
@@ -1231,7 +1248,7 @@ namespace qfmain
                                 new ini_sharpconfig(path_临时).Write(section, key_, vxt, true);
                                 break;
                         }
-                        转正式文件(path_临时, path);
+                        防文件损坏_转正式文件(path_临时, path);
 
                     }
                     else if (s == "读")
@@ -1319,8 +1336,8 @@ namespace qfmain
                             continue;
                         }
 
-                       
-                        string path_临时 = 生成临时文件(path);
+
+                        string path_临时 = 防文件损坏_生成临时文件路径(path);
 
                         switch (ini类型)
                         {
@@ -1331,7 +1348,7 @@ namespace qfmain
                                 new ini_sharpconfig(path_临时).Write(section, key_, cfg, true);
                                 break;
                         }
-                        转正式文件(path_临时, path);
+                        防文件损坏_转正式文件(path_临时, path);
 
                     }
                     else if (s == "读")
