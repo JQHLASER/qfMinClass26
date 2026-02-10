@@ -247,6 +247,7 @@
     <Compile Include="PC\键盘_鼠标.cs" />
     <Compile Include="TRuest.cs" />
     <Compile Include="const常量.cs" />
+    <Compile Include="基础\class类.cs" />
     <Compile Include="基础\Csv\Csv_高效.cs" />
     <Compile Include="基础\INI\ini_sharpconfig.cs" />
     <Compile Include="基础\INI\ini_sharpconfig_ReadString.cs" />
