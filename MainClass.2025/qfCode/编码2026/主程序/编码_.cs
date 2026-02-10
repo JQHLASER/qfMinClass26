@@ -86,7 +86,6 @@ namespace qfCode
         }
 
 
-
         #region 配方
 
         public (bool s, string m) 配方_保存(_配方文件_属性_ 配方, string 配方名称, DateTime dates)
@@ -155,7 +154,6 @@ namespace qfCode
 
         #endregion
 
-
         #region 修改
 
         /// <summary>
@@ -207,7 +205,6 @@ namespace qfCode
         }
 
         #endregion
-
 
 
         #region 初始化状态

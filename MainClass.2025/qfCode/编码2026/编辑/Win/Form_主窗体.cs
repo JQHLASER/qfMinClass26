@@ -625,8 +625,12 @@ namespace qfCode
             }
             if (this._编辑._功能.对象属性.校验模板 && objc.属性.校验模板)
             {
-                sb.Append($"<{Language_.Get语言("模板")}>");
+                sb.Append($"<{Language_.Get语言("模板变量")}>");
             }
+            if (this._编辑._功能.对象属性.保存csv  && objc.属性.保存csv )
+            {
+                sb.Append($"<{Language_.Get语言("保存csv")}>");
+            } 
             if (this._编辑._功能.对象属性.校验关键字 && !string.IsNullOrWhiteSpace(objc.属性.校验关键字))
             {
                 sb.Append($"<{Language_.Get语言("关键字")}>");
