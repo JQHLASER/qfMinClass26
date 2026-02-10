@@ -450,6 +450,9 @@ namespace qfmain
             return rt;
         }
 
+        /// <summary>
+        /// 获取文件路径所在的文件夹路径
+        /// </summary> 
         public virtual bool 文件_获取文件夹路径(string path, out string FilePath, out string msgErr)
         {
             bool rt = true;
