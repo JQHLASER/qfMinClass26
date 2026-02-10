@@ -273,7 +273,7 @@ namespace qfmain
         /// <summary>
         ///  获取表头
         /// </summary> 
-        public static string[] Get_CsvHeader<T>()
+        public   string[] Get_CsvHeader<T>()
         {
             var props = typeof(T).GetProperties();
             return props.Select(p => new class类_属性显示名工具().Get_DisplayName(p)).ToArray ();
