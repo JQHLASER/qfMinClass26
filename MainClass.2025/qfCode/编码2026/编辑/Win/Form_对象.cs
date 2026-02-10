@@ -33,6 +33,7 @@ namespace qfCode
             this.uiCheckBox_模板变量.Visible = Form_主窗体.forms._编辑._功能.对象属性.校验模板;
             this.uiCheckBox_读码.Visible = Form_主窗体.forms._编辑._功能.对象属性.读码;
             this.uiCheckBox_防重.Visible = Form_主窗体.forms._编辑._功能.对象属性.防重;
+            this.uiCheckBox_保存csv.Visible = Form_主窗体.forms._编辑._功能.对象属性.保存csv;
 
             this.uiButton_变量对象名.Visible = Form_主窗体.forms._编辑._变量对象名.Length > 0 ? true : false;
 
@@ -66,7 +67,7 @@ namespace qfCode
             this.uiCheckBox_模板变量.Checked = this._cfg.校验模板;
             this.uiCheckBox_读码.Checked = this._cfg.读码;
             this.uiCheckBox_防重.Checked = this._cfg.防重;
-
+            this.uiCheckBox_保存csv.Checked = this._cfg.保存csv;
 
             this.Shown += (s, e) =>
             {
@@ -98,6 +99,9 @@ namespace qfCode
                 this._cfg.校验模板 = this.uiCheckBox_模板变量.Checked;
                 this._cfg.读码 = this.uiCheckBox_读码.Checked;
                 this._cfg.防重 = this.uiCheckBox_防重.Checked;
+                this._cfg.保存csv = this.uiCheckBox_保存csv.Checked;
+
+
 
                 this.DialogResult = DialogResult.OK;
 

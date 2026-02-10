@@ -60,6 +60,7 @@ namespace qfCode
 
         public class _对象属性_
         {
+            public bool 保存csv { set; get; } = false;
             public bool 防重 { set; get; } = false;
             public bool 读码 { set; get; } = false;
             /// <summary>

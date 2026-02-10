@@ -8,6 +8,7 @@ namespace qfCode
 {
     public  class _对象_属性
     {
+        public bool 保存csv { set; get; } = false;
         public bool 防重 { set; get; } = false;
         public bool 读码 { set; get; } = false;
         /// <summary>
@@ -30,6 +31,7 @@ namespace qfCode
                 校验模板 = this.校验模板,
                 校验关键字 = this.校验关键字,
                 校验位数 = this.校验位数,
+                保存csv =this.保存csv ,
             };
         }
     }
