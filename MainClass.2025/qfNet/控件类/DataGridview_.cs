@@ -44,12 +44,12 @@ namespace qfNet
             return this;
         }
 
-        public DataGridview_ 设置文本颜色_列标题(  Color color_)
+        public DataGridview_ 设置文本颜色_列标题(Color color_)
         {
             this._datagridview.EnableHeadersVisualStyles = false;//需要
             this._datagridview.ColumnHeadersDefaultCellStyle.ForeColor = color_;
             return this;
-       
+
         }
         public DataGridview_ 设置背景颜色_列标题(Color color_)
         {
@@ -888,6 +888,18 @@ namespace qfNet
             return this;
         }
 
+        public DataGridview_ 自动设置列头<T>()
+        {
+            foreach (DataGridViewColumn col in this._datagridview.Columns)
+            {
+                col.HeaderText = new class类_属性显示名工具().Get_DisplayName<T>(col.DataPropertyName);
+            }
+            return this;
+        }
+
+
+
+
         #endregion
 
 
@@ -907,9 +919,9 @@ namespace qfNet
             this.取总列数(out int countColumns);
             this.设置字体_整体(new Font("微软雅黑", 11f, FontStyle.Regular));
             this.设置字体颜色_整体(Color.Black);
-            this.设置文本颜色_列标题(Color.Gray);          
+            this.设置文本颜色_列标题(Color.Gray);
             列标题样式();
-            
+
 
             //for (int i = 0; i < countColumns; i++)
             //{

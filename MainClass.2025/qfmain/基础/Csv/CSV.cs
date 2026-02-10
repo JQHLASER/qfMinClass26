@@ -1,6 +1,7 @@
 ﻿using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -267,6 +268,17 @@ namespace qfmain
             lstCsv.Add(row);
             return await Write(path, 标题, lstCsv.ToArray(), append, encoding);
         }
+
+
+        /// <summary>
+        ///  获取表头
+        /// </summary> 
+        public static string[] Get_CsvHeader<T>()
+        {
+            var props = typeof(T).GetProperties();
+            return props.Select(p => new class类_属性显示名工具().Get_DisplayName(p)).ToArray ();
+        }
+
 
 
     }
