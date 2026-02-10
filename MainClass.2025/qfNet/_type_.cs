@@ -26,7 +26,7 @@ namespace qfNet
         public string 内容 { set; get; } = "";
 
         public Font fonts { set; get; } = null;
-
+        
 
         /// <summary>
         /// =0:正常显示,-1:清除显示
@@ -51,6 +51,6 @@ namespace qfNet
             this.状态 = 状态;
         }
     }
-
+    
 
 }
