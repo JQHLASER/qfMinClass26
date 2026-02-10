@@ -72,7 +72,7 @@ namespace qfCode
             this.Padding = new System.Windows.Forms.Padding(5, 35, 5, 5);
 
             _bindsoure.DataSource = this._lstBind元素;
-            this.dataGridView_元素.DataSource = _bindsoure; 
+            this.dataGridView_元素.DataSource = _bindsoure;
             Datagridview格式();
 
             this.uiListBox_对象列表.Items.Clear();
@@ -458,7 +458,7 @@ namespace qfCode
                 && MessageBox.Show(Language_.Get语言("确认删除?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 this._配方信息.对象[this._编辑对象索引].元素.RemoveAt(index);
-                this.uiListBox_对象列表.Items.RemoveAt(index);
+                this._lstBind元素.RemoveAt(index);
                 _是否要保存 = true;
             }
         }
@@ -473,6 +473,19 @@ namespace qfCode
                 if (rtJS.s)
                 {
                     var rt = new 编辑交互_统一接口(this._编辑)._Iworker.计算元素(this._配方信息, this._lst对象内容, now, this._配方信息.对象[this._编辑对象索引], json元素);
+
+                    switch (rt.cfg.工具)
+                    {
+                        case _em_工具箱_.关联对象:
+
+                            var rtobj = new Json序列化().转成Json<_元素_.关联对象>(json元素);
+                            rt.cfg.Value = $"【{rtobj.cfg.对象}】{rt.cfg.Value}";
+                            break;
+                    }
+
+
+
+
                     return rt;
                 }
                 else
@@ -492,7 +505,7 @@ namespace qfCode
             grid.设置列宽(0, 200);
             grid.设置列宽(1, 500);
             grid.设置字体_整体(new Font("微软雅黑", 9f))
-                .列为只读 ();
+                .列为只读();
 
         }
 
