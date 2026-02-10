@@ -14,6 +14,17 @@ namespace qfmain
             public long 良品 { set; get; } = 0;
             public long 不良品 { set; get; } = 0;
             public long 零件 { set; get; } = 0;
+
+            public _cfg_生产计数_ Clone()
+            {
+                return new _cfg_生产计数_()
+                {
+                    良品 =this.良品 ,
+                    不良品 =this.不良品 ,
+                    零件  =this.零件  ,
+                };
+            }
+
         }
 
         public bool _使能_零件 = false;

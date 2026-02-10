@@ -632,7 +632,7 @@ namespace qfWork
             {
                 this._连接状态 = state;
             }
-            Event_读码器连接状态?.Invoke(state);
+            Event_读码器连接状态?.Invoke(this._连接状态);
         }
 
         public event Action<_读码状态_> Event_读码状态;
