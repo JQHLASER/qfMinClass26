@@ -55,8 +55,7 @@ namespace qfNet
         {
             using (Form_读码器 forms = new Form_读码器(this))
             {
-                forms.ShowDialog();
-
+                forms.ShowDialog();             
                 if (!_参数.使能_读码器)
                 {
                     断开读码器();

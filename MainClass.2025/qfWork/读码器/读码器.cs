@@ -362,14 +362,16 @@ namespace qfWork
             读写参数(1);
 
 
-            string path = Path.Combine(this._File, $"Tcp.cfg");
+            string path = Path.Combine(this._File, "Tcp.cfg");
             this.TcpClient_sys = new qfmain.Socket_Client(path, new qfmain._解码_Cfg_(this._前缀_接收, this._后缀_接收, this._参数.读码器.通讯超时));
-            this.TcpClient_sys.Event_接收数据_jm += On_接收数据;
+
+            this.TcpClient_sys.Event_接收数据_jm += On_接收数据_jm;
             this.TcpClient_sys.Event_连接状态 += On_连接状态;
 
-            string pathCom = Path.Combine(this._File, $"Com.dll");
+            string pathCom = Path.Combine(this._File, "Com.dll");
             this.Com_sys = new qfmain.SerialPort_(pathCom, new qfmain._解码_Cfg_(this._前缀_接收, this._后缀_接收, this._参数.读码器.通讯超时));
-            this.Com_sys.Event_接收数据_jm += On_接收数据;
+
+            this.Com_sys.Event_接收数据_jm += On_接收数据_jm;
             this.Com_sys.Event_isOpen += On_连接状态;
 
             await 连接读码器();
@@ -408,13 +410,13 @@ namespace qfWork
             if (this._参数.通讯方式 == _通讯方式_.TcpClient)
             {
                 this.TcpClient_sys.Stop关闭连接(out string msgErr);
-                this.TcpClient_sys.Event_接收数据_jm -= On_接收数据;
+                this.TcpClient_sys.Event_接收数据_jm -= On_接收数据_jm;
                 this.TcpClient_sys.Event_连接状态 -= On_连接状态;
             }
             else if (this._参数.通讯方式 == _通讯方式_.SerialPort)
             {
                 this.Com_sys.Close(out string msgerr);
-                this.Com_sys.Event_接收数据_jm -= On_接收数据;
+                this.Com_sys.Event_接收数据_jm -= On_接收数据_jm;
                 this.Com_sys.Event_isOpen -= On_连接状态;
             }
 
@@ -434,7 +436,7 @@ namespace qfWork
         {
             lock (_lock)
             {
-                string path = Path.Combine(this._File, $"ReadCode.dll");
+                string path = Path.Combine(this._File, "ReadCode.dll");
                 _cfg_主参数_ cfg = this._参数;
                 new qfmain.文件_文件夹().WriteReadJson(path, model, ref cfg, out string msgErr);
                 this._参数 = cfg;
@@ -445,6 +447,16 @@ namespace qfWork
 
                 this._前缀_接收 = 解析前后缀(this._参数.读码器.前后缀_接收.前缀);
                 this._后缀_接收 = 解析前后缀(this._参数.读码器.前后缀_接收.后缀);
+
+
+                if (this._参数.通讯方式 == _通讯方式_.TcpClient && this.TcpClient_sys != null)
+                {
+                    this.TcpClient_sys.jm_sys._参数.超时时间 = this._参数.读码器.通讯超时;
+                }
+                else if (this._参数.通讯方式 == _通讯方式_.SerialPort && this.Com_sys != null)
+                {
+                    this.Com_sys.jm_sys._参数.超时时间 = this._参数.读码器.通讯超时;
+                }
 
 
                 #region 功能....使能
@@ -526,19 +538,21 @@ namespace qfWork
         public qfmain._连接状态_ _连接状态 = qfmain._连接状态_.未连接;
 
 
-        void On_接收数据(byte[] data)
+        void On_接收数据_jm(byte[] data)
         {
-            On_接收读码数据(data);
             this._接收数据 = _Encoding.GetString(data).Trim();
+            On_接收读码数据(data);
+            On_接收读码数据(this._接收数据);
+
             On_Log(true, $"{this._读码器名称},{Language_.Get语言("接收")},{this._接收数据}");
             if (_通讯辅助 == qfmain._通讯过程_.等待反馈中)
             {
                 this._通讯辅助 = qfmain._通讯过程_.已反馈;
                 this.delay_sys.中断延时();
-
             }
-
         }
+
+
 
         void On_连接状态(qfmain._连接状态_ state)
         {
@@ -590,6 +604,21 @@ namespace qfWork
         {
             Event_接收数据?.Invoke(data);
         }
+
+        /// <summary>
+        /// 接收到读码数据
+        /// </summary>
+        /// <param name="data"></param>
+        public event Action<string> Event_接收数据_Str;
+        /// <summary>
+        /// 接收到读码数据
+        /// </summary>
+        /// <param name="data"></param>
+        void On_接收读码数据(string data)
+        {
+            Event_接收数据_Str?.Invoke(data);
+        }
+
 
 
         public event Action<qfmain._连接状态_> Event_读码器连接状态;
@@ -704,16 +733,17 @@ namespace qfWork
 
         }
 
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="Model">0:检测,1:读码</param>      ..
         /// <returns></returns>
-        bool 发送(_操作_ Model, out _err_ err, out _cfg_读码内容_ 内容, out string msgErr)
+        async Task<(bool s, string m, _err_ err, _cfg_读码内容_ cfg)> 发送(_操作_ Model, bool 是否读码前延时 = true)
         {
-            内容 = new _cfg_读码内容_();
-            msgErr = string.Empty;
-            err = _err_.未读出内容;
+            var 内容 = new _cfg_读码内容_();
+            var msgErr = string.Empty;
+            var err = _err_.未读出内容;
             On_读码状态(_读码状态_.读码中);
 
             int 读码超时 = 0;
@@ -745,7 +775,7 @@ namespace qfWork
 
 
             bool rt = true;
-            if (读码前延时 > 0)
+            if (是否读码前延时 && 读码前延时 > 0)
             {
                 Thread.Sleep(读码前延时);
             }
@@ -761,7 +791,7 @@ namespace qfWork
                 #endregion
 
                 发送_启动();
-                delay_sys.延时(读码超时).Wait();
+                await delay_sys.延时(读码超时);
                 发送_停止();
 
                 #region 解析
@@ -798,10 +828,8 @@ namespace qfWork
 
             On_读码状态(_读码状态_.None);
 
-            return rt;
+            return (rt, msgErr, err, 内容);
         }
-
-
 
         public virtual bool 解析_检测(string 接收内容, out _cfg_读码内容_ 内容, out _err_ err, out string msgErr)
         {
@@ -959,26 +987,25 @@ namespace qfWork
         /// 放在线程中使用
         /// </summary>
         /// <returns></returns>
-        public virtual bool 检测(out _cfg_读码内容_ 内容, out string msgErr)
+        public virtual async Task<(bool s, string m, _cfg_读码内容_ cfg)> 检测(bool 是否读码前延时 = false)
         {
-            msgErr = string.Empty;
+            var msgErr = string.Empty;
             bool rt = true;
-            内容 = new _cfg_读码内容_();
+            var 内容 = new _cfg_读码内容_();
 
             if (!Err_未连接(out msgErr) || !Err_读码中(out msgErr))
             {
                 rt = false;
-                return rt;
+                return (rt, msgErr, 内容);
             }
             else if (!Err_未使能(out msgErr))
             {
                 rt = true;
-                return rt;
+                return (rt, msgErr, 内容);
             }
-            rt = 发送(_操作_.检测, out _err_ err, out 内容, out msgErr);
+            var rts = await 发送(_操作_.检测, 是否读码前延时);
             this._通讯辅助 = qfmain._通讯过程_.闲置;
-
-            return rt;
+            return (rts.s, rts.m, rts.cfg);
         }
 
 
@@ -986,65 +1013,37 @@ namespace qfWork
         /// 放在异步线程中使用
         /// </summary>
         /// <returns></returns>
-        public virtual bool 读码(out _cfg_读码内容_ 内容, out _err_ _err, out string msgErr)
+        public virtual async Task<(bool s, string m, _err_ err, _cfg_读码内容_ cfg)> 读码(bool 是否读码前延时 = true)
         {
-            msgErr = string.Empty;
+            var msgErr = string.Empty;
             bool rt = true;
-            内容 = new _cfg_读码内容_();
-            _err = _err_.未读出内容;
+            var 内容 = new _cfg_读码内容_();
+            var _err = _err_.未读出内容;
 
 
             if (!Err_未连接(out msgErr))
             {
                 _err = _err_.未连接;
                 rt = false;
-                return rt;
+                return (rt, msgErr, _err, 内容);
             }
             else if (!Err_读码中(out msgErr))
             {
                 _err = _err_.读码中;
                 rt = false;
-                return rt;
+                return (rt, msgErr, _err, 内容);
             }
             else if (!Err_未使能(out msgErr))
             {
                 _err = _err_.未使能;
                 rt = true;
-                return rt;
+                return (rt, msgErr, _err, 内容);
             }
-
-
-            rt = 发送(_操作_.读码, out _err, out 内容, out msgErr);
-
+            var rts = await 发送(_操作_.读码, 是否读码前延时);
             this._通讯辅助 = qfmain._通讯过程_.闲置;
-
-            return rt;
+            return rts;
         }
 
-        public async Task<(bool s, string m, _cfg_读码内容_ cfg)> 检测()
-        {
-            bool rt = true;
-            string msgErr = "";
-            _cfg_读码内容_ cfg = new _cfg_读码内容_();
-            await Task.Run(() =>
-            {
-                rt = 检测(out cfg, out msgErr);
-            });
-            return (rt, msgErr, cfg);
-        }
-
-        public async Task<(bool s, string m, _cfg_读码内容_ cfg, _err_ _err)> 读码()
-        {
-            bool rt = true;
-            string msgErr = "";
-            _cfg_读码内容_ cfg = new _cfg_读码内容_();
-            _err_ _err = new _err_();
-            await Task.Run(() =>
-            {
-                rt = 读码(out cfg, out _err, out msgErr);
-            });
-            return (rt, msgErr, cfg, _err);
-        }
 
 
         #endregion

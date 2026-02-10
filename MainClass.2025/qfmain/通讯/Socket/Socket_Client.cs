@@ -58,7 +58,7 @@ namespace qfmain
         }
 
 
-        private 解码 jm_sys;
+        public  解码 jm_sys;
         Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         public _连接状态_ _连接状态 { set; get; } = _连接状态_.未连接;
 

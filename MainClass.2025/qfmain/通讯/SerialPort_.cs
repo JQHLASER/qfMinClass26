@@ -48,7 +48,7 @@ namespace qfmain
 
         }
 
-        private 解码 jm_sys;
+        public  解码 jm_sys;
         public _打开状态_ _打开状态 { set; get; } = _打开状态_.未打开;
         public _通讯中状态_ _通讯状态 { set; get; } = _通讯中状态_.闲置;
 

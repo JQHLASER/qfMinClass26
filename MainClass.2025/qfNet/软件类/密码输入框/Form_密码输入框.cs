@@ -52,6 +52,7 @@ namespace qfNet
         }
         void On_Shown()
         {
+            this.uiTextBox_psd.ImeMode = ImeMode.Disable;
             this.uiTextBox_psd.Focus();
         }
         void On_Yes()
@@ -60,11 +61,13 @@ namespace qfNet
             if (string.IsNullOrEmpty(pasd))
             {
                 MessageBox.Show(Language_.Get语言("密码不能为空"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                On_Shown();
                 return;
             }
             else if (pasd != this._正确密码)
             {
                 MessageBox.Show(Language_.Get语言("密码错误"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                On_Shown();
                 return;
             }
 

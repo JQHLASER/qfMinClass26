@@ -28,10 +28,10 @@ namespace qfNet
             this.ui_Button2_关闭._Button.Style = Sunny.UI.UIStyle.Red;
 
             this._lst前后缀 = this._readcode.读取前后缀文件().ToList();
-            this.con_前后缀.ui_Combobox2_发送_前缀._ComboBox.DataSource = this._lst前后缀;
-            this.con_前后缀.ui_Combobox2_发送_后缀._ComboBox.DataSource = this._lst前后缀;
-            this.con_前后缀.ui_Combobox2_接收_前缀._ComboBox.DataSource = this._lst前后缀;
-            this.con_前后缀.ui_Combobox2_接收_后缀._ComboBox.DataSource = this._lst前后缀;
+            this.con_前后缀.ui_Combobox2_发送_前缀._ComboBox.DataSource = new List<string>(this._lst前后缀);
+            this.con_前后缀.ui_Combobox2_发送_后缀._ComboBox.DataSource = new List<string>(this._lst前后缀);
+            this.con_前后缀.ui_Combobox2_接收_前缀._ComboBox.DataSource = new List<string>(this._lst前后缀);
+            this.con_前后缀.ui_Combobox2_接收_后缀._ComboBox.DataSource = new List<string>(this._lst前后缀);
 
             语言();
             this.Text = this._readcode._读码器名称;
@@ -318,7 +318,7 @@ namespace qfNet
 
         string stringBeffToString(string[] beff)
         {
-            string xt = string.Join("\r\n", beff.Select(s => s?.Trim())
+            string xt = string.Join(",", beff.Select(s => s?.Trim())
         .Where(s => !string.IsNullOrEmpty(s)));
             return xt.Trim();
         }

@@ -325,6 +325,7 @@ namespace qfmain
         /// <returns></returns>
         public bool 判断是否超时(DateTime nows, int 超时时间)
         {
+            if (超时时间 <= 0) return false;
             return new 日期时间_().是否超时(nows, now, 超时时间);
         }
 
