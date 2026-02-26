@@ -326,8 +326,22 @@ namespace qfmain
             return result;
         }
 
+        /// <summary>
+        /// 将bool[] 转换成 int
+        /// </summary> 
+        public virtual uint BoolArrayToInt(bool[] bits)
+        { 
+            int result = 0; 
+            for (int i = 0; i < bits.Length; i++)
+            {
+                if (bits[i])
+                {
+                    result |= (1 << i);
+                }
+            }
 
-
+            return (uint)result;
+        }
 
 
 
