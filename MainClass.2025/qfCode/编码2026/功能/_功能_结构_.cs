@@ -56,6 +56,8 @@ namespace qfCode
             public bool 删除 { set; get; } = false;
 
             public bool 保存 { set; get; } = true;
+
+            public bool 获取模板变量对象名 { set; get; } = true;
         }
 
         public class _对象属性_

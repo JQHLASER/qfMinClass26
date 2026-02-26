@@ -48,7 +48,7 @@ namespace qfCode
             this._功能 = 编码._功能;
             this._编码 = 编码;
             this._交互类型 = 交互类型;
-            this._变量对象名 = 变量对象名;
+            this._变量对象名 = this._编码._功能.编辑.获取模板变量对象名 ? 变量对象名 : new string[0];
 
         }
 
