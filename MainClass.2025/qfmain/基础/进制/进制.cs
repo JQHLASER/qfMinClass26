@@ -315,7 +315,7 @@ namespace qfmain
         /// <summary>
         /// 将int转换成bool[]
         /// </summary> 
-        public virtual bool[] IntToBoolArray(int value, uint length = 32)
+        public virtual bool[] IntToBoolArray(uint value, uint length = 32)
         {
             bool[] result = new bool[length];
             for (int i = 0; i < length; i++)
