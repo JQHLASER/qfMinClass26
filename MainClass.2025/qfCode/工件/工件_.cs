@@ -112,6 +112,20 @@ namespace qfCode
         {
             using (Form_工件 forms = new Form_工件(con))
             {
+                forms.KeyDown += (s, e) =>
+                {
+                    //导入
+                    if (e.KeyCode == Keys.F11)
+                    {
+                        this.Event_导入(forms);
+                    }
+                    //导出
+                    else if (e.KeyCode == Keys.F12)
+                    {
+                        this.Event_导出(forms);
+                    }
+                };
+
                 forms.Load += (s, e) =>
                 {
                     Event_forms_Load?.Invoke(forms);
@@ -124,7 +138,7 @@ namespace qfCode
                     {
                         return;
                     }
-                   else  if (MessageBox.Show(Language_.Get语言("新建?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    else if (MessageBox.Show(Language_.Get语言("新建?"), "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         On_是否需要保存(forms);
                         Event_forms_新建?.Invoke(forms);
@@ -179,12 +193,12 @@ namespace qfCode
                     }
 
                     #endregion
-                }; 
+                };
                 forms.ui_工具栏_文件操作1.Event_关闭 += () =>
                 {
                     #region 退出
 
-                     if (Event_forms_Close != null)
+                    if (Event_forms_Close != null)
                     {
                         if (Event_forms_Close.Invoke(forms))
                         {
@@ -268,7 +282,9 @@ namespace qfCode
         }
 
 
+        public event Action<Form_工件> Event_导出;
 
+        public event Action<Form_工件> Event_导入;
 
 
 

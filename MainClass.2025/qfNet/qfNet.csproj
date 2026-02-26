@@ -182,6 +182,7 @@
     <Compile Include="软件类\文件\子程序\文件_SQLite.cs" />
     <Compile Include="软件类\文件\子程序\文件_ini.cs" />
     <Compile Include="软件类\文件\子程序\表.cs" />
+    <Compile Include="软件类\文件\导入_导出.cs" />
     <Compile Include="软件类\文件\文件弹窗_文件\Form_文件_弹窗.cs">
       <SubType>Form</SubType>
     </Compile>

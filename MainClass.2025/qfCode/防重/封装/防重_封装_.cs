@@ -31,10 +31,13 @@ namespace qfCode
             {
                 if (s)
                 {
-                    db.优化数据库(this.FCcode_sys ._id );
-                    var rt = 查询_防重("&^^123");
-                    qfmain._初始化状态_ state = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
-                    this.FCcode_sys.On_初始化状态(state, rt.m);
+                    await  Task.Run(() =>
+                    {
+                        db.优化数据库(this.FCcode_sys._id);
+                        var rt = 查询_防重("&^^123");
+                        qfmain._初始化状态_ state = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
+                        this.FCcode_sys.On_初始化状态(state, rt.m);
+                    });
                 }
                 else
                 {

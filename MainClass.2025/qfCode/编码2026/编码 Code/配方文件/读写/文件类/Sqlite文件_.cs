@@ -38,14 +38,17 @@ namespace qfCode
                         , this._ConfigID, SqlSugar.DbType.Sqlite);
                 s.Add(config);
             };
-            qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += (s, m, db) =>
+            qfSqlSugar.SqlSugar_DB_封装.Event_初始化结束 += async (s, m, db) =>
              {
                  if (s)
                  {
-                     db.优化数据库(_ConfigID );
-                     (bool s, string m, _配方文件_属性_ cfg) rt = Read("text^%&");
-                     this._CodeSys._初始化状态 = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
-                     this._CodeSys.On_初始化状态(this._CodeSys._初始化状态, rt.m);
+                     await Task.Run(() =>
+                     {
+                         db.优化数据库(_ConfigID);
+                         (bool s, string m, _配方文件_属性_ cfg) rt = Read("text^%&");
+                         this._CodeSys._初始化状态 = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
+                         this._CodeSys.On_初始化状态(this._CodeSys._初始化状态, rt.m);
+                     });
                  }
                  else
                  {

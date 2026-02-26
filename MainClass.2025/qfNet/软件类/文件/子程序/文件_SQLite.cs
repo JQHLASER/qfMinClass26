@@ -47,10 +47,13 @@ namespace qfNet
         {
             if (s)
             {
-                db.优化数据库(_ConfigID );
-                (bool s, string m, T cfg) rt = Read("text^%&");
-                this._初始化状态 = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
-                this.On_初始化状态(this._初始化状态, rt.m);
+                await Task.Run(() =>
+                {
+                    db.优化数据库(_ConfigID);
+                    (bool s, string m, T cfg) rt = Read("text^%&");
+                    this._初始化状态 = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
+                    this.On_初始化状态(this._初始化状态, rt.m);
+                });
             }
             else
             {
