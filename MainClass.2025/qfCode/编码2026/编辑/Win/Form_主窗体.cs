@@ -194,7 +194,7 @@ namespace qfCode
                 }
                 else if (a.dlt == DialogResult.No)
                 {
-                    MessageBox.Show(a.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(a.msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             };
@@ -209,7 +209,7 @@ namespace qfCode
                 }
                 else if (a.dlt == DialogResult.No)
                 {
-                    MessageBox.Show(a.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(a.msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             };
