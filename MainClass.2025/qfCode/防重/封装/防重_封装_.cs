@@ -2,6 +2,7 @@
 using Sunny.UI.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Remoting.Contexts;
@@ -24,14 +25,17 @@ namespace qfCode
         /// </summary>
         public qfCode.防重_<表_防重_.FC26> FCcode_sys = new qfCode.防重_<表_防重_.FC26>();
         bool _Inistiall = false;
+        public _Type_防重_._cfg_防重参数_ _参数 = new _Type_防重_._cfg_防重参数_();
 
         public void 初始化(_Type防重_._em_数据库格式_ 数据库格式 = _Type防重_._em_数据库格式_.SQLite)
         {
+            读写参数(1);
+
             qfSqlSugar.SqlSugar_DB_封装._DB.Event_初始化结束1 += async (s, m, db) =>
             {
                 if (s)
                 {
-                    await  Task.Run(() =>
+                    await Task.Run(() =>
                     {
                         db.优化数据库(this.FCcode_sys._id);
                         var rt = 查询_防重("&^^123");
@@ -46,6 +50,7 @@ namespace qfCode
             };
 
             FCcode_sys.初始化(数据库格式);
+            防重_查询窗体.初始化(this);
         }
 
         public void 释放()
@@ -54,6 +59,14 @@ namespace qfCode
             {
                 return;
             }
+        }
+
+        public void 读写参数(ushort Model)
+        {
+            _Type_防重_._cfg_防重参数_ cfg = _参数.Clone();
+            string path = Path.Combine(FCcode_sys._SQLiteFC, "sysFC.dll");
+            new qfmain.文件_文件夹().WriteReadJson(path, Model, ref cfg, out string msgErr);
+            _参数 = cfg.Clone();
         }
 
 
@@ -159,12 +172,55 @@ namespace qfCode
                         pars.Add(new SugarParameter("@end", end.Date));
 
                     }
-                    bool rt = table.GetList(sb.ToString(), pars, out List<表_防重_.FC26> lst, out string msgErr);
+                    bool rt = table.GetList(sb.ToString(), pars.ToArray(), out List<表_防重_.FC26> lst, out string msgErr);
                     return (rt, msgErr, lst);
                 }
             }
 
         }
+
+        /// <summary>
+        /// 删除指定日期之前的数据
+        /// </summary> 
+        public (bool s, string m) 删除_清除过期数据(DateTime now)
+        {
+            using (var getDb = new qfSqlSugar.SqlSugar_GetDB(this.FCcode_sys._id))
+            {
+                using (var table = new qfSqlSugar.SqlSugar_Table<表_防重_.FC26>(getDb.Db))
+                {
+                    StringBuilder sb = new StringBuilder($"delete  from FC26 where 1=1 ");
+                    var pars = new List<SugarParameter>();
+                    sb.Append($" and  时间 <= @now");
+                    pars.Add(new SugarParameter("@now", now.Date));
+
+                    bool exist = table.Delete(sb.ToString(), pars.ToArray(), out int count, out string msgErr);
+                    string msg = exist ? "OK" : $"NG,{msgErr}";
+                    return (!exist, msg);
+                }
+            }
+        }
+         
+        public (bool s, string m) 删除(List<表_防重_.FC26> cfg)
+        {
+            using (var getDb = new qfSqlSugar.SqlSugar_GetDB(this.FCcode_sys._id))
+            {
+                using (var table = new qfSqlSugar.SqlSugar_Table<表_防重_.FC26>(getDb.Db))
+                { 
+                    bool exist = table.Delete(cfg, out int count, out string msgErr); 
+                    return (!exist, msgErr );
+                }
+            }
+        }
+
+
+        public void Win_查询()
+        {
+            防重_查询窗体.窗体();
+        }
+
+
+
+
 
 
     }

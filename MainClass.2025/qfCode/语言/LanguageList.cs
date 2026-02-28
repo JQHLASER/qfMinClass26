@@ -23,6 +23,7 @@ namespace qfLanguage
             new _language_Value_ ( keys, "检测到已重复","检测到已重复"),
             new _language_Value_ ( keys, "添加","添加"),
             new _language_Value_ ( keys, "修改","修改"),
+            new _language_Value_ ( keys, "删除","删除"),
             new _language_Value_ ( keys,"未选中要操作的对象","未选中要操作的对象"),
             new _language_Value_ ( keys,"未选中要操作的元素","未选中要操作的元素"),
             new _language_Value_ ( keys,"确认删除?","确认删除?"),

@@ -19,6 +19,8 @@ namespace qfNet
         /// </summary>
         uint _每页行数 = 1000;
         Form_查询 _forms = null;
+        public ContextMenuStrip _右键 = new ContextMenuStrip();
+
 
         /// <summary>
         /// 当前显示页的数据
@@ -43,15 +45,24 @@ namespace qfNet
             this._每页行数 = 每页多少行_;
         }
 
+        /// <summary>
+        /// 右键...删除
+        /// </summary>
+        ToolStripMenuItem _item_删除 = new ToolStripMenuItem(Language_.Get语言("删除"));
 
-        public void 窗体()
+        public void 窗体(bool 使能右键 = false)
         {
             using (this._forms = new Form_查询())
             {
                 this._forms.Event_Load_进入时 += (s) =>
                 {
-                    _datagridviewSys = new DataGridview_(this._forms.dataGridView1).格式化();
+                    if (使能右键)
+                    {
+                        Event_右键菜单?.Invoke(_右键);
+                        _右键.Items.Add(_item_删除);
+                    }
 
+                    _datagridviewSys = new DataGridview_(this._forms.dataGridView1).格式化();
 
                     this._BindingSource.DataSource = this._lst_当前页数据;
                     s.dataGridView1.DataSource = this._BindingSource;
@@ -64,6 +75,24 @@ namespace qfNet
 
                     this.Event_Load_进入时?.Invoke(s);
                 };
+
+                _item_删除.Click += (s, e) =>
+                {
+                    this._datagridviewSys.获取当前选中的行号(out int index);
+                    if (index < 0)
+                    {
+                        return;
+                    }
+                    if (this.Event_删除指定数据 != null)
+                    {
+                        bool rt = this.Event_删除指定数据.Invoke(index);
+                        if (rt)
+                        {
+                            删除_指定行数据(index);
+                        }
+                    }
+                };
+
 
                 this._forms.Event_FormClosing_关闭时 += (s) =>
                 {
@@ -171,6 +200,19 @@ namespace qfNet
         /// </summary>
         public event Action<Form_查询, uint> Event_到指定页;
 
+        /// <summary>
+        ///  var item_删除 = new ToolStripMenuItem(Language_.Get语言("删除"));
+        /// </summary>
+        public event Action<ContextMenuStrip> Event_右键菜单;
+
+        /// <summary>
+        ///  参数(int 选中行号)
+        ///  <para>返回 true:成功,false:失败</para>
+        /// </summary>
+        public event Func<int, bool> Event_删除指定数据;
+
+
+
         public async Task 导出(List<string[]> lstCsv)
         {
             #region 导出
@@ -205,6 +247,16 @@ namespace qfNet
             #endregion
         }
 
+        /// <summary>
+        /// 删除指定行的数据,并删除显示的
+        /// </summary> 
+        public void 删除_指定行数据(int index)
+        {
+            var rt = _lst_当前页数据[index];
+            _lst所有数据.Remove(rt);
+            _lst_当前页数据.RemoveAt(index);
+            显示当前页数据(_lst_当前页数据);
+        }
 
         #region 本地方法
 

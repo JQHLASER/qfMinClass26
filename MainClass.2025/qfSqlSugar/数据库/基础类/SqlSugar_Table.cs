@@ -109,7 +109,7 @@ namespace qfSqlSugar
             catch (Exception ex)
             {
                 rt = false;
-                msgErr = ex.Message;
+                msgErr = ex.ToString();
             }
             return rt;
         }
@@ -131,7 +131,7 @@ namespace qfSqlSugar
             catch (Exception ex)
             {
                 rt = false;
-                msgErr = ex.Message;
+                msgErr = ex.ToString();
             }
 
             return rt;
@@ -145,7 +145,7 @@ namespace qfSqlSugar
         public bool GetList<T>(Expression<Func<T, bool>> exp, string orderby, out List<T> lst, out string msgErr)
             where T : class, new()
         {
-            lst = new List<T> ();
+            lst = new List<T>();
             msgErr = "";
 
             try
@@ -163,7 +163,7 @@ namespace qfSqlSugar
             }
             catch (Exception ex)
             {
-                msgErr = ex.Message;
+                msgErr = ex.ToString();
                 return false;
             }
         }
@@ -193,7 +193,7 @@ namespace qfSqlSugar
             }
             catch (Exception ex)
             {
-                msgErr = ex.Message;
+                msgErr = ex.ToString();
                 return false;
             }
         }
@@ -217,7 +217,7 @@ namespace qfSqlSugar
             {
                 t_ = default;
                 rt = false;
-                msgErr = ex.Message;
+                msgErr = ex.ToString();
             }
             return rt;
 
@@ -232,7 +232,7 @@ namespace qfSqlSugar
         /// <param name="sqlstr">  
         public bool GetList(string sqlstr, int pageIndex, int pageSize, out int total, out List<T> list, out string msgErr)
         {
-            list = default;
+            list = new List<T>();
             msgErr = string.Empty;
             total = 0;
 
@@ -243,7 +243,7 @@ namespace qfSqlSugar
             }
             catch (Exception ex)
             {
-                msgErr = ex.Message;
+                msgErr = ex.ToString();
                 return false;
             }
         }
@@ -253,7 +253,7 @@ namespace qfSqlSugar
         /// </summary> 
         public bool GetList(string sqlstr, out List<T> list, out string msgErr)
         {
-            list = default;
+            list = new List<T>();
             msgErr = string.Empty;
             bool rt = true;
             try
@@ -262,7 +262,7 @@ namespace qfSqlSugar
             }
             catch (Exception ex)
             {
-                msgErr = ex.Message;
+                msgErr = ex.ToString();
                 rt = false;
             }
             return rt;
@@ -276,18 +276,20 @@ namespace qfSqlSugar
         /// <para>sb.Append(" and 内容 = @内容");</para>
         /// <para>pars.Add(new SugarParameter("@内容", cfg.内容));</para>
         /// </summary> 
-        public bool GetList(string sqlstr, List<SugarParameter> pars, out List<T> list, out string msgErr)
-        {
-            list = default;
+        public bool GetList(string sqlstr, SugarParameter[] pars, out List<T> list, out string msgErr)
+        { 
             msgErr = string.Empty;
             bool rt = true;
             try
             {
-                list = this.Db.Ado.SqlQuery<T>(sqlstr, pars).ToList();
+                list = (pars is null || pars.Length == 0) 
+                    ? this.Db.Ado.SqlQuery<T>(sqlstr).ToList() 
+                    : this.Db.Ado.SqlQuery<T>(sqlstr, pars).ToList();
             }
             catch (Exception ex)
             {
-                msgErr = ex.Message;
+                list = new List<T>();
+                msgErr = ex.ToString();
                 rt = false;
             }
             return rt;
@@ -296,7 +298,7 @@ namespace qfSqlSugar
         public bool GetList<B>(List<B> lst主键内容, string 表名, string 主键字段名, out List<T> list, out string msgErr)
         {
             msgErr = string.Empty;
-            list = default;
+            list = new List<T>();
 
             try
             {
@@ -309,7 +311,7 @@ namespace qfSqlSugar
             }
             catch (Exception ex)
             {
-                msgErr = ex.Message;
+                msgErr = ex.ToString();
                 return false;
             }
         }
@@ -328,7 +330,7 @@ namespace qfSqlSugar
             }
             catch (Exception ex)
             {
-                msgErr = ex.Message;
+                msgErr = ex.ToString();
                 return false;
             }
         }
@@ -358,7 +360,7 @@ namespace qfSqlSugar
             }
             catch (Exception ex)
             {
-                msgErr = ex.Message;
+                msgErr = ex.ToString();
                 rt = false;
             }
             return rt;
@@ -411,7 +413,7 @@ namespace qfSqlSugar
             }
             catch (Exception ex)
             {
-                msgErr = ex.Message;
+                msgErr = ex.ToString();
                 rt = false;
             }
 
@@ -439,7 +441,7 @@ namespace qfSqlSugar
             catch (Exception ex)
             {
                 rt = false;
-                msgErr = ex.Message;
+                msgErr = ex.ToString();
             }
             return rt;
         }
@@ -563,6 +565,38 @@ namespace qfSqlSugar
         }
 
 
+        /// <summary>
+        /// 自定义sql语句查询 
+        /// <para>var sb = new StringBuilder("select * from FC26 where 1=1 ");</para>
+        /// <para>var pars = new List(SugarParameter)();</para>
+        /// <para>sb.Append(" and 内容 = @内容");</para>
+        /// <para>pars.Add(new SugarParameter("@内容", cfg.内容));</para>
+        /// <para> pars 可以为null</para>
+        /// </summary> 
+        public bool Delete(string sqlstr,
+                           SugarParameter[] pars,
+                           out int 受影响行,
+                           out string msgErr)
+        {
+            受影响行 = 0;
+            msgErr = string.Empty;
+
+            try
+            {
+                受影响行 =(pars is null || pars .Length ==0)
+                    ? this.Db.Ado.ExecuteCommand(sqlstr)
+                    : this.Db.Ado.ExecuteCommand(sqlstr, pars);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                msgErr = ex.ToString();
+                return false;
+            }
+        }
+
+
+
         #endregion
 
 
@@ -594,7 +628,7 @@ namespace qfSqlSugar
                 catch (Exception ex)
                 {
                     rt = false;
-                    msgErr = ex.Message;
+                    msgErr = ex.ToString();
                 }
             }
             return rt;
@@ -684,7 +718,7 @@ namespace qfSqlSugar
             catch (Exception ex)
             {
                 rt = false;
-                msgErr = ex.Message;
+                msgErr = ex.ToString();
             }
             return rt;
         }

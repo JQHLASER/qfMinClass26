@@ -73,6 +73,7 @@
     <Compile Include="编码2026\编码 Code\计算\计算_日期时间.cs" />
     <Compile Include="编码2026\编码 Code\计算\计算_班次.cs" />
     <Compile Include="编码2026\编码 Code\配方文件\读写\文件类\外部文件.cs" />
+    <Compile Include="编码2026\编码 Code\配置文件\Iwork_配置文件.cs" />
     <Compile Include="编码2026\编辑\Win\Form_主窗体.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,6 +165,7 @@
     <Compile Include="编码2026\编辑\交互\子接口\编辑交互_本地.cs" />
     <Compile Include="编码2026\主程序\编辑_.cs" />
     <Compile Include="编码2026\编辑\Win\视图\视图_.cs" />
+    <Compile Include="编码2026\编码 Code\配置文件\配置文件.cs" />
     <Compile Include="语言\Language_.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="编码2026\编码 Code\数据结构\Type.cs" />
@@ -200,6 +202,20 @@
       <DependentUpon>Form_工件.cs</DependentUpon>
     </Compile>
     <Compile Include="工件\工件_.cs" />
+    <Compile Include="防重\_Type_防重_.cs" />
+    <Compile Include="防重\封装\窗体查询\Form_防重_参数.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="防重\封装\窗体查询\Form_防重_参数.Designer.cs">
+      <DependentUpon>Form_防重_参数.cs</DependentUpon>
+    </Compile>
+    <Compile Include="防重\封装\窗体查询\Form_防重查询.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="防重\封装\窗体查询\Form_防重查询.Designer.cs">
+      <DependentUpon>Form_防重查询.cs</DependentUpon>
+    </Compile>
+    <Compile Include="防重\封装\窗体查询\防重_查询窗体.cs" />
     <Compile Include="防重\封装\表_防重_.cs" />
     <Compile Include="防重\封装\防重_封装_.cs" />
     <Compile Include="防重\防重_\_Type防重_.cs" />
@@ -267,6 +283,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="工件\Form_工件.resx">
       <DependentUpon>Form_工件.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="防重\封装\窗体查询\Form_防重_参数.resx">
+      <DependentUpon>Form_防重_参数.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="防重\封装\窗体查询\Form_防重查询.resx">
+      <DependentUpon>Form_防重查询.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

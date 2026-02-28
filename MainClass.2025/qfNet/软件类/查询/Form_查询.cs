@@ -84,7 +84,8 @@ namespace qfNet
         /// </summary>
         public event Action<Form_查询, uint> Event_到指定页;
 
-       
+        
+
         public void 设置显示信息(string value)
         { 
             this.ui_分页1.设置显示信息(value);
