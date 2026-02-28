@@ -61,6 +61,8 @@
             this.tableLayoutPanel_下边栏 = new System.Windows.Forms.TableLayoutPanel();
             this.textBox_信息 = new System.Windows.Forms.TextBox();
             this.textBox_备注 = new System.Windows.Forms.TextBox();
+            this.导入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.导出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uiTitlePanel_元素列表.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_元素)).BeginInit();
             this.panel2.SuspendLayout();
@@ -479,6 +481,8 @@
             this.删除ToolStripMenuItem,
             this.保存ToolStripMenuItem,
             this.另存为ToolStripMenuItem,
+            this.导入ToolStripMenuItem,
+            this.导出ToolStripMenuItem,
             this.关闭ToolStripMenuItem});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
             this.文件ToolStripMenuItem.Size = new System.Drawing.Size(56, 25);
@@ -593,6 +597,18 @@
             this.textBox_备注.Size = new System.Drawing.Size(484, 94);
             this.textBox_备注.TabIndex = 0;
             // 
+            // 导入ToolStripMenuItem
+            // 
+            this.导入ToolStripMenuItem.Name = "导入ToolStripMenuItem";
+            this.导入ToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
+            this.导入ToolStripMenuItem.Text = "导入";
+            // 
+            // 导出ToolStripMenuItem
+            // 
+            this.导出ToolStripMenuItem.Name = "导出ToolStripMenuItem";
+            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
+            this.导出ToolStripMenuItem.Text = "导出";
+            // 
             // Form_主窗体
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -652,5 +668,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_下边栏;
         private System.Windows.Forms.TextBox textBox_信息;
         private System.Windows.Forms.TextBox textBox_备注;
+        private System.Windows.Forms.ToolStripMenuItem 导入ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 导出ToolStripMenuItem;
     }
 }

@@ -34,7 +34,7 @@ namespace qfNet
         /// <summary>
         /// 反回  DialogResult.OK:成功,No:失败
         /// </summary> 
-        public (DialogResult dlt, string m, T t, string 文件名称) 导入(string 后缀 = "*.ave")
+        public (DialogResult dlt, string m, T cfg, string 文件名称) 导入(string 后缀 = "*.ave")
         {
             OpenFileDialog open = new OpenFileDialog();
             open.Title = Language_.Get语言("导入");

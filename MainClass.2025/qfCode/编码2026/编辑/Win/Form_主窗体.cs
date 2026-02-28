@@ -116,6 +116,9 @@ namespace qfCode
             this.保存ToolStripMenuItem.Visible = this._编辑._功能.编辑.保存;
             this.ui_Button_对象_保存.Visible = this._编辑._功能.编辑.保存;
 
+            this.导入ToolStripMenuItem.Visible = this._编辑._功能.编辑.导入导出;
+            this.导出ToolStripMenuItem.Visible = this._编辑._功能.编辑.导入导出;
+
             this.关闭ToolStripMenuItem.Click += (s, e) =>
             {
                 this.Close();
@@ -177,6 +180,39 @@ namespace qfCode
                 On_另存为();
             };
 
+            this.导入ToolStripMenuItem.Click += (s, e) =>
+            {
+                var a = new qfNet.导入_导出<_配方文件_属性_>().导入();
+                if (a.dlt == DialogResult.OK)
+                {
+                    On_清除所有();
+                    this._配方信息 = a.cfg;
+                    this._配方名称 = a.文件名称;
+                    显示配方信息(this._配方信息, this._配方名称);
+                    MessageBox.Show(Language_.Get语言("导入成功"));
+                    return;
+                }
+                else if (a.dlt == DialogResult.No)
+                {
+                    MessageBox.Show(a.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            };
+
+            this.导出ToolStripMenuItem.Click += (s, e) =>
+            {
+                var a = new qfNet.导入_导出<_配方文件_属性_>().导出(this._配方信息);
+                if (a.dlt == DialogResult.OK)
+                {
+                    MessageBox.Show(Language_.Get语言("导出成功"));
+                    return;
+                }
+                else if (a.dlt == DialogResult.No)
+                {
+                    MessageBox.Show(a.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            };
 
             #endregion
 
@@ -627,10 +663,10 @@ namespace qfCode
             {
                 sb.Append($"<{Language_.Get语言("模板变量")}>");
             }
-            if (this._编辑._功能.对象属性.保存csv  && objc.属性.保存csv )
+            if (this._编辑._功能.对象属性.保存csv && objc.属性.保存csv)
             {
                 sb.Append($"<{Language_.Get语言("保存csv")}>");
-            } 
+            }
             if (this._编辑._功能.对象属性.校验关键字 && !string.IsNullOrWhiteSpace(objc.属性.校验关键字))
             {
                 sb.Append($"<{Language_.Get语言("关键字")}>");
