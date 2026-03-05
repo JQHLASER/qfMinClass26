@@ -110,11 +110,15 @@ namespace qf_Laser
         bool _Inistiall = false;
         public void 初始化(bool 使能线程)
         {
-            标题栏状态_加工状态();
+         
             标题栏状态_初始化状态();
+            标题栏状态_加工状态();
+
+            On_初始化状态(_初始化状态_.未初始化);
             读写参数(1);
             读写_最后一次ezdpath(1);
             读EzCadName();
+         
 
             if (使能线程)
             {
@@ -305,10 +309,10 @@ namespace qf_Laser
             return (true, "");
         }
 
-        public (bool s, string m) 删除所有对象(bool Is清除最后一打打开的激光模 = true, bool Is清空图形=true )
+        public (bool s, string m) 删除所有对象(bool Is清除最后一打打开的激光模 = true, bool Is清空图形 = true)
         {
-            var nErr = 删除所有对象_(Is清除最后一打打开的激光模,Is清空图形);
-            bool rt = ErrToMsg((int)nErr, out string msgErr); 
+            var nErr = 删除所有对象_(Is清除最后一打打开的激光模, Is清空图形);
+            bool rt = ErrToMsg((int)nErr, out string msgErr);
             return (rt, msgErr);
         }
 
@@ -586,7 +590,7 @@ namespace qf_Laser
 
             while (this._isRun)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(1500);
                 if (!this._isRun)
                 {
                     break;
@@ -818,7 +822,7 @@ namespace qf_Laser
         }
 
 
-        internal _Err_jczMarkEzd2_ 删除所有对象_(bool Is清除最后一打打开的激光模=true,bool Is清空图形 = true)
+        internal _Err_jczMarkEzd2_ 删除所有对象_(bool Is清除最后一打打开的激光模 = true, bool Is清空图形 = true)
         {
             int nErr = JczLmc.删除所有对象();
             if (nErr == 0)
@@ -830,10 +834,10 @@ namespace qf_Laser
                     读写_最后一次ezdpath(0);
                 }
                 if (Is清空图形)
-                {                   
+                {
                     刷新图形(_激光_获取图像_.清除);
                 }
-            } 
+            }
             return (_Err_jczMarkEzd2_)nErr;
         }
 

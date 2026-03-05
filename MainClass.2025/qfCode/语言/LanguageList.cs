@@ -71,9 +71,9 @@ namespace qfLanguage
             new _language_Value_ ( keys, "未计算出结果","未计算出结果"),
             new _language_Value_ ( keys, "导出成功","导出成功"),
             new _language_Value_ ( keys, "导入成功","导入成功"),
-
+            new _language_Value_ ( keys, "未成功","未成功"),
+            new _language_Value_ ( keys, "未使能","未使能"),
             
-
         };
 
     }

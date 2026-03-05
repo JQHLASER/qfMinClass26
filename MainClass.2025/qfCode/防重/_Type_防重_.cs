@@ -20,12 +20,20 @@ namespace qfCode
             {
                 return new _Type_防重_._cfg_防重参数_()
                 {
-                   数据保存时间 =this.数据保存时间 ,
+                    数据保存时间 = this.数据保存时间,
                 };
             }
         }
 
+        public class _功能_查询窗体_
+        {
+            public bool _功能_窗体_参数设置 { set; get; } = false;
 
+            public bool _功能_右键_删除指定数据 { set; get; } = false;
+
+            public string 密码_防重参数 { set; get; } = "QF8888";
+
+        }
 
 
     }

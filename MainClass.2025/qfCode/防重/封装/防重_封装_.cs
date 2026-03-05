@@ -1,4 +1,5 @@
 ﻿using SqlSugar;
+using Sunny.UI;
 using Sunny.UI.Win32;
 using System;
 using System.Collections.Generic;
@@ -7,9 +8,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using static qfCode.表_防重_;
 using static System.Windows.Forms.AxHost;
 
@@ -26,6 +29,8 @@ namespace qfCode
         public qfCode.防重_<表_防重_.FC26> FCcode_sys = new qfCode.防重_<表_防重_.FC26>();
         bool _Inistiall = false;
         public _Type_防重_._cfg_防重参数_ _参数 = new _Type_防重_._cfg_防重参数_();
+
+        bool _IsRun = true;
 
         public void 初始化(_Type防重_._em_数据库格式_ 数据库格式 = _Type防重_._em_数据库格式_.SQLite)
         {
@@ -50,11 +55,29 @@ namespace qfCode
             };
 
             FCcode_sys.初始化(数据库格式);
-            防重_查询窗体.初始化(this);
+
+
+            new Thread(() =>
+            {
+                do
+                {
+                    Thread.Sleep(1000);
+                    if (FCcode_sys._初始化状态 != qfmain._初始化状态_.已初始化)
+                    {
+                        continue;
+                    }
+                    删除_清除过期数据(this._参数.数据保存时间);
+                    Thread.Sleep(1000 * 60 * 60);
+                }
+                while (_IsRun);
+            })
+            { IsBackground = true }.Start();
+
         }
 
         public void 释放()
         {
+            _IsRun = false;
             if (!_Inistiall)
             {
                 return;
@@ -199,25 +222,45 @@ namespace qfCode
                 }
             }
         }
-         
-        public (bool s, string m) 删除(List<表_防重_.FC26> cfg)
+
+        public (bool s, string m) 删除_清除过期数据(int 保存天数)
+        {
+            if (保存天数 == 0)
+            {
+                return (true, Language_.Get语言("未使能"));
+            }
+
+            DateTime nowDate = new qfmain.日期时间_().增减时间(DateTime.Now, 2, 保存天数 * -1);
+            return this.删除_清除过期数据(nowDate);
+        }
+
+
+        public (bool s, string m, int count) 删除(List<表_防重_.FC26> cfg)
         {
             using (var getDb = new qfSqlSugar.SqlSugar_GetDB(this.FCcode_sys._id))
             {
                 using (var table = new qfSqlSugar.SqlSugar_Table<表_防重_.FC26>(getDb.Db))
-                { 
-                    bool exist = table.Delete(cfg, out int count, out string msgErr); 
-                    return (!exist, msgErr );
+                {
+                    bool exist = table.Delete(cfg, out int count, out string msgErr);
+                    return (exist, msgErr, count);
                 }
             }
         }
 
 
-        public void Win_查询()
+        public void Win_查询(_Type_防重_._功能_查询窗体_ 功能_)
         {
-            防重_查询窗体.窗体();
+            using (防重_查询窗体 forms = new 防重_查询窗体())
+            {
+                forms.初始化(this, 功能_);
+                Event_查询窗体?.Invoke(forms);
+                forms.窗体();
+
+            }
+
         }
 
+        public event Action<防重_查询窗体> Event_查询窗体;
 
 
 

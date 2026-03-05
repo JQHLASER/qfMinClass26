@@ -17,7 +17,7 @@ namespace qfNet
         /// <summary>
         /// 每页显示多少行
         /// </summary>
-        uint _每页行数 = 1000;
+        public uint _每页行数 = 1000;
         Form_查询 _forms = null;
         public ContextMenuStrip _右键 = new ContextMenuStrip();
 
@@ -45,6 +45,12 @@ namespace qfNet
             this._每页行数 = 每页多少行_;
         }
 
+        public 查询_win()
+        {
+
+        }
+
+
         /// <summary>
         /// 右键...删除
         /// </summary>
@@ -60,6 +66,11 @@ namespace qfNet
                     {
                         Event_右键菜单?.Invoke(_右键);
                         _右键.Items.Add(_item_删除);
+
+                        if (_右键.Items.Count > 0)
+                        {
+                            s.dataGridView1.ContextMenuStrip = _右键;
+                        }
                     }
 
                     _datagridviewSys = new DataGridview_(this._forms.dataGridView1).格式化();
@@ -105,6 +116,7 @@ namespace qfNet
                 this._forms.Event_查询 += (s) =>
                 {
                     List<T> rt = this.Event_查询?.Invoke(s);
+
                     if (rt != null && rt.Count > 0)
                     {
                         this._lst所有数据 = rt;
@@ -206,8 +218,9 @@ namespace qfNet
         public event Action<ContextMenuStrip> Event_右键菜单;
 
         /// <summary>
-        ///  参数(int 选中行号)
-        ///  <para>返回 true:成功,false:失败</para>
+        /// 右键
+        /// <para>参数(int 选中行号)</para>
+        /// <para>返回 true:成功,false:失败</para>
         /// </summary>
         public event Func<int, bool> Event_删除指定数据;
 

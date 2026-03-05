@@ -1,4 +1,4 @@
-﻿ 
+﻿
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace qf_Laser
 {
-    public class MultilineMarkEzd : qfmain. Language_
+    public class MultilineMarkEzd : qfmain.Language_
     {
         [DllImport("gdi32.dll")]
         internal static extern bool DeleteObject(IntPtr hObject);//`D_显示指定卡的图形用的函数
@@ -405,10 +405,10 @@ namespace qf_Laser
                 rt = JczLmc_Multiline.Close();
             }
             catch (Exception ex)
-            { 
+            {
                 On_Log(false, $"{ex.Message}");
             }
-             
+
             return rt;
         }
 
@@ -1302,7 +1302,7 @@ namespace qf_Laser
             return lst.Count;
         }
 
-        public void 刷新图形(int CardIndex,  _激光_获取图像_ state)
+        public void 刷新图形(int CardIndex, _激光_获取图像_ state)
         {
             Event_刷新图像?.Invoke(CardIndex, state);
         }
@@ -1310,6 +1310,7 @@ namespace qf_Laser
 
         public virtual void 初始化(bool 使能线程 = true)
         {
+            标题栏状态_初始化状态();
             On_初始化状态(_初始化状态_.未初始化);
             初始化数据();
             读写参数_参数(1, out string msgErr);
@@ -1704,7 +1705,7 @@ namespace qf_Laser
 
             while (this.isRun)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(1500);
                 if (!this.isRun)
                 {
                     break;
@@ -1814,7 +1815,7 @@ namespace qf_Laser
 
         #endregion
 
-
+         
         #region 事件
 
         /// <summary>
@@ -1841,6 +1842,8 @@ namespace qf_Laser
 
             this._初始化状态 = state;
             Event_初始化状态?.Invoke(state);
+
+            On_标题栏状态_初始化状态(_标题栏标题_初始化状态, state);
         }
 
         bool is第一次初始化 = true;
@@ -1876,6 +1879,12 @@ namespace qf_Laser
         }
 
 
+        public event Action<qfNet._cfg_标题栏状态_[], _初始化状态_> Event_标题栏状态_初始化状态;
+
+        void On_标题栏状态_初始化状态(qfNet._cfg_标题栏状态_[] cfg, _初始化状态_ state)
+        {
+            Event_标题栏状态_初始化状态?.Invoke(cfg, state);
+        }
 
 
         #endregion
@@ -2009,6 +2018,30 @@ namespace qf_Laser
         }
 
 
+        #endregion
+
+
+        #region 窗体标题栏状态
+
+
+        private qfNet._cfg_标题栏状态_[] 标题栏状态_初始化状态()
+        {
+            string Name = "jcz2激光初始化状态";
+            string 名称 = qfmain.Language_.Get语言("打标卡");
+            qfNet._cfg_标题栏状态_[] info = new qfNet._cfg_标题栏状态_[]
+           {
+              new  qfNet ._cfg_标题栏状态_(Name,$"{名称}{qfmain .Language_ .Get语言("已初始化")}"  ,(int)_初始化状态_  .已初始化  ),
+              new  qfNet ._cfg_标题栏状态_(Name,$"{名称}{qfmain .Language_ .Get语言("初始化中")}"  ,(int)_初始化状态_.初始化中 ),
+              new  qfNet ._cfg_标题栏状态_(Name  ,$"{名称}{qfmain .Language_ .Get语言("未初始化")}" ,(int)_初始化状态_.未初始化  ),
+
+           };
+            _标题栏标题_初始化状态 = info;
+            return info;
+        }
+
+        qfNet._cfg_标题栏状态_[] _标题栏标题_初始化状态 = new qfNet._cfg_标题栏状态_[0];
+
+        
         #endregion
 
 
