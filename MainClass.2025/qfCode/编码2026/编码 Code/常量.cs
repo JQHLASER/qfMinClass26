@@ -26,12 +26,12 @@ namespace qfCode
         /// </summary>
         internal static string 日期时间 { get; } = Path.Combine(主文件夹 , "DateTime");
         /// <summary>
-        /// 存放信息文件
+        /// 存放配方信息文件
         /// </summary>
-        internal static string 信息 { get; } = Path.Combine(主文件夹 , "Main");
+        internal static string 配方 { get; } = Path.Combine(主文件夹 , "Main");
 
         /// <summary>
-        /// 编码信息文件后缀
+        /// 配方信息文件后缀
         /// </summary>
         internal static string 后缀 { get; } = ".cqf";
         /// <summary>

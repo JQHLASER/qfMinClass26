@@ -17,17 +17,19 @@ namespace qfCode
 
         public string[] Get目录_配置文件_日期时间()
         {
-            return this._编辑._编码._文件类.Get目录_日期时间();
+            var rt = this._编辑._编码._配置文件._Iwork.Get目录_日期时间();
+            return rt.cfg;
         }
         public string[] Get目录_配置文件_班次()
         {
-            return this._编辑._编码._文件类.Get目录_班次();
+            var rt = this._编辑._编码._配置文件._Iwork.Get目录_班次();
+            return rt.cfg;
         }
-        public (bool s,string m,string[] v) Get目录_配方文件()
+        public (bool s, string m, string[] v) Get目录_配方文件()
         {
-            return this._编辑._编码._文件类.Get目录_配方();
+            return this._编辑._编码._配方文件操作._Iwork文件.Get目录();
         }
-         
+
         public (bool s, string m) 配方_保存(_配方文件_属性_ 配方, string 配方名称, DateTime dates)
         {
             return this._编辑._编码.配方_保存(配方, 配方名称, dates);
@@ -69,7 +71,7 @@ namespace qfCode
         public (bool s, string m, _元素_Str_ cfg) 计算元素(_配方文件_属性_ 配方文件, List<_对象_内容_> lst对象内容, DateTime dates, _对象_ 对象, string Json元素)
         {
             return this._编辑._编码.计算元素(配方文件, lst对象内容, dates, 对象, Json元素);
-        } 
+        }
         public (bool s, string m, List<_对象_内容_> lstObject) 计算编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime dates, _em_计算类型_ 计算类型, bool Is计算完保存 = false)
         {
             return this._编辑._编码.计算编码(配方文件名, 配方文件, dates, 计算类型, Is计算完保存);

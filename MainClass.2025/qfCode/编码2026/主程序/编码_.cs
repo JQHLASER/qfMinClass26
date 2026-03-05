@@ -16,21 +16,29 @@ namespace qfCode
         /// <summary>
         ///  配置文件及编码文件
         /// </summary>
-        internal 文件类 _文件类;
+       // internal 文件类 _文件类;
 
         /// <summary>
         /// 系统的文件夹
         /// </summary>
         internal _文件夹_._属性_ _文件夹_属性;
 
-        internal _功能_ _功能=new _功能_ ();
+        internal _功能_ _功能 = new _功能_();
         internal _初始化状态_ _初始化状态 = _初始化状态_.未初始化;
+        internal _初始化状态_ _初始化状态_配置文件模块 = _初始化状态_.未初始化;
+
+
 
         /// <summary>
         /// 编码文件和读写操作
         /// </summary>
         internal 文件_统一接口 _配方文件操作;
-         
+
+        /// <summary>
+        /// 班次配置文件或时间日期配置文件
+        /// </summary>
+        internal 配置文件_统一接口 _配置文件;
+
         public 编码_(_文件夹_._属性_ typeFile, _功能_ 功能)
         {
             初始化(typeFile, 功能);
@@ -47,23 +55,27 @@ namespace qfCode
         public void 初始化(_文件夹_._属性_ typeFile, _功能_ 功能)
         {
             On_初始化状态(qfmain._初始化状态_.初始化中, "");
-            new Language_(); 
+            On_初始化状态_配置文件模块(qfmain._初始化状态_.初始化中, "");
+
+
+            new Language_();
             this._文件夹_属性 = typeFile;
             if (功能 != null) this._功能 = 功能;
 
             new _文件夹_(this);
-            this._文件类 = new 文件类(this);
+            // this._文件类 = new 文件类(this);
             this._配方文件操作 = new 文件_统一接口(this);
+            this._配置文件 = new 配置文件_统一接口(this);
 
-            if (this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.ini
-                 || this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.txt
-                 || this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.外部文件)
-            {
-                On_初始化状态(_初始化状态_.已初始化, "");
-            }
+            //if (this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.ini
+            //     || this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.txt
+            //     || this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.外部文件)
+            //{
+            //    On_初始化状态(_初始化状态_.已初始化, "");
+            //}
 
         }
-         
+
 
         /// <summary>
         /// 配方名称 : 当前打开的配方名称
@@ -170,14 +182,14 @@ namespace qfCode
 
         #region 校验
 
-        public (bool s ,int Count) 校验_位数(uint 设置位数, string 内容)
+        public (bool s, int Count) 校验_位数(uint 设置位数, string 内容)
         {
             int count = Encoding.Default.GetByteCount(内容);
             if (设置位数 != count)
             {
-                return (false ,count );
+                return (false, count);
             }
-            return (true,count );
+            return (true, count);
         }
 
         public bool 校验_关键字(string 关键字, string 内容)
@@ -241,6 +253,13 @@ namespace qfCode
             Event_初始化状态?.Invoke(state, msgErr);
         }
 
+        public event Action<qfmain._初始化状态_, string> Event_初始化状态_配置文件模块;
+        internal void On_初始化状态_配置文件模块(qfmain._初始化状态_ state, string msgErr)
+        {
+            Event_初始化状态_配置文件模块?.Invoke(state, msgErr);
+        }
+
+
         /// <summary>
         /// 外部文件时使用
         /// <para>参数: (文件名,配方信息)   反馈(boo s,string msgErr)</para>
@@ -278,7 +297,19 @@ namespace qfCode
             //深拷贝出来一份,用来防止源文件被意外修改
             _配方文件_属性_ 配方 = 配方文件.Clone();
 
-            _班次_[] 班次规则 = this._文件类.Get_班次(配方.班次文件);
+            #region 班次
+
+            var rt_班次 = this._配置文件._Iwork.Get_班次(配方.班次文件);
+            rt = rt_班次.s;
+            msg = rt_班次.m;
+            _班次_[] 班次规则 = rt_班次.cfg;
+            if (!rt)
+            {
+                return (rt, msg, lstObject);
+            }
+
+            #endregion
+
 
             DateTime.TryParse(配方.Datetimes, out DateTime 最后加工时间);
             var rtDatetime = 更新日期_(配方, date_);
@@ -351,9 +382,9 @@ namespace qfCode
 
                                 //将更新的结果赋值对源数据,保存时使用
                                 if (rt) 配方文件.对象[i].元素[j] = snStr;
-                                 
+
                             }
-                           
+
                             #endregion
 
                             break;
@@ -386,7 +417,7 @@ namespace qfCode
                         case _em_工具箱_.班次:
 
                             #region 班次 
-                            
+
                             var rtClasses = new 编码_计算(this).班次(y, 班次规则, dates);
                             rt = rtClasses.s;
                             msg = rtClasses.m;
@@ -516,7 +547,22 @@ namespace qfCode
 
             //深拷贝出来一份,用来防止源文件被意外修改
             _配方文件_属性_ 配方 = 配方文件.Clone();
-            _班次_[] 班次规则 = this._文件类.Get_班次(配方.班次文件);
+
+            #region 班次
+
+            var rt_班次 = this._配置文件._Iwork.Get_班次(配方.班次文件);
+            rt = rt_班次.s;
+            msg = rt_班次.m;
+            _班次_[] 班次规则 = rt_班次.cfg;
+            if (!rt)
+            {
+                return (rt, msg, new _元素_Str_());
+            }
+
+            #endregion
+
+
+
             DateTime.TryParse(配方.Datetimes, out DateTime 最后加工时间);
 
             var rtDatetime = 更新日期_(配方, date_);
@@ -639,7 +685,20 @@ namespace qfCode
             //深拷贝出来一份,用来防止源文件被意外修改
             _配方文件_属性_ 配方 = 配方文件.Clone();
 
-            _班次_[] 班次规则 = this._文件类.Get_班次(配方.班次文件);
+            #region 班次
+
+            var rt_班次 = this._配置文件._Iwork.Get_班次(配方.班次文件);
+            rt = rt_班次.s;
+            msg = rt_班次.m;
+            _班次_[] 班次规则 = rt_班次.cfg;
+            if (!rt)
+            {
+                return (rt, msg);
+            }
+
+            #endregion
+
+
             DateTime.TryParse(配方.Datetimes, out DateTime 最后加工时间);
 
             for (int i = 0; i < 配方.对象.Count; i++)
@@ -650,7 +709,7 @@ namespace qfCode
                 {
                     continue;
                 }
-                string v = "";
+               
                 rt = true;
                 msg = "";
 
@@ -721,7 +780,7 @@ namespace qfCode
             {
                 if (this._功能.日期时间.更新日期)
                 {
-                    TimeSpan  当前时间 = TimeSpan.Parse(now.ToString("HH:mm:ss"));
+                    TimeSpan 当前时间 = TimeSpan.Parse(now.ToString("HH:mm:ss"));
                     TimeSpan 更新时间 = TimeSpan.Parse(配方文件.更新时间);
                     if (当前时间 <= 更新时间)
                     {

@@ -74,6 +74,9 @@
     <Compile Include="编码2026\编码 Code\计算\计算_班次.cs" />
     <Compile Include="编码2026\编码 Code\配方文件\读写\文件类\外部文件.cs" />
     <Compile Include="编码2026\编码 Code\配置文件\Iwork_配置文件.cs" />
+    <Compile Include="编码2026\编码 Code\配置文件\接口\配置文件_SQLite.cs" />
+    <Compile Include="编码2026\编码 Code\配置文件\配置文件_初始数据.cs" />
+    <Compile Include="编码2026\编码 Code\配置文件\接口\配置文件_txt.cs" />
     <Compile Include="编码2026\编辑\Win\Form_主窗体.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -165,7 +168,7 @@
     <Compile Include="编码2026\编辑\交互\子接口\编辑交互_本地.cs" />
     <Compile Include="编码2026\主程序\编辑_.cs" />
     <Compile Include="编码2026\编辑\Win\视图\视图_.cs" />
-    <Compile Include="编码2026\编码 Code\配置文件\配置文件.cs" />
+    <Compile Include="编码2026\编码 Code\配置文件\配置文件_统一接口.cs" />
     <Compile Include="语言\Language_.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="编码2026\编码 Code\数据结构\Type.cs" />
@@ -194,7 +197,6 @@
     <Compile Include="编码2026\编码 Code\配方文件\读写\表.cs" />
     <Compile Include="编码2026\编码 Code\配方文件\文件类.cs" />
     <Compile Include="语言\LanguageList.cs" />
-    <Compile Include="编码2026\通讯\Server\Iworker_通讯.cs" />
     <Compile Include="工件\Form_工件.cs">
       <SubType>Form</SubType>
     </Compile>

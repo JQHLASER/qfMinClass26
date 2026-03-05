@@ -17,6 +17,12 @@ namespace qfCode
         public _功能_结构_._em_配方文件类型_ 配方文件类型 { set; get; } = _功能_结构_._em_配方文件类型_.ini;
 
         /// <summary>
+        /// 班次 , 日期时间配置的信息
+        /// </summary>
+        public _em_配置文件类型_ 配置文件类型 { set; get; } = _em_配置文件类型_.Txt ;
+
+
+        /// <summary>
         /// 编码信息文件后缀,
         /// <para>.cqf</para>
         /// </summary>

@@ -80,4 +80,12 @@ namespace qfCode
         public string Value { set; get; }
     }
 
+
+    public enum _em_配置文件类型_
+    {
+        Txt,
+        SQLite  
+    }
+
+
 }

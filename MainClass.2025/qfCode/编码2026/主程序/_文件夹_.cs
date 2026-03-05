@@ -15,26 +15,26 @@ namespace qfCode
         {
 
             /// <summary>
-            /// 父文件夹
+            /// 父文件夹,默认为Code26
             /// </summary>
             public string 主文件夹 { set; get; } = 常量.主文件夹;
             /// <summary>
-            /// 存放参数文件夹
+            /// 存放参数文件夹,cfg
             /// </summary>
             public string 参数 { set; get; } = 常量.参数;
             /// <summary>
-            /// 存放班次文件夹
+            /// 存放班次文件夹,Class
             /// </summary>
             public string 班次 { set; get; } = 常量.班次;
             /// <summary>
-            /// 存放日期时间文件夹
+            /// 存放日期时间文件夹,DateTime
             /// </summary>
             public string 日期时间 { set; get; } = 常量.日期时间;
 
             /// <summary>
-            /// 存编码配方的文件夹
+            /// 存编码配方的文件夹,Main
             /// </summary>
-            public string 配方 { set; get; } = 常量.信息;
+            public string 配方 { set; get; } = 常量.配方;
         } 
         public _文件夹_( 编码_  codeSys)
         {

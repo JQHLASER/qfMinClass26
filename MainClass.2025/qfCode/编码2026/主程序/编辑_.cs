@@ -24,6 +24,7 @@ namespace qfCode
         /// </summary>
         internal type_编辑._交互类型_ _交互类型 = type_编辑._交互类型_.本地;
         internal string[] _变量对象名 = new string[0];
+      
 
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace qfCode
         /// <para>在视图存储参数,本地方式计算时</para>
         /// </summary> 
         public 编辑_(编码_ 编码, _交互类型_ 交互类型, string[] 变量对象名)
-        {
+        { 
             初始化(编码, 交互类型, 变量对象名);
         }
         public 编辑_()
@@ -45,6 +46,7 @@ namespace qfCode
         /// </summary> 
         public void 初始化(编码_ 编码, _交互类型_ 交互类型, string[] 变量对象名)
         {
+            变量对象名 = 变量对象名 ?? new string[0];
             this._功能 = 编码._功能;
             this._编码 = 编码;
             this._交互类型 = 交互类型;

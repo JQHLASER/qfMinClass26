@@ -11,7 +11,7 @@ namespace qfCode
     internal class 文件类
     {
         public 编码_ _codeSys;
-        public 文件类(编码_ codeSys)
+          文件类(编码_ codeSys)
         {
             this._codeSys = codeSys;
             Get_班次(常量.配置文件名_默认);
@@ -27,7 +27,7 @@ namespace qfCode
         /// <summary>
         /// 文件路径
         /// </summary> 
-        public string GetPath_班次(string FileName)
+          string GetPath_班次(string FileName)
         {
             return Path.Combine(this._codeSys._文件夹_属性.班次, $"{FileName}.txt");
         }
@@ -35,7 +35,7 @@ namespace qfCode
         /// <summary>
         /// 文件路径
         /// </summary> 
-        public string GetPath_日期时间(string FileName)
+          string GetPath_日期时间(string FileName)
         {
             return Path.Combine(this._codeSys._文件夹_属性.日期时间, $"{FileName}.txt");
         }
@@ -45,24 +45,24 @@ namespace qfCode
         /// 获取存放编码信息的文件路径
         /// <para>仅ini或txt类型时有效</para>
         /// </summary> 
-        public string GetPath_配方(string FileName)
+          string GetPath_配方(string FileName)
         {
             return Path.Combine(this._codeSys._文件夹_属性.配方, $"{FileName}{this._codeSys._功能.后缀}");
         }
 
-        public string[] Get目录_班次()
+          string[] Get目录_班次()
         {
             new qfmain.文件_文件夹().文件夹_获取所有文件_无后缀(this._codeSys._文件夹_属性.班次, out List<string> lst, "*.txt");
             return lst.ToArray();
         }
-        public string[] Get目录_日期时间()
+          string[] Get目录_日期时间()
         {
             new qfmain.文件_文件夹().文件夹_获取所有文件_无后缀(this._codeSys._文件夹_属性.日期时间, out List<string> lst, "*.txt");
             return lst.ToArray();
         }
 
 
-        public (bool s, string m, string[] v) Get目录_配方()
+          (bool s, string m, string[] v) Get目录_配方()
         {
             return this._codeSys._配方文件操作._Iwork文件.Get目录();
         }
@@ -77,7 +77,7 @@ namespace qfCode
         /// <summary>
         /// 获取班次
         /// </summary> 
-        internal _班次_[] Get_班次(string FileName)
+          _班次_[] Get_班次(string FileName)
         {
             string path = GetPath_班次(FileName);
             _班次_[] Beff = new _班次_[0];
@@ -112,7 +112,7 @@ namespace qfCode
         /// <para>section : 节名称,如年4等</para>
         /// <para>keys : 字段,如2022=22 等</para>
         /// </summary> 
-        internal string Get_日期时间(string FileName, string section, string keys)
+          string Get_日期时间(string FileName, string section, string keys)
         {
             string path = GetPath_日期时间(FileName);
 

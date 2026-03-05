@@ -19,6 +19,7 @@ namespace qfCode
         public ini文件_(编码_ codeSys)
         {
             this._codeSys = codeSys;
+            this._codeSys.On_初始化状态(qfmain._初始化状态_.已初始化, "");
         }
 
         public (bool s, string m) Save(string FileName, _配方文件_属性_ cfg)
