@@ -252,6 +252,7 @@ SqlServer 数据库....使用最新库
                      PRAGMA cache_size=-20000;
                      PRAGMA temp_store=MEMORY;
                      PRAGMA busy_timeout=5000;
+                     PRAGMA mmap_size=268435456;
                  ");
 
                 //PRAGMA journal_mode=WAL;          //WAL 模式：提升并发读写性能 

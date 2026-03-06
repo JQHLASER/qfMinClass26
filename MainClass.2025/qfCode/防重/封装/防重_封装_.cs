@@ -31,7 +31,7 @@ namespace qfCode
         public _Type_防重_._cfg_防重参数_ _参数 = new _Type_防重_._cfg_防重参数_();
 
         bool _IsRun = true;
-
+        qfSqlSugar.SqlSugar_DB _db;
         public void 初始化(_Type防重_._em_数据库格式_ 数据库格式 = _Type防重_._em_数据库格式_.SQLite)
         {
             读写参数(1);
@@ -41,8 +41,7 @@ namespace qfCode
                 if (s)
                 {
                     await Task.Run(() =>
-                    {
-                        db.优化数据库(this.FCcode_sys._id);
+                    { 
                         var rt = 查询_防重("&^^123");
                         qfmain._初始化状态_ state = rt.s ? qfmain._初始化状态_.已初始化 : qfmain._初始化状态_.未初始化;
                         this.FCcode_sys.On_初始化状态(state, rt.m);
@@ -147,17 +146,35 @@ namespace qfCode
         /// <summary>
         /// Count:受影响行
         /// </summary> 
+        public (bool s, string m, int count) 修改(List<表_防重_.FC26> cfg)
+        {
+            using (var getDb = new qfSqlSugar.SqlSugar_GetDB(this.FCcode_sys._id))
+            {
+                using (var table = new qfSqlSugar.SqlSugar_Table<表_防重_.FC26>(getDb.Db))
+                {
+                    var rt = table.Update(cfg, out int Count, out string msgErr);
+                    return (rt, msgErr, Count);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Count:受影响行
+        /// </summary> 
         public (bool s, string m, int count) 添加(表_防重_.FC26 cfg)
         {
             using (var getDb = new qfSqlSugar.SqlSugar_GetDB(this.FCcode_sys._id))
             {
                 using (var table = new qfSqlSugar.SqlSugar_Table<表_防重_.FC26>(getDb.Db))
                 {
-                    var rt = table.Storageable(cfg, out int Count, out string msgErr);
+                    var rt = table.Insertable(cfg, out int Count, out string msgErr);
                     return (rt, msgErr, Count);
                 }
             }
         }
+
+
 
         /// <summary>
         /// 查询窗体用
