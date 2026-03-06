@@ -11,11 +11,14 @@ namespace qfNet
 {
     internal class 文件_SQLite<T> : Iwork_文件_<T>
     {
-        string _File = Path.Combine(qfmain.软件类.Files_Cfg.Files_LogMyApp, "GJS");
+
         string _文件类型 = "FLS";
 
-        string _path = "";
-        string _ConfigID = "_file26_sqlite_";
+        public string _path = "";
+        /// <summary>
+        /// SQL_id
+        /// </summary>
+        public string _ConfigID = "_file26_sqlite_";
         private static readonly object _lock = new object();
 
         public qfmain._初始化状态_ _初始化状态 { set; get; } = qfmain._初始化状态_.未初始化;
@@ -23,24 +26,23 @@ namespace qfNet
         /// <summary>
         /// File : 存放Code26.db的文件夹
         /// </summary> 
-        public void 初始化(string File, string 文件类型 = "FLS", string 后缀 = "")
+        public void 初始化(string path, string 文件类型 = "FLS", string 后缀 = "", string ConfigID = "_file26_sqlite_")
         {
-
-            if (!string.IsNullOrWhiteSpace(File)) this._File = File;
             this._文件类型 = 文件类型;
-            new qfmain.文件_文件夹().文件夹_新建(this._File, out string msgErr);
+            this._ConfigID = ConfigID;
+            // new qfmain.文件_文件夹().文件夹_新建(this._File, out string msgErr);
 
-            this._path = Path.Combine(this._File, "Code26.db");
+            this._path = path;
 
             On_初始化状态(qfmain._初始化状态_.初始化中, "");
-            SqlSugar.ConnectionConfig config = null;
+
             qfSqlSugar.SqlSugar_DB_封装._DB.Event_ConnectionConfig += async (s, db) =>
             {
                 string conStr = db.生成连接字符串(new qfSqlSugar._cfg_SQLite_
                 {
                     Path = this._path,
                 });
-                config = db.生成连接信息(conStr, this._ConfigID, SqlSugar.DbType.Sqlite);
+                var config = db.生成连接信息(conStr, this._ConfigID, SqlSugar.DbType.Sqlite);
                 s.Add(config);
             };
             qfSqlSugar.SqlSugar_DB_封装._DB.Event_初始化结束1 += async (s, m, db) =>

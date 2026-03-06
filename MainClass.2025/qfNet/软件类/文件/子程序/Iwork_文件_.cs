@@ -15,8 +15,12 @@ namespace qfNet
         event Action<qfmain._初始化状态_, string> Event_初始化状态;
 
 
-
-        void 初始化(string File, string 文件类型, string 后缀);
+        /// <summary>
+        /// <para> 文件类型 : 显示</para>
+        /// <para> 后缀 : txt或ini时有效</para>
+        /// <para> ConfigID : 使能数据库时有效</para>
+        /// </summary> 
+        void 初始化(string Path, string 文件类型, string 后缀, string ConfigID );
 
         string 获取文件路径(string FileName);
         bool 文件是否存在(string fileName);

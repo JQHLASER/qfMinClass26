@@ -119,6 +119,11 @@ namespace qfCode
             this.导入ToolStripMenuItem.Visible = this._编辑._功能.编辑.导入导出;
             this.导出ToolStripMenuItem.Visible = this._编辑._功能.编辑.导入导出;
 
+           
+
+      
+
+
             this.关闭ToolStripMenuItem.Click += (s, e) =>
             {
                 this.Close();

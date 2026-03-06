@@ -17,12 +17,12 @@ namespace qfCode
 
         public string[] Get目录_配置文件_日期时间()
         {
-            var rt = this._编辑._编码._配置文件._Iwork.Get目录_日期时间();
+            var rt = this._编辑._编码._配置文件.Get目录_日期时间();
             return rt.cfg;
         }
         public string[] Get目录_配置文件_班次()
         {
-            var rt = this._编辑._编码._配置文件._Iwork.Get目录_班次();
+            var rt = this._编辑._编码._配置文件.Get目录_班次();
             return rt.cfg;
         }
         public (bool s, string m, string[] v) Get目录_配方文件()

@@ -73,10 +73,7 @@
     <Compile Include="编码2026\编码 Code\计算\计算_日期时间.cs" />
     <Compile Include="编码2026\编码 Code\计算\计算_班次.cs" />
     <Compile Include="编码2026\编码 Code\配方文件\读写\文件类\外部文件.cs" />
-    <Compile Include="编码2026\编码 Code\配置文件\Iwork_配置文件.cs" />
-    <Compile Include="编码2026\编码 Code\配置文件\接口\配置文件_SQLite.cs" />
     <Compile Include="编码2026\编码 Code\配置文件\配置文件_初始数据.cs" />
-    <Compile Include="编码2026\编码 Code\配置文件\接口\配置文件_txt.cs" />
     <Compile Include="编码2026\编辑\Win\Form_主窗体.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -195,7 +192,6 @@
     <Compile Include="编码2026\编码 Code\配方文件\读写\文件类\SqlServer文件_.cs" />
     <Compile Include="编码2026\编码 Code\配方文件\读写\文件类\txt文件_.cs" />
     <Compile Include="编码2026\编码 Code\配方文件\读写\表.cs" />
-    <Compile Include="编码2026\编码 Code\配方文件\文件类.cs" />
     <Compile Include="语言\LanguageList.cs" />
     <Compile Include="工件\Form_工件.cs">
       <SubType>Form</SubType>

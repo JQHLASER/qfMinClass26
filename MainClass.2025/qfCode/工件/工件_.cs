@@ -22,9 +22,13 @@ namespace qfCode
         public qfmain._初始化状态_ _初始化状态 = qfmain._初始化状态_.未初始化;
 
 
-        public 工件_(string 文件夹, string 后缀, _em_配方_工件_文件类型_ 类型 = _em_配方_工件_文件类型_.SQLite)
+        /// <summary>
+        /// 文件夹 : ini时为所在文件夹,SQLite时为SQLite的路径
+        /// <para>confingId :使用数据库时有效</para> 
+        /// </summary> 
+        public 工件_(string filesPath, string 后缀, _em_配方_工件_文件类型_ 类型 = _em_配方_工件_文件类型_.SQLite, string confingId = "_gj26_Default")
         {
-            初始化(文件夹, 后缀, 类型);
+            初始化(filesPath, 后缀, 类型, confingId);
         }
         public 工件_()
         {
@@ -32,8 +36,11 @@ namespace qfCode
         }
 
 
-
-        public void 初始化(string 文件夹, string 后缀, _em_配方_工件_文件类型_ 类型 = _em_配方_工件_文件类型_.SQLite)
+        /// <summary>
+        /// 文件夹 : ini时为所在文件夹,SQLite时为SQLite的路径
+        /// <para>confingId :使用数据库时有效</para>
+        /// </summary> 
+        public void 初始化(string filesPath, string 后缀, _em_配方_工件_文件类型_ 类型 = _em_配方_工件_文件类型_.SQLite,string confingId= "_gj26_Default")
         {
 
             Gj_sys = new qfNet.文件_<T>();
@@ -43,10 +50,10 @@ namespace qfCode
             switch (类型)
             {
                 case _em_配方_工件_文件类型_.ini:
-                    Gj_sys.初始化_ini(文件夹, "", 后缀);
+                    Gj_sys.初始化_ini(filesPath, "", 后缀);
                     break;
                 case _em_配方_工件_文件类型_.SQLite:
-                    Gj_sys.初始化_SQLite(文件夹, "");
+                    Gj_sys.初始化_SQLite(filesPath, "", confingId);
                     break;
             }
 

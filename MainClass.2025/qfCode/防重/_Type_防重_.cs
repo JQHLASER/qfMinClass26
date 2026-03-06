@@ -13,7 +13,7 @@ namespace qfCode
             /// <summary>
             /// 单位:天
             /// </summary>
-            public int 数据保存时间 { set; get; } = 366;
+            public int 数据保存时间 { set; get; } = 366 * 2;
 
 
             public _Type_防重_._cfg_防重参数_ Clone()

@@ -18,7 +18,7 @@ namespace qfNet
         {
             SaveFileDialog save = new SaveFileDialog();
             save.Title = Language_.Get语言("导出");
-            save.Filter = $"|*{后缀}";
+            save.Filter = $"|{后缀}";
             var dlt = save.ShowDialog();
             if (dlt == DialogResult.OK)
             {

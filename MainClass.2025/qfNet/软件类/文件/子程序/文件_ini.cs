@@ -27,7 +27,10 @@ namespace qfNet
 
         }
 
-        public void 初始化(string File, string 文件类型, string 后缀名 = ".fls")
+        /// <summary>
+        /// ConfigID : 无效
+        /// </summary> 
+        public void 初始化(string File, string 文件类型, string 后缀名 = ".fls", string ConfigID = "")
         {
             On_初始化状态(qfmain._初始化状态_.初始化中, "");
 

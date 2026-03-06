@@ -73,7 +73,7 @@ namespace qfCode
                     TimeSpan 下班时间 = TimeSpan.Parse(s.下班时间.Trim());
 
                     // 调试输出
-                  //  MessageBox.Show($"当前:{当前时间} 上班:{上班时间} 下班:{下班时间}");
+                    //  MessageBox.Show($"当前:{当前时间} 上班:{上班时间} 下班:{下班时间}");
 
                     if (上班时间 <= 下班时间)
                     {
@@ -81,7 +81,7 @@ namespace qfCode
                         if (当前时间 >= 上班时间 && 当前时间 <= 下班时间)
                         {
                             结果 = 代码;
-                          //  MessageBox.Show(代码+结果);
+                            //  MessageBox.Show(代码+结果);
                             break;
                         }
                     }
@@ -108,7 +108,7 @@ namespace qfCode
                 msgErr = ex.Message;
             }
 
-           
+
             return (rt, msgErr, 结果);
         }
 
@@ -265,7 +265,10 @@ namespace qfCode
 
                 if (this._sys._功能.日期时间.配置编码)
                 {
-                    结果 = this._sys._文件类.Get_日期时间(info.配置, $"{编码类型}", 结果);
+                    var rts = this._sys._配置文件.Get_日期时间(info.配置, $"{编码类型}", 结果);
+                    rt = rts.s;
+                    msgErr = rts.m;
+                    结果 = rts.cfg;
                 }
 
             }
@@ -314,7 +317,10 @@ namespace qfCode
 
                 if (this._sys._功能.日期时间.配置编码 && info.types != _日期时间_._em_时间_.毫秒)
                 {
-                    结果 = this._sys._文件类.Get_日期时间(info.配置, $"{编码类型}", 结果);
+                    var rts = this._sys._配置文件.Get_日期时间(info.配置, $"{编码类型}", 结果);
+                    rt = rts.s;
+                    msgErr = rts.m;
+                    结果 = rts.cfg;
                 }
 
             }

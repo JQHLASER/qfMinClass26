@@ -37,7 +37,7 @@ namespace qfCode
         /// <summary>
         /// 班次配置文件或时间日期配置文件
         /// </summary>
-        internal 配置文件_统一接口 _配置文件;
+        internal 配置文件_ _配置文件;
 
         public 编码_(_文件夹_._属性_ typeFile, _功能_ 功能)
         {
@@ -65,7 +65,7 @@ namespace qfCode
             new _文件夹_(this);
             // this._文件类 = new 文件类(this);
             this._配方文件操作 = new 文件_统一接口(this);
-            this._配置文件 = new 配置文件_统一接口(this);
+            this._配置文件 = new 配置文件_(this);
 
             //if (this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.ini
             //     || this._功能.配方文件类型 == _功能_结构_._em_配方文件类型_.txt
@@ -299,7 +299,7 @@ namespace qfCode
 
             #region 班次
 
-            var rt_班次 = this._配置文件._Iwork.Get_班次(配方.班次文件);
+            var rt_班次 = this._配置文件.Get_班次(配方.班次文件);
             rt = rt_班次.s;
             msg = rt_班次.m;
             _班次_[] 班次规则 = rt_班次.cfg;
@@ -550,7 +550,7 @@ namespace qfCode
 
             #region 班次
 
-            var rt_班次 = this._配置文件._Iwork.Get_班次(配方.班次文件);
+            var rt_班次 = this._配置文件.Get_班次(配方.班次文件);
             rt = rt_班次.s;
             msg = rt_班次.m;
             _班次_[] 班次规则 = rt_班次.cfg;
@@ -687,7 +687,7 @@ namespace qfCode
 
             #region 班次
 
-            var rt_班次 = this._配置文件._Iwork.Get_班次(配方.班次文件);
+            var rt_班次 = this._配置文件.Get_班次(配方.班次文件);
             rt = rt_班次.s;
             msg = rt_班次.m;
             _班次_[] 班次规则 = rt_班次.cfg;
@@ -800,7 +800,6 @@ namespace qfCode
 
         #endregion
 
-
         #region Err
 
         public bool Err_未初始化(string Name, out string msgErr)
@@ -813,6 +812,18 @@ namespace qfCode
             }
             return true;
         }
+
+        public bool Err_未初始化_配置文件模块(string Name, out string msgErr)
+        {
+            msgErr = "";
+            if (this._初始化状态_配置文件模块  != _初始化状态_.已初始化)
+            {
+                msgErr = Name + Language_.Get语言("未初始化");
+                return false;
+            }
+            return true;
+        }
+
 
         #endregion
 
