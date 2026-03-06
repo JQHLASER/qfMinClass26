@@ -222,7 +222,7 @@ SqlServer 数据库....使用最新库
                     case DbType.MySql:
                         return 优化_MySql(dbTemp);
                     default:
-                        return (true , $"not type,{config.DbType}");
+                        return (true, $"not type,{config.DbType}");
                 }
             }
         }
@@ -232,7 +232,7 @@ SqlServer 数据库....使用最新库
                     .ToDictionary(c => c.ConfigId.ToString(), c => c, StringComparer.OrdinalIgnoreCase);
             if (dict.TryGetValue(id, out var cfg))
             {
-              return   优化数据库(cfg);
+                return 优化数据库(cfg);
             }
             else
             {
@@ -244,21 +244,22 @@ SqlServer 数据库....使用最新库
         {
             try
             {
-                var Ado = db_.Ado;
-                // WAL 模式：提升并发读写性能
-                Ado.ExecuteCommand("PRAGMA journal_mode = WAL;");
 
-                // 缓存大小调整（加快查询性能）
-                Ado.ExecuteCommand("PRAGMA cache_size = -20000;"); // 约 20MB
 
-                // 写安全系数降低一点提高性能（正常使用足够安全）
-                Ado.ExecuteCommand("PRAGMA synchronous = NORMAL;");
+                db_.Ado.ExecuteCommand(@"
+                     PRAGMA journal_mode=WAL;       
+                     PRAGMA synchronous=NORMAL;
+                     PRAGMA cache_size=-20000;
+                     PRAGMA temp_store=MEMORY;
+                     PRAGMA busy_timeout=5000;
+                 ");
 
-                // 使用内存表加速排序、分组等操作
-                Ado.ExecuteCommand("PRAGMA temp_store = MEMORY;");
+                //PRAGMA journal_mode=WAL;          //WAL 模式：提升并发读写性能 
+                //PRAGMA cache_size = -20000;       //缓存大小调整（加快查询性能） 约 20MB
+                //PRAGMA synchronous = NORMAL;      //写安全系数降低一点提高性能（正常使用足够安全） 
+                //PRAGMA temp_store = MEMORY;       //使用内存表加速排序、分组等操作 
+                //PRAGMA wal_checkpoint(TRUNCATE);  //自动清理 WAL 文件，提高长期运行稳定性
 
-                // 自动清理 WAL 文件，提高长期运行稳定性
-                Ado.ExecuteCommand("PRAGMA wal_checkpoint(TRUNCATE);");
 
                 return (true, "");
             }
@@ -318,9 +319,10 @@ SqlServer 数据库....使用最新库
             switch (连接类型)
             {
                 case _SQLite_连接类型_.V2:
-                    return $"data source={SqlLitePath.Path};Cache=Shared;Mode=ReadWriteCreate;";
+                    //return $"data source={SqlLitePath.Path};Cache=Shared;Mode=ReadWriteCreate;Pooling=True;";
+                    return $"Data Source={SqlLitePath.Path};Mode=ReadWriteCreate;Cache=Shared;Pooling=True;Default Timeout=5;";
                 case _SQLite_连接类型_.V3:
-                    return $"data source={SqlLitePath.Path};Version=3;Cache=Shared;Mode=ReadWriteCreate;";
+                    return $"data source={SqlLitePath.Path};Version=3;Cache=Shared;Mode=ReadWriteCreate;Pooling=True;";
                 default:
                     return "";
             }

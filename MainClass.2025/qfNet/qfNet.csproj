@@ -179,6 +179,7 @@
     <Compile Include="软件类\Log\%24R77VTKM.cs" />
     <Compile Include="软件类\Win_委托线程.cs" />
     <Compile Include="软件类\文件\子程序\Iwork_文件_.cs" />
+    <Compile Include="软件类\文件\子程序\文件_SQLserver.cs" />
     <Compile Include="软件类\文件\子程序\文件_SQLite.cs" />
     <Compile Include="软件类\文件\子程序\文件_ini.cs" />
     <Compile Include="软件类\文件\子程序\表.cs" />

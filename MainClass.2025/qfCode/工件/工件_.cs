@@ -13,6 +13,7 @@ namespace qfCode
     {
         ini,
         SQLite,
+        SQLserver,
     }
 
     public class 工件_<T>
@@ -37,7 +38,7 @@ namespace qfCode
 
 
         /// <summary>
-        /// 文件夹 : ini时为所在文件夹,SQLite时为SQLite的路径
+        /// 文件夹 : ini时为所在文件夹,SQLite时为SQLite的路径,SQLserver时为数据库连接参数保存的路径
         /// <para>confingId :使用数据库时有效</para>
         /// </summary> 
         public void 初始化(string filesPath, string 后缀, _em_配方_工件_文件类型_ 类型 = _em_配方_工件_文件类型_.SQLite,string confingId= "_gj26_Default")
@@ -53,6 +54,9 @@ namespace qfCode
                     Gj_sys.初始化_ini(filesPath, "", 后缀);
                     break;
                 case _em_配方_工件_文件类型_.SQLite:
+                    Gj_sys.初始化_SQLite(filesPath, "", confingId);
+                    break;
+                case _em_配方_工件_文件类型_.SQLserver:
                     Gj_sys.初始化_SQLite(filesPath, "", confingId);
                     break;
             }

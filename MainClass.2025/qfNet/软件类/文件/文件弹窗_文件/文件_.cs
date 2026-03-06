@@ -39,7 +39,18 @@ namespace qfNet
             this._Iwork.初始化(Path, 文件类型, "", ConfigID);
         }
 
-
+        /// <summary>
+        /// path : 存放sqlserver连接参数的路径
+        /// <para> 文件类型 : 显示</para>
+        /// <para> 后缀 : txt或ini时有效</para>
+        /// <para> ConfigID : 使能数据库时有效</para>
+        /// </summary> 
+        public void 初始化_SQLserver(string Path, string 文件类型, string ConfigID = "_file26_sqlserver_")
+        {
+            this._Iwork = new 文件_SQLserver <T>();
+            this._Iwork.Event_初始化状态 += (s, e) => On_初始化状态(s, e);
+            this._Iwork.初始化(Path, 文件类型, "", ConfigID);
+        }
 
 
         public bool 读写最后一次打开的文件(ushort model, ref string FileName, string path)
