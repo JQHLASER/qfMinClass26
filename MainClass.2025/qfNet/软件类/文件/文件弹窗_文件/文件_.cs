@@ -18,40 +18,23 @@ namespace qfNet
         /// <summary>
         /// 使用INI文件,File:文件所在文件夹
         /// </summary> 
-        public void 初始化_ini(string File, string 文件类型, string 后缀)
+        public void 初始化(_em_文件保存方式_ 文件保存方式_, string File, string 文件类型, string 后缀or数据库ID)
         {
-            this._Iwork = new 文件_ini<T>();
+            if (文件保存方式_ == _em_文件保存方式_.ini
+                || 文件保存方式_ == _em_文件保存方式_.txt)
+            {
+                this._Iwork = new 文件_ini_txt<T>(); ;
+            }
+            else if (文件保存方式_ == _em_文件保存方式_.SQLite
+                || 文件保存方式_ == _em_文件保存方式_.SQLserver)
+            {
+                this._Iwork = new 文件_数据库<T>();
+            }
             this._Iwork.Event_初始化状态 += (s, e) => On_初始化状态(s, e);
-            this._Iwork.初始化(File, 文件类型, 后缀, "");
+            this._Iwork.初始化(文件保存方式_, File, 文件类型, 后缀or数据库ID);
         }
 
-
-        /// <summary>
-        /// 使用SQLite,path:SQLite路径
-        /// <para> 文件类型 : 显示</para>
-        /// <para> 后缀 : txt或ini时有效</para>
-        /// <para> ConfigID : 使能数据库时有效</para>
-        /// </summary> 
-        public void 初始化_SQLite(string Path, string 文件类型, string ConfigID = "_file26_sqlite_")
-        {
-            this._Iwork = new 文件_SQLite<T>();
-            this._Iwork.Event_初始化状态 += (s, e) => On_初始化状态(s, e);
-            this._Iwork.初始化(Path, 文件类型, "", ConfigID);
-        }
-
-        /// <summary>
-        /// path : 存放sqlserver连接参数的路径
-        /// <para> 文件类型 : 显示</para>
-        /// <para> 后缀 : txt或ini时有效</para>
-        /// <para> ConfigID : 使能数据库时有效</para>
-        /// </summary> 
-        public void 初始化_SQLserver(string Path, string 文件类型, string ConfigID = "_file26_sqlserver_")
-        {
-            this._Iwork = new 文件_SQLserver <T>();
-            this._Iwork.Event_初始化状态 += (s, e) => On_初始化状态(s, e);
-            this._Iwork.初始化(Path, 文件类型, "", ConfigID);
-        }
-
+         
 
         public bool 读写最后一次打开的文件(ushort model, ref string FileName, string path)
         {

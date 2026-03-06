@@ -1,4 +1,5 @@
-﻿using Sunny.UI.Win32;
+﻿using qfNet;
+using Sunny.UI.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,27 +10,22 @@ using System.Windows.Forms;
 
 namespace qfCode
 {
-    public enum _em_配方_工件_文件类型_
-    {
-        ini,
-        SQLite,
-        SQLserver,
-    }
+
 
     public class 工件_<T>
     {
 
         public qfNet.文件_<T> Gj_sys;
         public qfmain._初始化状态_ _初始化状态 = qfmain._初始化状态_.未初始化;
-
+        qfNet._em_文件保存方式_ _文件类型 = qfNet._em_文件保存方式_.SQLite;
 
         /// <summary>
         /// 文件夹 : ini时为所在文件夹,SQLite时为SQLite的路径
-        /// <para>confingId :使用数据库时有效</para> 
+        /// <para> 后缀or数据库ID : 文件保存方式为 txt或ini时为后缀,数据库时为数据库ID</para> 
         /// </summary> 
-        public 工件_(string filesPath, string 后缀, _em_配方_工件_文件类型_ 类型 = _em_配方_工件_文件类型_.SQLite, string confingId = "_gj26_Default")
+        public 工件_(string filesPath, string 后缀or数据库ID, qfNet._em_文件保存方式_ 类型 = qfNet._em_文件保存方式_.SQLite)
         {
-            初始化(filesPath, 后缀, 类型, confingId);
+            初始化(filesPath, 后缀or数据库ID, 类型);
         }
         public 工件_()
         {
@@ -39,27 +35,14 @@ namespace qfCode
 
         /// <summary>
         /// 文件夹 : ini时为所在文件夹,SQLite时为SQLite的路径,SQLserver时为数据库连接参数保存的路径
-        /// <para>confingId :使用数据库时有效</para>
+        /// <para> 后缀or数据库ID : 文件保存方式为 txt或ini时为后缀,数据库时为数据库ID</para> 
         /// </summary> 
-        public void 初始化(string filesPath, string 后缀, _em_配方_工件_文件类型_ 类型 = _em_配方_工件_文件类型_.SQLite,string confingId= "_gj26_Default")
+        public void 初始化(string filesPath, string 后缀or数据库ID, qfNet._em_文件保存方式_ 文件类型 = qfNet._em_文件保存方式_.SQLite)
         {
-
+            this._文件类型 = 文件类型;
             Gj_sys = new qfNet.文件_<T>();
             Gj_sys.Event_初始化状态 += (s, e) => this.On_初始化状态(s, e);
-
-
-            switch (类型)
-            {
-                case _em_配方_工件_文件类型_.ini:
-                    Gj_sys.初始化_ini(filesPath, "", 后缀);
-                    break;
-                case _em_配方_工件_文件类型_.SQLite:
-                    Gj_sys.初始化_SQLite(filesPath, "", confingId);
-                    break;
-                case _em_配方_工件_文件类型_.SQLserver:
-                    Gj_sys.初始化_SQLite(filesPath, "", confingId);
-                    break;
-            }
+            Gj_sys.初始化(文件类型, filesPath, "", 后缀or数据库ID);
 
         }
 
@@ -88,6 +71,25 @@ namespace qfCode
             bool rt = Gj_sys._Iwork.打开(FileName, ref cfg, out string msgErr);
             return (rt, msgErr, cfg);
         }
+
+        /// <summary>
+        /// 仅在保存为数据库格式时生效
+        /// </summary> 
+        public (bool s, string m, 表.Code26[] cfg) 查询全部()
+        {
+            表.Code26[] cfg = new 表.Code26[0];
+            bool rt = Gj_sys._Iwork.查询全部(ref cfg, out string msgErr);
+            return (rt, msgErr, cfg);
+        }
+        /// <summary>
+        /// 仅在保存为数据库格式时生效
+        /// </summary> 
+        public (bool s, string m) 添加全部(表.Code26[] cfg)
+        {
+            bool rt = Gj_sys._Iwork.添加全部(cfg, out string msgErr);
+            return (rt, msgErr);
+        }
+
 
         /// <summary>
         /// <para> 返回 DialogResult.Yes ,成功</para>
@@ -125,15 +127,30 @@ namespace qfCode
             {
                 forms.KeyDown += (s, e) =>
                 {
-                    //导入
-                    if (e.KeyCode == Keys.F11)
+                    if (this._文件类型 == qfNet._em_文件保存方式_.SQLite
+                         || this._文件类型 == qfNet._em_文件保存方式_.SQLserver)
                     {
-                        this.Event_导入(forms);
-                    }
-                    //导出
-                    else if (e.KeyCode == Keys.F12)
-                    {
-                        this.Event_导出(forms);
+                        //导入
+                        if (e.KeyCode == Keys.F11)
+                        {
+                            this.Event_导入?.Invoke(forms);
+                        }
+                        //导出
+                        else if (e.KeyCode == Keys.F12)
+                        {
+                            this.Event_导出?.Invoke(forms);
+                        }
+                        //导入全部
+                        else if (e.KeyCode == Keys.F10)
+                        {
+                            this.Event_导入全部?.Invoke(forms);
+                        }
+                        //导出全部
+                        else if (e.KeyCode == Keys.F9)
+                        {
+                            this.Event_导出全部?.Invoke(forms);
+                        }
+
                     }
                 };
 
@@ -298,6 +315,9 @@ namespace qfCode
         public event Action<Form_工件> Event_导入;
 
 
+        public event Action<Form_工件> Event_导出全部;
+
+        public event Action<Form_工件> Event_导入全部;
 
         #endregion
 

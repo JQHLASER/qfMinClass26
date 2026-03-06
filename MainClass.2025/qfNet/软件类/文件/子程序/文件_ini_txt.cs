@@ -5,12 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static qfNet.表;
 
 namespace qfNet
 {
-    internal class 文件_ini<T> : Iwork_文件_<T>
+    internal class 文件_ini_txt<T> : Iwork_文件_<T>
     {
 
+        _em_文件保存方式_ _文件保存方式 = _em_文件保存方式_.ini;
         string _File = Path.Combine(qfmain.软件类.Files_Cfg.Files_LogMyApp, "gj");
         string _后缀名 = ".fls";
         string _文件类型 = "fls";
@@ -21,7 +23,7 @@ namespace qfNet
         /// <para>文件类型 : 用于显示文件类型,如图片等 </para>
         /// <para>后缀名:文件的后缀</para>
         /// </summary> 
-        public 文件_ini()
+        public 文件_ini_txt()
         {
 
 
@@ -29,13 +31,15 @@ namespace qfNet
 
         /// <summary>
         /// ConfigID : 无效
+        /// <para>文件保存方式_ : =0:txt,=1:ini</para>
         /// </summary> 
-        public void 初始化(string File, string 文件类型, string 后缀名 = ".fls", string ConfigID = "")
+        public void 初始化(_em_文件保存方式_ 文件保存方式_, string File, string 文件类型, string 后缀or数据库ID = ".fls" )
         {
+            this._文件保存方式 = 文件保存方式_;
             On_初始化状态(qfmain._初始化状态_.初始化中, "");
 
             this._File = File;
-            this._后缀名 = 后缀名;
+            this._后缀名 = 后缀or数据库ID;
             this._文件类型 = 文件类型;
             new qfmain.文件_文件夹().文件夹_新建(this._File, out string msgErr);
 
@@ -61,7 +65,17 @@ namespace qfNet
         {
             bool rt = true;
             string path = Path.Combine(this._File, $"{FileName}{this._后缀名}");
-            rt = new qfmain.文件_文件夹().WriteReadIni(path, model, ref t, out msgerr);
+            t = qfmain.T_实例化泛型.FastNew<T>.Create();
+            msgerr = "";
+
+            if (this._文件保存方式 == _em_文件保存方式_.ini)
+            {
+                rt = new qfmain.文件_文件夹().WriteReadIni(path, model, ref t, out msgerr);
+            }
+            else if (this._文件保存方式 == _em_文件保存方式_.txt)
+            {
+                rt = new qfmain.文件_文件夹().WriteReadJson(path, model, ref t, out msgerr);
+            }
             return rt;
         }
 
@@ -77,7 +91,7 @@ namespace qfNet
             FileName = string.Empty;
             DialogResult dlt = new qfNet.软件类().Win_文件类弹窗(this._File, this._文件类型, this._后缀名, out FileName, _文件弹窗类型_.打开, Event_删除文件);
             if (dlt == DialogResult.OK)
-            { 
+            {
                 bool rt = this.读写(FileName, 1, ref t, out msgerr);
                 dlt = rt ? DialogResult.Yes : DialogResult.No;
             }
@@ -94,7 +108,7 @@ namespace qfNet
         public DialogResult 另存为_弹窗(T t, out string NewFileName, out string msgerr, Func<string, (bool s, string m)> Event_删除文件 = null)
         {
             msgerr = string.Empty;
-            NewFileName = string.Empty; 
+            NewFileName = string.Empty;
             DialogResult dlt = 弹窗(out NewFileName, out msgerr, _文件弹窗类型_.保存, Event_删除文件);
             if (dlt == DialogResult.OK)
             {
@@ -110,6 +124,26 @@ namespace qfNet
         {
             return this.读写(FileName, 1, ref t, out msgerr);
         }
+
+        /// <summary>
+        /// 无此功能
+        /// </summary> 
+        public bool 查询全部(ref 表.Code26[] t, out string msgerr)
+        {
+            t = new Code26[0];
+            msgerr = "is not object";
+            return true;
+        }
+
+        /// <summary>
+        /// 无此功能
+        /// </summary> 
+        public bool 添加全部(Code26[] t, out string msgerr)
+        {         
+            msgerr = "is not object";
+            return true;
+        }
+
 
         public bool 保存(string FileName, T t, out string msgerr)
         {

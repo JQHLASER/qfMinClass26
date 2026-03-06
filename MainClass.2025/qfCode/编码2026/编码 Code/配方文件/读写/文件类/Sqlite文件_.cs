@@ -64,9 +64,9 @@ namespace qfCode
 
                 using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(qfSqlSugar.SqlSugar_DB_封装._DB, _ConfigID))
                 {
-                    using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
+                    using (qfSqlSugar.SqlSugar_Table<qfNet.表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<qfNet.表.Code26>(db_.Db))
                     {
-                        bool rt = _Table.GetList(u => u.FileName == FileName, out List<表.Code26> lst, out string msgErr);
+                        bool rt = _Table.GetList(u => u.FileName == FileName, out List<qfNet.表.Code26> lst, out string msgErr);
                         if (rt && lst.Count == 0)
                         {
                             return (rt, Language_.Get语言("未找到文件"), new _配方文件_属性_());
@@ -90,14 +90,14 @@ namespace qfCode
             lock (_lock)
             {
 
-                表.Code26 cdoe = new 表.Code26
+               qfNet . 表.Code26 cdoe = new qfNet.表.Code26
                 {
                     FileName = FileName,
                     CodeValue = new Json序列化().转成String(cfg),
                 };
                 using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(qfSqlSugar.SqlSugar_DB_封装._DB, _ConfigID))
                 {
-                    using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
+                    using (qfSqlSugar.SqlSugar_Table<qfNet.表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<qfNet.表.Code26>(db_.Db))
                     {
                         bool rt = _Table.Storageable(cdoe, out int count, out string msgErr);
                         if (!rt)
@@ -120,7 +120,7 @@ namespace qfCode
             {
                 using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(qfSqlSugar.SqlSugar_DB_封装._DB, _ConfigID))
                 {
-                    using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
+                    using (qfSqlSugar.SqlSugar_Table<qfNet.表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<qfNet.表.Code26>(db_.Db))
                     {
                         bool rt = _Table.Delete(u => u.FileName == FileName, out int count, out string msgErr);
                         return (rt, msgErr);
@@ -171,9 +171,9 @@ namespace qfCode
             string[] v = new string[0];
             using (var db_ = new qfSqlSugar.SqlSugar_GetDB(qfSqlSugar.SqlSugar_DB_封装._DB, _ConfigID))
             {
-                using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
+                using (qfSqlSugar.SqlSugar_Table<qfNet.表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<qfNet.表.Code26>(db_.Db))
                 {
-                    rt = _Table.GetList(out List<表.Code26> lst, out msgErr);
+                    rt = _Table.GetList(out List<qfNet.表.Code26> lst, out msgErr);
                     if (rt)
                     {
                         v = lst.Select(i => i.FileName).ToArray();

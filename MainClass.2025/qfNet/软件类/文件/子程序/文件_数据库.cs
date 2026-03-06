@@ -9,40 +9,69 @@ using System.Windows.Forms;
 
 namespace qfNet
 {
-    internal class 文件_SQLserver<T> : Iwork_文件_<T>
+    internal class 文件_数据库<T> : Iwork_文件_<T>
     {
+
+        public class _cfg_导入导出_
+        {
+            public string FileName { set; get; } = "";
+        }
+
+
+
+        _em_文件保存方式_ _文件保存方式 = _em_文件保存方式_.SQLite;
 
         string _文件类型 = "FLS";
 
-   
+        public string _path = "";
         /// <summary>
         /// SQL_id
         /// </summary>
-        public string _ConfigID = "_file26_server_";
+        public string _ConfigID = "_file26_sqlite_";
         private static readonly object _lock = new object();
 
         public qfmain._初始化状态_ _初始化状态 { set; get; } = qfmain._初始化状态_.未初始化;
 
         /// <summary>
-        /// path : 存放sqlserver连接参数的路径
+        /// path : SQLite时为.db数据库路径,SQLserver:保存数据库连接参数路径 
         /// </summary> 
-        public void 初始化(string path, string 文件类型 = "FLS", string 后缀 = "", string ConfigID = "_file26_server_")
+        public void 初始化(_em_文件保存方式_ 文件保存方式_, string path, string 文件类型 = "FLS", string 后缀or数据库ID = "_file26_sqlite_")
         {
+            this._文件保存方式 = 文件保存方式_;
             this._文件类型 = 文件类型;
-            this._ConfigID = ConfigID;
+            this._ConfigID = 后缀or数据库ID;
             // new qfmain.文件_文件夹().文件夹_新建(this._File, out string msgErr);
 
-          
+            this._path = path;
 
             On_初始化状态(qfmain._初始化状态_.初始化中, "");
 
             qfSqlSugar.SqlSugar_DB_封装._DB.Event_ConnectionConfig += async (s, db) =>
             {
-                var sqlserver = new qfSqlSugar._cfg_SQLserver_();               
-                db.读取参数<qfSqlSugar._cfg_SQLserver_>(1,ref sqlserver, path, out string msgErr);
-                string conStr = db.生成连接字符串(sqlserver);
-                var config = db.生成连接信息(conStr, this._ConfigID, SqlSugar.DbType.SqlServer);
-                s.Add(config);
+                switch (this._文件保存方式)
+                {
+                    case _em_文件保存方式_.SQLite:
+                        #region SQLite
+                        string conStr = db.生成连接字符串(new qfSqlSugar._cfg_SQLite_
+                        {
+                            Path = this._path,
+                        });
+                        var config = db.生成连接信息(conStr, this._ConfigID, SqlSugar.DbType.Sqlite);
+                        s.Add(config);
+                        #endregion
+                        break;
+                    case _em_文件保存方式_.SQLserver:
+                        #region SQLserver
+                        var sqlserver = new qfSqlSugar._cfg_SQLserver_();
+                        db.读取参数<qfSqlSugar._cfg_SQLserver_>(1, ref sqlserver, path, out string msgErr);
+                        string conStr1 = db.生成连接字符串(sqlserver);
+                        var config1 = db.生成连接信息(conStr1, this._ConfigID, SqlSugar.DbType.SqlServer);
+                        s.Add(config1);
+                        #endregion
+                        break;
+                }
+
+
             };
             qfSqlSugar.SqlSugar_DB_封装._DB.Event_初始化结束1 += async (s, m, db) =>
         {
@@ -157,6 +186,23 @@ namespace qfNet
             t = v1.cfg;
             return v1.s;
         }
+
+        public bool 查询全部(ref 表.Code26[] t, out string msgerr)
+        {
+            var v1 = ReadAll();
+            msgerr = v1.m;
+            t = v1.cfg;
+            return v1.s;
+        }
+
+        public bool 添加全部(表.Code26[] t, out string msgerr)
+        {
+            var v1 = SaveAll (t);
+            msgerr = v1.m; 
+            return v1.s;
+        }
+
+
         public bool 保存(string FileName, T t, out string msgerr)
         {
             var v2 = Save(FileName, t);
@@ -242,6 +288,32 @@ namespace qfNet
 
         #region 本地方法
 
+        public (bool s, string m, 表.Code26[] cfg) ReadAll()
+        {
+            using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(_ConfigID))
+            {
+                using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
+                {
+                    bool rt = _Table.GetList(out List<表.Code26> lst, out string msgErr);
+
+                    if (rt && lst.Count == 0)
+                    {
+                        return (rt, Language_.Get语言("未找到文件"), new 表.Code26[0]);
+                    }
+                    else if (rt)
+                    {
+                        return (rt, msgErr, lst.ToArray());
+                    }
+                    else
+                    {
+                        return (rt, msgErr, new 表.Code26[0]);
+                    }
+                }
+            }
+
+
+        }
+
         public (bool s, string m, T cfg) Read(string FileName)
         {
             lock (_lock)
@@ -269,6 +341,29 @@ namespace qfNet
                 }
             }
 
+        }
+
+        public (bool s, string m) SaveAll(表.Code26[] cfg)
+        {
+            lock (_lock)
+            {
+                using (qfSqlSugar.SqlSugar_GetDB db_ = new qfSqlSugar.SqlSugar_GetDB(_ConfigID))
+                {
+                    using (qfSqlSugar.SqlSugar_Table<表.Code26> _Table = new qfSqlSugar.SqlSugar_Table<表.Code26>(db_.Db))
+                    {
+                        bool rt = _Table.Storageable(cfg.ToList(), out int count, out string msgErr);
+                        if (!rt)
+                        {
+                            return (rt, msgErr);
+                        }
+                        else if (count == 0)
+                        {
+                            return (false, Language_.Get语言("受影响0行"));
+                        }
+                        return (rt, Language_.Get语言("执行成功"));
+                    }
+                }
+            }
         }
 
         public (bool s, string m) Save(string FileName, T cfg)

@@ -12,9 +12,7 @@ namespace qfCode
         /// 获取班次
         /// </summary> 
         internal static _班次_[] 班次()
-        {
-
-            _班次_[] Beff = new _班次_[0];
+        { 
             List<_班次_> lst = new List<_班次_>
             {
                 new _班次_
@@ -36,7 +34,7 @@ namespace qfCode
                 },
             };
 
-            return Beff;
+            return lst.ToArray ();
         }
 
 
@@ -46,20 +44,16 @@ namespace qfCode
         /// 转成Ini格式...节名称
         /// </summary> 
         static string ToIniSection(string section)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"[{section}]");
-            return sb.ToString();
+        { 
+            return $"[{section}]";
         }
 
         /// <summary>
         /// 转成Ini格式....字段
         /// </summary> 
         static string ToIniSetting(string setting, string value)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"{setting}={value}");
-            return sb.ToString();
+        { 
+            return $"{setting}={value}";
         }
 
 

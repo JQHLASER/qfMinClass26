@@ -53,4 +53,11 @@ namespace qfNet
     }
     
 
+    public enum _em_文件保存方式_
+    {
+        ini,
+        txt,
+        SQLite,
+        SQLserver,
+    }
 }

@@ -17,10 +17,9 @@ namespace qfNet
 
         /// <summary>
         /// <para> 文件类型 : 显示</para>
-        /// <para> 后缀 : txt或ini时有效</para>
-        /// <para> ConfigID : 使能数据库时有效</para>
+        /// <para> 后缀or数据库ID : 文件保存方式为 txt或ini时为后缀,数据库时为数据库ID</para> 
         /// </summary> 
-        void 初始化(string Path, string 文件类型, string 后缀, string ConfigID );
+        void 初始化(_em_文件保存方式_ 文件保存方式_, string Path, string 文件类型, string 后缀or数据库ID);
 
         string 获取文件路径(string FileName);
         bool 文件是否存在(string fileName);
@@ -42,7 +41,9 @@ namespace qfNet
         /// </summary> 
         DialogResult 另存为_弹窗(T t, out string NewFileName, out string msgerr, Func<string, (bool s, string m)> Event_删除文件 = null);
 
-  
+        bool 查询全部(ref 表.Code26[] t, out string msgerr);
+        bool 添加全部(表.Code26[] t, out string msgerr);
+
         bool 打开(string FileName, ref T t, out string msgerr);
         bool 保存(string FileName, T t, out string msgerr);
         /// <summary>
