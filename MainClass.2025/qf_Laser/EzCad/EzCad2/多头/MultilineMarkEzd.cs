@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -1671,9 +1672,8 @@ namespace qf_Laser
 
         string[] _Ezd进程名 = new string[0];
         void 读EzCadName()
-        {
-            string path = $"{qfmain.软件类.Files_Cfg.Files_sysConfig}\\EzdName.cfg";
-
+        { 
+            string path = Path.Combine(qfmain.软件类.Files_Cfg.Files_sysConfig, "EzdName.cfg");
             List<string> lst = new List<string>();
             lst.Add("EzCad2");
             lst.Add("EzCad2.7.6");
