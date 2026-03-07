@@ -69,12 +69,12 @@
     <Compile Include="激光\打标\金橙子\EzCad3\EzCad3_TcpServer.cs" />
     <Compile Include="语言\Language_.cs" />
     <Compile Include="读码器\读码器.cs" />
-    <Compile Include="运动控制卡\正运动\Class\Zmcaux.cs" />
+    <Compile Include="运动控制卡\正运动\Class\class\zmc.cs" />
+    <Compile Include="运动控制卡\正运动\Class\class\Zmcaux.cs" />
+    <Compile Include="运动控制卡\正运动\Class\class\Zmcaux_ZAux.cs" />
+    <Compile Include="运动控制卡\正运动\Class\class\Zmotion_.cs" />
     <Compile Include="运动控制卡\正运动\Zaxis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="运动控制卡\正运动\Class\zmc.cs" />
-    <Compile Include="运动控制卡\正运动\Class\Zmcaux_ZAux.cs" />
-    <Compile Include="运动控制卡\正运动\Class\Zmotion_.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
