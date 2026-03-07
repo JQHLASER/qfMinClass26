@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -110,7 +111,7 @@ namespace qf_Laser
         bool _Inistiall = false;
         public void 初始化(bool 使能线程)
         {
-         
+
             标题栏状态_初始化状态();
             标题栏状态_加工状态();
 
@@ -118,7 +119,7 @@ namespace qf_Laser
             读写参数(1);
             读写_最后一次ezdpath(1);
             读EzCadName();
-         
+
 
             if (使能线程)
             {
@@ -559,7 +560,7 @@ namespace qf_Laser
         string[] _Ezd进程名 = new string[0];
         void 读EzCadName()
         {
-            string path = $"{qfmain.软件类.Files_Cfg.Files_sysConfig}\\EzdName.cfg";
+            string path = Path.Combine(qfmain.软件类.Files_Cfg.Files_sysConfig, "EzdName.cfg");
 
             List<string> lst = new List<string>();
             lst.Add("EzCad2");
