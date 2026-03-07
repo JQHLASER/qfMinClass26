@@ -11,13 +11,27 @@ using System.Threading.Tasks;
 namespace qfmain
 {
     /// <summary>
+    /// windowss专用
+    /// </summary>
+    public class GC_windows_
+    {
+        public GC_windows_()
+        {
+            new GC_Windows专用().Start();
+        }
+    }
+
+    #region Windows专用
+
+
+    /// <summary>
     /// Windows下的智能GC处理,
     /// 使用方法: static GC_Windows mem = new GC_Windows(); mem.Start();
     /// </summary>
-    public class GC_Windows : IDisposable
+    internal class GC_Windows专用 : IDisposable
     {
-         
- 
+
+
         [DllImport("psapi.dll")]
         private static extern bool EmptyWorkingSet(IntPtr hProcess);
 
@@ -33,7 +47,7 @@ namespace qfmain
         public long HardLimitMB = 900;         // 硬限制直接全GC
         public long TrendThresholdMB = 80;     // 上涨趋势触发GC
 
-        public GC_Windows()
+        public GC_Windows专用()
         {
             _timer = new Timer(CheckMemory, null, Timeout.Infinite, Timeout.Infinite);
         }
@@ -148,7 +162,14 @@ namespace qfmain
         {
             _timer.Dispose();
         }
-     
 
-}
+
+    }
+
+
+
+
+    #endregion
+
+
 }

@@ -20,12 +20,6 @@ namespace qfmain
         }
 
 
-        /// <summary>
-        /// windowss专用
-        /// </summary>
-        public GC_()
-        {
-            new GC_Windows().Start();
-        }
+      
     }
 }
