@@ -27,7 +27,7 @@ namespace qfNet
         /// <summary>
         /// SQL_id
         /// </summary>
-        public string _ConfigID = "_file26_sqlite_";
+        public string _ConfigID = Guid.NewGuid().ToString("N") ;
         private static readonly object _lock = new object();
 
         public qfmain._初始化状态_ _初始化状态 { set; get; } = qfmain._初始化状态_.未初始化;
@@ -197,8 +197,8 @@ namespace qfNet
 
         public bool 添加全部(表.Code26[] t, out string msgerr)
         {
-            var v1 = SaveAll (t);
-            msgerr = v1.m; 
+            var v1 = SaveAll(t);
+            msgerr = v1.m;
             return v1.s;
         }
 

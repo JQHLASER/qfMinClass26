@@ -15,7 +15,7 @@ namespace qfCode
         /// <summary>
         /// 数据库id
         /// </summary>
-        public string _id = "FC26";
+        public string _id = Guid.NewGuid().ToString("N");
         public qfmain._初始化状态_ _初始化状态 = qfmain._初始化状态_.未初始化;
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace qfCode
             };
         }
 
-        public SqlSugar.ConnectionConfig 生成连接参数_ConnectionConfig(_Type防重_._em_数据库格式_ 数据库格式 = _Type防重_._em_数据库格式_.SQLite)
+        private SqlSugar.ConnectionConfig 生成连接参数_ConnectionConfig(_Type防重_._em_数据库格式_ 数据库格式 = _Type防重_._em_数据库格式_.SQLite)
         {
             SqlSugar.ConnectionConfig config = null;
             switch (数据库格式)
