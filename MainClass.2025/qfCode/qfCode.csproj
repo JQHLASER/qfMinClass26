@@ -183,14 +183,12 @@
     <Compile Include="编码2026\编码 Code\数据结构\对象\_对象_.cs" />
     <Compile Include="编码2026\编码 Code\数据结构\_配方文件_属性_.cs" />
     <Compile Include="编码2026\主程序\_文件夹_.cs" />
-    <Compile Include="编码2026\编码 Code\配方文件\读写\文件类\ini文件_.cs" />
+    <Compile Include="编码2026\编码 Code\配方文件\读写\文件类\配方文件_txt_ini_.cs" />
     <Compile Include="编码2026\编码 Code\配方文件\读写\Iwork_配方文件.cs" />
     <Compile Include="编码2026\编码 Code\常量.cs" />
     <Compile Include="编码2026\编码 Code\配方文件\Json序列化.cs" />
     <Compile Include="编码2026\编码 Code\配方文件\读写\文件_统一接口.cs" />
-    <Compile Include="编码2026\编码 Code\配方文件\读写\文件类\Sqlite文件_.cs" />
-    <Compile Include="编码2026\编码 Code\配方文件\读写\文件类\SqlServer文件_.cs" />
-    <Compile Include="编码2026\编码 Code\配方文件\读写\文件类\txt文件_.cs" />
+    <Compile Include="编码2026\编码 Code\配方文件\读写\文件类\配方文件_数据库_.cs" />
     <Compile Include="语言\LanguageList.cs" />
     <Compile Include="工件\Form_工件.cs">
       <SubType>Form</SubType>

@@ -17,6 +17,16 @@ namespace qfCode
         /// 保存
         /// </summary> 
         (bool s, string m) Save(string FileName, _配方文件_属性_ cfg);
+
+        /// <summary>
+        /// 导出全部时用
+        /// </summary> 
+        (bool s, string m, qfNet.表.Code26[] cfg) ReadAll( );
+        /// <summary>
+        /// 导入全部时用
+        /// </summary> 
+        (bool s, string m) SaveAll(  qfNet.表.Code26[] cfg);
+
         /// <summary>
         /// 删除
         /// </summary> 

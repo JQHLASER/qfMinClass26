@@ -34,6 +34,22 @@ namespace qfCode
             return (true , Language_.Get语言("无此功能"), new _配方文件_属性_());
         }
 
+        /// <summary>
+        /// 导出全部时用
+        /// </summary> 
+        public (bool s, string m, qfNet.表.Code26[] cfg) ReadAll()
+        {
+            return (true, "无此功能", new 表.Code26[0]);
+        }
+
+        /// <summary>
+        /// 导出全部时用
+        /// </summary> 
+        public (bool s, string m) SaveAll(qfNet.表.Code26[] cfg)
+        {
+            return (true, "无此功能");
+        }
+
         public (bool s, string m) Delete(string FileName)
         {
             return (true , Language_.Get语言("无此功能") );

@@ -75,6 +75,8 @@ namespace qfLanguage
             new _language_Value_ ( keys, "未使能","未使能"),
             new _language_Value_ ( keys, "班次配置","班次配置"),
             new _language_Value_ ( keys, "日期时间配置","日期时间配置"),
+     
+
 
 
         };

@@ -104,7 +104,61 @@ namespace qfCode
                 保存_弹窗确认(false);
             };
 
+            this.KeyDown += (s, e) =>
+            {
+                if (this._编辑._功能.编辑.导入导出)
+                {
+                    //导出全部
+                    if (e.KeyCode == Keys.F12)
+                    { 
+                        #region 导出全部
+                        var rtm = this._编辑._编码._配方文件操作._Iwork文件.ReadAll();
+                        if (!rtm.s)
+                        {
+                            MessageBox.Show(rtm.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        var a = new qfNet.导入_导出<qfNet.表.Code26>().导出全部(rtm.cfg);
+                        if (a.dlt == System.Windows.Forms.DialogResult.No)
+                        {
+                            MessageBox.Show(a.msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else if (a.dlt == System.Windows.Forms.DialogResult.OK)
+                        {
+                            MessageBox.Show(Language_.Get语言("导出成功"));
+                            return;
+                        }
+                        #endregion
+                    }
+                    else if (e.KeyCode != Keys.F11)
+                    {
+                        #region 导入全部
+                        var a = new qfNet.导入_导出<qfNet.表.Code26>().导入全部();
+                        if (a.dlt == System.Windows.Forms.DialogResult.No)
+                        {
+                            MessageBox.Show(a.msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        else if (a.dlt == System.Windows.Forms.DialogResult.OK)
+                        {
+                            var rtm = this._编辑._编码._配方文件操作._Iwork文件.SaveAll (a.cfg);
+                            if (rtm.s)
+                            {
+                                MessageBox.Show(Language_.Get语言("导入成功"));
+                            }
+                            else
+                            {
+                                MessageBox.Show(rtm.m, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            return;
+                        }
 
+                        #endregion
+                    }
+
+                }
+            };
 
 
             #region 文件
@@ -119,9 +173,9 @@ namespace qfCode
             this.导入ToolStripMenuItem.Visible = this._编辑._功能.编辑.导入导出;
             this.导出ToolStripMenuItem.Visible = this._编辑._功能.编辑.导入导出;
 
-           
 
-      
+
+
 
 
             this.关闭ToolStripMenuItem.Click += (s, e) =>
