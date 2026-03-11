@@ -116,6 +116,11 @@ namespace qfCode
                     if (forms.ShowDialog() == DialogResult.OK)
                     {
                         this.uiTextBox_对象.Text = forms._对象名称;
+                        if (Form_主窗体.forms._编辑._功能.对象属性.校验模板)
+                        {
+                            //自动选中模板变量校验,以防止操作员忽略
+                            this.uiCheckBox_模板变量.Checked = true;
+                        }
                     }
                 }
             };
