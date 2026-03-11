@@ -18,8 +18,7 @@
       
      bool rt = table.GetList(sb.ToString(), pars, out List<表_防重_.FC26> lst, out string msgErr);
 
-
-
+                          
 
 
 [SugarColumn(IsPrimaryKey = true,IsIdentity = true)]    //(主键,自增长)
