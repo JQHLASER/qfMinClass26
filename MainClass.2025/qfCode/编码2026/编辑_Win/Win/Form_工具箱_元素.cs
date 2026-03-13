@@ -82,7 +82,7 @@ namespace qfCode
                 else if (this.uiradioButton_关联对象.Checked && this.con_关联对象 != null)
                 {
                     if (Form_主窗体.forms._编辑对象索引 == 0)
-                    { 
+                    {
                         isOk = false;
                         MessageBox.Show(Language_.Get语言("首对象时无法添加"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -415,9 +415,17 @@ namespace qfCode
             显示工具(this.formMain._编辑._功能.工具箱.关联对象, this.uiradioButton_关联对象);
             显示工具(true, this.uiradioButton_时间);
             显示工具(true, this.uiradioButton_日期);
-            显示工具(true, this.uiradioButton_序列号);
-            显示工具(true, this.uiradioButton_文本);
 
+            string name = Form_主窗体.forms._配方信息.对象[Form_主窗体.forms._编辑对象索引].对象名;
+            bool IsShow序列号 = Form_主窗体.forms._编辑._功能.定制_二维码_明码强制防呆 
+                && (name.Contains("明码") || name.Contains("codeM") || name.Contains("barcodeM")
+                || name.Contains("二维码") || name.Contains("barcode"))
+                ? false
+                : true;
+            if (IsShow序列号)
+                显示工具(true, this.uiradioButton_序列号);
+
+            显示工具(true, this.uiradioButton_文本);
         }
 
         #endregion

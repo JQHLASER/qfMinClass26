@@ -8,19 +8,17 @@ namespace qfWork
 {
     public class Language_ : qfmain.Language_
     {
-        public Language_() : base()
+        public Language_()
         {
-            
-        }
-          
-        public new static string Get语言(string TyepValue)
-        {
-            (string value, qfLanguage._language_Value_[] beff) rt = qfmain.Language_.Get语言(TyepValue, qfLanguage.LanguageList.lst_Language);
-
-            return rt.value;
+            qfmain.Language_.Set语言包(LanguageList.lst_Language);
         }
 
- 
+        public static string Get语言(string TyepValue)
+        {
+            return qfmain.Language_.Get语言(TyepValue);
+        }
+
+
 
 
 

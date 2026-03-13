@@ -67,6 +67,7 @@
     <Compile Include="激光\打标\金橙子\EzCad2\多头\MultilineMarkEzd.cs" />
     <Compile Include="激光\打标\金橙子\EzCad2\多头\multilineMarkEzd_Lcm.cs" />
     <Compile Include="激光\打标\金橙子\EzCad3\EzCad3_TcpServer.cs" />
+    <Compile Include="语言\LanguageList.cs" />
     <Compile Include="语言\Language_.cs" />
     <Compile Include="读码器\读码器.cs" />
     <Compile Include="运动控制卡\正运动\Class\class\zmc.cs" />
@@ -77,6 +78,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="运动控制卡\正运动\运动轴\Zaxis_数据结构.cs" />
     <Compile Include="运动控制卡\正运动\运动轴\Zaxis_运动轴.cs" />
+    <Compile Include="运动控制卡\高川\IO\GaoCH_IO_scio32.cs" />
+    <Compile Include="运动控制卡\高川\IO\scio32.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
