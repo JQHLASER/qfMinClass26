@@ -74,7 +74,8 @@ namespace qfCode
         }
         public (bool s, string m, List<_对象_内容_> lstObject) 计算编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime dates, _em_计算类型_ 计算类型, bool Is计算完保存 = false)
         {
-            return this._编辑._编码.计算编码(配方文件名, 配方文件, dates, 计算类型, Is计算完保存);
+            var rt = this._编辑._编码.计算编码(配方文件名, 配方文件, dates, 计算类型, Is计算完保存);
+            return (rt.s, rt.m, rt.lstObject);
         }
 
     }

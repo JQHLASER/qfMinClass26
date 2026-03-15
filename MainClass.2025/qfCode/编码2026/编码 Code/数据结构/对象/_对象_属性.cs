@@ -12,7 +12,7 @@ namespace qfCode
         public bool 防重 { set; get; } = false;
         public bool 读码 { set; get; } = false;
         /// <summary>
-        /// 向模板中传入是否成功
+        /// 向模板中的变对对象传入内容是否成功
         /// </summary>
         public bool 校验模板 { set; get; } = false;
         public string 校验关键字 { set; get; } = "";

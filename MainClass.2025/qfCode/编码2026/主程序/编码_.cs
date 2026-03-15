@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Linq;
 using static System.Windows.Forms.AxHost;
 
 namespace qfCode
@@ -130,7 +131,11 @@ namespace qfCode
         /// Is计算完保存  =true:计算完成后保存,=false:不保存,在一次性计算多次时,就不需要马上保存
         /// <para>已对更新日期进行了计算</para>
         /// </summary> 
-        public (bool s, string m, List<_对象_内容_> lstObject) 计算编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime dates, _em_计算类型_ 计算类型, bool Is计算完保存 = false)
+        public (bool s, string m, List<_对象_内容_> lstObject,
+                    List<qfCode._对象_内容_> lst防重校验,
+                    List<qfCode._对象_内容_> lst读码校验,
+                    List<qfCode._对象_内容_> lst模板变量校验
+            ) 计算编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime dates, _em_计算类型_ 计算类型, bool Is计算完保存 = false)
         {
             return 计算_编码(配方文件名, 配方文件, dates, 计算类型, Is计算完保存, "");
         }
@@ -140,7 +145,11 @@ namespace qfCode
         /// <para>对象名 : 不为空时,计算指定对象及之前的内容</para>
         /// <para>已对更新日期进行了计算</para>
         /// </summary> 
-        public (bool s, string m, List<_对象_内容_> lstObject) 计算编码_对象(_配方文件_属性_ 配方文件, DateTime dates, string 对象名)
+        public (bool s, string m, List<_对象_内容_> lstObject,
+                    List<qfCode._对象_内容_> lst防重校验,
+                    List<qfCode._对象_内容_> lst读码校验,
+                    List<qfCode._对象_内容_> lst模板变量校验
+            ) 计算编码_对象(_配方文件_属性_ 配方文件, DateTime dates, string 对象名)
         {
             var rt = 计算_编码("", 配方文件, dates, _em_计算类型_.测试, false, 对象名);
             return rt;
@@ -203,6 +212,41 @@ namespace qfCode
 
 
         #endregion
+
+        #region 二维码..明码强制防呆
+
+        /// <summary>
+        /// true:触发防呆,false:不触发防呆
+        /// </summary> 
+        public bool 定制_二维码强制防呆_是否明码二维码(string 对象名称)
+        {
+            string name = 对象名称;
+            bool rt = name.Contains("明码") || name.Contains("codeM") || name.Contains("barcodeM")
+                      || name.Contains("二维码") || name.Contains("barcode")
+                      ? true
+                      : false;
+
+            return rt;
+        }
+
+
+        /// <summary>
+        /// true:触发防呆,false:不触发防呆
+        /// </summary> 
+        public bool 定制_二维码强制防呆_是否二维码(string 对象名称)
+        {
+            string name = 对象名称;
+            bool rt = name.Contains("二维码") || name.Contains("barcode")
+                      ? true
+                      : false;
+
+            return rt;
+        }
+
+
+
+        #endregion
+
 
         #region json与结构之间转换
 
@@ -286,13 +330,21 @@ namespace qfCode
         /// <para>对象名 : 不为空时,计算指定对象及之前的内容</para>
         /// <para>已对更新日期进行了计算</para>
         /// </summary> 
-        private (bool s, string m, List<_对象_内容_> lstObject) 计算_编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime date_, _em_计算类型_ 计算类型, bool Is计算完保存, string 对象名)
+        private (bool s, string m,
+            List<_对象_内容_> lstObject,
+             List<qfCode._对象_内容_> lst防重校验,
+             List<qfCode._对象_内容_> lst读码校验,
+             List<qfCode._对象_内容_> lst模板变量校验
+            ) 计算_编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime date_, _em_计算类型_ 计算类型, bool Is计算完保存, string 对象名)
         {
             List<_对象_内容_> lstObject = new List<_对象_内容_>();
             bool rt = true;
             string msg = string.Empty;
-            //List<qfCode._对象_内容_> lst防重 = new List<_对象_内容_>();
-            //List<qfCode._对象_内容_> lst读码 = new List<_对象_内容_>();
+            List<qfCode._对象_内容_> lst防重校验 = new List<_对象_内容_>();
+            List<qfCode._对象_内容_> lst读码校验 = new List<_对象_内容_>();
+            List<qfCode._对象_内容_> lst模板变量校验 = new List<_对象_内容_>();
+
+
 
             //深拷贝出来一份,用来防止源文件被意外修改
             _配方文件_属性_ 配方 = 配方文件.Clone();
@@ -305,7 +357,7 @@ namespace qfCode
             _班次_[] 班次规则 = rt_班次.cfg;
             if (!rt)
             {
-                return (rt, msg, lstObject);
+                return (rt, msg, lstObject, lst防重校验, lst读码校验, lst模板变量校验);
             }
 
             #endregion
@@ -315,7 +367,7 @@ namespace qfCode
             var rtDatetime = 更新日期_(配方, date_);
             if (!rtDatetime.s)
             {
-                return (rtDatetime.s, rtDatetime.m, new List<_对象_内容_>());
+                return (rtDatetime.s, rtDatetime.m, lstObject, lst防重校验, lst读码校验, lst模板变量校验);
             }
             DateTime dates = rtDatetime.dates;
 
@@ -460,30 +512,50 @@ namespace qfCode
 
                 #region 添加到防重类
 
-                //if (this._功能.对象属性.防重 && s.属性.防重)
-                //{
-                //    lst防重.Add(new _对象_内容_
-                //    {
-                //        对象 = s,
-                //        Value = sb.ToString(),
-                //    });
+                /*使能二维码强制防呆时,检测到二维码对象时,强制防重*/
+                if (this._功能.对象属性.防重 && (s.属性.防重 ||
+                    _功能.定制_二维码_明码强制防呆 && this.定制_二维码强制防呆_是否二维码(s.对象名)
+                    )
+                    )
+                {
+                    lst防重校验.Add(new _对象_内容_
+                    {
+                        对象 = s,
+                        Value = sb.ToString(),
+                    });
+                }
 
+                #endregion
 
-                //}
+                #region 添加到模板变量校验
+                /*使能二维码强制防呆时,检测到二维码或明码对象时,强制校验模板变量,以防止传入内容不符*/
+                if (this._功能.对象属性.校验模板 && (s.属性.校验模板 ||
+                    _功能.定制_二维码_明码强制防呆 && this.定制_二维码强制防呆_是否明码二维码(s.对象名)
+                    )
+                    )
+                {
+                    lst模板变量校验
+                        .Add(new _对象_内容_
+                        {
+                            对象 = s,
+                            Value = sb.ToString(),
+                        });
+                }
 
                 #endregion
 
 
+
                 #region 添加到读码类
 
-                //if (this._功能.对象属性.读码 && s.属性.读码)
-                //{
-                //    lst读码.Add(new _对象_内容_
-                //    {
-                //        对象 = s,
-                //        Value = sb.ToString(),
-                //    });
-                //}
+                if (this._功能.对象属性.读码 && s.属性.读码)
+                {
+                    lst读码校验.Add(new _对象_内容_
+                    {
+                        对象 = s,
+                        Value = sb.ToString(),
+                    });
+                }
 
                 #endregion
 
@@ -534,7 +606,7 @@ namespace qfCode
 
 
             //  return (rt, msg, lstObject, lst防重, lst读码);
-            return (rt, msg, lstObject);
+            return (rt, msg, lstObject, lst防重校验, lst读码校验, lst模板变量校验);
         }
 
         /// <summary>
@@ -709,7 +781,7 @@ namespace qfCode
                 {
                     continue;
                 }
-               
+
                 rt = true;
                 msg = "";
 
@@ -816,7 +888,7 @@ namespace qfCode
         public bool Err_未初始化_配置文件模块(string Name, out string msgErr)
         {
             msgErr = "";
-            if (this._初始化状态_配置文件模块  != _初始化状态_.已初始化)
+            if (this._初始化状态_配置文件模块 != _初始化状态_.已初始化)
             {
                 msgErr = Name + Language_.Get语言("未初始化");
                 return false;
