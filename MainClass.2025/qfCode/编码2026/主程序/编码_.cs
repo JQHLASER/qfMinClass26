@@ -60,7 +60,7 @@ namespace qfCode
             On_初始化状态(qfmain._初始化状态_.初始化中, "");
             On_初始化状态_配置文件模块(qfmain._初始化状态_.初始化中, "");
 
- 
+            new Language_();
             this._文件夹_属性 = typeFile;
             if (功能 != null) this._功能 = 功能;
 
