@@ -47,7 +47,7 @@ namespace qfmain
         /// <summary>
         /// 初始化
         /// </summary>
-        static void Inistiall()
+        public static void Inistiall()
         {
             new 文件_文件夹().文件夹_新建(软件类.Files_Cfg.Files_Langeuage, out string msgerr);
             读写参数(1);
