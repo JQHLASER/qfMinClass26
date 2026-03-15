@@ -134,7 +134,8 @@ namespace qfCode
         public (bool s, string m, List<_对象_内容_> lstObject,
                     List<qfCode._对象_内容_> lst防重校验,
                     List<qfCode._对象_内容_> lst读码校验,
-                    List<qfCode._对象_内容_> lst模板变量校验
+                    List<qfCode._对象_内容_> lst模板变量校验,
+                     List<qfCode._对象_内容_> lst保存csv
             ) 计算编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime dates, _em_计算类型_ 计算类型, bool Is计算完保存 = false)
         {
             return 计算_编码(配方文件名, 配方文件, dates, 计算类型, Is计算完保存, "");
@@ -148,7 +149,8 @@ namespace qfCode
         public (bool s, string m, List<_对象_内容_> lstObject,
                     List<qfCode._对象_内容_> lst防重校验,
                     List<qfCode._对象_内容_> lst读码校验,
-                    List<qfCode._对象_内容_> lst模板变量校验
+                    List<qfCode._对象_内容_> lst模板变量校验,
+                    List<qfCode._对象_内容_> lst保存csv
             ) 计算编码_对象(_配方文件_属性_ 配方文件, DateTime dates, string 对象名)
         {
             var rt = 计算_编码("", 配方文件, dates, _em_计算类型_.测试, false, 对象名);
@@ -334,7 +336,8 @@ namespace qfCode
             List<_对象_内容_> lstObject,
              List<qfCode._对象_内容_> lst防重校验,
              List<qfCode._对象_内容_> lst读码校验,
-             List<qfCode._对象_内容_> lst模板变量校验
+             List<qfCode._对象_内容_> lst模板变量校验,
+             List<qfCode._对象_内容_> lst保存csv
             ) 计算_编码(string 配方文件名, _配方文件_属性_ 配方文件, DateTime date_, _em_计算类型_ 计算类型, bool Is计算完保存, string 对象名)
         {
             List<_对象_内容_> lstObject = new List<_对象_内容_>();
@@ -343,7 +346,7 @@ namespace qfCode
             List<qfCode._对象_内容_> lst防重校验 = new List<_对象_内容_>();
             List<qfCode._对象_内容_> lst读码校验 = new List<_对象_内容_>();
             List<qfCode._对象_内容_> lst模板变量校验 = new List<_对象_内容_>();
-
+            List<qfCode._对象_内容_> lst保存csv = new List<_对象_内容_>();
 
 
             //深拷贝出来一份,用来防止源文件被意外修改
@@ -357,7 +360,7 @@ namespace qfCode
             _班次_[] 班次规则 = rt_班次.cfg;
             if (!rt)
             {
-                return (rt, msg, lstObject, lst防重校验, lst读码校验, lst模板变量校验);
+                return (rt, msg, lstObject, lst防重校验, lst读码校验, lst模板变量校验, lst保存csv);
             }
 
             #endregion
@@ -367,7 +370,7 @@ namespace qfCode
             var rtDatetime = 更新日期_(配方, date_);
             if (!rtDatetime.s)
             {
-                return (rtDatetime.s, rtDatetime.m, lstObject, lst防重校验, lst读码校验, lst模板变量校验);
+                return (rtDatetime.s, rtDatetime.m, lstObject, lst防重校验, lst读码校验, lst模板变量校验, lst保存csv);
             }
             DateTime dates = rtDatetime.dates;
 
@@ -543,9 +546,7 @@ namespace qfCode
                 }
 
                 #endregion
-
-
-
+                 
                 #region 添加到读码类
 
                 if (this._功能.对象属性.读码 && s.属性.读码)
@@ -559,7 +560,18 @@ namespace qfCode
 
                 #endregion
 
+                #region 添加到保存csv
 
+                if (this._功能.对象属性.保存csv && s.属性.保存csv)
+                {
+                    lst保存csv.Add(new _对象_内容_
+                    {
+                        对象 = s,
+                        Value = sb.ToString(),
+                    });
+                }
+
+                #endregion
 
 
                 #region 到指定对象后退出 
@@ -606,7 +618,7 @@ namespace qfCode
 
 
             //  return (rt, msg, lstObject, lst防重, lst读码);
-            return (rt, msg, lstObject, lst防重校验, lst读码校验, lst模板变量校验);
+            return (rt, msg, lstObject, lst防重校验, lst读码校验, lst模板变量校验, lst保存csv);
         }
 
         /// <summary>
