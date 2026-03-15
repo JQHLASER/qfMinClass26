@@ -76,9 +76,9 @@ namespace qfCode
             new _language_Value_ ( keys, "未使能","未使能"),
             new _language_Value_ ( keys, "班次配置","班次配置"),
             new _language_Value_ ( keys, "日期时间配置","日期时间配置"),
-     
 
-
+            new _language_Value_ ( keys, "编码模块,位数校验","编码模块,位数校验"),
+            new _language_Value_ ( keys, "编码模块,关键字校验","编码模块,关键字校验"),
 
         };
 
