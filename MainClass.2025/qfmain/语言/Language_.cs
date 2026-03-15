@@ -18,11 +18,8 @@ namespace qfmain
     public class Language_
     {
 
-        public Language_()
-        {
-            Inistiall();
+        static Language_() => Inistiall();
 
-        }
 
 
         public class _languageInfo_
@@ -50,7 +47,7 @@ namespace qfmain
         /// <summary>
         /// 初始化
         /// </summary>
-        public static void Inistiall()
+        static void Inistiall()
         {
             new 文件_文件夹().文件夹_新建(软件类.Files_Cfg.Files_Langeuage, out string msgerr);
             读写参数(1);
@@ -121,19 +118,19 @@ namespace qfmain
             new 文件_文件夹().文件夹_新建(软件类.Files_Cfg.Files_Langeuage, out string msgerr);
             string path = Get语言文件路径();
             var rt = ini_sys.GetAll();
-              
+
             foreach (var s in rt.v)
             {
                 foreach (var b in s.Value)
                 {
-                    var vb = new qfLanguage._language_Value_(s.Key, b.Key, b.Value); 
+                    var vb = new qfLanguage._language_Value_(s.Key, b.Key, b.Value);
                     lst.Add(vb);
                 }
             }
             qfLanguage.LanguageList.lst_Language = lst;
             return lst.ToArray();
         }
-         
+
         public static void Set语言包(List<qfLanguage._language_Value_> lst)
         {
             lock (_lock)
@@ -153,12 +150,12 @@ namespace qfmain
                         ini_sys.Write(s.KeyValue, $"{TypeValue}", languageVlaue, false);
 
                     }
-                    lst[i].LanguageValue = languageVlaue; 
+                    lst[i].LanguageValue = languageVlaue;
                 }
 
-                ini_sys.Save(); 
+                ini_sys.Save();
             }
-        } 
+        }
         public static (string languageValue, qfLanguage._language_Value_[] beff) Get语言(string TypeValue, List<qfLanguage._language_Value_> lst)
         {
             qfLanguage._language_Value_[] ma = lst.Where(p => p.TypeValue == TypeValue).ToArray();
@@ -166,14 +163,14 @@ namespace qfmain
 
             return (value, ma);
         }
-         
-      
+
+
         public static string Get语言(string TypeValue)
         {
             (string languageValue, qfLanguage._language_Value_[] beff) rt = Get语言(TypeValue, qfLanguage.LanguageList.lst_Language);
             return rt.languageValue;
         }
-         
+
 
         /// <summary>
         /// 获取语言目录
@@ -203,6 +200,6 @@ namespace qfmain
             Config.LangeuageCfg = cfg;
         }
 
-        
+
     }
 }
