@@ -35,8 +35,9 @@
     <Reference Include="HslCommunication">
       <HintPath>..\..\..\资料类\第三方库\PLC\HslCommunication.dll</HintPath>
     </Reference>
-    <Reference Include="SunnyUI8">
-      <HintPath>..\..\..\UserControl\SunnyUI\Bin\SunnyUI8.dll</HintPath>
+    <Reference Include="SunnyUI8, Version=2.2.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\UserControl\SunnyUI\SunnyUI\Bin\SunnyUI8.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -60,6 +61,13 @@
     <Compile Include="HslCommunication\Main\HslCommunication_.cs" />
     <Compile Include="HslCommunication\Modbus\Modbus_地址转换.cs" />
     <Compile Include="HslCommunication\Main\PLC_Hsl.cs" />
+    <Compile Include="HslCommunication\西门子\Form_西门子S7.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HslCommunication\西门子\Form_西门子S7.Designer.cs">
+      <DependentUpon>Form_西门子S7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HslCommunication\西门子\S7.cs" />
     <Compile Include="HslCommunication\读写\ReadPlc.cs" />
     <Compile Include="HslCommunication\读写\WritePlc.cs" />
     <Compile Include="HslCommunication\三菱\FX\Form_FX.cs">
@@ -91,6 +99,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HslCommunication\三菱\FX\Form_FX.resx">
       <DependentUpon>Form_FX.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HslCommunication\西门子\Form_西门子S7.resx">
+      <DependentUpon>Form_西门子S7.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

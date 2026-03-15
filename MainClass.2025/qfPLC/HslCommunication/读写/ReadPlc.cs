@@ -3,6 +3,7 @@ using HslCommunication.CNC.Fanuc;
 using HslCommunication.Core;
 using HslCommunication.ModBus;
 using HslCommunication.Profinet.Melsec;
+using HslCommunication.Profinet.Siemens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -206,7 +207,34 @@ namespace qfPLC
         #endregion
 
 
+        #region SiemensS7Net....西门子S7
 
+
+        public virtual (bool state, string msg, T v) Read<T>(SiemensS7Net Plc, _ReadType_ Read_Type, string address, ushort length = 0, Encoding encoding = null)
+        {
+            switch (Read_Type)
+            {
+                case _ReadType_.Read:
+                    var rt = Read<T>(Plc, address, length, encoding);
+                    return rt;
+                default:
+                    return (false, $"{Get语言_无此功能()}: {Read_Type}", qfmain.T_实例化泛型.FastNew<T>.Create());
+            }
+        }
+
+        public virtual async Task<(bool state, string msg, T v)> ReadAsync<T>(SiemensS7Net Plc, _ReadTypeAsync_ Read_Type, string address, ushort length = 0, Encoding encoding = null)
+        {
+            switch (Read_Type)
+            {
+                case _ReadTypeAsync_.ReadAsync:
+                    var rt = await ReadAsync<T>(Plc, address, length, encoding);
+                    return rt;
+                default:
+                    return (false, $"{Get语言_无此功能()}: {Read_Type}", qfmain.T_实例化泛型.FastNew<T>.Create());
+            }
+        }
+
+        #endregion
 
 
 
