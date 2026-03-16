@@ -19,26 +19,26 @@ namespace qfPLC
         #region MelsecMcAsciiNet....三菱_MC_Ascii_Qna3E
 
 
-        public virtual (bool state, string msg, T v) Read<T>(MelsecMcAsciiNet Plc, _ReadType_ Read_Type, string address, ushort length = 0, Encoding encoding = null) 
+        public virtual (bool state, string msg, T v) Read<T>(MelsecMcAsciiNet Plc, _ReadType_ Read_Type, string address, ushort length = 0, Encoding encoding = null)
         {
             switch (Read_Type)
             {
                 case _ReadType_.Read:
                     var rt = Read<T>(Plc, address, length, encoding);
                     return rt;
-                   default :
+                default:
                     return (false, $"{Get语言_无此功能()}: {Read_Type}", qfmain.T_实例化泛型.FastNew<T>.Create());
             }
         }
 
-        public virtual async Task<(bool state, string msg, T v)> ReadAsync<T>(MelsecMcAsciiNet Plc, _ReadTypeAsync_ Read_Type, string address, ushort length = 0, Encoding encoding = null) 
+        public virtual async Task<(bool state, string msg, T v)> ReadAsync<T>(MelsecMcAsciiNet Plc, _ReadTypeAsync_ Read_Type, string address, ushort length = 0, Encoding encoding = null)
         {
             switch (Read_Type)
             {
                 case _ReadTypeAsync_.ReadAsync:
                     var rt = await ReadAsync<T>(Plc, address, length, encoding);
                     return rt;
-                    default :
+                default:
                     return (false, $"{Get语言_无此功能()}: {Read_Type}", qfmain.T_实例化泛型.FastNew<T>.Create());
             }
         }
@@ -47,26 +47,26 @@ namespace qfPLC
 
         #region MelsecFxSerial...三菱_FX
 
-        public virtual (bool state, string msg, T v) Read<T>(MelsecFxSerial Plc, _ReadType_ Read_Type, string address, ushort length = 0, Encoding encoding = null) 
+        public virtual (bool state, string msg, T v) Read<T>(MelsecFxSerial Plc, _ReadType_ Read_Type, string address, ushort length = 0, Encoding encoding = null)
         {
             switch (Read_Type)
             {
                 case _ReadType_.Read:
                     var rt = Read<T>(Plc, address, length, encoding);
                     return rt;
-                    default :
+                default:
                     return (false, $"{Get语言_无此功能()}: {Read_Type}", qfmain.T_实例化泛型.FastNew<T>.Create());
             }
         }
 
-        public virtual async Task<(bool state, string msg, T v)> ReadAsync<T>(MelsecFxSerial Plc, _ReadTypeAsync_ Read_Type, string address, ushort length = 0, Encoding encoding = null) 
+        public virtual async Task<(bool state, string msg, T v)> ReadAsync<T>(MelsecFxSerial Plc, _ReadTypeAsync_ Read_Type, string address, ushort length = 0, Encoding encoding = null)
         {
             switch (Read_Type)
             {
                 case _ReadTypeAsync_.ReadAsync:
                     var rt = await ReadAsync<T>(Plc, address, length, encoding);
                     return rt;
-                    default :
+                default:
                     return (false, $"{Get语言_无此功能()}: {Read_Type}", qfmain.T_实例化泛型.FastNew<T>.Create());
             }
         }
@@ -78,7 +78,7 @@ namespace qfPLC
         #region ModbusTcp....包含( ReadDiscrete / ReadCoil )
 
 
-        public virtual (bool state, string msg, T v) Read<T>(ModbusTcpNet Plc, _ReadType_ Read_Type, string address, ushort length = 0, Encoding encoding = null) 
+        public virtual (bool state, string msg, T v) Read<T>(ModbusTcpNet Plc, _ReadType_ Read_Type, string address, ushort length = 0, Encoding encoding = null)
         {
             switch (Read_Type)
             {
@@ -140,12 +140,12 @@ namespace qfPLC
 
                     #endregion
 
-                   default :
+                default:
                     return (false, "", qfmain.T_实例化泛型.FastNew<T>.Create());
             }
         }
 
-        public virtual async Task<(bool state, string msg, T v)> ReadAsync<T>(ModbusTcpNet Plc, _ReadTypeAsync_ Read_Type, string address, ushort length = 0, Encoding encoding = null) 
+        public virtual async Task<(bool state, string msg, T v)> ReadAsync<T>(ModbusTcpNet Plc, _ReadTypeAsync_ Read_Type, string address, ushort length = 0, Encoding encoding = null)
         {
             switch (Read_Type)
             {
@@ -212,11 +212,19 @@ namespace qfPLC
 
         public virtual (bool state, string msg, T v) Read<T>(SiemensS7Net Plc, _ReadType_ Read_Type, string address, ushort length = 0, Encoding encoding = null)
         {
+
             switch (Read_Type)
             {
                 case _ReadType_.Read:
                     var rt = Read<T>(Plc, address, length, encoding);
                     return rt;
+                case _ReadType_.ReadByte:
+                    var result = Plc.ReadByte(address);
+                    return result.IsSuccess ?
+                       (true, "", (T)(object)result.Content) :
+                       (false, result.Message, qfmain.T_实例化泛型.FastNew<T>.Create());
+            
+
                 default:
                     return (false, $"{Get语言_无此功能()}: {Read_Type}", qfmain.T_实例化泛型.FastNew<T>.Create());
             }
@@ -242,10 +250,10 @@ namespace qfPLC
 
         #region 本地方法
 
-        (bool rt, string msgErr, T value) Read<T>(IReadWriteNet PlcNet, string address, ushort length, Encoding encoding = null) 
+        (bool rt, string msgErr, T value) Read<T>(IReadWriteNet PlcNet, string address, ushort length, Encoding encoding = null)
         {
             try
-            {
+            { 
                 Type type = typeof(T);
 
                 if (type == typeof(bool))
@@ -254,7 +262,7 @@ namespace qfPLC
                     return result.IsSuccess ?
                           (true, "", (T)(object)result.Content) :
                           (false, result.Message, qfmain.T_实例化泛型.FastNew<T>.Create());
-                     
+
                 }
                 else if (type == typeof(short))
                 {
@@ -375,6 +383,13 @@ namespace qfPLC
                             (true, "", (T)(object)result.Content) :
                             (false, result.Message, qfmain.T_实例化泛型.FastNew<T>.Create());
                 }
+                else if (type == typeof(byte[]))
+                {
+                    OperateResult<byte[]> result = PlcNet.Read(address, length);
+                    return result.IsSuccess ?
+                            (true, "", (T)(object)result.Content) :
+                            (false, result.Message, qfmain.T_实例化泛型.FastNew<T>.Create());
+                }
                 else if (type == typeof(string))
                 {
                     OperateResult<string> result = PlcNet.ReadString(address, length, encoding ?? Encoding.ASCII);
@@ -394,7 +409,7 @@ namespace qfPLC
             }
         }
 
-        async Task<(bool rt, string msgErr, T value)> ReadAsync<T>(IReadWriteNet PlcNet, string address, ushort length, Encoding encoding = null) 
+        async Task<(bool rt, string msgErr, T value)> ReadAsync<T>(IReadWriteNet PlcNet, string address, ushort length, Encoding encoding = null)
         {
             try
             {

@@ -29,12 +29,14 @@ namespace qfPLC
         /// <para>Path_ : 存放信息文件路径</para>
         /// <para>自动连接</para>
         /// </summary> 
-        public void 初始化(_PLC_Type_ PLC类型_, string Path_)
+        public void 初始化(_PLC_Type_ PLC类型_, string Path_, bool _Is线程 = true)
         {
             this._path = Path_;
             this._PLC类型 = PLC类型_;
             this._PLC库 = 获取PLC库();
-            new Thread(() => { 线程(); }) { IsBackground = true }.Start();
+            if (_Is线程)
+                new Thread(() => { 线程(); }) { IsBackground = true }.Start();
+
         }
 
         public void 释放()
@@ -69,6 +71,9 @@ namespace qfPLC
 
 
         bool _IsRun = true;
+        /// <summary>
+        /// 在线程中有自动连接
+        /// </summary>
         public void 线程()
         {
             if (!HslCommunication_._Is激活状态)
@@ -86,6 +91,11 @@ namespace qfPLC
                 {
                     Thread.Sleep(1000);
                     (bool rt, string msg) rt = 连接(true);
+                    if (!rt.rt)
+                    {
+                        On_Log(rt.rt, rt.msg);
+                    }
+                    Thread.Sleep(200);
                     continue;
                 }
                 else if (this._PLC库.Get连接状态() != qfmain._连接状态_.已连接)
@@ -141,8 +151,7 @@ namespace qfPLC
         public void On_连接状态(qfmain._连接状态_ state)
         {
 
-            Event_连接状态?.Invoke(state);
-
+            Event_连接状态?.Invoke(state); 
         }
 
 

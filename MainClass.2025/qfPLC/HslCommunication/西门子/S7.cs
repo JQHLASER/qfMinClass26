@@ -21,7 +21,7 @@ namespace qfPLC
         /// PLC对象
         /// </summary>
         public SiemensS7Net _siemensTcpNet = null;
-        //private SiemensPLCS _siemensPLCSelected = SiemensPLCS.S1200;
+        private SiemensPLCS _siemensPLCSelected = SiemensPLCS.S1200;
         public _cfg_ _参数 = new _cfg_();
 
 
@@ -42,6 +42,9 @@ namespace qfPLC
             /// PLC的槽号，针对S7-400的PLC设置的
             /// </summary>
             public byte Slot { set; get; } = 0;
+
+            public int 连接超时 { set; get; } = 10000;
+            public int 接收超时 { set; get; } = 5000;
         }
 
 
@@ -51,7 +54,7 @@ namespace qfPLC
         public string _path { set; get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "S7.txt");
         public qfmain._连接状态_ _连接状态 { set; get; } = qfmain._连接状态_.未连接;
 
-         
+
 
         /// <summary>
         /// path_:参数保存路径
@@ -104,6 +107,13 @@ namespace qfPLC
             //  SiemensPLCS siemensPLCS = SiemensPLCS.S1200;
             //  siemensPLCSelected = siemensPLCSelected;
             // siemensTcpNet = new SiemensS7Net(siemensPLCSelected);
+
+            if (_siemensTcpNet != null)
+            {
+                _siemensTcpNet?.ConnectClose();//先关闭连接 
+                _siemensTcpNet?.Dispose();
+            }
+
             _siemensTcpNet = new SiemensS7Net(cfg.PlcType);
 
             // 连接
@@ -112,8 +122,12 @@ namespace qfPLC
 
                 _siemensTcpNet.IpAddress = cfg.IP;
                 _siemensTcpNet.Port = (int)cfg.Port;
-                PlcType(cfg.PlcType);
-                _siemensTcpNet?.ConnectClose();//先关闭连接 
+
+                _siemensTcpNet.ConnectTimeOut = cfg.连接超时;     // 连接超时，单位毫秒
+                _siemensTcpNet.ReceiveTimeOut = cfg.接收超时;     // 接收超时，单位毫秒
+
+
+                Plc_Rack_Slot(cfg.PlcType);
                 OperateResult connect = _siemensTcpNet.ConnectServer();
                 msgErr = connect.Message;
                 if (!connect.IsSuccess)
@@ -143,7 +157,7 @@ namespace qfPLC
                 rt = connect.IsSuccess;
                 if (!rt)
                     msgErr = connect.Message;
-
+                _siemensTcpNet?.Dispose();
             }
             catch (Exception ex)
             {
@@ -155,7 +169,7 @@ namespace qfPLC
 
         public virtual DialogResult 窗体设置(string Title, bool 重连)
         {
-            using (Form_西门子S7  forms = new Form_西门子S7(this, Title))
+            using (Form_西门子S7 forms = new Form_西门子S7(this, Title))
             {
                 DialogResult dlt = forms.ShowDialog();
                 if (重连 && dlt == DialogResult.OK)
@@ -184,6 +198,7 @@ namespace qfPLC
 
 
         #region Read
+
         public virtual (bool state, string msg, T v) Read<T>(_ReadType_ Read_Type, string address, ushort length = 0, Encoding encoding = null)
         {
             return new ReadPlc().Read<T>(this._siemensTcpNet, Read_Type, address, length, encoding);
@@ -225,7 +240,7 @@ namespace qfPLC
         /// 根据不同的型号来配置Rack和slot
         /// </summary>
         /// <param name="PlcType">plc的类型,S1200/S1500/S300/S400/S200/S200Smart</param>
-        internal void PlcType(SiemensPLCS PlcType)
+        internal void Plc_Rack_Slot(SiemensPLCS PlcType)
         {
             /// PLC的机架号，针对S7-400的PLC设置的 
             byte Rack = 0;
@@ -237,32 +252,32 @@ namespace qfPLC
             switch (PlcType)
             {
                 case SiemensPLCS.S1200:
-                    // _siemensPLCSelected = SiemensPLCS.S1200;
+                    _siemensPLCSelected = SiemensPLCS.S1200;
                     Rack = 0;
                     Slot = 0;
                     break;
                 case SiemensPLCS.S1500:
-                    //_siemensPLCSelected = SiemensPLCS.S1500;
+                    _siemensPLCSelected = SiemensPLCS.S1500;
                     Rack = 0;
                     Slot = 0;
                     break;
                 case SiemensPLCS.S300:
-                    // _siemensPLCSelected = SiemensPLCS.S300;
+                    _siemensPLCSelected = SiemensPLCS.S300;
                     Rack = 0;
                     Slot = 2;
                     break;
                 case SiemensPLCS.S400:
-                    // _siemensPLCSelected = SiemensPLCS.S400;
+                    _siemensPLCSelected = SiemensPLCS.S400;
                     Rack = 0;
                     Slot = 3;
                     break;
                 case SiemensPLCS.S200:
-                    // _siemensPLCSelected = SiemensPLCS.S200;
+                    _siemensPLCSelected = SiemensPLCS.S200;
                     Rack = 0;
                     Slot = 0;
                     break;
                 case SiemensPLCS.S200Smart:
-                    // _siemensPLCSelected = SiemensPLCS.S200Smart;
+                    _siemensPLCSelected = SiemensPLCS.S200Smart;
                     Rack = 0;
                     Slot = 0;
                     break;
@@ -273,7 +288,6 @@ namespace qfPLC
                 _siemensTcpNet.Slot = Slot;
             }
         }
-
 
 
 

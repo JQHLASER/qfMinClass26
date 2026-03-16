@@ -47,7 +47,12 @@ namespace qfPLC
         /// <para>功能码: 0x01</para>
         /// </summary>
         ReadCoil,
-       
+
+        /// <summary>
+        /// 有的没有这个功能
+        /// </summary>
+        ReadByte,
+      
     }
 
 
@@ -56,8 +61,10 @@ namespace qfPLC
     /// </summary>
     public enum _ReadTypeAsync_
     {
-      
 
+        /// <summary>
+        /// 异步读取 
+        /// </summary>
         ReadAsync,
 
         /// <summary>
