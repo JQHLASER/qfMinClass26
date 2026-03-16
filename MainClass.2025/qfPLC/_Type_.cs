@@ -21,7 +21,10 @@ namespace qfPLC
         /// </summary>
         MC_ASCII,
         ModbusTcp,
-
+        /// <summary>
+        /// 西门子,S7系列
+        /// </summary>
+        S7,
 
 
     }

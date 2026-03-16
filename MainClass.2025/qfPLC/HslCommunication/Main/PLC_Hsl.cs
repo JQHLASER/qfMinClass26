@@ -34,7 +34,7 @@ namespace qfPLC
             this._path = Path_;
             this._PLC类型 = PLC类型_;
             this._PLC库 = 获取PLC库();
-            new Thread (() => { 线程(); }) { IsBackground =true }.Start ();
+            new Thread(() => { 线程(); }) { IsBackground = true }.Start();
         }
 
         public void 释放()
@@ -53,7 +53,8 @@ namespace qfPLC
                     return new 三菱_FX(this._path);
                 case _PLC_Type_.ModbusTcp:
                     return new ModbusTcp(this._path);
-
+                case _PLC_Type_.S7:
+                    return new S7(this._path);
 
 
 
@@ -84,7 +85,7 @@ namespace qfPLC
                 else if (this._PLC库.Get连接状态() == qfmain._连接状态_.未连接)
                 {
                     Thread.Sleep(1000);
-                    (bool rt, string msg) rt = 连接(true); 
+                    (bool rt, string msg) rt = 连接(true);
                     continue;
                 }
                 else if (this._PLC库.Get连接状态() != qfmain._连接状态_.已连接)
