@@ -32,8 +32,9 @@
     <DocumentationFile>bin\Release\qfPLC.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HslCommunication">
-      <HintPath>..\..\..\资料类\第三方库\PLC\HslCommunication.dll</HintPath>
+    <Reference Include="HslCommunication, Version=11.6.1.0, Culture=neutral, PublicKeyToken=3d72ad3b6b5ec0e3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\2026\资料类\第三方库\PLC\HslCommunication.dll</HintPath>
     </Reference>
     <Reference Include="SunnyUI8, Version=2.2.9.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

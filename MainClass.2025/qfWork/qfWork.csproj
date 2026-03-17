@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Interop.BarTender">
-      <HintPath>..\..\..\资料类\第三方库\Bartender\2021版\SDK\Assemblies\Interop.BarTender.dll</HintPath>
+      <HintPath>..\..\..\..\2026\资料类\第三方库\Bartender\2021版\SDK\Assemblies\Interop.BarTender.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
