@@ -22,7 +22,7 @@ namespace qf_Contol
             this._控制符 = 控制符;
             this._最大显示行 = 最大显示行;
         }
-        public void 主窗体(string Title)
+        public void 主窗体(string Title,bool Is显示窗体=false )
         {
             if (forms != null)
             {
@@ -30,8 +30,9 @@ namespace qf_Contol
             }
             _timer.Tick += Timer_Tick;
             _timer.Start();
-            using (forms = new Form_Control(this, Title))
+            using (forms = new Form_Control(this, Title, Is显示窗体))
             {
+                 
                 forms.ShowDialog();
             }
             _timer.Stop();

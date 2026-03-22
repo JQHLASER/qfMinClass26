@@ -13,17 +13,22 @@ namespace qf_Contol
     public partial class Form_Control : Sunny.UI.UIForm
     {
         CMD_ _cmd;
-        public Form_Control(CMD_ cmd,string Title)
+        public Form_Control(CMD_ cmd, string Title, bool Is显示窗体 = false)
         {
             InitializeComponent();
             this.Padding = new System.Windows.Forms.Padding(10, 45, 10, 10);
             this.listBox1.Items.Clear();
             this._cmd = cmd;
 
-            this.Text =Title;
+            this.Text = Title;
 
             this.Shown += (s, e) =>
             {
+                if (!Is显示窗体)
+                {
+                    this.Opacity = 0;
+                    this.ShowInTaskbar = false;
+                }
                 this.uiTextBox1.Focus();
             };
 
@@ -46,12 +51,12 @@ namespace qf_Contol
 
             this.listBox1.DoubleClick += (s, e) =>
             {
-                int index=this.listBox1.SelectedIndex;
+                int index = this.listBox1.SelectedIndex;
                 if (index < 0)
                 {
                     return;
                 }
-                string v=this.listBox1 .Items[index].ToString();
+                string v = this.listBox1.Items[index].ToString();
                 new qfNet.软件类().Win_显示信息(v, "");
                 this.uiTextBox1.Focus();
             };
