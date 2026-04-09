@@ -41,9 +41,8 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\qfmain\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Seagull.BarTender.Print, Version=11.0.2.1, Culture=neutral, PublicKeyToken=109ff779a1b4cbc7, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\资料类\第三方库\Bartender\2021版\SDK\Assemblies\Seagull.BarTender.Print.dll</HintPath>
+    <Reference Include="Seagull.BarTender.Print">
+      <HintPath>..\..\..\..\2026\资料类\第三方库\Bartender\2021版\SDK\Assemblies\Seagull.BarTender.Print.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

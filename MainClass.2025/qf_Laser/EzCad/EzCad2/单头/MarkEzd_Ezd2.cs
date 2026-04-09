@@ -1794,7 +1794,7 @@ namespace qf_Laser
                 On_标题栏状态_初始化状态(_标题栏标题_初始化状态, state);
                 Event_初始化状态?.Invoke(state);
             }
-            await Task.Run(() =>
+            await Task.Run(async () =>
                {
                    switch (state)
                    {
@@ -1803,6 +1803,7 @@ namespace qf_Laser
 
                            if ((is第一次初始化 && this._参数.进入时加载激光模板) || !is第一次初始化)
                            {
+                               await Task.Delay(500);
                                this.LoadEzdFile(this._Path_激光模板_最后一次);
                            }
                            is第一次初始化 = false;
