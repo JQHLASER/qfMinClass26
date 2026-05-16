@@ -19,7 +19,7 @@ namespace qfmain
     {
 
         private static readonly object _lockSave = new object();
-        private string _filePath;    
+        private string _filePath;
         private Configuration _config;
 
         public ini_sharpconfig(string filePath)
@@ -61,59 +61,59 @@ namespace qfmain
         }
         public (bool s, string m, string value) ReadStr(string sectionName, string settingName, string 默认值 = "")
         {
-          
-                bool rt = true;
-                string value = 默认值;
-                string msgErr = string.Empty;
-                try
-                {
-                    var section =this. _config[sectionName];
-                    if (section == null || !section.Contains(settingName))
-                    {
-                        return (rt, msgErr, value);
-                    }
 
-                    value = section[settingName].RawValue;
-                    //return section[settingName].GetValue<string>();
-                    return (rt, msgErr, value);
-                }
-                catch (Exception ex)
+            bool rt = true;
+            string value = 默认值;
+            string msgErr = string.Empty;
+            try
+            {
+                var section = this._config[sectionName];
+                if (section == null || !section.Contains(settingName))
                 {
-                    rt = false;
-                    msgErr = ex.Message;
-                    // 记录日志或处理类型转换失败的情况
                     return (rt, msgErr, value);
                 }
-             
+
+                value = section[settingName].RawValue;
+                //return section[settingName].GetValue<string>();
+                return (rt, msgErr, value);
+            }
+            catch (Exception ex)
+            {
+                rt = false;
+                msgErr = ex.Message;
+                // 记录日志或处理类型转换失败的情况
+                return (rt, msgErr, value);
+            }
+
         }
 
         /// <summary>
         /// 需要配置是否保存
         /// </summary>
         public (bool s, string m) Write<T>(string sectionName, string settingName, T value, bool 是否保存)
-        {  
-                try
+        {
+            try
+            {
+
+                if (!_config.Contains(sectionName))
+                    _config.Add(sectionName);
+
+                if (!_config[sectionName].Contains(settingName))
+                    _config[sectionName].Add(settingName, "");
+
+                _config[sectionName][settingName].SetValue(value);
+                if (是否保存)
                 {
-
-                    if (!_config.Contains(sectionName))
-                        _config.Add(sectionName);
-
-                    if (!_config[sectionName].Contains(settingName))
-                        _config[sectionName].Add(settingName, "");
-
-                    _config[sectionName][settingName].SetValue(value);
-                    if (是否保存)
-                    {
-                        Save();
-                    }
-
-                    return (true, "");
+                    Save();
                 }
-                catch (Exception ex)
-                {
-                    return (false, ex.Message);
-                }
-            
+
+                return (true, "");
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
+            }
+
         }
 
 
@@ -124,10 +124,10 @@ namespace qfmain
         /// 读取配置值（带类型转换和默认值）
         /// </summary>
         public T Read_T<T>(string sectionName, string settingName, T 默认值 = default)
-        { 
+        {
             try
             {
-                var section =this. _config[sectionName];
+                var section = this._config[sectionName];
                 if (section == null || !section.Contains(settingName))
                     return 默认值;
                 return section[settingName].GetValue<T>();
@@ -141,10 +141,10 @@ namespace qfmain
         }
 
         public T[] Read_T<T>(string sectionName, string settingName, T[] 默认值 = default)
-        { 
+        {
             try
             {
-                var section =this. _config[sectionName];
+                var section = this._config[sectionName];
                 if (section == null || !section.Contains(settingName))
                     return 默认值;
 
@@ -168,8 +168,8 @@ namespace qfmain
         public (bool state, string msg, Dictionary<int, string> value) Read_Dictionary(string sectionName, int 行数)
         {
             try
-            { 
-                var section = this._config [sectionName];
+            {
+                var section = this._config[sectionName];
                 var dict = new Dictionary<int, string>(行数);
                 foreach (var setting in section)
                 {
@@ -192,8 +192,8 @@ namespace qfmain
         {
 
             try
-            { 
-                string[] data = new string[行数]; 
+            {
+                string[] data = new string[行数];
                 foreach (var s in this._config[sectionName])
                 {
                     int idx = int.Parse(s.Name);
@@ -230,8 +230,8 @@ namespace qfmain
 
         }
 
-         
-    
+
+
         /// <summary>
         /// 保存
         /// <para>将更改持久化到磁盘（高效写入）</para>
@@ -240,7 +240,7 @@ namespace qfmain
         {
             return Save1();
         }
-         
+
 
         (bool state, string msg) Save1()
         {

@@ -49,11 +49,12 @@ namespace qfmain
         /// </summary>
         public static void Inistiall()
         {
+       
             new 文件_文件夹().文件夹_新建(软件类.Files_Cfg.Files_Langeuage, out string msgerr);
             读写参数(1);
             string path = Get语言文件路径();
-            ini_sys = new ini_sharpconfig(path);
-
+        
+            ini_sys = new ini_sharpconfig(path);     
             Set语言包(qfLanguage.LanguageList.lst_Language);//本地语言包
         }
 
@@ -79,31 +80,41 @@ namespace qfmain
         {
             lock (_lock)
             {
-                new 文件_文件夹().文件夹_新建(软件类.Files_Cfg.Files_Langeuage, out string msgerr);
-                string path = Get语言文件路径();
-                ini_sys = new ini_sharpconfig(path);
-                bool 是否写入 = false;
-
-
-                for (int i = 0; i < lst.Count; i++)
+                try
                 {
-                    var s = lst[i];
-                    string TypeValue = s.TypeValue;
-                    string languageVlaue = ini_sys.Read(s.KeyValue, $"{TypeValue}", "");
 
-                    if (string.IsNullOrEmpty(languageVlaue))
+                    new 文件_文件夹().文件夹_新建(软件类.Files_Cfg.Files_Langeuage, out string msgerr);
+
+
+                    string path = Get语言文件路径();
+                    ini_sys = new ini_sharpconfig(path);
+                    bool 是否写入 = false;
+
+
+                    for (int i = 0; i < lst.Count; i++)
                     {
-                        languageVlaue = s.LanguageValue;
-                        ini_sys.Write(s.KeyValue, $"{TypeValue}", languageVlaue, false);
-                        是否写入 = true;
+                        var s = lst[i];
+                        string TypeValue = s.TypeValue;
+                        string languageVlaue = ini_sys.Read(s.KeyValue, $"{TypeValue}", "");
+
+                        if (string.IsNullOrEmpty(languageVlaue))
+                        {
+                            languageVlaue = s.LanguageValue;
+                            ini_sys.Write(s.KeyValue, $"{TypeValue}", languageVlaue, false);
+                            是否写入 = true;
+                        }
+                        lst[i].LanguageValue = languageVlaue;
+
                     }
-                    lst[i].LanguageValue = languageVlaue;
 
+                    if (是否写入)
+                    {
+                        ini_sys.Save();
+                    }
                 }
-
-                if (是否写入)
-                {
-                    ini_sys.Save();
+                catch (Exception)
+                {   
+                   
                 }
             }
         }
