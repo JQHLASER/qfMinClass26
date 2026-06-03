@@ -89,7 +89,7 @@ namespace qfNet
         {
             msgerr = string.Empty;
             FileName = string.Empty;
-            DialogResult dlt = new qfNet.软件类().Win_文件类弹窗(this._File, this._文件类型, this._后缀名, out FileName, _文件弹窗类型_.打开, Event_删除文件);
+            DialogResult dlt = new qfNet.软件类().Win_文件类弹窗(this._File, this._文件类型, $"*{this._后缀名}", out FileName, _文件弹窗类型_.打开, Event_删除文件);
             if (dlt == DialogResult.OK)
             {
                 bool rt = this.读写(FileName, 1, ref t, out msgerr);

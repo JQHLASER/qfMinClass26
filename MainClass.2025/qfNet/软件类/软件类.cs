@@ -70,6 +70,8 @@ namespace qfNet
             return result;
         }
 
+
+        qfmain.文件_文件夹 file_sys = new qfmain.文件_文件夹();
         /// <summary>
         /// <para>File : 文件夹路径</para>
         /// <para>文件类型 : 文件类型 | 前面的内容</para>
@@ -79,10 +81,16 @@ namespace qfNet
         {
             DialogResult dlt = DialogResult.None;
             FileName = string.Empty;
-            bool rt = new qfmain.文件_文件夹().文件_获取_文件夹下所有文件名(File, out string[] 目录, out string msgerr, 后缀);
+            bool rt = file_sys.文件_获取_文件夹下所有文件名(File, out string[] 目录,out string msgerr, 后缀);
+            List<string> lst = new List<string>();
+            foreach (var s in 目录)
+            {
+                file_sys.文件_获取文件名_不含后缀(s,out string name,out  string msgErr);
+                lst.Add(name );
+            }
             if (rt)
             {
-                using (Form_文件_弹窗 forms = new Form_文件_弹窗(目录, 文件类型, 后缀, 类型, Event_删除文件))
+                using (Form_文件_弹窗 forms = new Form_文件_弹窗(lst.ToArray (), 文件类型, 后缀, 类型, Event_删除文件))
                 {
                     dlt = forms.ShowDialog();
                     FileName = forms._selectedFileName;
