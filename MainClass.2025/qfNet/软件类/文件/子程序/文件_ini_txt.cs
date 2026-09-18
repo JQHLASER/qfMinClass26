@@ -65,7 +65,7 @@ namespace qfNet
         {
             bool rt = true;
             string path = Path.Combine(this._File, $"{FileName}{this._后缀名}");
-            t = qfmain.T_实例化泛型.FastNew<T>.Create();
+           //t = qfmain.T_实例化泛型.FastNew<T>.Create();
             msgerr = "";
 
             if (this._文件保存方式 == _em_文件保存方式_.ini)
